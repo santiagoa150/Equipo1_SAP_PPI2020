@@ -1,0 +1,262 @@
+#Main1Container{
+padding: 2vw;
+width: 96vw;
+height: calc(100vh - (100px + 6vw));
+display: grid;
+grid-template-rows: 1fr;
+grid-template-columns: 50% 50%;
+align-items: center;
+}
+#Grid1Main1{
+    margin-left: 30%;
+    font-size: 20px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: 70%;
+    height: 80%;
+    grid-column: 1/2;
+    grid-row: 1/2;
+    background-color: #ffa987;
+    border-radius: 20px;
+}
+#Grid2Main1{
+    flex-flow: column;
+    margin-right: 30%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    grid-column: 2/3;
+    grid-row: 1/2;
+
+}
+#SubGrid1_1{
+    background-color: #ffa987;
+    text-align: justify;
+    border-radius: 10px;
+    padding: 1vw 1vw 1vw 1vw;
+    grid-column: 1/2;
+    grid-row: 1/2;
+    margin-bottom: 3vw;
+}
+#ImagePreform{
+    width: 20vw;
+}
+#SubGrid1_2{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.ButtonIni{
+    display: inline-block;
+    width: 40%;
+    height: 35px;
+    margin-right: 5px;
+    margin-bottom: 1vw;
+    font-weight: bold;
+    font-size: 15px;
+}
+.DisInicioCom{
+    display: none;
+}
+#FormTeleInicio,#FormTeleRegistro, #MainRegistroCel, #MainInicioCel{
+    display: none;
+}
+.DisCom{
+    display: none;
+}
+.DisTemp{
+    display: none;
+}
+#ForTele{
+    display: none;
+}
+#MainInicioCom, #MainRegistroCom{
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+.buttonComI{
+    height: 30px;
+    width: 200px;
+
+}
+.buttonComI2{
+    height: 30px;
+    width: 200px;
+    margin-top: 5px;
+}
+#Main2InicioCom{
+    margin-top: 10px;
+    flex-flow: column;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#RegistroMain1{
+    display: flex;
+    width: 100%;
+}
+.BIniCel2{
+    margin: 5px;
+    width: 80%;
+    height: 30px;
+}
+#RegistroMain2{
+    justify-content: center;
+    align-items: center;
+    padding-left: 2vw;
+    display: flex;
+    width: 100%;
+}
+.BIniCel3{
+    margin: 6px;
+    width: 80%;
+    height: 30px;
+}
+#PContraCel, #PContraCom{
+    display: none;
+    color: red;
+    margin:0;
+    font-size: 10px;
+}
+#PMainReg2{
+    margin-right: 10px;
+    width: 90%;
+font-size:15px;
+}
+@media(max-width:870px){
+    #ImagePreform{
+        width: 24vw;
+    }
+}
+@media(max-width:720px){
+    .TopIn{
+        margin-top: 0;
+    }
+    .BotP{
+        margin-bottom: 0;
+    }
+    #FormTeleInicio,#FormTeleRegistro  {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgb(0,0,0, 0.9);
+        width: 100vw;
+        height: 100vh;
+    }
+    #RegistroMain1{
+        display: flex;
+        width: 100%;
+    }
+    #RegistroMain2{
+        padding-left: 2vw;
+        display: flex;
+        width: 100%;
+    }
+    #MainInicioCel, #MainRegistroCel{
+        border-radius: 10px;
+        background-color: white;
+        width: 80%;
+        height: 80%;
+        padding: 1vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+    }
+    #TitleInicioCel, #TitleRegistroCel, #TitleInicioCom{
+        display: flex;
+        justify-content: center;
+    }
+    .GrupoForm{
+        margin-left: 28%;
+        width: 80%;
+        justify-content: left;
+    }
+    .BIniCel2{
+        margin: 10px;
+        width: 80%;
+        height: 30px;
+    }
+    .BIniCel3{
+        margin: 6px;
+        width: 80%;
+        height: 30px;
+    }
+    .BIniCel{
+        margin: 10px;
+        width: 50%;
+        height: 30px;
+    }
+    #FormTeleRegistro{
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgb(0,0,0, 0.9);
+        width: 100vw;
+        height: 100vh;
+    }
+    .DisCom{
+        display: block;
+    }
+    #Main1Container{
+        width: 96vw;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2vw;
+        height: calc(100vh - 30.875vw);
+        /*Bendito sea el Calc*/
+    }
+    #Grid1Main1{
+        background-color: transparent;
+        width: 82vw;
+        height: max-content;
+        display: grid;
+        margin: 0 10% 0% 10%;
+        grid-template-rows: max-content max-content;
+        grid-template-columns: 1fr;
+    }
+    #Grid2Main1{
+        display: none;
+    }
+    #SubGrid1_1{
+        text-align: justify;
+        border-radius: 10px;
+        background-color: #ffa987;
+        padding: 3vw 6vw 3vw 6vw;
+        grid-column: 1/2;
+        grid-row: 1/2;
+        margin-bottom: 3vw;
+    }
+    #SubGrid2_1{
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+    .ButtonIni{
+        display: block;
+        width: 100%;
+        height: 35px;
+        margin-top: 2vw;
+        font-weight: bold;
+        font-size: 15px;
+    }
+    .DisCel{
+        display: none;
+    }
+}

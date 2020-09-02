@@ -1,0 +1,66 @@
+body{
+    margin: 0;
+    background-color: #f7ebe8;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+button, input{
+    cursor: pointer;
+    border-radius: 2px;
+    border: 1px solid #444140;
+    background-color: white;
+    color: black;
+    font-family: 'Josefin Sans', sans-serif;
+    transition: all 500ms;
+}
+
+button:hover{
+    transition: all 700ms;
+    color: #f7ebe8;
+    background-color: #444140;
+}
+input:focus{
+    outline: none;
+}
+button:focus{
+    transition: all 700ms;
+    outline: none;
+    background-color: white;
+    color: black;
+}
+
+#Header1Container{
+    display: flex;
+    padding: 1vw;
+    justify-content: center;
+    align-items: center;
+    background-color: #444140;
+    width: 98vw;
+    height: max-content;
+}
+#TitleHeader1{
+    color: white;
+    margin: 0;
+}
+#LogoHeader1{
+    background-image: url(https://1.bp.blogspot.com/-eXfP9XUmzHc/X02wni0s3dI/AAAAAAAAPPo/Oj9XbD4WIpgvdS_jmAkJc32Z1vOnUzTXwCLcBGAsYHQ/s16000/LogoP.png);
+    background-size: 100% 100%;
+    height: 100px;
+    width: 100px;
+}
+
+@media(max-width: 720px){
+    #Header1Container{
+        padding: 2vw;
+        width: 96vw;
+    }
+    #TitleHeader1{
+        display: none;
+    }
+    #LogoHeader1{
+        background-image: url(https://1.bp.blogspot.com/-4AYfdW1HnGQ/X02wnk_2J_I/AAAAAAAAPPk/znnHlLxw_bINf8jIvcaE3hxEruVJOjcawCLcBGAsYHQ/s16000/Logo.png);
+        background-size: 100% 100%;
+        height: 22.875vw;
+        width: 36.875vw;
+    }
+}
