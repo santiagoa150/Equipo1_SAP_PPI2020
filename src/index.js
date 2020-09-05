@@ -14,11 +14,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
+      <Route exact path="/">
+          <Home />
+        </Route>
       <Route path="/Principal">
           <Principal />
-        </Route>
-        <Route path="/">
-          <Home />
         </Route>
       </Switch>
     </Router>

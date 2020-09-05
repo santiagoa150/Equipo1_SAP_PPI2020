@@ -3,441 +3,399 @@ import React from 'react';
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
 
 import '../Styles/Main1.css';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
-let Dat = new Date();
-let Daño = Dat.getFullYear();
-let DatFin = Dat.getFullYear() + "-" + (Dat.getMonth().toString()).padStart(2, 0) + "-" + (Dat.getDate().toString()).padStart(2, 0);
+let Fecha = new Date();
+let FechaY = Fecha.getFullYear();
+let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
+let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
+let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
+let FechaMin = (FechaY - 100) + "-" + FechaM + "-" + FechaD;
+
+console.log(Usuarios);
 
 class Main1 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Bool: false
+            Tipo: "",
+            Bool: false,
+            UserB: false,
+            ConB2: false
         }
     }
 
-    InicioCel = () => {
-        document.getElementById("FormTeleInicio").style.display = "flex";
-        document.getElementById("FormTeleRegistro").style.display = "none";
+    RegistrarCom = () => {
+        document.getElementById("GridCom2Div2").style.display = "block";
+        document.getElementById("LogoInicialC").style.display = "none";
+        document.getElementById("GridCom2Div3").style.display = "none";
     }
-    RegistroCel = () => {
-        document.getElementById("FormTeleRegistro").style.display = "flex";
-        document.getElementById("FormTeleInicio").style.display = "none";
+    IniciarCom = () => {
+        document.getElementById("GridCom2Div2").style.display = "none";
+        document.getElementById("LogoInicialC").style.display = "none";
+        document.getElementById("GridCom2Div3").style.display = "flex";
     }
+    RegistrarCel = () => {
+        document.getElementById("RegistroCel").style.display = "flex";
+        document.getElementById("InicioCel").style.display = "none";
+    }
+    IniciarCel = () => {
+        document.getElementById("RegistroCel").style.display = "none";
+        document.getElementById("InicioCel").style.display = "flex";
+    }
+    Close = () => {
+        document.getElementById("RegistroCel").style.display = "none";
+        document.getElementById("InicioCel").style.display = "none";
+    }
+    RegistrarUsuCom = () => {
+        let Nombre = document.getElementById("NRC"), Apellido = document.getElementById("ARC");
+        let UserName = document.getElementById("DRC"), Correo = document.getElementById("CRC");
+        let Sexo = document.getElementById("SRC"), Edad = document.getElementById("ERC");
+        let Contraseña = document.getElementById("CoRC"), Contraseña2 = document.getElementById("Co2RC");
 
-    InicioCom = () => {
-        document.getElementById("ImagePreform").style.display = "none";
-        document.getElementById("MainInicioCom").style.display = "flex";
-        document.getElementById("MainRegistroCom").style.display = "none";
-        document.getElementById("Grid1Main1").style.width = "70%";
-        document.getElementById("Grid1Main1").style.marginLeft = "30%";
-    }
-    RegistroCom = () => {
-        document.getElementById("ImagePreform").style.display = "none";
-        document.getElementById("MainInicioCom").style.display = "none";
-        document.getElementById("MainRegistroCom").style.display = "flex";
-        document.getElementById("Grid1Main1").style.width = "60%";
-        document.getElementById("Grid1Main1").style.marginLeft = "20%";
-    }
-    Registro = () => {
-        let WidthBody = document.body.clientWidth;
-        if (WidthBody > 720) {
-
-            let Usuario = document.getElementById("UsuRegCom").value;
-            let Contraseña = document.getElementById("ConRegCom").value;
-            let Contraseña2 = document.getElementById("CofRegCom").value;
-            let Correo = document.getElementById("CorRegCom").value;
-            let Nombres = document.getElementById("NomRegCom").value;
-            let Apellidos = document.getElementById("ApeRegCom").value;
-            let Edad = document.getElementById("EdaRegCom").value;
-            let Edadsub = parseInt(Edad.substr(0, 4));
-            let Edad2 = Daño - Edadsub;
-            let Notificaciones = document.getElementById("CheRegCom").value;
-            let Sexo = document.getElementById("SexRegCom").value;
-
-            if (Sexo == 0) {
-                Sexo = "Sin definir";
+        if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
+            if (this.state.UserB == false) {
+                UserName.style.color = "red";
+                UserName.value = "Usuario invalido";
+                this.Time(UserName, "text");
             }
-
-            if (Usuario != "" && Contraseña != "" && Correo != "" && Nombres != "" && Apellidos != "" && Edad != "" && Contraseña2 != "") {
-                if (Contraseña2 == Contraseña) {
+            if (Contraseña.value == Contraseña2.value) {
+                if (this.state.UserB == true) {
                     Usuarios.push({
-                        Usuario: Usuario,
-                        Contraseña: Contraseña,
-                        Correo: Correo,
-                        Nombres: Nombres,
-                        Apellidos: Apellidos,
-                        Edad: Edad2,
-                        FechaN: Edad,
-                        Notificaciones: Notificaciones,
-                        Sexo: Sexo
+                        Nombre: Nombre.value,
+                        Apellido: Apellido.value,
+                        UserName: UserName.value,
+                        Correo: Correo.value,
+                        Edad: Edad.value,
+                        Sexo: Sexo.value,
+                        Contraseña: Contraseña.value,
+                        id: Usuarios.length
                     });
-                    this.InicioCom();
-                } else {
-                    document.getElementById("ConRegCom").style.color = "red";
-                    document.getElementById("CofRegCom").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("ConRegCom").value = "";
-                        document.getElementById("ConRegCom").style.color = "black";
-                        document.getElementById("CofRegCom").value = "";
-                        document.getElementById("CofRegCom").style.color = "black";
-                    }, 1000);
-                }
-
-            } else {
-                if (Usuario == "") {
-                    document.getElementById("UsuRegCom").value = "Dato sin ingresar.";
-                    document.getElementById("UsuRegCom").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("UsuRegCom").value = "";
-                        document.getElementById("UsuRegCom").style.color = "black";
-                    }, 1000);
-                } if (Contraseña == "") {
-                    document.getElementById("ConRegCom").value = "Dato sin ingresar.";
-                    document.getElementById("ConRegCom").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("ConRegCom").value = "";
-                        document.getElementById("ConRegCom").style.color = "black";
-                    }, 1000);
-                } if (Contraseña2 == "") {
-                    document.getElementById("CofRegCel").value = "Dato sin ingresar.";
-                    document.getElementById("CofRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("CofRegCel").value = "";
-                        document.getElementById("CofRegCel").style.color = "black";
-                    }, 1000);
-                } if (Correo == "") {
-                    document.getElementById("CorRegCom").value = "Dato sin ingresar.";
-                    document.getElementById("CorRegCom").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("CorRegCom").value = "";
-                        document.getElementById("CorRegCom").style.color = "black";
-                    }, 1000);
-                } if (Nombres == "") {
-                    document.getElementById("NomRegCom").value = "Dato sin ingresar.";
-                    document.getElementById("NomRegCom").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("NomRegCom").value = "";
-                        document.getElementById("NomRegCom").style.color = "black";
-                    }, 1000);
-                } if (Apellidos == "") {
-                    document.getElementById("ApeRegCom").value = "Dato sin ingresar.";
-                    document.getElementById("ApeRegCom").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("ApeRegCom").value = "";
-                        document.getElementById("ApeRegCom").style.color = "black";
-                    }, 1000);
-                } if (Edad == "") {
-                    document.getElementById("EdaRegCom").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("EdaRegCom").value = "";
-                        document.getElementById("EdaRegCom").style.color = "black";
-                    }, 1000);
+                    Nombre.value = "";
+                    Apellido.value = "";
+                    UserName.value = "";
+                    Correo.value = "";
+                    Edad.value = "";
+                    Contraseña.value = "";
+                    Contraseña2.value = "";
+                    this.IniciarCom();
                 }
             }
-
         } else {
-            let Usuario = document.getElementById("UsuRegCel").value;
-            let Contraseña = document.getElementById("ConRegCel").value;
-            let Contraseña2 = document.getElementById("CofRegCel").value;
-            let Correo = document.getElementById("CorRegCel").value;
-            let Nombres = document.getElementById("NomRegCel").value;
-            let Apellidos = document.getElementById("ApeRegCel").value;
-            let Edad = document.getElementById("EdaRegCel").value;
-            let Edadsub = parseInt(Edad.substr(0, 4));
-            let Edad2 = Daño - Edadsub;
-            let Notificaciones = document.getElementById("CheRegCel").value;
-            let Sexo = document.getElementById("SexRegCel").value;
-            if (Sexo == 0) {
-                Sexo = "Sin definir";
+            if (Nombre.value == "") {
+                Nombre.style.color = "red";
+                Nombre.value = "Dato no ingresado.";
+                this.Time(Nombre, "text");
+            } if (Apellido.value == "") {
+                Apellido.style.color = "red";
+                Apellido.value = "Dato no ingresado.";
+                this.Time(Apellido, "text");
+            } if (UserName.value == "") {
+                UserName.style.color = "red";
+                UserName.value = "Dato no ingresado."
+                this.Time(UserName, "text");
+            } if (Correo.value == "") {
+                Correo.style.color = "red";
+                Correo.value = "Dato no ingresado.";
+                this.Time(Correo, "email")
+            } if (Edad.value == "") {
+                Edad.type = "text";
+                Edad.style.color = "red";
+                Edad.value = "Dato no ingresado.";
+                this.Time(Edad, "date");
+            } if (Contraseña.value == "") {
+                Contraseña.type = "text";
+                Contraseña.style.color = "red";
+                Contraseña.value = "Dato no ingresado.";
+                this.Time(Contraseña, "password")
+            } if (Contraseña2.value == "") {
+                Contraseña2.type = "text";
+                Contraseña2.style.color = "red";
+                Contraseña2.value = "Dato no ingresado.";
+                this.Time(Contraseña2, "password");
             }
+        }
 
-            if (Usuario != "" && Contraseña != "" && Correo != "" && Nombres != "" && Apellidos != "" && Edad != "" && Contraseña2 != "") {
-                if (Contraseña2 == Contraseña) {
+    }
+    RegistrarUsuCel = () =>{
+        let Nombre = document.getElementById("NRCe");
+        let Apellido = document.getElementById("ARCe");
+        let UserName = document.getElementById("DRCe");
+        let Correo = document.getElementById("CRCe");
+        let Sexo = document.getElementById("SRCe"), Edad = document.getElementById("ERCe");
+        let Contraseña = document.getElementById("CoRCe"), Contraseña2 = document.getElementById("Co2RCe");
+
+        if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
+            if (this.state.UserB == false) {
+                UserName.style.color = "red";
+                UserName.value = "Usuario invalido";
+                this.Time(UserName, "text");
+            }
+            if (Contraseña.value == Contraseña2.value) {
+                if (this.state.UserB == true) {
                     Usuarios.push({
-                        Usuario: Usuario,
-                        Contraseña: Contraseña,
-                        Correo: Correo,
-                        Nombres: Nombres,
-                        Apellidos: Apellidos,
-                        Edad: Edad2,
-                        FechaN: Edad,
-                        Notificaciones: Notificaciones,
-                        Sexo: Sexo
+                        Nombre: Nombre.value,
+                        Apellido: Apellido.value,
+                        UserName: UserName.value,
+                        Correo: Correo.value,
+                        Edad: Edad.value,
+                        Sexo: Sexo.value,
+                        Contraseña: Contraseña.value,
+                        id: Usuarios.length
                     });
-                    this.InicioCel();
-                } else {
-                    document.getElementById("ConRegCel").style.color = "red";
-                    document.getElementById("CofRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("ConRegCel").value = "";
-                        document.getElementById("ConRegCel").style.color = "black";
-                        document.getElementById("CofRegCel").value = "";
-                        document.getElementById("CofRegCel").style.color = "black";
-                    }, 1000);
-                }
-
-            } else {
-                if (Usuario == "") {
-                    document.getElementById("UsuRegCel").value = "Dato sin ingresar.";
-                    document.getElementById("UsuRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("UsuRegCel").value = "";
-                        document.getElementById("UsuRegCel").style.color = "black";
-                    }, 1000);
-                } if (Contraseña == "") {
-                    document.getElementById("ConRegCel").value = "Dato sin ingresar.";
-                    document.getElementById("ConRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("ConRegCel").value = "";
-                        document.getElementById("ConRegCel").style.color = "black";
-                    }, 1000);
-                } if (Contraseña2 == "") {
-                    document.getElementById("CofRegCel").value = "Dato sin ingresar.";
-                    document.getElementById("CofRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("CofRegCel").value = "";
-                        document.getElementById("CofRegCel").style.color = "black";
-                    }, 1000);
-                }
-                if (Correo == "") {
-                    document.getElementById("CorRegCel").value = "Dato sin ingresar.";
-                    document.getElementById("CorRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("CorRegCel").value = "";
-                        document.getElementById("CorRegCel").style.color = "black";
-                    }, 1000);
-                } if (Nombres == "") {
-                    document.getElementById("NomRegCel").value = "Dato sin ingresar.";
-                    document.getElementById("NomRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("NomRegCel").value = "";
-                        document.getElementById("NomRegCel").style.color = "black";
-                    }, 1000);
-                } if (Apellidos == "") {
-                    document.getElementById("ApeRegCel").value = "Dato sin ingresar.";
-                    document.getElementById("ApeRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("ApeRegCel").value = "";
-                        document.getElementById("ApeRegCel").style.color = "black";
-                    }, 1000);
-                } if (Edad == "") {
-                    document.getElementById("EdaRegCel").style.color = "red";
-                    setTimeout(function () {
-                        document.getElementById("EdaRegCel").value = "";
-                        document.getElementById("EdaRegCel").style.color = "black";
-                    }, 1000);
+                    Nombre.value = "";
+                    Apellido.value = "";
+                    UserName.value = "";
+                    Correo.value = "";
+                    Edad.value = "";
+                    Contraseña.value = "";
+                    Contraseña2.value = "";
+                    this.IniciarCel();
                 }
             }
+        } else {
+            if (Nombre.value == "") {
+                Nombre.style.color = "red";
+                Nombre.value = "Dato no ingresado.";
+                this.Time(Nombre, "text");
+            } if (Apellido.value == "") {
+                Apellido.style.color = "red";
+                Apellido.value = "Dato no ingresado.";
+                this.Time(Apellido, "text");
+            } if (UserName.value == "") {
+                UserName.style.color = "red";
+                UserName.value = "Dato no ingresado."
+                this.Time(UserName, "text");
+            } if (Correo.value == "") {
+                Correo.style.color = "red";
+                Correo.value = "Dato no ingresado.";
+                this.Time(Correo, "email")
+            } if (Edad.value == "") {
+                Edad.type = "text";
+                Edad.style.color = "red";
+                Edad.value = "Dato no ingresado.";
+                this.Time(Edad, "date");
+            } if (Contraseña.value == "") {
+                Contraseña.type = "text";
+                Contraseña.style.color = "red";
+                Contraseña.value = "Dato no ingresado.";
+                this.Time(Contraseña, "password")
+            } if (Contraseña2.value == "") {
+                Contraseña2.type = "text";
+                Contraseña2.style.color = "red";
+                Contraseña2.value = "Dato no ingresado.";
+                this.Time(Contraseña2, "password");
+            }
         }
+
     }
-
-    Usua = () => {
-        let Usucel = document.getElementById("UsuRegCom").value;
-        let Usucom = document.getElementById("UsuRegCel").value;
-
+    Time = (Propi, Propi2) => {
+        setTimeout(function () {
+            Propi.type = Propi2;
+            Propi.style.color = "black";
+            Propi.value = "";
+        }, 1500)
+    }
+    UserName = () => {
+        let user = document.getElementById("DRC");
         for (let i = 0; i < Usuarios.length; i++) {
-            if (Usuarios[i].Usuario == Usucel || Usuarios[i].Usuario == Usucom) {
-                document.getElementById("PContraCel").style.display = "block";
-                document.getElementById("PContraCom").style.display = "block";
+            if (Usuarios[i].UserName != user.value) {
+                this.setState({ UserB: true });
+                user.style.color = "black";
             } else {
-                document.getElementById("PContraCel").style.display = "none";
-                document.getElementById("PContraCom").style.display = "none";
-                document.getElementById("PContraCel").style.display = document.getElementById("PContraCel").value;
-                document.getElementById("PContraCom").style.display = document.getElementById("PContraCom").value;
+                this.setState({ UserB: false });
+                user.style.color = "red";
             }
         }
     }
-
-    PrincipalCom = () =>{
-        let CorreUsu = document.getElementById("InicioUsuCom").value;
-        let Contra = document.getElementById("InicioConCom").value;
-
-        for(let i= 0; i<Usuarios.length; i++){
-            if(Usuarios[i].Contraseña == Contra && Usuarios[i].Usuario == CorreUsu){
-                this.setState({
-                    Bool: true
-                })
-            } else if(Usuarios[i].Contraseña == Contra && Usuarios[i].Correo == CorreUsu){
-                this.setState({
-                    Bool: true
-                })
-            }else{
-                document.getElementById("InicioUsuCom").style.color = "red";
-                setTimeout(function(){
-                    document.getElementById("InicioUsuCom").style.color = "black";
-                    document.getElementById("InicioUsuCom").value = "";
-                }, 1000);
-                document.getElementById("InicioConCom").style.color = "red";
-                setTimeout(function(){
-                    document.getElementById("InicioConCom").style.color = "black";
-                    document.getElementById("InicioConCom").value = "";
-                }, 1000);
+    UserName2 = () => {
+        let user = document.getElementById("DRCe");
+        for (let i = 0; i < Usuarios.length; i++) {
+            if (Usuarios[i].UserName != user.value) {
+                this.setState({ UserB: true });
+                user.style.color = "black";
+            } else {
+                this.setState({ UserB: false });
+                user.style.color = "red";
             }
         }
     }
+    IniciarSCom = () =>{
+        let Usuario = document.getElementById("IUC");
+        let Contraseña = document.getElementById("ICC");
 
-    PrincipalCel = () =>{
-        let CorreUsu = document.getElementById("InicioUsuCel").value;
-        let Contra = document.getElementById("InicioConCel").value;
-
-        for(let i= 0; i < Usuarios.length; i++){
-            if(Usuarios[i].Contraseña == Contra && Usuarios[i].Usuario == CorreUsu){
-                this.setState({
-                    Bool: true
-                });
-            } else if(Usuarios[i].Contraseña == Contra && Usuarios[i].Correo == CorreUsu){
-                this.setState({
-                    Bool: true
-                });
-            }else{
-                document.getElementById("InicioUsuCel").style.color = "red";
-                setTimeout(function(){
-                    document.getElementById("InicioUsuCel").style.color = "black";
-                    document.getElementById("InicioUsuCel").value = "";
-                }, 1000);
-                document.getElementById("InicioConCel").style.color = "red";
-                setTimeout(function(){
-                    document.getElementById("InicioConCel").style.color = "black";
-                    document.getElementById("InicioConCel").value = "";
-                }, 1000);
+        if(Usuario.value != "" && Contraseña.value != ""){
+            for(let i = 0; i< Usuarios.length; i++){
+                if(Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value){
+                    this.setState({Bool:true})
+                }
+            }
+        } else {
+            if (Usuario.value == "") {
+                Usuario.style.color = "red";
+                Usuario.value = "Dato no ingresado.";
+                this.Time(Usuario, "text");
+            } if (Contraseña.value == "") {
+                Contraseña.style.color = "red";
+                Contraseña.value = "Dato no ingresado.";
+                this.Time(Contraseña, "password");
             }
         }
     }
+    IniciarSCel = () =>{
+        let Usuario = document.getElementById("IUCel");
+        let Contraseña = document.getElementById("ICCel");
 
+        if(Usuario.value != "" && Contraseña.value != ""){
+            for(let i = 0; i< Usuarios.length; i++){
+                if(Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value){
+                    this.setState({Bool:true})
+                }
+            }
+        } else {
+            if (Usuario.value == "") {
+                Usuario.style.color = "red";
+                Usuario.value = "Dato no ingresado.";
+                this.Time(Usuario, "text");
+            } if (Contraseña.value == "") {
+                Contraseña.style.color = "red";
+                Contraseña.value = "Dato no ingresado.";
+                this.Time(Contraseña, "password");
+            }
+        }
+    }
     render() {
         return (
             <>
-                <div id="Main1Container">
-                    <div id="FormTeleInicio">
-                        <div id="MainInicioCel">
-                            <div id="TitleInicioCel">
-                                <h2>Iniciar sesión</h2>
-                            </div>
-                            <div className="GrupoForm">
-                                <p className="BotP">Correo/Usuario</p>
-                                <input className="BIniCel TopIn" id="InicioUsuCel" type="email" placeholder="Correo/Usuario" autoComplete="off" />
-                            </div>
-                            <div className="GrupoForm">
-                                <p className="BotP">Contraseña</p>
-                                <input placeholder="Contraseña TopIn"  id="InicioConCel" className="BIniCel" autoComplete="off" />
-                            </div>
-
-                            <button className="BIniCel button">Iniciar sesión con google</button>
-                            <button className="BIniCel button" onClick={this.PrincipalCel}>Aceptar</button>
+                {/*Inicio de sesión en celular*/}
+                <div id="InicioCel">
+                    <div id="InicioCel2">
+                        <div id="XimageC">
+                            <img id="Ximage" onClick={this.Close} src="https://images.vexels.com/media/users/3/155473/isolated/preview/faa3172dd52035d0c227d7ecab4d6024-doodle-cruzado-x-by-vexels.png" />
                         </div>
-                    </div>
-
-
-                    <div id="FormTeleRegistro">
-                        <div id="MainRegistroCel">
-                            <div id="TitleRegistroCel">
-                                <h2>Registrarse</h2>
-                            </div>
-                            <div id="RegistroMain1">
-                                <div>
-                                    <input className="BIniCel2" id="NomRegCel" placeholder="Nombres" autoComplete="off" />
-                                    <input className="BIniCel2" id="ApeRegCel" placeholder="Apellidos" autoComplete="off" />
-                                    <input className="BIniCel2" id="EdaRegCel" type="date" max={DatFin} autoComplete="off" />
-                                    <select className="BIniCel2" id="SexRegCel">
-                                        <option value="0" className="DisCel">Sexo</option>
-                                        <option value="M" >Hombre</option>
-                                        <option value="F" >Mujer</option>
-                                        <option value="O">Otro</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <p id="PContraCel">Usuario registrado</p>
-                                    <input className="BIniCel2" id="UsuRegCel" onChange={this.Usua} placeholder="Usuario" autoComplete="off" />
-                                    <input className="BIniCel2" id="CorRegCel" type="email" placeholder="Correo" autoComplete="off" />
-                                    <input className="BIniCel2" id="ConRegCel" type="password" placeholder="Contraseña" autoComplete="off" />
-                                    <input className="BIniCel2" id="CofRegCel" type="password" placeholder="Confirmar Contraseña" autoComplete="off" />
-                                </div>
-                            </div>
-                            <div id="RegistroMain2">
-                                <p >¿Desea recibir notificaciones personalizadas en su correo?</p>
-                                <input className="BIniCel" id="CheRegCel" type="checkbox" />
-                            </div>
-                            <button className="BIniCel3 button">Registrase con google</button>
-                            <button className="BIniCel3 button" onClick={this.Registro}>Aceptar</button>
+                        <div className="GridCom2Div1">
+                            <h2 id="TitleReg">Iniciar Sesión</h2>
                         </div>
-                    </div>
-
-
-
-                    <div id="Grid1Main1">
-                        <div id="SubGrid1_1">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, et delectus earum aspernatur sunt esse sapiente laborum sequi sint nobis voluptate, sed consectetur veritatis, itaque ipsa ex officia dolore tenetur!</p>
+                        <div id="GridCom2Div3_">
+                            <p>Usuario</p>
+                            <input className="B4" id="IUCel" type="text" autoComplete="off" />
+                            <p>Constraseña</p>
+                            <input className="B4" id="ICCel" type="password" autoComplete="off" />
                         </div>
-                        <div id="SubGrid2_1">
-                            <button className="DisCom ButtonIni" onClick={this.InicioCel}>Iniciar sesión</button>
-                            <button className="DisCom ButtonIni" onClick={this.RegistroCel}>Registrarse</button>
-                        </div>
-                    </div>
-                    <div id="Grid2Main1" className="DisCel">
-                        <div id="SubGrid1_2">
-                            <button className="ButtonIni" onClick={this.InicioCom}>Iniciar sesión</button>
-                            <button className="ButtonIni" onClick={this.RegistroCom}>Registrarse</button>
-                        </div>
-                        <div id="SubGrid1_1">
-                            <img id="ImagePreform" src="https://1.bp.blogspot.com/-4AYfdW1HnGQ/X02wnk_2J_I/AAAAAAAAPPk/znnHlLxw_bINf8jIvcaE3hxEruVJOjcawCLcBGAsYHQ/s16000/Logo.png" />
-
-                            <div id="MainInicioCom" className="DisInicioCom">
-                                <div id="TitleInicioCom">
-                                    <h2>Iniciar sesión</h2>
-                                </div>
-                                <div className="GrupoForm">
-                                    <p className="BotP">Correo/Usuario</p>
-                                    <input className="buttonComI TopIn" id="InicioUsuCom" placeholder="Correo/Usuario" type="email" autoComplete="off" />
-                                </div>
-                                <div className="GrupoForm">
-                                    <p className="BotP">Contraseña</p>
-                                    <input placeholder="Contraseña TopIn" id="InicioConCom" className="buttonComI" autoComplete="off" />
-                                </div>
-                                <div id="Main2InicioCom">
-                                    <button className="buttonComI2 button">Iniciar sesión con google</button>
-                                    <button className="buttonComI2 button" onClick={this.PrincipalCom}>Aceptar</button>
-                                </div>
-                            </div>
-
-                            <div id="MainRegistroCom" className="DisInicioCom">
-                                <div id="TitleRegistroCel">
-                                    <h2>Registrarse</h2>
-                                </div>
-                                <div id="RegistroMain1">
-                                    <div>
-                                        <input className="BIniCel2" id="NomRegCom" placeholder="Nombres" autoComplete="off" />
-                                        <input className="BIniCel2" id="ApeRegCom" placeholder="Apellidos" autoComplete="off" />
-                                        <input className="BIniCel2" id="EdaRegCom" type="date" max={DatFin} autoComplete="off" />
-                                        <select className="BIniCel2" id="SexRegCom">
-                                            <option value="0" className="DisCom">Sexo</option>
-                                            <option value="M" >Hombre</option>
-                                            <option value="F" >Mujer</option>
-                                            <option value="O">Otro</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <p id="PContraCom">Usuario Registrado</p>
-                                        <input className="BIniCel2" id="UsuRegCom" onChange={this.Usua} placeholder="Usuario" autoComplete="off" />
-                                        <input className="BIniCel2" id="CorRegCom" type="email" placeholder="Correo" autoComplete="off" />
-                                        <input className="BIniCel2" id="ConRegCom" type="password" placeholder="Contraseña" autoComplete="off" />
-                                        <input className="BIniCel2" id="CofRegCom" type="password" placeholder="Confirmar contraseña" autoComplete="off" />
-                                    </div>
-                                </div>
-                                <div id="RegistroMain2">
-                                    <p id="PMainReg2">¿Desea recibir notificaciones personalizadas en su correo?</p>
-                                    <input id="PMainReg1" id="CheRegCom" className="BIniCel" type="checkbox" />
-                                </div>
-                                <button className="BIniCel3 button">Registrase con google</button>
-                                <button className="BIniCel3 button" onClick={this.Registro}>Aceptar</button>
-                            </div>
-
+                        <div className="GridCom2Div1_">
+                            <button className="B4" onClick={this.IniciarSCel}>Aceptar</button>
+                            <button className="B4">Iniciar sesión con Google</button>
                         </div>
                     </div>
                 </div>
-                {this.state.Bool && <Redirect to="/Principal"></Redirect>
-                }
+                {/*Registro de usuarios en celular*/}
+                <div id="RegistroCel">
+                    <div id="RegistroCel2">
+                        <div id="XimageC">
+                            <img id="Ximage" onClick={this.Close} src="https://images.vexels.com/media/users/3/155473/isolated/preview/faa3172dd52035d0c227d7ecab4d6024-doodle-cruzado-x-by-vexels.png" />
+                        </div>
+                        <div className="GridCom2Div1">
+                            <h2 id="TitleReg">Registro</h2>
+                        </div>
+                        <div className="GridCom2Div1">
+                            <input className="B1" id="NRCe" placeholder="Nombre" autoComplete="off" />
+                            <input className="B1" id="ARCe" placeholder="Apellido" autoComplete="off" />
+                        </div>
+                        <div className="GridCom2Div1">
+                            <input className="B1" id="DRCe" onChange={this.UserName2}placeholder="Username" autoComplete="off" />
+                            <input className="B1" id="CRCe" placeholder="Correo" autoComplete="off" />
+                        </div>
+                        <div className="GridCom2Div1">
+                            <select className="B2" id="SRCe">
+                                <option className="None" value="0">Sexo</option>
+                                <option value="Hombre">Hombre</option>
+                                <option value="Mujer">Mujer</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            <input className="B3" id="ERCe" type="date" min={FechaMin} max={FechaH} placeholder="Edad" autoComplete="off" />
+                        </div>
+                        <div className="GridCom2Div1">
+                            <input className="B1" id="CoRCe" type="password" placeholder="Contraseña" autoComplete="of" />
+                            <input className="B1" id="Co2RCe" type="password" placeholder="Confirmar Contraseña" autoComplete="of" />
+                        </div>
+                        <div className="GridCom2Div1_">
+                            <button className="B4" onClick={this.RegistrarUsuCel}>Aceptar</button>
+                            <button className="B4">Registrarse con Google</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Main1Container">
+                    <div id="GridComp1">
+                        <p id="PInfo">distinctio consequatur ducimus velit perspiciatis saepe alias voluptate cumque nobis ad, qui voluptates corporis! Dolores velit est aliquam, necessitatibus earum at? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis provident alias nesciunt ipsum ea eos necessitatibus qui natus rerum tempore non esse iusto nostrum id dignissimos deleniti similique, eaque corrupti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis illum eius nihil porro fugit architecto, obcaecati ipsa, in eaque sit minus? Inventore, vel tenetur. Doloremque, impedit tempora. At, natus obcaecati.</p>
+                    </div>
+                    <div className="GridCom2Div1__">
+                        <button className="button B1" onClick={this.IniciarCel}>Iniciar sesión</button>
+                        <button className="button B1" onClick={this.RegistrarCel}>Registrarse</button>
+                    </div>
+
+                    {/*Computador*/}
+                    <div id="GridComp2">
+                        <div className="GridCom2Div1">
+                            <button className="button B1" onClick={this.IniciarCom}>Iniciar sesión</button>
+                            <button className="button B1" onClick={this.RegistrarCom}>Registrarse</button>
+                        </div>
+                        {/*Logo Inicial...................*/}
+                        <div id="LogoInicialC">
+                            <img id="LogoInicial" src="https://1.bp.blogspot.com/-4AYfdW1HnGQ/X02wnk_2J_I/AAAAAAAAPPk/znnHlLxw_bINf8jIvcaE3hxEruVJOjcawCLcBGAsYHQ/s16000/Logo.png" />
+                        </div>
+                        {/*Registro de usuarios Computador*/}
+                        <div id="GridCom2Div2">
+                            <div className="GridCom2Div1T">
+                                <h2 id="TitleReg">Registro</h2>
+                                <p id="PAlert"></p>
+                            </div>
+                            <div className="GridCom2Div1">
+                                <input className="B1" id="NRC" placeholder="Nombre" autoComplete="off" />
+                                <input className="B1" id="ARC" placeholder="Apellido" autoComplete="off" />
+                            </div>
+                            <div className="GridCom2Div1">
+                                <input className="B1" id="DRC" type="text" onChange={this.UserName} placeholder="Username" autoComplete="off" />
+                                <input className="B1" id="CRC" placeholder="Correo" type="email" autoComplete="off" />
+                            </div>
+                            <div className="GridCom2Div1">
+                                <select className="B2" id="SRC">
+                                    <option className="None" value="None">Sexo</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <input className="B3" id="ERC" type="date" min={FechaMin} max={FechaH} placeholder="Edad" autoComplete="off" />
+                            </div>
+                            <div className="GridCom2Div1">
+                                <input className="B1" id="CoRC" type="password" placeholder="Contraseña" autoComplete="off" />
+                                <input className="B1" id="Co2RC" type="password" placeholder="Confirmar Contraseña" autoComplete="off" />
+                            </div>
+                            <div className="GridCom2Div1_">
+                                <button className="B4" onClick={this.RegistrarUsuCom}>Aceptar</button>
+                                <button className="B4">Registrarse con Google </button>
+                            </div>
+                        </div>
+                        {/*Inicio de sesión Computador*/}
+                        <div id="GridCom2Div3">
+                            <div className="GridCom2Div1">
+                                <h2 id="TitleReg">Iniciar Sesión</h2>
+                            </div>
+                            <div id="GridCom2Div3_">
+                                <p>Usuario</p>
+                                <input className="B4" id="IUC" autoComplete="off" type="text" />
+                                <p>Constraseña</p>
+                                <input className="B4" id="ICC" autoComplete="off" type="password" />
+                            </div>
+                            <div className="GridCom2Div1_">
+                                <button className="B4" onClick={this.IniciarSCom}>Aceptar</button>
+                                <button className="B4">Iniciar sesión con Google</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {this.state.Bool && <Redirect to="/Principal"></Redirect>}
             </>
         );
     }

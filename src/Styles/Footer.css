@@ -1,0 +1,10 @@
+#Footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #444140;
+    color: white;
+    padding: 5px;
+    height: 15px;
+    width: calc(100vw - 10px);
+}

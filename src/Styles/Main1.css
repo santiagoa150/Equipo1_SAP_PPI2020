@@ -1,262 +1,286 @@
-#Main1Container{
-padding: 2vw;
-width: 96vw;
-height: calc(100vh - (100px + 6vw));
-display: grid;
-grid-template-rows: 1fr;
-grid-template-columns: 50% 50%;
-align-items: center;
-}
-#Grid1Main1{
-    margin-left: 30%;
-    font-size: 20px;
-    justify-content: center;
-    display: flex;
+/*MAIN COMPUTADOR*/
+
+#Main1Container {
+    display: grid;
     align-items: center;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 1fr;
+    padding: 2vw;
+    width: 96vw;
+    height: calc(100vh - (6vw + 125px));
+}
+
+#GridComp1, #GridComp2 {
     width: 70%;
-    height: 80%;
+    border-radius: 10px;
+    justify-self: center;
+    padding: 10px;
+    background-color: #FFA987;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - (6vw + 145px));
+}
+
+#GridComp1 {
     grid-column: 1/2;
     grid-row: 1/2;
-    background-color: #ffa987;
-    border-radius: 20px;
 }
-#Grid2Main1{
+
+#GridComp2 {
     flex-flow: column;
-    margin-right: 30%;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    width: 70%;
-    height: 100%;
     grid-column: 2/3;
     grid-row: 1/2;
-
 }
-#SubGrid1_1{
-    background-color: #ffa987;
-    text-align: justify;
-    border-radius: 10px;
-    padding: 1vw 1vw 1vw 1vw;
-    grid-column: 1/2;
-    grid-row: 1/2;
-    margin-bottom: 3vw;
-}
-#ImagePreform{
-    width: 20vw;
-}
-#SubGrid1_2{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.ButtonIni{
-    display: inline-block;
-    width: 40%;
-    height: 35px;
-    margin-right: 5px;
-    margin-bottom: 1vw;
-    font-weight: bold;
-    font-size: 15px;
-}
-.DisInicioCom{
+#GridCom2Div3{
     display: none;
-}
-#FormTeleInicio,#FormTeleRegistro, #MainRegistroCel, #MainInicioCel{
-    display: none;
-}
-.DisCom{
-    display: none;
-}
-.DisTemp{
-    display: none;
-}
-#ForTele{
-    display: none;
-}
-#MainInicioCom, #MainRegistroCom{
-    border-radius: 10px;
-    width: 100%;
-    height: 100%;
-    display: none;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-flow: column;
+    width: 100%;
 }
-.buttonComI{
-    height: 30px;
-    width: 200px;
-
-}
-.buttonComI2{
-    height: 30px;
-    width: 200px;
-    margin-top: 5px;
-}
-#Main2InicioCom{
+#GridCom2Div3_{
+    width: 80%;
+    text-align: left;
     margin-top: 10px;
+    margin-bottom: 10px;
+}
+#LogoInicial{
+    width: 100%;
+}
+.GridCom2Div1, #GridCom2Div2, .GridCom2Div1_{
+    width: 100%;
+}
+
+.GridCom2Div1 {
+    display: flex;
+    justify-content: center;
+}
+.GridCom2Div1T{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-flow: column;
-    align-items: center;
-    width: 100%;
-    display: flex;
-    justify-content: center;
 }
-#RegistroMain1{
-    display: flex;
-    width: 100%;
-}
-.BIniCel2{
-    margin: 5px;
-    width: 80%;
-    height: 30px;
-}
-#RegistroMain2{
-    justify-content: center;
-    align-items: center;
-    padding-left: 2vw;
-    display: flex;
-    width: 100%;
-}
-.BIniCel3{
-    margin: 6px;
-    width: 80%;
-    height: 30px;
-}
-#PContraCel, #PContraCom{
-    display: none;
-    color: red;
-    margin:0;
+.GridCom2Div1T p {
     font-size: 10px;
+    color: red;
+    margin: 0;
 }
-#PMainReg2{
-    margin-right: 10px;
-    width: 90%;
-font-size:15px;
+#GridCom2Div2,.GridCom2Div1__ {
+    display: none;
 }
-@media(max-width:870px){
-    #ImagePreform{
-        width: 24vw;
+#PInfo {
+    text-align: justify;
+}
+
+.B1 {
+    height: 30px;
+    margin: 5px;
+    width: calc(50% - 10px);
+}
+
+.B2 {
+    height: 32px;
+    margin: 5px;
+    width: calc(50% - 10px);
+}
+
+.B3 {
+    height: 30px;
+    margin: 5px;
+    width: calc(50% - 10px);
+}
+
+.B4 {
+    margin: 2px;
+    height: 30px;
+    width: 100%;
+}
+
+.GridCom2Div1_ {
+    margin-top: 25px;
+}
+
+#TitleReg {
+    margin: 20px;
+}
+
+.GridCom2Div1_ {
+    margin-top: 25px;
+}
+#Ximage{
+    cursor: pointer;
+    width: 15px;
+}
+#XimageC{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+#RegistroCel,#RegistroCel2, #InicioCel, #InicioCel2{
+display: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+}
+/*MEDIAS ALTURA*/
+
+@media(max-height:550px) {
+    #TitleReg {
+        margin: 0px;
+    }
+    .GridCom2Div1_ {
+        margin-top: 10px;
     }
 }
-@media(max-width:720px){
-    .TopIn{
-        margin-top: 0;
+
+@media(max-height:550px) {
+    #TitleReg {
+        margin: 15px;
     }
-    .BotP{
-        margin-bottom: 0;
+    .GridCom2Div1_ {
+        margin-top: 25px;
     }
-    #FormTeleInicio,#FormTeleRegistro  {
-        display: none;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgb(0,0,0, 0.9);
-        width: 100vw;
-        height: 100vh;
+    .B4 {
+        height: 25px;
     }
-    #RegistroMain1{
-        display: flex;
-        width: 100%;
-    }
-    #RegistroMain2{
-        padding-left: 2vw;
-        display: flex;
-        width: 100%;
-    }
-    #MainInicioCel, #MainRegistroCel{
-        border-radius: 10px;
-        background-color: white;
-        width: 80%;
-        height: 80%;
-        padding: 1vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-flow: column;
-    }
-    #TitleInicioCel, #TitleRegistroCel, #TitleInicioCom{
-        display: flex;
-        justify-content: center;
-    }
-    .GrupoForm{
-        margin-left: 28%;
-        width: 80%;
-        justify-content: left;
-    }
-    .BIniCel2{
-        margin: 10px;
-        width: 80%;
-        height: 30px;
-    }
-    .BIniCel3{
-        margin: 6px;
-        width: 80%;
-        height: 30px;
-    }
-    .BIniCel{
-        margin: 10px;
-        width: 50%;
-        height: 30px;
-    }
-    #FormTeleRegistro{
-        display: none;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgb(0,0,0, 0.9);
-        width: 100vw;
-        height: 100vh;
-    }
-    .DisCom{
-        display: block;
-    }
-    #Main1Container{
-        width: 96vw;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 2vw;
-        height: calc(100vh - 30.875vw);
-        /*Bendito sea el Calc*/
-    }
-    #Grid1Main1{
-        background-color: transparent;
-        width: 82vw;
+    #Main1Container {
         height: max-content;
-        display: grid;
-        margin: 0 10% 0% 10%;
-        grid-template-rows: max-content max-content;
-        grid-template-columns: 1fr;
     }
-    #Grid2Main1{
+    #GridComp1, #GridComp2 {
+        height: max-content;
+    }
+}
+
+/*MAIN CELULAR*/
+
+@media(max-width: 720px) {
+    #RegistroCel, #InicioCel{
+        background-color: rgb(0, 0, 0, 0.9);
+        top:0;
+        left: 0;
+        position: fixed;
         display: none;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
     }
-    #SubGrid1_1{
-        text-align: justify;
+    #RegistroCel2, #InicioCel2{
+        display: flex;
+        flex-flow: column;
+        padding: 10px;
+        justify-content: space-around;
+        align-items: center;
+        background-color: white;
         border-radius: 10px;
-        background-color: #ffa987;
-        padding: 3vw 6vw 3vw 6vw;
-        grid-column: 1/2;
-        grid-row: 1/2;
-        margin-bottom: 3vw;
+        width: 90%;
+        height: 90%;
     }
-    #SubGrid2_1{
+    
+    #Main1Container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows:max-content max-content;
+        padding: 2vw;
+        width: 96vw;
+        height: calc(100vh - (25px + 30.875vw));
+    }
+    .GridCom2Div1__{
+        display: block;
         grid-column: 1/2;
         grid-row: 2/3;
-    }
-    .ButtonIni{
-        display: block;
         width: 100%;
-        height: 35px;
-        margin-top: 2vw;
-        font-weight: bold;
+    }
+    #GridComp1 {
+        height: max-content;
+        width: 80%;
+        grid-column: 1/2;
+        grid-row: 1/2;
+    }
+    #GridComp2 {
+        display: none;
+    }
+
+    @media(max-height:500px) {
+        #TitleReg {
+            margin: 15px;
+        }
+        .B4 {
+            height: 25px;
+        }
+        .GridCom2Div1_ {
+            margin-top: 25px;
+        }
+        #Main1Container {
+            height: max-content;
+        }
+        #GridComp1, #GridComp2 {
+            height: max-content;
+        }
+    }
+}
+
+/*MEDIAS OPCIONALES*/
+
+@media(max-width:1160px) {
+    #GridComp1 {
         font-size: 15px;
     }
-    .DisCel{
-        display: none;
+}
+
+@media(max-width:990px) {
+    #GridComp1 {
+        width: 80%;
+    }
+}
+
+@media(max-width:840px) {
+    #GridComp1 {
+        width: 90%;
+    }
+    .B1 {
+        height: 30px;
+        margin: 2px;
+        width: calc(50% - 4px);
+        font-size: 12px;
+    }
+    .B2 {
+        height: 35px;
+        margin: 2px;
+        width: calc(51% - 4px);
+        font-size: 12px;
+    }
+    .B3 {
+        font-size: 12px;
+        height: 30px;
+        margin: 2px;
+        width: calc(49% - 4px);
+    }
+}
+
+@media(max-width:800px) {
+    #GridComp1 {
+        width: 95%;
+    }
+}
+
+@media(max-width:320px) {
+    #TitleReg {
+        margin: 15px;
+    }
+    .B4 {
+        height: 25px;
+    }
+    .GridCom2Div1_ {
+        margin-top: 25px;
+    }
+    #Main1Container {
+        height: max-content;
+    }
+    #GridComp1, #GridComp2 {
+        height: max-content;
     }
 }

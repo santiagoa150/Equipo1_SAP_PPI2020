@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header1 from '../Components/Header1';
 import Main1 from '../Components/Main1';
+import Footer from '../Components/Footer';
 
 class Home extends React.Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class Home extends React.Component {
             <>
             <Header1 />
             <Main1 />
+            <Footer />
             </>
           );
     }
