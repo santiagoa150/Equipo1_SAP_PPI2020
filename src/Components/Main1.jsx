@@ -52,7 +52,26 @@ class Main1 extends React.Component {
         let UserName = document.getElementById("DRC"), Correo = document.getElementById("CRC");
         let Sexo = document.getElementById("SRC"), Edad = document.getElementById("ERC");
         let Contraseña = document.getElementById("CoRC"), Contraseña2 = document.getElementById("Co2RC");
-
+        let edad=new Date(Edad.value);
+        let tD= edad.getDate()+1;        
+        let tM= edad.getMonth() +1; 
+        let tY= edad.getFullYear();
+        let ttD= Fecha.getDate()+1;        
+        let ttM= Fecha.getMonth() +1; 
+        let ttY= Fecha.getFullYear();
+        let años;
+        if(tM==ttM){
+            if(tD<=ttD){
+                años=ttY-tY;
+            }else{
+                años=ttY-tY-1;
+            }
+        }
+        else if(tM<ttM){
+            años=ttY-tY;}
+        else{
+            años=ttY-tY-1;
+        }
         if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
             if (this.state.UserB == false) {
                 UserName.style.color = "red";
@@ -67,6 +86,7 @@ class Main1 extends React.Component {
                         UserName: UserName.value,
                         Correo: Correo.value,
                         Edad: Edad.value,
+                        FechaN: new Date(edad.getFullYear-(edad.getMonth+1)-edad.getDay),
                         Sexo: Sexo.value,
                         Contraseña: Contraseña.value,
                         id: Usuarios.length
@@ -124,7 +144,26 @@ class Main1 extends React.Component {
         let Correo = document.getElementById("CRCe");
         let Sexo = document.getElementById("SRCe"), Edad = document.getElementById("ERCe");
         let Contraseña = document.getElementById("CoRCe"), Contraseña2 = document.getElementById("Co2RCe");
-
+        let edad=new Date(Edad.value);
+        let tD= edad.getDate()+1;        
+        let tM= edad.getMonth() +1; 
+        let tY= edad.getFullYear();
+        let ttD= Fecha.getDate()+1;        
+        let ttM= Fecha.getMonth() +1; 
+        let ttY= Fecha.getFullYear();
+        let años;
+        if(tM==ttM){
+            if(tD<=ttD){
+                años=ttY-tY;
+            }else{
+                años=ttY-tY-1;
+            }
+        }
+        else if(tM<ttM){
+            años=ttY-tY;}
+        else{
+            años=ttY-tY-1;
+        }
         if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
             if (this.state.UserB == false) {
                 UserName.style.color = "red";
@@ -138,7 +177,8 @@ class Main1 extends React.Component {
                         Apellido: Apellido.value,
                         UserName: UserName.value,
                         Correo: Correo.value,
-                        Edad: Edad.value,
+                        Edad: años,
+                        FechaN: new Date(edad.getFullYear()+"-"+(edad.getMonth()+1)+"-"+(edad.getDate()+1)),
                         Sexo: Sexo.value,
                         Contraseña: Contraseña.value,
                         id: Usuarios.length
@@ -298,12 +338,12 @@ class Main1 extends React.Component {
                             <h2 id="TitleReg">Registro</h2>
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="NRCe" placeholder="Nombre" autoComplete="off" />
-                            <input className="B1" id="ARCe" placeholder="Apellido" autoComplete="off" />
+                            <input className="B1" id="NRCe" type="text" placeholder="Nombre" autoComplete="off" />
+                            <input className="B1" id="ARCe" type="text" placeholder="Apellido" autoComplete="off" />
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="DRCe" onChange={this.UserName2}placeholder="Username" autoComplete="off" />
-                            <input className="B1" id="CRCe" placeholder="Correo" autoComplete="off" />
+                            <input className="B1" id="DRCe" type="text" onChange={this.UserName2}placeholder="Username" autoComplete="off" />
+                            <input className="B1" id="CRCe" type="email" placeholder="Correo" autoComplete="off" />
                         </div>
                         <div className="GridCom2Div1">
                             <select className="B2" id="SRCe">
@@ -351,8 +391,8 @@ class Main1 extends React.Component {
                                 <p id="PAlert"></p>
                             </div>
                             <div className="GridCom2Div1">
-                                <input className="B1" id="NRC" placeholder="Nombre" autoComplete="off" />
-                                <input className="B1" id="ARC" placeholder="Apellido" autoComplete="off" />
+                                <input className="B1" id="NRC" type="text" placeholder="Nombre" autoComplete="off" />
+                                <input className="B1" id="ARC" type="text" placeholder="Apellido" autoComplete="off" />
                             </div>
                             <div className="GridCom2Div1">
                                 <input className="B1" id="DRC" type="text" onChange={this.UserName} placeholder="Username" autoComplete="off" />

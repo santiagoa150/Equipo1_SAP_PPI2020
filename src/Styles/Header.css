@@ -43,6 +43,9 @@ body{
 }
 
 /*BOTONES E INPUTS*/
+input[type=text],input[type=password], input[type=email],input[type=date]{    
+    cursor: text !important;
+}
 button, input, select,option{
     font-weight: bold;
     cursor: pointer;
@@ -56,14 +59,6 @@ button, input, select,option{
 button:hover{
     color: #f7ebe8;
     background-color: #444140;
-}
-input:focus{
-    outline: none;
-}
-button:focus{
-    outline: none;
-    background-color: white;
-    color: black;
 }
 .None{
     display: none;
