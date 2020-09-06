@@ -22,8 +22,11 @@ class Header2 extends React.Component {
                 </Link>
                 <div id="logo">                     
                 </div>
+                <Link to="/Perfíl">
                 <div id="profile">                     
-                </div></>;
+                </div>
+                </Link>
+                </>;
         }
         else{
             return <><Link id="link" to={x.substr(0,x.length-1)}>
@@ -32,8 +35,11 @@ class Header2 extends React.Component {
                 </Link>
                 <div id="logo" className={this.props.state.logo}>                     
                 </div>
+                <Link to="/Perfíl">
                 <div id="profile" className={this.props.state.perfil}>                     
-                </div></>;
+                </div>
+                </Link>
+                </>;
         }
     }
     render() { 

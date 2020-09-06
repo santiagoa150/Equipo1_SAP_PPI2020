@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Home from './Pages/Home';
 import Principal from './Pages/Principal';
 import Principal_ from './Pages/Principal_';
+import Perfil from './Pages/Perfil';
 
 import {
     BrowserRouter as Router,
@@ -15,6 +16,9 @@ ReactDOM.render(
     <React.StrictMode >
         <Router >
             <Switch >
+                <Route path= "/Perfíl">
+                    <Perfil />
+                </Route>
                 <Route path = "/Principal" >
                     <Principal/>
                 </Route>

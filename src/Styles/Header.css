@@ -11,7 +11,7 @@ body{
         justify-content: center;
         align-items: center;
         background-color: #444140;
-        width: 98vw;
+        width: calc(100% - 2vw);
         height: max-content;
     }
     #TitleHeader1{
@@ -29,7 +29,7 @@ body{
 @media(max-width: 720px){
     #Header1Container{
         padding: 2vw;
-        width: 96vw;
+        width:  calc(100% - 4vw);
     }
     #TitleHeader1{
         display: none;

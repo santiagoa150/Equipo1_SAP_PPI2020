@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
+import {UsuarioI} from '../Utiles/Mocks/UsuarioI';
 
 import '../Styles/Main1.css';
 import { Redirect, Link } from 'react-router-dom';
@@ -85,8 +86,8 @@ class Main1 extends React.Component {
                         Apellido: Apellido.value,
                         UserName: UserName.value,
                         Correo: Correo.value,
-                        Edad: Edad.value,
-                        FechaN: new Date(edad.getFullYear-(edad.getMonth+1)-edad.getDay),
+                        Edad: años,
+                        FechaN: new Date(edad.getFullYear()+"-"+(edad.getMonth()+1)+"-"+(edad.getDate()+1)),
                         Sexo: Sexo.value,
                         Contraseña: Contraseña.value,
                         id: Usuarios.length
@@ -267,6 +268,17 @@ class Main1 extends React.Component {
         if(Usuario.value != "" && Contraseña.value != ""){
             for(let i = 0; i< Usuarios.length; i++){
                 if(Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value){
+                    UsuarioI.push({
+                        Nombre: Usuarios[i].Nombre,
+                        Apellido: Usuarios[i].Apellido,
+                        UserName: Usuarios[i].UserName,
+                        Correo: Usuarios[i].Correo,
+                        Edad: Usuarios[i].Edad,
+                        FechaN: Usuarios[i].FechaN,
+                        Sexo: Usuarios[i].Sexo,
+                        Contraseña: Usuarios[i].Contraseña,
+                        id: Usuarios[i].id
+                    });
                     this.setState({Bool:true})
                 }
             }
@@ -289,7 +301,19 @@ class Main1 extends React.Component {
         if(Usuario.value != "" && Contraseña.value != ""){
             for(let i = 0; i< Usuarios.length; i++){
                 if(Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value){
-                    this.setState({Bool:true})
+                    UsuarioI.push({
+                        Nombre: Usuarios[i].Nombre,
+                        Apellido: Usuarios[i].Apellido,
+                        UserName: Usuarios[i].UserName,
+                        Correo: Usuarios[i].Correo,
+                        Edad: Usuarios[i].Edad,
+                        FechaN: Usuarios[i].FechaN,
+                        Sexo: Usuarios[i].Sexo,
+                        Contraseña: Usuarios[i].Contraseña,
+                        id: Usuarios[i].id
+                    });
+
+                    this.setState({Bool:true});
                 }
             }
         } else {
