@@ -3,13 +3,12 @@
     grid-template-rows: max-content max-content;
     grid-template-columns: 30% 70%;
     width: 100%;
-    height: max-content;
-    margin-bottom: 10px;
 }
-@media(max-height:580px){
-    #PerfilContainer{
-        height: max-content;
-    }
+.centrar{
+    display:flex;
+    align-items:center; 
+    min-height: calc(100vh - 135px - 2vw);    
+    margin-bottom: 10px;
 }
 .PInfo{
     width: 200px;
@@ -115,6 +114,9 @@
         grid-template-rows: max-content max-content max-content;
         grid-template-columns: 1fr;
     }
+    .centrar{        
+        min-height: calc(100vh - 35px - 26.875vw);
+    }
     #FotoContainer{
         grid-row: 1/2;
         grid-column: 1/2;
@@ -127,6 +129,7 @@
         grid-row: 3/4;
         grid-column: 1/2;
     }
+    
 
 }
 @media(max-width: 530px){

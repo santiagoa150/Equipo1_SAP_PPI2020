@@ -7,7 +7,7 @@ import Footer from '../Components/Footer';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
 
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect,withRouter } from 'react-router-dom';
 
 let Fecha2 = "";
 let Fecha = new Date();
@@ -16,7 +16,7 @@ let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
 let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
 let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
 let FechaMin = (FechaY - 100) + "-" + FechaM + "-" + FechaD;
-
+let aja;
 
 class Perfil extends React.Component {
     constructor(props) {
@@ -29,7 +29,14 @@ class Perfil extends React.Component {
             Bool: false
         }
     }
-
+    prueba=()=>{
+        aja =false;
+        try{    
+            console.log((UsuarioI[0].FechaN).getFullYear());    
+        }
+        catch(e){
+            aja=true;    
+        }}
     fechapendeja = () => {
         Fecha2 = (UsuarioI[0].FechaN).getFullYear() + "-" + ((UsuarioI[0].FechaN).getMonth() + 1) + "-" + (UsuarioI[0].FechaN).getDate();
     }
@@ -157,6 +164,7 @@ class Perfil extends React.Component {
         return (
             <>
                 <Header />
+                <div className="centrar">
                 <div id="PerfilContainer">
                     <div id="FotoContainer">
                         <div id="FotoAndEC">
@@ -248,10 +256,10 @@ class Perfil extends React.Component {
                             <div className="Edit2">
                             </div>
                         </div>
-                        {this.state.Bool && <Redirect to="/Perfíl"></Redirect>}
+                        {this.state.Bool && <Redirect to={this.props.location.state.x}></Redirect>}
                     </div>
                     <div id="ButtonPContainer">
-                        <Link className="BP" to="/Principal">
+                        <Link className="BP" to={this.props.location.state.x}>
                             <button className="BP">Atrás</button>
                         </Link>
                         <Link className="BP">
@@ -259,10 +267,13 @@ class Perfil extends React.Component {
                         </Link>
                     </div>
                 </div>
+                </div>
                 <Footer />
+                {this.prueba()}
+                {aja && <Redirect to="/"/>}
             </>
         );
     }
 }
 
-export default Perfil;
+export default withRouter(Perfil);

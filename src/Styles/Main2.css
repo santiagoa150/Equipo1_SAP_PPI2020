@@ -1,0 +1,81 @@
+
+.flex{
+    display: flex;
+    width: 100%;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;    
+    background-color:#F6EBE9;
+    min-height: calc(90vh - 25px - 2vw);
+}
+.conten{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    text-align: center;
+    padding:1vh;
+    width: 48vh;
+    height: max-content;    
+    max-width: calc(100% - 2vh);
+    min-width: 200px;
+    border-radius: 2vw;
+    background-color:#FFA988;
+    margin: 1vw;
+    
+}
+.tecto{
+    margin: 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.video{
+    width: 48vh;
+    height: 27vh;
+    min-width: 200px;
+    max-width: 100%;
+    min-height: 112.5px;
+    max-height: 56.25vw;
+    border-radius: 2vw;    
+    box-shadow: 5px 5px 15px black;
+}
+.redes{
+    display:flex;
+    width: 100%;
+    height: max-content;
+    justify-content: space-around;
+}
+#FB{
+    border-radius: 10%;
+    width: 25%;
+    padding-top: 25%;
+    background-image: url(https://image.flaticon.com/icons/svg/123/123717.svg);
+    background-size: 100%;
+    background-position-y: center;
+    background-position-x: center;
+    cursor: pointer;    
+    box-shadow: 5px 5px 15px black;
+}
+#tweet{
+    border-radius: 10%;
+    width: 25%;
+    padding-top: 25%;
+    background-image: url(https://image.flaticon.com/icons/svg/1384/1384049.svg);
+    background-size: 100%;
+    background-position-y: center;
+    background-position-x: center;    
+    cursor: pointer;
+    box-shadow: 5px 5px 15px black;
+}
+#instag{
+    border-radius: 10%;
+    width: 25%;
+    padding-top: 25%;
+    background-image: url(https://image.flaticon.com/icons/svg/1384/1384047.svg);
+    background-size: 100%;
+    background-position-y: center;
+    background-position-x: center; 
+    background-repeat: no-repeat;   
+    cursor: pointer;    
+    box-shadow: 5px 5px 15px black;
+}

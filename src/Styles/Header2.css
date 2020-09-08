@@ -1,11 +1,19 @@
 #gridP{
     display: grid;
     grid-template-rows: max-content max-content;
-    grid-template-columns:30vw 70vw;
+    grid-template-columns:30% 70%;
 }
 #HP{
     grid-row: 1/2;
+    grid-column:1/3;
+}
+#MP{
+    grid-row: 2/3;
     grid-column:2/3;
+}
+#MeP{
+    grid-row: 2/3;
+    grid-column:1/2;
 }
 #menu{
     background-image: url(https://image.flaticon.com/icons/svg/56/56763.svg);
@@ -33,29 +41,6 @@
     width: calc(100% - 2vw);
     /*bendito sea el calc*/
     height: max-content;
-}
-.hola1{
-    width: 28vw !important;      
-    height: 14vw !important;      
-    max-width: 14vh !important;
-    max-height: 7vh !important;
-    padding: 0.5vw !important;
-}
-#link{
- display:none;
-}
-.hola2{
-    display: none !important;
-    position: absolute!important;
-    width: 0px;
-    height: 0px;
-}
-.hola3{
-    width:  calc(14vw - 4px) !important;      
-    height: calc(14vw - 4px) !important;      
-    max-width: calc(7vh - 4px) !important;
-    max-height: calc(7vh - 4px) !important;    
-    padding: 0.5vw !important;
 }
 #logo{
     background-image: url(https://1.bp.blogspot.com/-4AYfdW1HnGQ/X02wnk_2J_I/AAAAAAAAPPk/znnHlLxw_bINf8jIvcaE3hxEruVJOjcawCLcBGAsYHQ/s16000/Logo.png);
@@ -86,10 +71,10 @@
     /*bendito sea el calc*/
     max-height: calc(10vh - 4px);
     /*bendito sea el calc*/
-    cursor: pointer;    
-    transition: all 500ms !important;
-    transition: background-size 1000ms;
+    cursor: pointer;     
+    box-shadow: 5px 5px 15px black;
 }
-#profile:hover{    
-    background-size: 80% 80%;    
+#profile:hover{      
+    background-size: 80% 80%;
+    box-shadow: 0px 0px 0px;    
 }
