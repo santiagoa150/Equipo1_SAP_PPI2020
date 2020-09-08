@@ -7,7 +7,7 @@ import Footer from '../Components/Footer';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
 
-import { Link, Redirect,withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 
 let Fecha2 = "";
 let Fecha = new Date();
@@ -16,9 +16,12 @@ let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
 let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
 let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
 let FechaMin = (FechaY - 100) + "-" + FechaM + "-" + FechaD;
-let aja;
+let aja, aja2, aja3 = false;
 
 class Perfil extends React.Component {
+    componentDidMount() {
+        document.getElementById("FotoPerfíl").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -29,14 +32,15 @@ class Perfil extends React.Component {
             Bool: false
         }
     }
-    prueba=()=>{
-        aja =false;
-        try{    
-            console.log((UsuarioI[0].FechaN).getFullYear());    
+    prueba = () => {
+        aja = false;
+        try {
+            let x = (UsuarioI[0].FechaN).getFullYear();
         }
-        catch(e){
-            aja=true;    
-        }}
+        catch (e) {
+            aja = true;
+        }
+    }
     fechapendeja = () => {
         Fecha2 = (UsuarioI[0].FechaN).getFullYear() + "-" + ((UsuarioI[0].FechaN).getMonth() + 1) + "-" + (UsuarioI[0].FechaN).getDate();
     }
@@ -139,8 +143,10 @@ class Perfil extends React.Component {
 
 
 
-            this.setState({ Ola: true,
-            Bool: true})
+            this.setState({
+                Ola: true,
+                Bool: true
+            })
 
         }
 
@@ -148,7 +154,7 @@ class Perfil extends React.Component {
 
     UserName = () => {
         let User = document.getElementById("UP");
-        for(let i = 0; i < Usuarios.length; i ++){
+        for (let i = 0; i < Usuarios.length; i++) {
 
             if (Usuarios[i].UserName != User.value && Usuarios[i].id != UsuarioI[0].id) {
                 this.setState({ UserB: true });
@@ -160,120 +166,180 @@ class Perfil extends React.Component {
         }
     }
 
+    Borrartusdatos = () => {
+        UsuarioI.splice(0, 1);
+
+    }
+    Close = () => {
+        document.getElementById("PopUpPerfíl").style.display = "none";
+    }
+    Activate = () => {
+        document.getElementById("PopUpPerfíl").style.display = "flex";
+    }
+    Subir = () => {
+        let inpu = document.getElementById("Elprota");
+        if (inpu.files && inpu.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById("PrevImg").src = e.target.result;
+                aja2 = e.target.result;
+            }
+
+            reader.readAsDataURL(inpu.files[0]);
+
+        }
+    }
+    Subir2 = () => {
+        let inpu = document.getElementById("Elprota");
+        if (inpu.files && inpu.files[0]) {
+            UsuarioI[0].image = aja2;
+            console.log(UsuarioI[0].id);
+            Usuarios[UsuarioI[0].id].image = aja2;
+
+            document.getElementById("FotoPerfíl").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
+            document.getElementById("PopUpPerfíl").style.display = "none";
+        }
+    }
+
+
     render() {
+
+
+
         return (
             <>
+                <div id="PopUpPerfíl">
+                    <div id="ContenedorPopUp">
+                        <div id="XimageC" className="EsitoPapi">
+                            <img id="Ximage" onClick={this.Close} src="https://images.vexels.com/media/users/3/155473/isolated/preview/faa3172dd52035d0c227d7ecab4d6024-doodle-cruzado-x-by-vexels.png" />
+                        </div>
+                        <form id="formProta" encType="multipart/form-data">
+                            <input id="Elprota" accept="image/*" onChange={this.Subir} type="file" />
+                        </form>
+                        <img id="PrevImg" className="PrevImg" />
+                        <Link className="SubImg" to={{
+                            pathname: "/Perfíl",
+                            state: { x: this.props.location.state.x }
+                        }}>
+                            <button className="button SubImg2" onClick={this.Subir2}>Subir</button>
+                        </Link>
+                    </div>
+                </div>
                 <Header />
                 <div className="centrar">
-                <div id="PerfilContainer">
-                    <div id="FotoContainer">
-                        <div id="FotoAndEC">
-                            <div id="FotoPerfíl">
+                    <div id="PerfilContainer">
+                        <div id="FotoContainer">
+                            <div id="FotoAndEC">
+                                <div id="FotoPerfíl" onClick={this.Activate}>
+
+                                </div>
 
                             </div>
                         </div>
-                    </div>
-                    <div id="InfoPContainer">
-                        <div className="GroupIP">
-                            <p className="PInfo">Nombre:</p>
-                            <input className="None Apar PInfo" id="NP" type="text" placeholder={UsuarioI[0].Nombre} autoComplete="off" />
-                            <p className="PInfo PInfo2">{UsuarioI[0].Nombre}</p>
-                            <div className="Edit" onClick={this.Edit}>
+                        <div id="InfoPContainer">
+                            <div className="GroupIP">
+                                <p className="PInfo">Nombre:</p>
+                                <input className="None Apar PInfo" id="NP" type="text" placeholder={UsuarioI[0].Nombre} autoComplete="off" />
+                                <p className="PInfo PInfo2">{UsuarioI[0].Nombre}</p>
+                                <div className="Edit" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="GroupIP">
-                            <p className="PInfo">Apellido:</p>
-                            <input className="None Apar PInfo" id="AP" type="text" placeholder={UsuarioI[0].Apellido} autoComplete="off" />
-                            <p className="PInfo PInfo2"> {UsuarioI[0].Apellido}</p>
-                            <div className="Edit" onClick={this.Edit}>
+                            <div className="GroupIP">
+                                <p className="PInfo">Apellido:</p>
+                                <input className="None Apar PInfo" id="AP" type="text" placeholder={UsuarioI[0].Apellido} autoComplete="off" />
+                                <p className="PInfo PInfo2"> {UsuarioI[0].Apellido}</p>
+                                <div className="Edit" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="GroupIP">
-                            <p className="PInfo">Usuario:</p>
-                            <input className="None Apar PInfo" id="UP" type="text" placeholder={UsuarioI[0].UserName} onChange={this.UserName} autoComplete="off" />
-                            <p className="PInfo PInfo2">{UsuarioI[0].UserName}</p>
-                            <div className="Edit" onClick={this.Edit}>
+                            <div className="GroupIP">
+                                <p className="PInfo">Usuario:</p>
+                                <input className="None Apar PInfo" id="UP" type="text" placeholder={UsuarioI[0].UserName} onChange={this.UserName} autoComplete="off" />
+                                <p className="PInfo PInfo2">{UsuarioI[0].UserName}</p>
+                                <div className="Edit" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="GroupIP">
-                            <p className="PInfo">Correo:</p>
-                            <input className="None Apar PInfo" id="EP" type="email" placeholder={UsuarioI[0].Correo} autoComplete="off" />
-                            <p className="PInfo PInfo2">{UsuarioI[0].Correo}</p>
-                            <div className="Edit" onClick={this.Edit}>
+                            <div className="GroupIP">
+                                <p className="PInfo">Correo:</p>
+                                <input className="None Apar PInfo" id="EP" type="email" placeholder={UsuarioI[0].Correo} autoComplete="off" />
+                                <p className="PInfo PInfo2">{UsuarioI[0].Correo}</p>
+                                <div className="Edit" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="GroupIP">
-                            <p className="PInfo">Contraseña:</p>
-                            <input className="None Apar PInfo" id="CP" type="password" placeholder={UsuarioI[0].Contraseña} autoComplete="off" />
-                            <p className="PInfo PInfo2">{UsuarioI[0].Contraseña}</p>
-                            <div className="Edit" onClick={this.Edit}>
+                            <div className="GroupIP">
+                                <p className="PInfo">Contraseña:</p>
+                                <input className="None Apar PInfo" id="CP" type="password" placeholder={UsuarioI[0].Contraseña} autoComplete="off" />
+                                <p className="PInfo PInfo2">{UsuarioI[0].Contraseña}</p>
+                                <div className="Edit" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        <div id="GroupIP2">
-                            <p className="PInfo">Confirmar Contraseña:</p>
-                            <input className="None Apar PInfo" id="CP2" type="password" placeholder={UsuarioI[0].Contraseña} autoComplete="off" />
-                            <div className="Edit" onClick={this.Edit}>
+                            <div id="GroupIP2">
+                                <p className="PInfo">Confirmar Contraseña:</p>
+                                <input className="None Apar PInfo" id="CP2" type="password" placeholder={UsuarioI[0].Contraseña} autoComplete="off" />
+                                <div className="Edit" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="GroupIP">
-                            <p className="PInfo">Sexo:</p>
-                            <select className="None Apar PInfo" id="SP">
-                                <option className="None" value="0">Sexo</option>
-                                <option value="Hombre">Hombre</option>
-                                <option value="Mujer">Mujer</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                            <p className="PInfo PInfo2">{UsuarioI[0].Sexo}</p>
-                            <div className="Edit" onClick={this.Edit}>
+                            <div className="GroupIP">
+                                <p className="PInfo">Sexo:</p>
+                                <select className="None Apar PInfo" id="SP">
+                                    <option className="None" value="0">Sexo</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                <p className="PInfo PInfo2">{UsuarioI[0].Sexo}</p>
+                                <div className="Edit" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        {this.fechapendeja()}
-                        <div className="GroupIP">
-                            <p className="PInfo">Fecha de nacimiento:</p>
-                            <input className="None Apar PInfo" id="FP" type="date" max={FechaH} min={FechaMin} autoComplete="off" />
-                            <p className="PInfo PInfo2">{Fecha2}</p>
-                            <div className="Edit" onClick={this.Edit}>
+                            {this.fechapendeja()}
+                            <div className="GroupIP">
+                                <p className="PInfo">Fecha de nacimiento:</p>
+                                <input className="None Apar PInfo" id="FP" type="date" max={FechaH} min={FechaMin} autoComplete="off" />
+                                <p className="PInfo PInfo2">{Fecha2}</p>
+                                <div className="Edit" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="GroupIP">
-                            <p className="PInfo">Edad:</p>
-                            <p className="PInfo">{UsuarioI[0].Edad}</p>
-                            <div className="Edit2" onClick={this.Edit}>
+                            <div className="GroupIP">
+                                <p className="PInfo">Edad:</p>
+                                <p className="PInfo">{UsuarioI[0].Edad}</p>
+                                <div className="Edit2" onClick={this.Edit}>
 
+                                </div>
                             </div>
-                        </div>
-                        <div className="GroupIP">
-                            <p className="PInfo">Id:</p>
-                            <p className="PInfo">{UsuarioI[0].id}</p>
-                            <div className="Edit2">
+                            <div className="GroupIP">
+                                <p className="PInfo">Id:</p>
+                                <p className="PInfo">{UsuarioI[0].id}</p>
+                                <div className="Edit2">
+                                </div>
                             </div>
+                            {this.state.Bool && <Redirect to={this.props.location.state.x}></Redirect>}
                         </div>
-                        {this.state.Bool && <Redirect to={this.props.location.state.x}></Redirect>}
-                    </div>
-                    <div id="ButtonPContainer">
-                        <Link className="BP" to={this.props.location.state.x}>
-                            <button className="BP">Atrás</button>
-                        </Link>
-                        <Link className="BP">
-                            <button className="BP">Cerrar sesión</button>
-                        </Link>
+                        <div id="ButtonPContainer">
+                            <Link className="BP" to={this.props.location.state.x}>
+                                <button className="BP">Atrás</button>
+                            </Link>
+                            <Link className="BP" to="/">
+                                <button className="BP" onClick={this.Borrartusdatos}>Cerrar sesión</button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
-                </div>
+
                 <Footer />
+
                 {this.prueba()}
-                {aja && <Redirect to="/"/>}
             </>
         );
     }
+
 }
 
 export default withRouter(Perfil);

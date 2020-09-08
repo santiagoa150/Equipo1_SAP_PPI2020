@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
-import {UsuarioI} from '../Utiles/Mocks/UsuarioI';
+import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 
 import '../Styles/Main1.css';
 import { Redirect, Link } from 'react-router-dom';
@@ -12,8 +12,6 @@ let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
 let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
 let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
 let FechaMin = (FechaY - 100) + "-" + FechaM + "-" + FechaD;
-
-console.log(Usuarios);
 
 class Main1 extends React.Component {
     constructor(props) {
@@ -53,25 +51,26 @@ class Main1 extends React.Component {
         let UserName = document.getElementById("DRC"), Correo = document.getElementById("CRC");
         let Sexo = document.getElementById("SRC"), Edad = document.getElementById("ERC");
         let Contraseña = document.getElementById("CoRC"), Contraseña2 = document.getElementById("Co2RC");
-        let edad=new Date(Edad.value);
-        let tD= edad.getDate()+1;        
-        let tM= edad.getMonth() +1; 
-        let tY= edad.getFullYear();
-        let ttD= Fecha.getDate()+1;        
-        let ttM= Fecha.getMonth() +1; 
-        let ttY= Fecha.getFullYear();
+        let edad = new Date(Edad.value);
+        let tD = edad.getDate() + 1;
+        let tM = edad.getMonth() + 1;
+        let tY = edad.getFullYear();
+        let ttD = Fecha.getDate() + 1;
+        let ttM = Fecha.getMonth() + 1;
+        let ttY = Fecha.getFullYear();
         let años;
-        if(tM==ttM){
-            if(tD<=ttD){
-                años=ttY-tY;
-            }else{
-                años=ttY-tY-1;
+        if (tM == ttM) {
+            if (tD <= ttD) {
+                años = ttY - tY;
+            } else {
+                años = ttY - tY - 1;
             }
         }
-        else if(tM<ttM){
-            años=ttY-tY;}
-        else{
-            años=ttY-tY-1;
+        else if (tM < ttM) {
+            años = ttY - tY;
+        }
+        else {
+            años = ttY - tY - 1;
         }
         if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
             if (this.state.UserB == false) {
@@ -87,10 +86,11 @@ class Main1 extends React.Component {
                         UserName: UserName.value,
                         Correo: Correo.value,
                         Edad: años,
-                        FechaN: new Date(edad.getFullYear()+"-"+(edad.getMonth()+1)+"-"+(edad.getDate()+1)),
+                        FechaN: new Date(edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1)),
                         Sexo: Sexo.value,
                         Contraseña: Contraseña.value,
-                        id: Usuarios.length
+                        id: Usuarios.length,
+                        image: "https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png"
                     });
                     Nombre.value = "";
                     Apellido.value = "";
@@ -138,32 +138,33 @@ class Main1 extends React.Component {
         }
 
     }
-    RegistrarUsuCel = () =>{
+    RegistrarUsuCel = () => {
         let Nombre = document.getElementById("NRCe");
         let Apellido = document.getElementById("ARCe");
         let UserName = document.getElementById("DRCe");
         let Correo = document.getElementById("CRCe");
         let Sexo = document.getElementById("SRCe"), Edad = document.getElementById("ERCe");
         let Contraseña = document.getElementById("CoRCe"), Contraseña2 = document.getElementById("Co2RCe");
-        let edad=new Date(Edad.value);
-        let tD= edad.getDate()+1;        
-        let tM= edad.getMonth() +1; 
-        let tY= edad.getFullYear();
-        let ttD= Fecha.getDate()+1;        
-        let ttM= Fecha.getMonth() +1; 
-        let ttY= Fecha.getFullYear();
+        let edad = new Date(Edad.value);
+        let tD = edad.getDate() + 1;
+        let tM = edad.getMonth() + 1;
+        let tY = edad.getFullYear();
+        let ttD = Fecha.getDate() + 1;
+        let ttM = Fecha.getMonth() + 1;
+        let ttY = Fecha.getFullYear();
         let años;
-        if(tM==ttM){
-            if(tD<=ttD){
-                años=ttY-tY;
-            }else{
-                años=ttY-tY-1;
+        if (tM == ttM) {
+            if (tD <= ttD) {
+                años = ttY - tY;
+            } else {
+                años = ttY - tY - 1;
             }
         }
-        else if(tM<ttM){
-            años=ttY-tY;}
-        else{
-            años=ttY-tY-1;
+        else if (tM < ttM) {
+            años = ttY - tY;
+        }
+        else {
+            años = ttY - tY - 1;
         }
         if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
             if (this.state.UserB == false) {
@@ -179,10 +180,11 @@ class Main1 extends React.Component {
                         UserName: UserName.value,
                         Correo: Correo.value,
                         Edad: años,
-                        FechaN: new Date(edad.getFullYear()+"-"+(edad.getMonth()+1)+"-"+(edad.getDate()+1)),
+                        FechaN: new Date(edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1)),
                         Sexo: Sexo.value,
                         Contraseña: Contraseña.value,
-                        id: Usuarios.length
+                        id: Usuarios.length,
+                        image: "https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png"
                     });
                     Nombre.value = "";
                     Apellido.value = "";
@@ -261,13 +263,13 @@ class Main1 extends React.Component {
             }
         }
     }
-    IniciarSCom = () =>{
+    IniciarSCom = () => {
         let Usuario = document.getElementById("IUC");
         let Contraseña = document.getElementById("ICC");
 
-        if(Usuario.value != "" && Contraseña.value != ""){
-            for(let i = 0; i< Usuarios.length; i++){
-                if(Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value){
+        if (Usuario.value != "" && Contraseña.value != "") {
+            for (let i = 0; i < Usuarios.length; i++) {
+                if (Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value) {
                     UsuarioI.push({
                         Nombre: Usuarios[i].Nombre,
                         Apellido: Usuarios[i].Apellido,
@@ -277,9 +279,10 @@ class Main1 extends React.Component {
                         FechaN: Usuarios[i].FechaN,
                         Sexo: Usuarios[i].Sexo,
                         Contraseña: Usuarios[i].Contraseña,
-                        id: Usuarios[i].id
+                        id: Usuarios[i].id,
+                        image: Usuarios[i].image
                     });
-                    this.setState({Bool:true})
+                    this.setState({ Bool: true })
                 }
             }
         } else {
@@ -294,13 +297,13 @@ class Main1 extends React.Component {
             }
         }
     }
-    IniciarSCel = () =>{
+    IniciarSCel = () => {
         let Usuario = document.getElementById("IUCel");
         let Contraseña = document.getElementById("ICCel");
 
-        if(Usuario.value != "" && Contraseña.value != ""){
-            for(let i = 0; i< Usuarios.length; i++){
-                if(Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value){
+        if (Usuario.value != "" && Contraseña.value != "") {
+            for (let i = 0; i < Usuarios.length; i++) {
+                if (Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value) {
                     UsuarioI.push({
                         Nombre: Usuarios[i].Nombre,
                         Apellido: Usuarios[i].Apellido,
@@ -310,10 +313,11 @@ class Main1 extends React.Component {
                         FechaN: Usuarios[i].FechaN,
                         Sexo: Usuarios[i].Sexo,
                         Contraseña: Usuarios[i].Contraseña,
-                        id: Usuarios[i].id
+                        id: Usuarios[i].id,
+                        image: Usuarios[i].image
                     });
 
-                    this.setState({Bool:true});
+                    this.setState({ Bool: true });
                 }
             }
         } else {
@@ -366,7 +370,7 @@ class Main1 extends React.Component {
                             <input className="B1" id="ARCe" type="text" placeholder="Apellido" autoComplete="off" />
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="DRCe" type="text" onChange={this.UserName2}placeholder="Username" autoComplete="off" />
+                            <input className="B1" id="DRCe" type="text" onChange={this.UserName2} placeholder="Username" autoComplete="off" />
                             <input className="B1" id="CRCe" type="email" placeholder="Correo" autoComplete="off" />
                         </div>
                         <div className="GridCom2Div1">
@@ -391,7 +395,8 @@ class Main1 extends React.Component {
 
                 <div id="Main1Container">
                     <div id="GridComp1">
-                        <p id="PInfo">distinctio consequatur ducimus velit perspiciatis saepe alias voluptate cumque nobis ad, qui voluptates corporis! Dolores velit est aliquam, necessitatibus earum at? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis provident alias nesciunt ipsum ea eos necessitatibus qui natus rerum tempore non esse iusto nostrum id dignissimos deleniti similique, eaque corrupti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis illum eius nihil porro fugit architecto, obcaecati ipsa, in eaque sit minus? Inventore, vel tenetur. Doloremque, impedit tempora. At, natus obcaecati.</p>
+                        <p id="PInfo">Learn With Us es un programa para alumnos, que desarrolla su aprendizaje mediante contenidos interactivos y herramientas diversas, facilitándole a los maestros la búsqueda de estas estrategias y métodos de enseñanza en la virtualidad, nuestro producto no genera presión en el alumno y recurre a diferentes dinámicas.
+</p>
                     </div>
                     <div className="GridCom2Div1__">
                         <button className="button B1" onClick={this.IniciarCel}>Iniciar sesión</button>

@@ -16,14 +16,10 @@ class menu extends React.Component {
             document.getElementById("des").value="► Cursos";
         }
     }
-    ureles=()=>{
-        let x=this.props.location.pathname;
-        return x.substr(0,x.length-1);
-    }
     render() { 
         return <>
         <div id="conatinerM">
-            <Link className="esquina" to={this.ureles()}>
+            <Link className="esquina" to={this.props.Ruta}>
             <div id="XimageC">
                 <img className="tama" onClick={this.Close} src="https://images.vexels.com/media/users/3/155473/isolated/preview/faa3172dd52035d0c227d7ecab4d6024-doodle-cruzado-x-by-vexels.png" />
             </div>
@@ -33,7 +29,7 @@ class menu extends React.Component {
             </Link>
             <div className="grupo"><input className="linkm" id="des" type="button" value="► Cursos" onClick={this.desple}/>
                 <ul id="obje"className="lista">
-                    <li><Link className="linkm"><input type="button" value="Integrados"/></Link></li>
+                    <li><Link className="linkm" to="/Integrados"><input type="button" value="Integrados"/></Link></li>
                     <li><Link className="linkm"><input type="button" value="Comunidad"/></Link></li>
                     <li><Link className="linkm"><input type="button" value="Mis cursos"/></Link></li>
                 </ul>

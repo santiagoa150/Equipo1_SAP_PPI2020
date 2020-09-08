@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import Principal from './Pages/Principal';
 import Principal_ from './Pages/Principal_';
 import Perfil from './Pages/Perfil';
+import Integrados from './Pages/Integrados';
 
 import {
     BrowserRouter as Router,
@@ -16,15 +17,19 @@ ReactDOM.render(
     <React.StrictMode >
         <Router >
             <Switch >
-                <Route path= "/Perfíl">
+                <Route path= "/Perfíl" >
                     <Perfil />
                 </Route>
                 <Route path = "/Principal" >
-                    <Principal/>
+                    <Principal />
                 </Route>
                 <Route path = "/Principal_" >
                     <Principal_/>
                 </Route>
+                <Route path = "/Integrados" >
+                    <Integrados/>
+                </Route>
+                               
                 <Route path = "/" >
                     <Home/>
                 </Route>

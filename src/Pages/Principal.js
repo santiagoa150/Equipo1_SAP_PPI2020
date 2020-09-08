@@ -16,7 +16,7 @@ class Principal extends React.Component {
     prueba=()=>{
         aja =false;
         try{    
-            console.log((UsuarioI[0].FechaN).getFullYear());    
+            let x = (UsuarioI[0].FechaN).getFullYear();    
         }
         catch(e){
             aja=true;    
@@ -24,7 +24,7 @@ class Principal extends React.Component {
     render() {
         return ( 
             <>
-                <Header2/> 
+                <Header2 Componente="/Principal"/> 
                 <Main2/>
                 <Footer/>
                 {this.prueba()}

@@ -7,7 +7,7 @@
     grid-template-rows: 1fr;
     padding: 2vw;
     width: 96vw;
-    height: calc(100vh - (6vw + 125px));
+    min-height: calc(100vh - (6vw + 125px));
 }
 
 #GridComp1, #GridComp2 {

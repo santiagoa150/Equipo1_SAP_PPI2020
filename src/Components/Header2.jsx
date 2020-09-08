@@ -2,49 +2,72 @@ import React from 'react';
 
 import '../Styles/Header2.css';
 import '../Styles/Header2.css';
-import {withRouter, Link} from 'react-router-dom';
-let x;
+import { withRouter, Link } from 'react-router-dom';
+import { UsuarioI} from '../Utiles/Mocks/UsuarioI';
+let x, bool = false;
+
 class Header2 extends React.Component {
+    componentDidMount(){
+        console.log("giejskñlñvf");
+        console.log(UsuarioI[0].image);
+        document.getElementById("profile").style.backgroundImage = "url("+ UsuarioI[0].image + ")";
+     }
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = {}
     }
-    ureles=()=>{
-        x=this.props.location.pathname;
-        let pathfin= x.substr(x.length-1);
-        if(pathfin!="_"){
-            return <>
-                <Link to={x+"_"}>
-                <div id="menu">
-                </div>                    
-                </Link>                
+    ureles = () => {
+        x = this.props.location.pathname;
+        let pathfin = x.substr(x.length - 1);
+            if (pathfin != "_") {
+                return <>
+                    <Link to={{pathname: "/Principal_", 
+                    state:{
+                    x: x }}}>
+                        <div id="menu">
+                        </div>
+                    </Link>
                 </>;
-        }
-        else{
-            return <><Link id="link" to={x.substr(0,x.length-1)}>
+            }
+            else {
+                return <>
+                <Link id="link" to={this.props.Componente}>
                     <div id="menu">
-                    </div>                    
-                </Link>                
+                    </div>
+                </Link>
                 </>;
-        }
+            }
     }
-    render() { 
+    minieventico = () =>{
+        bool = true;
+    }
+
+
+    render() {
         return (
             <>
-            <div id="Header2Container">
-                {this.ureles()}                            
-                <div id="logo">                     
+                <div id="Header2Container">
+                    {this.ureles()}
+
+                    <div id="logo">
+                    </div>
+
+                    <Link to={{
+                        pathname: "/Perfíl", state: {
+                            x: x
+                        }
+                    }}>
+                        
+                        <div id="profile">
+                        </div>
+                    </Link>
                 </div>
-                <Link to={{pathname:"/Perfíl", state:{
-                    x:x
-                }}}>
-                <div id="profile">                     
-                </div>
-                </Link>
-            </div>
             </>
-          );
+            
+        );
+       
     }
+    
 }
 
 export default withRouter(Header2);

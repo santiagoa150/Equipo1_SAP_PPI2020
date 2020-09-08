@@ -15,7 +15,7 @@
     flex-flow: column;
     text-align: center;
     padding:1vh;
-    width: 48vh;
+    width: 80vh;
     height: max-content;    
     max-width: calc(100% - 2vh);
     min-width: 200px;
@@ -24,14 +24,23 @@
     margin: 1vw;
     
 }
+@media(max-width:570px){
+    .conten{
+        width: 48vh;
+    }
+    .video{
+        width: 48vh;
+        height: 27vh;
+    }
+}
 .tecto{
     margin: 0px;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 .video{
-    width: 48vh;
-    height: 27vh;
+    width: 80vh;
+    height: 45vh;
     min-width: 200px;
     max-width: 100%;
     min-height: 112.5px;
