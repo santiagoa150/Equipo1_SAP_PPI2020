@@ -8,8 +8,6 @@ let x, bool = false;
 
 class Header2 extends React.Component {
     componentDidMount(){
-        console.log("giejskñlñvf");
-        console.log(UsuarioI[0].image);
         document.getElementById("profile").style.backgroundImage = "url("+ UsuarioI[0].image + ")";
      }
     constructor(props) {
