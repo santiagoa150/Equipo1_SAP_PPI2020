@@ -5,8 +5,6 @@ import {withRouter} from 'react-router-dom';
 import {Cursos} from '../Utiles/Mocks/Cursos';
 class Main4 extends React.Component {
     componentDidMount() {
-        console.log(this.props.id);
-        console.log(Cursos[this.props.id].conT);
         document.getElementById("TeoriaCurso").innerHTML = Cursos[this.props.id].conT;
     }
     constructor(props) {
