@@ -1,8 +1,4 @@
 import React from 'react';
-
-import { progreso } from '../Utiles/Mocks/progreso';
-import { UsuarioI } from '../Utiles/Mocks/progreso';
-
 import Header2 from '../Components/Header2';
 import Footer from '../Components/Footer';
 import Main6 from '../Components/Main6';

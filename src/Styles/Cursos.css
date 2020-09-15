@@ -28,11 +28,21 @@
 }
 
 #DidaCurso {
+    cursor: initial;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-row: 2/3;
     grid-column: 1/2;
 }
 
 #ExaCurso {
+    cursor: initial;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-row: 2/3;
     grid-column: 2/3;
 }
@@ -67,4 +77,31 @@
 .GuardarCurso2 {
     height: 100%;
     width: 100%;
+}
+
+.LinkCursoMain4{
+    width: 60%;
+    height: 35px;
+}
+
+@media(max-width:720px){
+    #Main4Container {
+        grid-template-columns: 1fr;
+        grid-template-rows: max-content max-content max-content;
+    }
+   
+    #TeoriaCurso {
+        grid-row: 1/2;
+        grid-column: 1/2;
+    }
+    
+    #DidaCurso {
+        grid-row: 2/3;
+        grid-column: 1/2;
+    }
+    
+    #ExaCurso {
+        grid-row: 3/4;
+        grid-column: 1/2;
+    }
 }

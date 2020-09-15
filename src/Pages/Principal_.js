@@ -30,7 +30,6 @@ prueba=()=>{
 
     Ruta = () =>{
         let x = this.props.location.state.x;
-        console.log(x);
         if(x == "/Principal" || x == "/principal"){
             return (<Main2 />);
         } else if (x == "/Integrados"){

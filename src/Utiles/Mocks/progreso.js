@@ -1,3 +1,1 @@
-export const progreso = [{
-
-}]
+export const Progreso = []
