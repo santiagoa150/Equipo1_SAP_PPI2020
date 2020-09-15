@@ -15,6 +15,7 @@
 
 .CardCI {
     min-height: calc(90vh - 25px - 2vw);
+    margin-bottom: 10px;
     display: flex;
     flex-flow: column;
     align-items: center;
