@@ -8,7 +8,7 @@ export const Usuarios = [
         FechaN: new Date("2004-03-15"),
         Sexo: "Hombre",
         Contraseña: "santiagolipe1.",
-        id: "0",
+        id: 0,
         image: "https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png"
     },
     {
@@ -20,7 +20,7 @@ export const Usuarios = [
         FechaN: new Date("2003-07-14"),
         Sexo: "Hombre",
         Contraseña: "montoya0713_",
-        id: "1",
+        id: 1,
         image: "https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png"
     }
 ]
