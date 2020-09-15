@@ -29,12 +29,12 @@ class menu extends React.Component {
             </Link>
             <div className="grupo"><input className="linkm" id="des" type="button" value="► Cursos" onClick={this.desple}/>
                 <ul id="obje"className="lista">
-                    <li><Link className="linkm" to="/Integrados"><input type="button" value="Integrados"/></Link></li>
-                    <li><Link className="linkm"><input type="button" value="Comunidad"/></Link></li>
-                    <li><Link className="linkm"><input type="button" value="Mis cursos"/></Link></li>
+                    <li><Link className="linkm" to={{pathname:"/Integrados",state:{pagina:"Integrado"}}}><input type="button" value="Integrado"/></Link></li>
+                    <li><Link className="linkm" to={{pathname:"/Integrados",state:{pagina:"Comunidad"}}}><input type="button" value="Comunidad"/></Link></li>
+                    <li><Link className="linkm" ><input type="button" value="Mis cursos"/></Link></li>
                 </ul>
             </div>
-            <Link className="linkm">
+            <Link className="linkm" to="/Clases">
                 <input type="button" value="Clases"/>
             </Link>
         </div>

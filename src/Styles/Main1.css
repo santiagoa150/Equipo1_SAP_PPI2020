@@ -146,13 +146,8 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     .B4 {
         height: 25px;
     }
-    #Main1Container {
-        height: max-content;
-    }
-    #GridComp1, #GridComp2 {
-        height: max-content;
-    }
 }
+
 
 /*MAIN CELULAR*/
 
@@ -186,7 +181,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
         grid-auto-rows:max-content max-content;
         padding: 2vw;
         width: 96vw;
-        height: calc(100vh - (25px + 30.875vw));
+        min-height: calc(100vh - (25px + 30.875vw));
     }
     .GridCom2Div1__{
         display: block;

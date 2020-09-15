@@ -1,13 +1,13 @@
 import React from 'react';
 import '../Styles/Main3.css';
 import { Cursos } from '../Utiles/Mocks/Cursos';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 
 class Main3 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            filtrado: Cursos.filter(Esito => Esito.Tipo == "Integrado")
+            filtrado: Cursos.filter(Esito => Esito.Tipo == this.props.location.state.pagina)
         }
     }
     render() {
@@ -15,7 +15,7 @@ class Main3 extends React.Component {
             <>
                 <div className="flex">
                     <div className="CardCI">
-                        {this.state.filtrado.map((Esito, index) => {
+                        {this.state.filtrado.map((Esito, index) => {                            
                             return (
                                 <div id="MaxContC" key={index}>
                                     <div className="InfoContMinI2">
@@ -42,6 +42,7 @@ class Main3 extends React.Component {
                                 </div>
                             );
                         })}
+                        <div><p>No hay mas cursos para mostrar</p></div>
                     </div>
                 </div>
             </>
@@ -49,4 +50,4 @@ class Main3 extends React.Component {
     }
 }
 
-export default Main3;
+export default withRouter(Main3);

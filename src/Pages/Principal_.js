@@ -1,9 +1,8 @@
 import React from 'react';
-
 import Header2 from '../Components/Header2';
 import Main2 from '../Components/Main2';
 import Main3 from '../Components/Main3';
-
+import Main5 from '../Components/Main5';
 import Menu from '../Components/Menu';
 import Footer from '../Components/Footer';
 import {UsuarioI} from '../Utiles/Mocks/UsuarioI';
@@ -35,7 +34,9 @@ prueba=()=>{
             return (<Main2 />);
         } else if (x == "/Integrados"){
             return (<Main3 />)
-        }
+        }else if (x == "/Clases"){
+            return (<Main5 />)
+        }        
     }
     render() {
         return ( 
