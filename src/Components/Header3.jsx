@@ -21,7 +21,7 @@ class Header3 extends React.Component {
             <>
 
                 <div id="Header3Container">
-                    <Link to="/Integrados">
+                    <Link to={{pathname:"/Integrados",state:{pagina:this.state.Curso[0].Tipo}}}>
                     <div id="AtrasCurso">
 
                     </div>
