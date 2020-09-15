@@ -20,6 +20,9 @@
 #imgclases{
     width: 30vw;
     height: 30vw;
+    max-width: 50vh;
+    max-height: 50vh;
+    background-repeat: no-repeat;
     background-size: 100%;
     margin:10px;
 }

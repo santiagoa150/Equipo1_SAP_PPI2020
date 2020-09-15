@@ -168,7 +168,6 @@ class Perfil extends React.Component {
 
     Borrartusdatos = () => {
         UsuarioI.splice(0, 1);
-
     }
     Close = () => {
         document.getElementById("PopUpPerfíl").style.display = "none";
