@@ -7,7 +7,8 @@ import Principal_ from './Pages/Principal_';
 import Perfil from './Pages/Perfil';
 import Integrados from './Pages/Inte_Comu';
 import Curso from './Pages/Curso';
-import misCursos from './Pages/MisCursos';
+import MisCursos from './Pages/MisCursos';
+import Clases from './Pages/Clases.js';
 
 import {
     BrowserRouter as Router,
@@ -32,7 +33,10 @@ ReactDOM.render(
                     <Integrados />
                 </Route>
                 <Route path="/misCursos">
-                    <misCursos />
+                    <MisCursos />
+                </Route>
+                <Route path="/Clases" >
+                    <Clases />
                 </Route>
                 <Route path="/Curso">
                     <Curso />

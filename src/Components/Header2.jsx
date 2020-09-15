@@ -19,22 +19,46 @@ class Header2 extends React.Component {
         let pathfin = x.substr(x.length - 1);
             if (pathfin != "_") {
                 return <>
-                    <Link to={{pathname: "/Principal_", 
-                    state:{
-                    x: x }}}>
-                        <div id="menu">
-                        </div>
-                    </Link>
+                {this.algo()}        
                 </>;
             }
             else {
+                if(this.props.Componente != "/Integrados"){   
                 return <>
                 <Link id="link" to={this.props.Componente}>
                     <div id="menu">
                     </div>
                 </Link>
                 </>;
+                } else {
+                    return <>
+                    <Link id="link" to={{pathname:this.props.Componente, state:{pagina:this.props.location.state.pagina}}}>
+                    <div id="menu">
+                    </div>
+                </Link>
+                    </>
+                }
             }
+    }
+    algo = () =>{
+        if(this.props.Componente != "/Integrados"){
+            return( <Link to={{pathname: "/Principal_", 
+         state:{
+         x: x}}}>
+             <div id="menu">
+             </div>
+         </Link>)
+         } else {
+             return(
+                 <Link to={{pathname: "/Principal_", 
+         state:{
+         x: x,
+         pagina: this.props.location.state.pagina}}}>
+             <div id="menu">
+             </div>
+         </Link>
+             )
+         }
     }
     minieventico = () =>{
         bool = true;
