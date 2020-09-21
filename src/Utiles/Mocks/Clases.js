@@ -10,5 +10,23 @@ export const Clases = [
         idusuario:0,
         fechaC: new Date("2020-09-15"),
         titulo:"Clase Alvarez"
+    },
+    {
+        id:2,
+        idusuario:0,
+        fechaC: new Date("2020-09-15"),
+        titulo:"Clase Alvarez"
+    },
+    {
+        id:3,
+        idusuario:1,
+        fechaC: new Date("2020-09-15"),
+        titulo:"Clase Alvarez"
+    },
+    {
+        id:4,
+        idusuario:0,
+        fechaC: new Date("2020-09-15"),
+        titulo:"Clase Alvarez"
     }
 ]

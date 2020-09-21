@@ -3,7 +3,14 @@ body{
     background-color: white;
     font-family: 'Source Code Pro', monospace;
 }
-
+body::-webkit-scrollbar{
+    background-color:  #F6EBE9;
+    width: 15px;
+}
+BODY::-webkit-scrollbar-thumb{
+    background-color: #444140;
+    box-shadow: 2px 0 10px black;
+}
 /*HEADER COMPUTADOR*/
     #Header1Container{
         display: flex;

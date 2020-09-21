@@ -25,6 +25,7 @@
     background-repeat: no-repeat;
     background-size: 100%;
     margin:10px;
+    border-radius: 50%;
 }
 #botonear{
     margin:10px;
@@ -41,7 +42,24 @@
     margin:10px;
     text-align: center;
 }
+#clasesP, #contidU{
+    justify-content: flex-start;
+    margin: 10px;
+    height: calc((90vh - 2vw - 25px) /2) ;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#clasesP::-webkit-scrollbar, #contidU::-webkit-scrollbar{
+    background-color:  #F6EBE9;
+    width: 12px;
+}
+#clasesP::-webkit-scrollbar-thumb,  #contidU::-webkit-scrollbar-thumb{
+    background-color: #444140;
+
+}
 #conclases{
+    width: 50%;
     display: flex;
     flex-flow: column;
     justify-content: space-around;
@@ -55,12 +73,14 @@
     margin-block-end: 10px;
 }
 .cardsclas{
+    margin-bottom: 10px;
     background-color:#ffffff;
     display: flex;
     justify-content: space-around;
-    width: 60vw;
+    width: 98%;
     border:black 1px solid;
     border-radius: 10px;
+    box-shadow: 3px 3px 8px black;
 }
 .cardsclas input{
     width: 15vw !important;
@@ -68,12 +88,24 @@
     background-color: #FFA987;
     border: transparent;
 }
-@media(max-width:620px){    
+@media(max-width:620px){ 
+    #clasesP, #contidU{
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: 300px;
+    }
+    #conclases{
+        width: 100%;
+    }  
     .franja{       
         flex-flow: column;
         align-items: center;
     }
-    
+    #ClasesC, #ClasesP{
+        height: 35px;
+    }
 #imgclases{
     width: 40vw;
     height: 40vw;

@@ -1,7 +1,6 @@
 #Main6Container{
     margin:10px 0 10px 0;
     width: 100%;
-    min-height: calc(90vh - 45px - 2vw);
     justify-content: center;
     display: grid;
     grid-template-columns: 40% 40%;
@@ -10,7 +9,7 @@
 }
 #Main6I,#Main6C{
     background-color: orange;
-    min-height:  calc(90vh -45px -2vw);
+    height:100%;
     width: 100%;
     display: flex;
     flex-flow: column;
@@ -18,6 +17,25 @@
     justify-content: flex-start;
     background-color: #F6EBE9;
     border-radius: 5px;
+    overflow: hidden;
+}
+
+#Main6I::-webkit-scrollbar, #Main6C::-webkit-scrollbar{
+    background-color:  #F6EBE9;
+    width: 15px;
+}
+#Main6I::-webkit-scrollbar-thumb,  #Main6C::-webkit-scrollbar-thumb{
+    background-color: #444140;
+    box-shadow: 2px 0 10px black;
+}
+
+
+.ButtonMisCursosC{
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 #Main6I{
     grid-row: 1/2;
@@ -30,8 +48,9 @@
 .buttonMisCursos{
     margin: 5px;
     width: 80%;
-    height: 35px;
+    height: 35px !important;
 }
+
 #CardsInner,#CardsInner2{
     width: 90%;
     height: 100%;
@@ -58,10 +77,19 @@
     width: 100%;
     height: 35px;
 }
+.CIMB{
+    margin-bottom: 10px;
+}
+@media(min-width: 720px){
+    #Main6Container{
+        height: calc(90vh - 45px - 2vw);
+    }
+}
 @media(max-width:720px){
     #Main6Container{
+        min-height: calc(90vh - 45px - 2vw) !important;
         grid-template-columns: 95%;
-        grid-template-rows: max-content max-content;
+        grid-template-rows: 500px 500px;
     }
     #Main6I{
         grid-row: 1/2;
