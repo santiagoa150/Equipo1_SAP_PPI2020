@@ -21,6 +21,7 @@ let aja, aja2, aja3 = false;
 class Perfil extends React.Component {
     componentDidMount() {
         document.getElementById("FotoPerfíl").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
+        console.log(this.props.location.state.x);
     }
     constructor(props) {
         super(props);
@@ -201,7 +202,38 @@ class Perfil extends React.Component {
         }
     }
 
+    Accion1 = () => {
+        if (this.props.location.state.x == "/Principal_") {
+            if (this.props.location.state.pagina == "undefined") {
+                return (
+                    <Link className="BP" to={{ pathname: this.props.location.state.x, state: { x: this.props.location.state.x2 } }}>
+                        <button className="BP">Atrás</button>
+                    </Link>
+                );
+            } else {
+                return (
+                    <Link className="BP" to={{ pathname: this.props.location.state.x, state: { x: this.props.location.state.x2, pagina: this.props.location.state.x3 } }}>
+                        <button className="BP">Atrás</button>
+                    </Link>
+                );
 
+            }
+
+        } else if (this.props.location.state.x != "/Integrados") {
+            return (
+                <Link className="BP" to={{ pathname: this.props.location.state.x, state: { x: this.props.location.state.x } }}>
+                    <button className="BP">Atrás</button>
+                </Link>
+            );
+        } else {
+            return (
+                <Link className="BP" to={{ pathname: this.props.location.state.x, state: { x: this.props.location.state.x, pagina: this.props.location.state.x3 } }}>
+                    <button className="BP">Atrás</button>
+                </Link>
+            );
+
+        }
+    }
     render() {
 
 
@@ -319,12 +351,11 @@ class Perfil extends React.Component {
                                 <div className="Edit2">
                                 </div>
                             </div>
-                            {this.state.Bool && <Redirect to={this.props.location.state.x}></Redirect>}
+                            {this.state.Bool && <Redirect to={{ pathname: this.props.location.state.x, x: this.props.location.state.x }}></Redirect>}
                         </div>
                         <div id="ButtonPContainer">
-                            <Link className="BP" to={this.props.location.state.x}>
-                                <button className="BP">Atrás</button>
-                            </Link>
+                            {this.Accion1()}
+
                             <Link className="BP" to="/">
                                 <button className="BP" onClick={this.Borrartusdatos}>Cerrar sesión</button>
                             </Link>

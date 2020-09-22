@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Styles/Main3.css';
 import { Cursos } from '../Utiles/Mocks/Cursos';
-import { Link,withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class Main3 extends React.Component {
     constructor(props) {
@@ -14,8 +14,30 @@ class Main3 extends React.Component {
         return (
             <>
                 <div className="flex">
+                    <div className="Filtros">
+                        <div className="Filtros2">
+                            <input placeholder="Nombre" className="FiltrosC2" />
+                            <select className="FiltrosC">
+                                <option className="None" value="0">Materia</option>
+                                {this.state.filtrado.map((Esito, index) => {
+                                    return (
+                                        <option key={index} value={Esito.Materia}>{Esito.Materia}</option>
+                                    );
+                                })}
+                            </select>
+                            <select className="FiltrosC">
+                                <option className="None" value="0">Sexo</option>
+                                <option>Hombre</option>
+                                <option>Mujer</option>
+                            </select>
+                            <select className="FiltrosC">
+                                <option className="None" value="0">Año de creación</option>
+                                <option>2020</option>
+                            </select>
+                        </div>
+                    </div>
                     <div className="CardCI">
-                        {this.state.filtrado.map((Esito, index) => {                            
+                        {this.state.filtrado.map((Esito, index) => {
                             return (
                                 <div id="MaxContC" key={index}>
                                     <div className="InfoContMinI2">
@@ -30,10 +52,12 @@ class Main3 extends React.Component {
                                             </div>
                                             <div id="BottonCI">
                                                 <img className="Edit2" src="/Images/InfoCurso.png" />
-                                                <Link to={{pathname:"/Curso", 
-                                                state:{
-                                                    id: Esito.id
-                                                }}}>
+                                                <Link to={{
+                                                    pathname: "/Curso",
+                                                    state: {
+                                                        id: Esito.id
+                                                    }
+                                                }}>
                                                     <button className="button buttonI">Iniciar curso</button>
                                                 </Link>
                                             </div>

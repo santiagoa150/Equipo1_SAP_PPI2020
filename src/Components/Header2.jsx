@@ -16,6 +16,7 @@ class Header2 extends React.Component {
     }
     ureles = () => {
         x = this.props.location.pathname;
+        console.log(this.props.Pagina);
         let pathfin = x.substr(x.length - 1);
             if (pathfin != "_") {
                 return <>
@@ -76,7 +77,9 @@ class Header2 extends React.Component {
 
                     <Link to={{
                         pathname: "/Perfíl", state: {
-                            x: x
+                            x: x,
+                            x2: this.props.Componente,
+                            x3: this.props.Pagina
                         }
                     }}>
                         

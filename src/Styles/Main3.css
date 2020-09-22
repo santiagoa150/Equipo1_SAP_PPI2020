@@ -12,9 +12,37 @@
     justify-content: space-around;
 }
 
-
+.Filtros{
+   
+    margin-top: 10px;
+    width: 100%;
+    min-height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.FiltrosC2{
+    margin: 2px 0 2px 0;
+    width: 150px;
+    height: 30px;
+}
+.FiltrosC{
+    margin: 2px 0 2px 0;
+    width: 156px;
+    height: 34px;
+}
+.Filtros2{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 90%;
+    min-height: 40px;
+    background-color: #444140;
+}
 .CardCI {
-    min-height: calc(90vh - 25px - 2vw);
+    min-height: calc(90vh - 90px - 2vw);
     margin-bottom: 10px;
     display: flex;
     flex-flow: column;

@@ -6,8 +6,8 @@ import Main5 from '../Components/Main5';
 import Main6 from '../Components/Main6';
 import Menu from '../Components/Menu';
 import Footer from '../Components/Footer';
-import {UsuarioI} from '../Utiles/Mocks/UsuarioI';
-import {withRouter} from 'react-router-dom';
+import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
+import { withRouter } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 let aja;
 
@@ -18,44 +18,55 @@ class Principal extends React.Component {
         super(props);
         this.state = {}
     }
-    
-prueba=()=>{
-    aja =false;
-    try{    
-        let x = (UsuarioI[0].FechaN).getFullYear();    
-    }
-    catch(e){
-        aja=true;    
-    }}
 
-    Ruta = () =>{
+    prueba = () => {
+        aja = false;
+        try {
+            let x = (UsuarioI[0].FechaN).getFullYear();
+        }
+        catch (e) {
+            aja = true;
+        }
+    }
+
+    Ruta = () => {
         let x = this.props.location.state.x;
-        if(x == "/Principal" || x == "/principal"){
+        if (x == "/Principal" || x == "/principal") {
             return (<Main2 />);
-        } else if (x == "/Integrados"){
+        } else if (x == "/Integrados") {
             return (<Main3 />)
-        }else if (x == "/Clases"){
+        } else if (x == "/Clases") {
             return (<Main5 />)
-        }else if(x == "/misCursos"){
+        } else if (x == "/misCursos") {
             return (<Main6 />)
-        }       
+        }
+    }
+    Accion1 = () => {
+        if (this.props.location.state.x == "/Integrados") {
+            return (
+            <Header2 Componente={this.props.location.state.x} Pagina={this.props.location.state.pagina} />);
+        } else {
+            return (
+                <Header2 Componente={this.props.location.state.x} />);
+        }
     }
     render() {
-        return ( 
+        return (
             <>
 
-            <div id="gridP">
-                <div id="HP">
-                    <Header2 Componente={this.props.location.state.x}/>
-                    </div>
-                <div id="MP">
-                {this.Ruta()}  
+                <div id="gridP">
+                    <div id="HP">
+                        {this.Accion1()}
 
-                <Footer /></div>
-                <div id="MeP"> <Menu Ruta={this.props.location.state.x}/></div>
-                </div> 
+                    </div>
+                    <div id="MP">
+                        {this.Ruta()}
+
+                        <Footer /></div>
+                    <div id="MeP"> <Menu Ruta={this.props.location.state.x} /></div>
+                </div>
                 {this.prueba()}
-                {aja && <Redirect to="/"/>}
+                {aja && <Redirect to="/" />}
             </>
         );
     }

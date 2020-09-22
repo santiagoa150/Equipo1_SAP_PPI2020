@@ -34,7 +34,7 @@ class menu extends React.Component {
                     <li><Link className="linkm" to="/misCursos"><input type="button" value="Mis cursos"/></Link></li>
                 </ul>
             </div>
-            <Link className="linkm" to="/Clases">
+            <Link className="linkm" to={{pathname: "/Clases", state:{i: "undefined"}}}>
                 <input type="button" value="Clases"/>
             </Link>
         </div>

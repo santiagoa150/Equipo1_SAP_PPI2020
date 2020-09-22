@@ -5,7 +5,7 @@ import Main3 from '../Components/Main3';
 import Footer from '../Components/Footer';
 
 import {UsuarioI} from "../Utiles/Mocks/UsuarioI";
-import {Redirect} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 
 let aja;
 
@@ -27,7 +27,7 @@ class Integrados extends React.Component {
     render() { 
         return (
         <>
-        <Header2 Componente="/Integrados"/>
+        <Header2 Componente="/Integrados" Pagina={this.props.location.state.pagina}/>
         <Main3 />
         <Footer />
 
@@ -37,4 +37,4 @@ class Integrados extends React.Component {
     }
 }
  
-export default Integrados;
+export default withRouter(Integrados);
