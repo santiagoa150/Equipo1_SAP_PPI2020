@@ -14,29 +14,7 @@ class Main5 extends React.Component {
             bool3: false
         }
     }
-    componentWillMount(){
-        this.setState({
-            Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
-            Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
-            bool3: false
-        });
-    }
-    componentDidMount() {
-        
-        document.getElementById("imgclases").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
-        /*CLASES CREADAS*/
-        if (this.state.Clase.length == 0) {
-            document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>"
-            document.getElementById("clasesP2").style.display = "flex";
-            document.getElementById("clasesP2").style.justifyContent = "center";
-        }
-
-        if (this.state.Usuario_C.length == 0) {
-            document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>"
-            document.getElementById("contidU2").style.display = "flex";
-            document.getElementById("contidU2").style.justifyContent = "center";
-        }
-    }
+    
     Accion1 = () => {
         if (!bool) {
             document.getElementById("clasesP2").style.display = "block";
@@ -92,16 +70,37 @@ class Main5 extends React.Component {
                 fechaC: new Date(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate() + 1)),
                 titulo: Nombre.value
             });
-            document.getElementById("PopUp1").style.display = "none";
-            console.log(Clases);
-            this.setState({bool3: true});
+
+            this.setState({            
+                Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
+                Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
+                bool3: false});
+                document.getElementById("PopUp1").style.display = "none";
+                if(document.getElementById("clasesP2").innerHTML == "<p>No hay clases creadas.</p>"){
+                    document.getElementById("clasesP2").innerHTML = "";
+                }
         }
         return this;
+    }
+    componentDidMount() {
+        
+        document.getElementById("imgclases").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
+        /*CLASES CREADAS*/
+        if (this.state.Clase.length == 0) {
+            document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
+            document.getElementById("clasesP2").style.display = "flex";
+            document.getElementById("clasesP2").style.justifyContent = "center";
+        } 
+
+        if (this.state.Usuario_C.length == 0) {
+            document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>"
+            document.getElementById("contidU2").style.display = "flex";
+            document.getElementById("contidU2").style.justifyContent = "center";
+        }
     }
     render() {
         return (
             <>
-                {this.state.bool3 && <Redirect to="/Clases"/>}
                 <div className="PopUp1" id="PopUp1">
                     <div className="PopUp1_">
 
@@ -184,7 +183,7 @@ class Main5 extends React.Component {
                         </div>
                     </div>
                 </div>
-
+{this.ComponentCharge}
             </>
         );
     }

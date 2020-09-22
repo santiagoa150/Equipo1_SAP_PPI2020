@@ -58,6 +58,12 @@
     background-color: #444140;
 
 }
+#clasesP2, #contidU2{
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+}
 #conclases{
     width: 50%;
     display: flex;
