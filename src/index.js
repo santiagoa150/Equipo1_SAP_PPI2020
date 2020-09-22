@@ -8,8 +8,8 @@ import Perfil from './Pages/Perfil';
 import Integrados from './Pages/Inte_Comu';
 import Curso from './Pages/Curso';
 import MisCursos from './Pages/MisCursos';
-import Clases from './Pages/Clases.js';
-
+import Clases from './Pages/Clases';
+import Clase from './Pages/Clase';
 import {
     BrowserRouter as Router,
     Switch,
@@ -41,6 +41,7 @@ ReactDOM.render(
                 <Route path="/Curso">
                     <Curso />
                 </Route>
+                <Route path="/Clase" component={Clase}/>
                 <Route path="/" >
                     <Home />
                 </Route>

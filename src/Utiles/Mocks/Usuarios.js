@@ -13,7 +13,7 @@ export const Usuarios = [
     },
     {
         Nombre: "Juan Camilo",
-        Apellido: "Montoya Majía",
+        Apellido: "Montoya Mejía",
         UserName: "jucamo0713",
         Correo: "jucamo.0713@gmail.com",
         Edad: "17",

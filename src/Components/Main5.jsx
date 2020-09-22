@@ -1,20 +1,36 @@
 import React from 'react';
 import '../Styles/Main5.css';
-import { withRouter, Link, Redirect } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import { Clases } from '../Utiles/Mocks/Clases';
 import { User_clase } from '../Utiles/Mocks/User_clase';
-let bool = true, bool2 = true;
+import { Usuarios } from '../Utiles/Mocks/Usuarios';
+import Clase from '../Pages/Clase';
+let bool = true, bool2 = true, SubirUsu = new Array(), i = 0;
 class Main5 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
             Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
-            bool3: false
         }
     }
-    
+    componentDidMount() {
+
+        document.getElementById("imgclases").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
+        /*CLASES CREADAS*/
+        if (this.state.Clase.length == 0) {
+            document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
+            document.getElementById("clasesP2").style.display = "flex";
+            document.getElementById("clasesP2").style.justifyContent = "center";
+        }
+
+        if (this.state.Usuario_C.length == 0) {
+            document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>"
+            document.getElementById("contidU2").style.display = "flex";
+            document.getElementById("contidU2").style.justifyContent = "center";
+        }
+    }
     Accion1 = () => {
         if (!bool) {
             document.getElementById("clasesP2").style.display = "block";
@@ -48,59 +64,152 @@ class Main5 extends React.Component {
         }
     }
     CrearClase = () => {
-        document.getElementById("PopUp1").style.display ="flex";
+        document.getElementById("PopUp1").style.display = "flex";
     }
     Close1 = () => {
-        document.getElementById("PopUp1").style.display ="none";
+        document.getElementById("PopUp1").style.display = "none";
+        document.getElementById("UsuariosIN").innerHTML = "";
     }
-    CrearClase2 = () =>{
+    CrearClase2 = () => {
         let Nombre = document.getElementById("NombreClase");
         let fecha = new Date();
-        if(Nombre.value == ""){
+        if (Nombre.value == "") {
             Nombre.style.color = "red";
             Nombre.value = "Valor no ingresado";
-            setTimeout(function(){
+            setTimeout(function () {
                 Nombre.value = "";
                 Nombre.style.color = "black";
             }, 1000);
         } else {
+            let leng = Clases.length;
             Clases.push({
-                id: Clases.length,
+                id: leng,
                 idusuario: UsuarioI[0].id,
                 fechaC: new Date(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate() + 1)),
                 titulo: Nombre.value
             });
+            for (let i = 0; i < SubirUsu.length; i++) {
+                User_clase.push({
+                    id: User_clase.length,
+                    idusuario: SubirUsu[i],
+                    idclase: Clases.length,
+                    fechaU: new Date(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate() + 1))
+                });
 
-            this.setState({            
+            }
+            console.log(User_clase);
+            this.setState({
                 Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
                 Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
-                bool3: false});
-                document.getElementById("PopUp1").style.display = "none";
-                if(document.getElementById("clasesP2").innerHTML == "<p>No hay clases creadas.</p>"){
-                    document.getElementById("clasesP2").innerHTML = "";
-                }
+            });
+            document.getElementById("UsuariosIN").innerHTML = "";
+            document.getElementById("NombreClase").value = "";
+            document.getElementById("PopUp1").style.display = "none";
+            if (document.getElementById("clasesP2").innerHTML == "<p>No hay clases creadas.</p>") {
+                document.getElementById("clasesP2").innerHTML = "";
+            }
         }
         return this;
     }
-    componentDidMount() {
-        
-        document.getElementById("imgclases").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
-        /*CLASES CREADAS*/
-        if (this.state.Clase.length == 0) {
-            document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
-            document.getElementById("clasesP2").style.display = "flex";
-            document.getElementById("clasesP2").style.justifyContent = "center";
-        } 
+    SubirUsuario1 = () => {
+        if (document.getElementById("UsuarioClase").value == "") {
+            document.getElementById("UsuarioClase").style.color = "red"
+            document.getElementById("UsuarioClase").value = "Dato no ingresado."
+            setTimeout(function () {
+                document.getElementById("UsuarioClase").value = "";
+                document.getElementById("UsuarioClase").style.color = "black";
+            }, 1000);
+        } else {
+            let j = document.getElementById("UsuarioClase").value;
+            let inner = document.getElementById("UsuariosIN").innerHTML;
+            for (let k = 0; k < Usuarios.length; k++) {
+                if (Usuarios[k].id == j && Usuarios[k].id != UsuarioI[0].id) {
+                    inner = inner + '<div class="Etiqueta"><p>Id:' + j + '</p></div>';
+                    document.getElementById("UsuariosIN").innerHTML = inner;
+                    SubirUsu[i] = j;
+                    document.getElementById("UsuarioClase").value = "";
+                    i++;
+                } else {
+                    document.getElementById("UsuarioClase").style.color = "red"
+                    setTimeout(function () {
+                        document.getElementById("UsuarioClase").value = "";
+                        document.getElementById("UsuarioClase").style.color = "black";
+                    }, 1000);
+                }
+            }
 
-        if (this.state.Usuario_C.length == 0) {
-            document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>"
-            document.getElementById("contidU2").style.display = "flex";
-            document.getElementById("contidU2").style.justifyContent = "center";
+
+        }
+    }
+    UnirUser = () => {
+        document.getElementById("PopUp2").style.display = "flex";
+    }
+    Close2 = () => {
+        document.getElementById("PopUp2").style.display = "none";
+        document.getElementById("UsuarioClase2").value = "";
+    }
+    SubirUsuario2 = () => {
+        let i = document.getElementById("UsuarioClase2");
+        if (i.value != "") {
+            let bool1 = false;
+            for (let k = 0; k < Clases.length; k++) {
+                if (Clases[k].id == i.value) {
+                    bool1 = true;
+                }
+            }
+            if (bool1 == true) {
+                let fecha = new Date();
+                User_clase.push({
+                    id: User_clase.length,
+                    idusuario: UsuarioI[0].id,
+                    idclase: i.value,
+                    fechaU: new Date(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate() + 1))
+                });
+                this.setState({
+                    Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
+                    Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
+                });
+                i.value = "";
+                document.getElementById("PopUp2").style.display = "none";
+            } else {
+                i.style.color = "red";
+                i.type = "text";
+                i.value = "Clase no encontrada.";
+                setTimeout(function () {
+                    i.value = "";
+                    i.style.color = "black";
+                    i.type = "number";
+                }, 1000);
+            }
+        } else {
+            i.style.color = "red";
+            i.type = "text";
+            i.value = "Dato no ingresado.";
+            setTimeout(function () {
+                i.value = "";
+                i.style.color = "black";
+                i.type = "number";
+            }, 1000);
         }
     }
     render() {
         return (
             <>
+                <div className="PopUp2" id="PopUp2">
+                    <div className="PopUp2_">
+                        <h3>Agregar Usuario</h3>
+                        <div className="Group GroupC2 GroupC3">
+                            <div>
+                                <div>
+                                    <p className="Group">Id clase</p>
+                                    <input type="text" className="inputCrearClase Group" id="UsuarioClase2" type="number" autoComplete="off" />
+                                </div>
+                            </div>
+                            <input type="button" className="inputCrearClase2" onClick={this.SubirUsuario2} />
+                        </div>
+                        <button className="BotonMadreClase bmargintop" onClick={this.Close2}>Cancelar</button>
+                    </div>
+                </div>
                 <div className="PopUp1" id="PopUp1">
                     <div className="PopUp1_">
 
@@ -113,13 +222,15 @@ class Main5 extends React.Component {
                             <div className="GroupC">
                                 <p className="Group">Id usuarios</p>
                                 <div className="Group GroupC2">
-                                    <input type="text" className="inputCrearClase" />
-                                    <input type="button" className="inputCrearClase" />
+                                    <input type="text" className="inputCrearClase" id="UsuarioClase" type="nunber" autoComplete="off" />
+                                    <input type="button" className="inputCrearClase2" onClick={this.SubirUsuario1} />
                                 </div>
                             </div>
                         </div>
                         <div id="PopUpPart2">
+                            <div id="UsuariosIN">
 
+                            </div>
                         </div>
                         <div id="XimageCrearClase">
                             <button onClick={this.Close1} className="BotonMadreClase">Cancelar</button>
@@ -132,7 +243,7 @@ class Main5 extends React.Component {
                         <div id="infop">
                             <div id="imgclases"></div>
                             <div id="contid">Tu id:{UsuarioI[0].id}</div>
-                            <div id="botonear"><input type="button" value="Unirse" /><input type="button" value="Crear" onClick={this.CrearClase} /></div>
+                            <div id="botonear"><input type="button" value="Unirse" onClick={this.UnirUser} /><input type="button" value="Crear" onClick={this.CrearClase} /></div>
                         </div>
                         <div id="conclases">
                             <div id="clasesP">
@@ -141,6 +252,12 @@ class Main5 extends React.Component {
                                 </div>
                                 <div id="clasesP2">
                                     {this.state.Clase.map((Esito, Index) => {
+                                        let variable = 0;
+                                        for (let i = 0; i < User_clase.length; i++) {
+                                            if (User_clase[i].idclase == Esito.id) {
+                                                variable = variable + 1;
+                                            }
+                                        }
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
@@ -149,10 +266,17 @@ class Main5 extends React.Component {
                                                         {Esito.fechaC.toLocaleDateString()}
                                                     </h4>
                                                 </div>
-                                                <div className="botoncard"><Link><input type="button" value="Ir" /></Link>
-                                                    <h4>Id: {Esito.id}</h4>
+                                                <div className="botoncard"><Link to={{ pathname: "/Clase/" + Esito.id, state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                    <div className="InfoClassCard">
+                                                        <h4 className="InfoClassCardConte">Id: {Esito.id}</h4>
+                                                        <h4 className="InfoClassCardConte DisCel">Usuarios: {variable}</h4>
+                                                    </div>
+                                                </div>
+                                                <div className="UsuarioInfoCardAbajo">
+                                                    <h4 className="InfoClassCardConte DisCom">Usuarios: {variable}</h4>
                                                 </div>
                                             </div>
+
                                         </>);
                                     })}
                                 </div>
@@ -164,6 +288,13 @@ class Main5 extends React.Component {
                                 </div>
                                 <div id="contidU2">
                                     {this.state.Usuario_C.map((Esito, Index) => {
+                                        let variable = 0;
+                                        for (let i = 0; i < User_clase.length; i++) {
+                                            if (Clases[Esito.idclase].id == User_clase[i].idclase) {
+                                                variable = variable + 1;
+                                            }
+                                        }
+                                        console.log("Esto es variable: " + variable);
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
@@ -172,8 +303,13 @@ class Main5 extends React.Component {
                                                         {Clases[Esito.idclase].fechaC.toLocaleDateString()}
                                                     </h4>
                                                 </div>
-                                                <div className="botoncard"><Link><input type="button" value="Ir" /></Link>
-                                                    <h4>Id: {Esito.idclase}</h4>
+                                                <div className="botoncard">
+                                                    <Link><input type="button" value="Ir" /></Link>
+                                                    <h4 className="InfoClassCardConte">Id: {Esito.idclase}</h4>
+                                                    <h4 className="InfoClassCardConte DisCel">Usuarios: {variable}</h4>
+                                                </div>
+                                                <div className="UsuarioInfoCardAbajo">
+                                                    <h4 className="InfoClassCardConte DisCom">Usuarios: {variable}</h4>
                                                 </div>
                                             </div>
                                         </>);
@@ -183,7 +319,7 @@ class Main5 extends React.Component {
                         </div>
                     </div>
                 </div>
-{this.ComponentCharge}
+                {this.ComponentCharge}
             </>
         );
     }

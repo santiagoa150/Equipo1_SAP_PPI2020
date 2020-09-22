@@ -81,13 +81,14 @@
     background-color: rgb(0, 0, 0, 0.7);
 }
 #ContenedorPopUp{
-    width: 70%;
+    width: 40%;
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: space-between;
     background-color: white;
     min-height: 70vh;
+    border-radius: 10px;
 }
 #formProta{
 width: 100%;
@@ -97,6 +98,7 @@ text-align: center;
     margin: 4px 0 0 4px;
 }
 #Elprota{
+
     width: 70%;
 }
 #Elprota::-webkit-file-upload-button{
@@ -113,9 +115,23 @@ text-align: center;
     margin: 0 0 10px 0;
 }
 .SubImg2{
+    background-color: #FFA987;
     height: 30px;
     width: 100%;
 
+}
+#Elprota::-webkit-file-upload-button{
+    font-weight: bold;
+    background: #FFA987;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 700ms;
+}
+#Elprota::-webkit-file-upload-button:hover{
+    background-color: #444140;
+    color: white;
+    transition: all 700ms;
 }
 .PrevImg{
     border:1px solid black;
@@ -162,7 +178,10 @@ height: 200px;
     height: 30px;
 }
 
-@media(max-width: 720px){
+@media(max-width: 720px){   
+    #ContenedorPopUp{
+        width: 80%;
+    }
     #PerfilContainer{
         grid-template-rows: max-content max-content max-content;
         grid-template-columns: 1fr;
