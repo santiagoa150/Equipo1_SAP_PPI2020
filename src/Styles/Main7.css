@@ -1,17 +1,70 @@
 #Main7Container{
     width: 100%;
-    min-height: calc(100vh - 75px);
+    min-height: calc(100vh - 96px);
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 30% 70%;
     grid-template-rows: 1fr;
 }
 #ClasesMain7{
+    padding: 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    grid-row: 1/2;
+    grid-column: 2/3;
+}
+#UsersMain7::-webkit-scrollbar{
+    background-color:   wheat;
+    width: 12px;
+}
+#UsersMain7::-webkit-scrollbar-thumb{
+    background-color: #444140;
+}
+.MaxContC{
+    width: 80% !important;
+}
+#UsersMain7{
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: wheat;
     grid-row: 1/2;
     grid-column: 1/2;
 }
-#UsersMain7{
-    background-color: wheat;
-    border-left: 1px solid #444140;
-    grid-row: 1/2;
-    grid-column: 2/3;
+.BClaseAccion{
+    width: 80%;
+    height: 35px;
+    margin:5px 0 5px 0;
+}
+.User_card{
+    margin: 5px 0 5px 0;
+    text-align: center;
+    border-radius: 5px;
+    width: 80%;
+    background-color: #444140;
+    color: white;
+    box-shadow: 3px 3px 10px black;
+}
+@media(max-width:620px){
+    #Main7Container{
+        grid-template-columns: 1fr;
+        grid-template-rows: 300px max-content;
+    }
+    #ClasesMain7{
+        grid-row: 2/3;
+        grid-column: 1/2;
+    }
+    #UsersMain7{
+        grid-row: 1/2;
+        grid-column: 1/2;
+
+    }
+    .MaxContC{
+        width: 95% !important;
+    }
 }

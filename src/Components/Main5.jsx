@@ -5,8 +5,7 @@ import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import { Clases } from '../Utiles/Mocks/Clases';
 import { User_clase } from '../Utiles/Mocks/User_clase';
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
-import Clase from '../Pages/Clase';
-let bool = true, bool2 = true, SubirUsu = new Array(), i = 0;
+let bool = true, bool2 = true,SubirUsu  = new Array(), i = 0;
 class Main5 extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +15,6 @@ class Main5 extends React.Component {
         }
     }
     componentDidMount() {
-
         document.getElementById("imgclases").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
         /*CLASES CREADAS*/
         if (this.state.Clase.length == 0) {
@@ -92,12 +90,10 @@ class Main5 extends React.Component {
                 User_clase.push({
                     id: User_clase.length,
                     idusuario: SubirUsu[i],
-                    idclase: Clases.length,
+                    idclase: leng,
                     fechaU: new Date(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate() + 1))
                 });
-
-            }
-            console.log(User_clase);
+            }            
             this.setState({
                 Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
                 Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
@@ -112,6 +108,7 @@ class Main5 extends React.Component {
         return this;
     }
     SubirUsuario1 = () => {
+
         if (document.getElementById("UsuarioClase").value == "") {
             document.getElementById("UsuarioClase").style.color = "red"
             document.getElementById("UsuarioClase").value = "Dato no ingresado."
@@ -128,6 +125,7 @@ class Main5 extends React.Component {
                     document.getElementById("UsuariosIN").innerHTML = inner;
                     SubirUsu[i] = j;
                     document.getElementById("UsuarioClase").value = "";
+                    console.log("Esto es SubirUsu" + SubirUsu[i]);
                     i++;
                 } else {
                     document.getElementById("UsuarioClase").style.color = "red"
@@ -246,15 +244,16 @@ class Main5 extends React.Component {
                             <div id="botonear"><input type="button" value="Unirse" onClick={this.UnirUser} /><input type="button" value="Crear" onClick={this.CrearClase} /></div>
                         </div>
                         <div id="conclases">
-                            <div id="clasesP">
-                                <div className="ButtonMisCursosC">
+                        <div className="ButtonMisCursosC">
                                     <input type="button" value="Clases creadas ▼" id="ClasesC" onClick={this.Accion1} />
                                 </div>
+                            <div id="clasesP">
+
                                 <div id="clasesP2">
                                     {this.state.Clase.map((Esito, Index) => {
                                         let variable = 0;
                                         for (let i = 0; i < User_clase.length; i++) {
-                                            if (User_clase[i].idclase == Esito.id) {
+                                            if (Esito.id == User_clase[i].idclase) {
                                                 variable = variable + 1;
                                             }
                                         }
@@ -281,11 +280,11 @@ class Main5 extends React.Component {
                                     })}
                                 </div>
                             </div>
-
-                            <div id="contidU">
-                                <div className="ButtonMisCursosC">
+                            <div className="ButtonMisCursosC">
                                     <input type="button" value="Clases inscritas ▼" id="ClasesP" onClick={this.Accion2} />
                                 </div>
+                            <div id="contidU">
+                                
                                 <div id="contidU2">
                                     {this.state.Usuario_C.map((Esito, Index) => {
                                         let variable = 0;
@@ -294,7 +293,7 @@ class Main5 extends React.Component {
                                                 variable = variable + 1;
                                             }
                                         }
-                                        console.log("Esto es variable: " + variable);
+
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
@@ -304,7 +303,7 @@ class Main5 extends React.Component {
                                                     </h4>
                                                 </div>
                                                 <div className="botoncard">
-                                                    <Link><input type="button" value="Ir" /></Link>
+                                                    <Link  to={{pathname: "/Clase/" + Esito.idclase, state:{InfoClass: Clases[Esito.idclase]}}}><input type="button" value="Ir"/></Link>
                                                     <h4 className="InfoClassCardConte">Id: {Esito.idclase}</h4>
                                                     <h4 className="InfoClassCardConte DisCel">Usuarios: {variable}</h4>
                                                 </div>

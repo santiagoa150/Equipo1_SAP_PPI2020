@@ -11,7 +11,7 @@ export const Cursos = [{
 },{
     id: 1,
     idCreador: "Learn",
-    Tipo: "Comunidad",
+    Tipo: "Integrado",
     Materia: "Filosofía",
     titulo: "Nacimiento del pensar",
     Tematica: "El origen de la filosofía",
@@ -36,7 +36,7 @@ export const Cursos = [{
     Tematica: "Respiración aerobica y anaerobica",
     Url: "/Images/Cursos/Biologia.png",
     conT: "<div><div><h2>Respiración celular</h2></div><div><div><p>La respiración celular es una ruta metabólica que rompe la glucosa y produce ATP, la molécula que permite todo el trabajo de las células.La respiración involucra muchas reacciones químicas. Las reacciones se pueden resumir en esta ecuación: C 6 H 12 O 6 + 6O 2 | 6CO 2 + 6H 2 O + Energía química (en ATP)</p></div><div><p>Repasemos:La respiración celular puede ser estudiada en 4 pasos: Glucólisis (estudiada en la guía anterior)Oxidación del piruvato (formación del acetil CoA)Ciclo de Krebs Transporte de electrones (fosforilación oxidativa).</p></div><div><p>El glucolisis se da en el citoplasma o citosol de la célula y no requiere de oxígeno, la oxidación del piruvato y ciclo de Krebs se llevan a cabo en la matriz mitocondrial y el transporte de electrones tiene lugar en la membrana interna de la mitocondria, estos dos últimos procesos requieren de oxígeno. </p></div><div><p>Cada una de estas etapas se describe con una serie de reacciones las cuales no se traerán en esta ocasión debido a su complejidad, lo importante es que identifiquemos dónde sucede cada proceso y cuáles son los productos finales de ellos. Algunas de las etapas ya se estudiaron en clase presencial o en guías anteriores, pero debido a su importancia serán retomadas aquí.</p></div></div><div><h2>Ruta anaeróbica del piruvato</h2></div><div><div><p>La Fermentación <br></br>La Glucolisis se da en ausencia de oxígeno, la fermentación es otra vía anaeróbica para degradar la glucosa, esta se realiza en muchos tipos de células y organismos. En la fermentación, la única vía de extracción de energía es la glucólisis, con uno o dos reacciones extras al final.  La fermentación y la respiración celular comienzan del mismo modo, con la glucólisis. Sin embargo, en la fermentación, el piruvato producido en la glucólisis no continúa su oxidación hacia el ciclo del ácido cítrico ni tampoco funciona la cadena de transporte de electrones. </p></div><div><p>La fermentación láctica <br></br>Las bacterias que forman el yogur realizan la fermentación del ácido láctico al igual que los eritrocitos de tu cuerpo, los cuales no tienen mitocondrias y por lo tanto, no pueden llevar a cabo la respiración celular.Las células musculares llevan a cabo la fermentación láctica, pero solo cuando tienen muy poco oxígeno como para continuar la respiración aeróbica, como cuando haces ejercicio muy intenso. Alguna vez se pensó que la acumulación de lactato en los músculos era responsable del dolor causado por el ejercicio, pero investigaciones recientes sugieren que tal vez esa no sea la razón. El ácido láctico producido en las células musculares se transporta a través del torrente sanguíneo hacia el hígado, donde se vuelve a convertir en piruvato y se continúa de manera normal con las reacciones restantes de la respiración celular.</p></div><div><p>Fermentación alcohólica <br></br> El producto final de la fermentación alcohólica es el etanol a partir de piruvato. La fermentación alcohólica de las levaduras produce el etanol de bebidas alcohólicas como la cerveza y el vino. Sin embargo, el alcohol en grandes cantidades es tóxico para las levaduras (al igual que para los seres humanos), lo que establece un límite superior en el porcentaje de alcohol en estas bebidas. La tolerancia de las levaduras al etanol abarca desde el 555 por ciento hasta el 212121 por ciento según la cepa de levadura y las condiciones ambientales.</p></div></div></div>",
-    privacidad: "null"
+    privacidad: 0
 },{
     id: 4,
     idCreador: "Learn",
@@ -45,6 +45,12 @@ export const Cursos = [{
     titulo: "Ley de Boyle o ley de Boyle-Mariotte",
     Tematica: "Leyes de los gases",
     Url: "/Images/Cursos/Quimica.png",
-    conT:"<div><div><h2>Ley de Boyle o ley de Boyle-Mariotte | Leyes de los gases</h2></div><div><div><p>***</p></div></div></div>",
+    conT:"<div><div><h2>Ley de Boyle o ley de Boyle-Mariotte | Leyes de los gases</h2></div><div><div><p>La Ley de Boyle es una ley de los gases que relaciona la presión y el volumen de una determinada cantidad de gas, sin variación de temperatura, es decir, a temperatura constante. También se la conoce como Ley de Boyle-Mariotte porque fue formulada independientemente por el físico y químico anglo-irlandés Robert Boyle (1662) y el físico y botánico francés Edme Mariotte (1676).</p></div></div><div><h2>Explicación de la ley de Boyle:</h2></div><div><div><p>En 1662 Robert Boyle, descubrió que la presión aplicada a un gas es inversamente proporcional a su volumen a temperatura y numero de moles (cantidad de gas) constante. Es decir que, si se aumenta del doble la presión ejercida sobre el gas, este se comprime reduciendo su volumen a la mitad. Si la presión es 3 veces superior, el volumen será de un tercio.</p></div><div><p>A temperatura constante, el volumen de una masa fija de gas es inversamente proporcional a la presión que éste ejerce.</p></div><div><p>Fórmulas de la ley de Boyle. Esta ley se puede expresar de forma matemática como:</p></div><div><p>P · V = k , P es presión, V es Volumen (k es una constante cuando Temperatura y masa son constantes).</p></div><div><p>Esta fórmula se puede utilizar para determinar el cambio de presión o temperatura durante una transformación isotérmica de la siguiente manera: P1 · V1 = P2 · V2 </p></div><div><p>Es decir, que el producto entre la presión inicial y el volumen inicial es igual al producto de la presión final por el volumen final. Por ejemplo, si se desea determinar el volumen final, será suficiente dividir P1V1 entre P2: (P1 · V1)/ P2 =  V2 </p></div></div></div>",
     privacidad: "null"
+},{
+    id:5,
+    idCreador: "Learn",
+    Tipo: "Integrado",
+    Materia: "Estadística",
+    Url: "/Images/Cursos/Estadistica.png"
 }]

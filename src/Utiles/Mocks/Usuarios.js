@@ -22,5 +22,17 @@ export const Usuarios = [
         Contraseña: "montoya0713_",
         id: 1,
         image: "https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png"
+    },
+    {
+        Nombre: "Jonnier Júlian",
+        Apellido: "Riaños Ocampo",
+        UserName: "jonnier14",
+        Correo: "palomaocampo@gmail.com",
+        Edad: "16",
+        FechaN: new Date("2003-07-14"),
+        Sexo: "Hombre",
+        Contraseña: "jonnier14.",
+        id: 2,
+        image: "https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png"
     }
 ]
