@@ -4,7 +4,7 @@ import { Usuarios } from '../Utiles/Mocks/Usuarios';
 import { User_clase } from '../Utiles/Mocks/User_clase';
 import { withRouter, Link } from 'react-router-dom';
 import '../Styles/Main7.css';
-import {Cursos} from '../Utiles/Mocks/Cursos';
+import { Cursos } from '../Utiles/Mocks/Cursos';
 class Main7 extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +14,10 @@ class Main7 extends React.Component {
     }
     Accion1 = () => {
         if (this.state.Clase.idusuario == UsuarioI[0].id) {
-            return (<button className="BClaseAccion">Crear curso</button>)
+            return (
+                <Link className="BClaseACCionC" to={{ pathname: "/CrearCurso", state: { location: "/clase", InfoClass: this.props.location.state.InfoClass } }}>
+                    <button className="BClaseAccion">Crear curso</button>
+                </Link>);
         }
     }
 
@@ -23,7 +26,7 @@ class Main7 extends React.Component {
             <>
                 <div id="Main7Container">
                     <div id="ClasesMain7">
-                    {Cursos.filter(Esito => Esito.privacidad == this.state.Clase.id).map((Esito, index) => {
+                        {Cursos.filter(Esito => Esito.privacidad == this.state.Clase.id).map((Esito, index) => {
 
                             return (
                                 <div id="MaxContC" className="MaxContC" key={index}>
@@ -52,7 +55,7 @@ class Main7 extends React.Component {
                                     </div>
                                 </div>
                             );
-                            
+
                         })}
                     </div>
                     <div id="UsersMain7">

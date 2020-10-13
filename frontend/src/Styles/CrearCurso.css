@@ -1,0 +1,207 @@
+.LogoCrearCurso {
+    width: 30vh;
+}
+
+.MainCrearCurso {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 100%;
+}
+
+.TableroCrearC {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    grid-row: 1/2;
+    grid-column: 1/2;
+    background-color: white;
+}
+
+.ButtonCCurso2 {
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    width: 100%;
+}
+
+.ButtonCCurso {
+    height: 35px;
+    width: 80%;
+}
+
+.ButtonCCurso:hover, .ButonSubir:hover {
+    background-color: wheat !important;
+    color: black;
+}
+
+.SubIMG {
+    width: calc(100% - 40px);
+    height: 35px;
+}
+
+.divSubImG {
+    display: flex;
+    align-items: center;
+}
+
+.XImageSubImage {
+    background-image: url(/images/XImage.png);
+    background-repeat: no-repeat;
+    background-size: 80%;
+    background-position: center;
+    width: 35px;
+    height: 35px;
+}
+
+.XImageSubImage:hover {
+    background-color: wheat !important;
+}
+
+.SubIMG:focus {
+    outline: none;
+}
+
+.SubIMG::-webkit-file-upload-button {
+    background-image: url(/images/Upload.png);
+    background-position: center;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    color: wheat;
+    border-radius: 0;
+    border: 0;
+    width: 35px;
+    height: 100%;
+    background-color: wheat;
+    transition: all 1000ms;
+}
+
+.SubIMG::-webkit-file-upload-button:hover {
+    background-color: lightgray;
+    color: lightgray;
+    transition: all 1000ms;
+}
+
+.EditorCrearCurso {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.FormCurso, .OpcionesCrearCurso {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+#Negrilla {
+    background-image: url(/images/Negrilla.png);
+}
+
+#Cursiva {
+    background-image: url(/images/Cursiva.png);
+}
+
+#Titulo {
+    background-image: url(/images/Titulo.png);
+}
+
+.ButonSubir {
+    margin-left: 20px;
+    height: 35px;
+    width: 100px;
+}
+
+.Cien2Ele {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MiniButonCrear {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    width: 35px;
+    height: 35px;
+    background-color: white;
+}
+
+.Cien {
+    width: 80%;
+}
+
+.ICCUrso, .TextAreaCCurso {
+    border-radius: 5px;
+    background-color: wheat;
+}
+
+.ICCUrso {
+    width: 100%;
+    height: 30px;
+}
+
+.ICCUrso:focus, .TextAreaCCurso {
+    outline: none;
+}
+
+.TextAreaCCurso {
+    width: 100%;
+    height: 80px;
+}
+
+.InfoCrearC p {
+    color: white;
+}
+
+.InfoCrearC {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: #444140;
+    width: 100%;
+    height: 100%;
+    grid-row: 1/2;
+    grid-column: 2/3;
+    justify-content: space-around;
+}
+
+.MainTablero {
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: wheat;
+    width: 95%;
+    height: 95%;
+}
+.MainTablero::-webkit-scrollbar{
+    background-color:  wheat;
+    width: 15px;
+}
+.MainTablero::-webkit-scrollbar-thumb{
+    background-color: #444140;
+    box-shadow: 2px 0 10px black;
+}
+@media(max-width: 600px) {
+    .MainCrearCurso {
+        grid-template-columns: 100%;
+        grid-template-rows: 650px max-content;
+    }
+    .InfoCrearC {
+        grid-row: 1/2;
+        grid-column: 1/2;
+    }
+    .TableroCrearC {
+        min-height: 500px;
+        grid-row: 2/3;
+        grid-column: 1/2;
+    }
+    .MainTablero {
+        width: 95%;
+        height: 97%;
+    }
+}

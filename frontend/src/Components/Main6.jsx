@@ -81,7 +81,7 @@ class Main6 extends React.Component {
                 <div id="Main6Container">
                     <div id="Main6I">
                         <div className="ButtonMisCursosC">
-                        <button className="button buttonMisCursos CIMB" id="CursosI" onClick={this.Accion1}>Cursos iniciado ▼</button>
+                            <button className="button buttonMisCursos CIMB" id="CursosI" onClick={this.Accion1}>Cursos iniciado ▼</button>
                         </div>
                         <div id="CardsInner">
                             {this.state.Progresos.map((Esito, index) => {
@@ -110,7 +110,9 @@ class Main6 extends React.Component {
                     </div>
                     <div id="Main6C">
                         <div className="ButtonMisCursosC">
-                            <button className="button buttonMisCursos">Crear curso</button>
+                            <Link to={{pathname:"/CrearCurso", state: {location: "/misCursos"}}} className="ButtonMisCursosC">
+                                <button className="button buttonMisCursos">Crear curso</button>
+                            </Link>
                             <button className="button buttonMisCursos" id="CursosC" onClick={this.Accion2}>Mis cursos ▼</button>
                         </div>
                         <div id="CardsInner2">

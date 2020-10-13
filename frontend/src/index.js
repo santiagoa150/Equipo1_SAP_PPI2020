@@ -10,6 +10,7 @@ import Curso from './Pages/Curso';
 import MisCursos from './Pages/MisCursos';
 import Clases from './Pages/Clases';
 import Clase from './Pages/Clase';
+import CrearCurso from './Pages/CrearCurso';
 import {
     BrowserRouter as Router,
     Switch,
@@ -20,6 +21,7 @@ ReactDOM.render(
     <React.StrictMode >
         <Router >
             <Switch >
+                
                 <Route path="/Perfíl" >
                     <Perfil />
                 </Route>
@@ -41,6 +43,7 @@ ReactDOM.render(
                 <Route path="/Curso">
                     <Curso />
                 </Route>
+                <Route path="/CrearCurso" component={CrearCurso}/>
                 <Route path="/Clase" component={Clase}/>
                 <Route path="/" >
                     <Home />

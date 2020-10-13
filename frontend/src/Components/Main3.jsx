@@ -26,11 +26,6 @@ class Main3 extends React.Component {
                                 })}
                             </select>
                             <select className="FiltrosC">
-                                <option className="None" value="0">Sexo</option>
-                                <option>Hombre</option>
-                                <option>Mujer</option>
-                            </select>
-                            <select className="FiltrosC">
                                 <option className="None" value="0">Año de creación</option>
                                 <option>2020</option>
                             </select>
