@@ -12,4 +12,17 @@ router.get('/:usuario', (req, res) => {
         }
     });
 });
+
+router.post('/', (req, res) => {
+    const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo } = req.body;
+    let usuarioA = [nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo];
+    let queryUsuario = 'INSERT INTO usuarios(nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo) VALUES(?,?,?,?,?,?,?,?)';
+    mysqlconection.query(queryUsuario, usuarioA, (err, results, fields) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.json({ message: 'Usuario fue registrado.' });
+        }
+    });
+});
 module.exports = router;
