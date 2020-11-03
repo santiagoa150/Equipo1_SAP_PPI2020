@@ -45,7 +45,7 @@ router.put('/principal/:id', (req, res) => {
         if (err) {
             console.error(err);
         } else {
-            res.json({ message: 'se cerro sesion correctamente.' });
+            res.json({ message: 'se inicio sesion correctamente.' });
         }
     });
 });
@@ -58,7 +58,20 @@ router.put('/perfil/:id', (req, res) => {
         if (err) {
             console.error(err);
         } else {
-            res.json({ message: 'se cerro sesion correctamente.' });
+            res.json({ message: 'se actualizo el perfil correctamente.' });
+        }
+    });
+});
+/* cambiar imagen */
+router.put('/perfil/:usuario', (req, res) => {
+    const { usuario } = req.params;
+    const { avatar } = req.body;
+    let queryimagen = 'UPTADE usuarios SET avatar=? WHERE usuario=?';
+    mysqlconection.query(queryimagen, [avatar, usuario], (err, results, fields) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.json({ message: 'se actualizo la imagen correctamente.' });
         }
     });
 });
