@@ -49,4 +49,17 @@ router.put('/principal/:id', (req, res) => {
         }
     });
 });
+/* actualizar informacion */
+router.put('/perfil/:id', (req, res) => {
+    const { id } = req.params;
+    const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo } = req.body;
+    let queryactualizarperfil = 'UPTADE usuarios SET nombre=?, apellido=?, genero=?, fecha_n=?, edad=?, usuario=?, contraseña=?, correo=? WHERE id=?';
+    mysqlconection.query(queryactualizarperfil, [nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, id], (err, results, fields) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.json({ message: 'se cerro sesion correctamente.' });
+        }
+    });
+});
 module.exports = router;
