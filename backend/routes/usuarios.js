@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const mysqlconection = require('../db/db');
 /* inicio de sesion */
-router.get('/:usuario', (req, res) => {
+router.get('/usuario-sesion/:usuario', (req, res) => {
     const { usuario } = req.params;
     mysqlconection.query('SELECT * FROM usuarios WHERE usuario = ?', [usuario], (error, rows, fields) => {
         if (error) {
@@ -13,10 +13,10 @@ router.get('/:usuario', (req, res) => {
     });
 });
 /* registrar usuario */
-router.post('/', (req, res) => {
-    const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo } = req.body;
-    let usuarioA = [nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo];
-    let queryUsuario = 'INSERT INTO usuarios(nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo) VALUES(?,?,?,?,?,?,?,?)';
+router.post('/registro-sesion', (req, res) => {
+    const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, tipo_registro } = req.body;
+    let usuarioA = [nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, tipo_registro];
+    let queryUsuario = 'INSERT INTO usuarios(nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, tipo_registro) VALUES(?,?,?,?,?,?,?,?,?)';
     mysqlconection.query(queryUsuario, usuarioA, (err, results, fields) => {
         if (err) {
             console.error(err);
@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
     });
 });
 /* cerrar sesion */
-router.put('/:id', (req, res) => {
+router.put('/cerrar-sesion/estado/:id', (req, res) => {
     const { id } = req.params;
     let querycerrarsesion = 'UPTADE usuarios SET estado=false WHERE id=?';
     mysqlconection.query(querycerrarsesion, [id], (err, results, fields) => {
@@ -38,7 +38,7 @@ router.put('/:id', (req, res) => {
     });
 });
 /* iniciar sesion */
-router.put('/principal/:id', (req, res) => {
+router.put('/inicio-sesion/estado/:id', (req, res) => {
     const { id } = req.params;
     let queryiniciarsesion = 'UPTADE usuarios SET estado=true WHERE id=?';
     mysqlconection.query(queryiniciarsesion, [id], (err, results, fields) => {
@@ -50,7 +50,7 @@ router.put('/principal/:id', (req, res) => {
     });
 });
 /* actualizar informacion */
-router.put('/perfil/:id', (req, res) => {
+router.put('/actualizacion-perfil/datos/:id', (req, res) => {
     const { id } = req.params;
     const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo } = req.body;
     let queryactualizarperfil = 'UPTADE usuarios SET nombre=?, apellido=?, genero=?, fecha_n=?, edad=?, usuario=?, contraseña=?, correo=? WHERE id=?';
@@ -63,11 +63,11 @@ router.put('/perfil/:id', (req, res) => {
     });
 });
 /* cambiar imagen */
-router.put('/perfil/:usuario', (req, res) => {
-    const { usuario } = req.params;
+router.put('/actualizacion-perfil/imagen/:id', (req, res) => {
+    const { id } = req.params;
     const { avatar } = req.body;
-    let queryimagen = 'UPTADE usuarios SET avatar=? WHERE usuario=?';
-    mysqlconection.query(queryimagen, [avatar, usuario], (err, results, fields) => {
+    let queryimagen = 'UPTADE usuarios SET avatar=? WHERE id=?';
+    mysqlconection.query(queryimagen, [avatar, id], (err, results, fields) => {
         if (err) {
             console.error(err);
         } else {
@@ -75,4 +75,5 @@ router.put('/perfil/:usuario', (req, res) => {
         }
     });
 });
+
 module.exports = router;

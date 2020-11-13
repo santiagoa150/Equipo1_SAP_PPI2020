@@ -7,6 +7,11 @@ const mysqlconection = mysql.createConnection({
     multipleStatements: true
 });
 mysqlconection.connect((error) => {
-    if (error) { console.error(error); return; } else { console.log('base_de_datos'); }
+    if (error) {
+        console.error(error);
+        return;
+    } else {
+        console.log('base_de_datos');
+    }
 });
 module.exports = mysqlconection;

@@ -7,11 +7,11 @@ const usuarios_clases = require('./routes/usuario_clases');
 const usuario_cursos = require('./routes/usuario_curso');
 app.set('port', 3883);
 app.use(express.json());
-app.use('/', usuarios);
-app.use('/', cursos);
-app.use('/', clases);
-app.use('/', usuarios_clases);
-app.use('/', usuario_cursos);
+app.use('/Usu', usuarios);
+app.use('/Cur', cursos);
+app.use('/Cla', clases);
+app.use('/UsuCla', usuarios_clases);
+app.use('/UsuCur', usuario_cursos);
 app.listen(app.get('port'), () => {
     console.log('server on port' + app.get('port'));
 });
