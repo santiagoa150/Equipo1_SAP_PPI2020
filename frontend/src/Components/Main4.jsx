@@ -21,10 +21,12 @@ class Main4 extends React.Component {
                     <div id="TeoriaCurso">
                     </div>
 
-                    <Link id="DidaCurso">
+                    <Link id="DidaCurso" to={{pathname:"/Didactico",
+                    state:{
+                        id:this.props.id
+                    }}}>
                         <button className="LinkCursoMain4">Jugar</button>
                     </Link>
-
 
                     <Link id="ExaCurso">
                         <button className="LinkCursoMain4">Pruebate</button>

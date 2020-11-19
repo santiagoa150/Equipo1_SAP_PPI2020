@@ -17,14 +17,14 @@ class Integrados extends React.Component {
 
     prueba=()=>{
         aja =false;
-        try{    
-            let x = (UsuarioI[0].FechaN).getFullYear();    
+        try{
+            let x = (UsuarioI[0].FechaN).getFullYear();
         }
         catch(e){
-            aja=true;    
+            aja=true;
         }}
 
-    render() { 
+    render() {
         return (
         <>
         <Header2 Componente="/Integrados" Pagina={this.props.location.state.pagina}/>
@@ -36,5 +36,5 @@ class Integrados extends React.Component {
         </>  );
     }
 }
- 
+
 export default withRouter(Integrados);

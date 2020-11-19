@@ -7,6 +7,7 @@ import Principal_ from './Pages/Principal_';
 import Perfil from './Pages/Perfil';
 import Integrados from './Pages/Inte_Comu';
 import Curso from './Pages/Curso';
+import Didactico from './Pages/Didactico';
 import MisCursos from './Pages/MisCursos';
 import Clases from './Pages/Clases';
 import Clase from './Pages/Clase';
@@ -21,7 +22,6 @@ ReactDOM.render(
     <React.StrictMode >
         <Router >
             <Switch >
-                
                 <Route path="/Perfíl" >
                     <Perfil />
                 </Route>
@@ -42,6 +42,9 @@ ReactDOM.render(
                 </Route>
                 <Route path="/Curso">
                     <Curso />
+                </Route>
+                <Route path="/Didactico">
+                    <Didactico />
                 </Route>
                 <Route path="/CrearCurso" component={CrearCurso}/>
                 <Route path="/Clase" component={Clase}/>

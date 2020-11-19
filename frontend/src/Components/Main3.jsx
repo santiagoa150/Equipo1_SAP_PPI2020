@@ -46,7 +46,7 @@ class Main3 extends React.Component {
                                                 <h5 className="TitlesI">Materia: <br /> {Esito.Materia}</h5>
                                             </div>
                                             <div id="BottonCI">
-                                                <img className="Edit2" src="/Images/InfoCurso.png" />
+                                                {/* <img className="Edit2" src="/Images/InfoCurso.png" /> */}
                                                 <Link to={{
                                                     pathname: "/Curso",
                                                     state: {

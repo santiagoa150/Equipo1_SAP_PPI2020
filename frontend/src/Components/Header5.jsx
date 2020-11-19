@@ -8,7 +8,7 @@ import '../Styles/Cursos.css';
 
 
 
-class Header3 extends React.Component {
+class Header5 extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -22,19 +22,20 @@ class Header3 extends React.Component {
         return (
             <>
                 <div id="Header3Container">
-                    <Link to="/misCursos">
+                    <Link to={{pathname:"/Curso",
+                    state:{
+                        id:this.props.location.state.id
+                    }}}>
                     <div id="AtrasCurso">
 
                     </div>
                     </Link>
                          <h2 id="TitleCurso">{this.state.Curso.titulo}</h2>
-                    <Link className="GuardarCurso" to="/misCursos">
-                    <button className="button GuardarCurso2">Guardar</button>
-                    </Link>
+                    <span></span>
                 </div>
             </>
           );
     }
 }
  
-export default withRouter(Header3);
+export default withRouter(Header5);

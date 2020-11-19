@@ -33,11 +33,11 @@ class Principal extends React.Component {
         let x = this.props.location.state.x;
         if (x == "/Principal" || x == "/principal") {
             return (<Main2 />);
-        } else if (x == "/Integrados") {
+        } else if (x=="/Integrados") {
             return (<Main3 />)
-        } else if (x == "/Clases") {
+        } else if (x == "/clases") {
             return (<Main5 />)
-        } else if (x == "/misCursos") {
+        } else if (x =="/misCursos") {
             return (<Main6 />)
         }
     }
