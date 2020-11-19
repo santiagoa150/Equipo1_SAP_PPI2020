@@ -345,12 +345,6 @@ class Perfil extends React.Component {
 
                                 </div>
                             </div>
-                            <div className="GroupIP">
-                                <p className="PInfo">Id:</p>
-                                <p className="PInfo">{UsuarioI[0].id}</p>
-                                <div className="Edit2">
-                                </div>
-                            </div>
                             {this.state.Bool && <Redirect to={{ pathname: this.props.location.state.x, x: this.props.location.state.x }}></Redirect>}
                         </div>
                         <div id="ButtonPContainer">

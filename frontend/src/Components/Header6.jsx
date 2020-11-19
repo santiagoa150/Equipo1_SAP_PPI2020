@@ -1,8 +1,7 @@
 import React from 'react';
+import '../Styles/Header4.css';
 import {withRouter, Link} from 'react-router-dom';
-import Header6 from '../Components/Header6';
-import Main8 from '../Components/Main8';
-class Crearcurso extends React.Component {
+class Header4 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -10,11 +9,12 @@ class Crearcurso extends React.Component {
     render() { 
         return ( 
             <>
-                <Header6/>
-                <Main8/>
+            <div id="Header4Container">
+                <h2>Crear clase</h2>
+            </div>
             </>
          );
     }
 }
  
-export default withRouter(Crearcurso);
+export default withRouter(Header4);
