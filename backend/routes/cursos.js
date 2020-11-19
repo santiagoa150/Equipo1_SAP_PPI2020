@@ -8,19 +8,19 @@ router.get('/get_cursos-Comunidad_Integrado/:categoria', (req, res) => {
     const { materia, fecha_c, titulo } = req.body;
     let queryCursos;
     if (materia != "" && fecha_c != "", titulo != "") {
-        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND materia=? AND fecha_c =Date(?) AND titulo =? AND privacidad= false';
+        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND materia=? AND fecha_c =Date(?) AND lower(titulo) like "%?%" AND privacidad= false';
     } else if (materia != "" && fecha_c != "") {
         queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND materia=? AND fecha_c =Date(?) AND privacidad= false';
     } else if (materia != "" && titulo != "") {
-        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND materia=? AND titulo =? AND privacidad= false';
+        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND materia=? AND lower(titulo) like "%?%" AND privacidad= false';
     } else if (fecha_c != "" && titulo != "") {
-        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND fecha_c =Date(?) AND titulo =? AND privacidad= false';
+        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND fecha_c =Date(?) AND lower(titulo) like "%?%" AND privacidad= false';
     } else if (materia != "") {
         queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND materia=? AND privacidad= false';
     } else if (fecha_c != "") {
         queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND fecha_c =Date(?) AND privacidad= false';
     } else if (titulo != "") {
-        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND titulo =? AND privacidad= false';
+        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND lower(titulo) like "%?%" AND privacidad= false';
     } else {
         queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND privacidad= false';
     }
