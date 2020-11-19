@@ -35,7 +35,7 @@ class Principal extends React.Component {
             return (<Main2 />);
         } else if (x=="/Integrados") {
             return (<Main3 />)
-        } else if (x == "/clases") {
+        } else if (x == "/Clases") {
             return (<Main5 />)
         } else if (x =="/misCursos") {
             return (<Main6 />)

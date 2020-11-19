@@ -137,7 +137,7 @@ class Main6 extends React.Component {
                                                             id: Esito.id
                                                         }
                                                     }}>
-                                                        <button className="button buttonI">Editor curso</button>
+                                                        <button className="button buttonI">Editar curso</button>
                                                     </Link>
                                                 </div>
                                             </div>

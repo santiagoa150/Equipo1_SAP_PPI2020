@@ -11,6 +11,7 @@ import Didactico from './Pages/Didactico';
 import MisCursos from './Pages/MisCursos';
 import Clases from './Pages/Clases';
 import Clase from './Pages/Clase';
+import CrearCursoTeorico from './Pages/CrearCursoTeorico';
 import CrearCurso from './Pages/CrearCurso';
 import {
     BrowserRouter as Router,
