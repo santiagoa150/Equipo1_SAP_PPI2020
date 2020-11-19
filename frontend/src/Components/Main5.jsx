@@ -15,7 +15,6 @@ class Main5 extends React.Component {
         }
     }
     componentDidMount() {
-        document.getElementById("imgclases").style.backgroundImage = "url(" + UsuarioI[0].image + ")";
         /*CLASES CREADAS*/
         if (this.state.Clase.length == 0) {
             document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
@@ -111,7 +110,7 @@ class Main5 extends React.Component {
 
         if (document.getElementById("UsuarioClase").value == "") {
             document.getElementById("UsuarioClase").style.color = "red"
-            document.getElementById("UsuarioClase").value = "Dato no ingresado."
+            document.getElementById("UsuarioClase").value = "No ingresado"
             setTimeout(function () {
                 document.getElementById("UsuarioClase").value = "";
                 document.getElementById("UsuarioClase").style.color = "black";
@@ -120,15 +119,24 @@ class Main5 extends React.Component {
             let j = document.getElementById("UsuarioClase").value;
             let inner = document.getElementById("UsuariosIN").innerHTML;
             for (let k = 0; k < Usuarios.length; k++) {
-                if (Usuarios[k].id == j && Usuarios[k].id != UsuarioI[0].id) {
-                    inner = inner + '<div class="Etiqueta"><p>Id:' + j + '</p></div>';
-                    document.getElementById("UsuariosIN").innerHTML = inner;
-                    SubirUsu[i] = j;
-                    document.getElementById("UsuarioClase").value = "";
-                    console.log("Esto es SubirUsu" + SubirUsu[i]);
-                    i++;
+                if (Usuarios[k].UserName == j ) {
+                    if(Usuarios[k].id == UsuarioI[0].id){
+                        document.getElementById("UsuarioClase").style.color = "red"
+                        document.getElementById("UsuarioClase").value = "Eres tú"
+                        setTimeout(function () {
+                            document.getElementById("UsuarioClase").value = "";
+                            document.getElementById("UsuarioClase").style.color = "black";
+                        }, 1000);
+                    }else{
+                        inner = inner + '<div class="Etiqueta"><p>Usuario:' + j + '</p></div>';
+                        document.getElementById("UsuariosIN").innerHTML = inner;
+                        SubirUsu[i] = j;
+                        document.getElementById("UsuarioClase").value = "";
+                        console.log("Esto es SubirUsu" + SubirUsu[i]);
+                    i++;}
                 } else {
-                    document.getElementById("UsuarioClase").style.color = "red"
+                    document.getElementById("UsuarioClase").style.color = "red"                    
+                    document.getElementById("UsuarioClase").value = "No existe"
                     setTimeout(function () {
                         document.getElementById("UsuarioClase").value = "";
                         document.getElementById("UsuarioClase").style.color = "black";
@@ -200,7 +208,7 @@ class Main5 extends React.Component {
                             <div>
                                 <div>
                                     <p className="Group">Id clase</p>
-                                    <input type="text" className="inputCrearClase Group" id="UsuarioClase2" type="number" autoComplete="off" />
+                                    <input type="text" className="inputCrearClase Group" id="UsuarioClase2" autoComplete="off" />
                                 </div>
                             </div>
                             <input type="button" className="inputCrearClase2" onClick={this.SubirUsuario2} />
@@ -210,7 +218,6 @@ class Main5 extends React.Component {
                 </div>
                 <div className="PopUp1" id="PopUp1">
                     <div className="PopUp1_">
-
                         <div id="PopUpPart1">
                             <h3>Crear clase</h3>
                             <div className="GroupC">
@@ -218,9 +225,9 @@ class Main5 extends React.Component {
                                 <input type="text" id="NombreClase" className="Group inputCrearClase" autoComplete="off" />
                             </div>
                             <div className="GroupC">
-                                <p className="Group">Id usuarios</p>
+                                <p className="Group">Usuario</p>
                                 <div className="Group GroupC2">
-                                    <input type="text" className="inputCrearClase" id="UsuarioClase" type="nunber" autoComplete="off" />
+                                    <input type="text" className="inputCrearClase" id="UsuarioClase" autoComplete="off" />
                                     <input type="button" className="inputCrearClase2" onClick={this.SubirUsuario1} />
                                 </div>
                             </div>
@@ -238,11 +245,7 @@ class Main5 extends React.Component {
                 </div>
                 <div className="contM5">
                     <div className="franja">
-                        <div id="infop">
-                            <div id="imgclases"></div>
-                            <div id="contid">Tu id:{UsuarioI[0].id}</div>
-                            <div id="botonear"><input type="button" value="Unirse" onClick={this.UnirUser} /><input type="button" value="Crear" onClick={this.CrearClase} /></div>
-                        </div>
+                        <div id="botonear"><input type="button" value="Unirse" onClick={this.UnirUser} /><input type="button" value="Crear" onClick={this.CrearClase} /></div>
                         <div id="conclases">
                         <div className="ButtonMisCursosC">
                                     <input type="button" value="Clases creadas ▼" id="ClasesC" onClick={this.Accion1} />
