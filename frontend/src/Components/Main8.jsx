@@ -5,6 +5,40 @@ class Main8 extends React.Component {
         super(props);
         this.state = {}
     }
+    Botones = () => {
+        if (this.props.location.state.location == "/misCursos") {
+            return (
+                <>
+                        <Link className="buttonAlgo"  to={{pathname:'/misCursos', state:{location: this.props.location.state.location}}}> 
+                            <button className="button buttonMisCursos">Cancelar</button>
+                        </Link>
+                </>
+            );
+        } else {
+            return (
+                <>
+                        <Link className="buttonAlgo"  to={{pathname:'/clase/'+ this.props.location.state.InfoClass.id, state:{InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location}}}> 
+                            <button className="button buttonMisCursos">Cancelar</button>
+                        </Link>
+                </>
+            );
+        }
+    }
+    Botones2 = () =>{
+        if(this.props.location.state.location == '/misCursos'){
+            return(
+                <Link to={{pathname:"/CrearCursoTeorico", state:{location: this.props.location.state.location}}}>
+                <button className="EstiloButtonCrearCursoC">Editar</button>
+                </Link>
+            );
+        }else{
+            return(
+                <Link to={{pathname:"/CrearCursoTeorico", state:{location: this.props.location.state.location, InfoClass: this.props.location.state.InfoClass}}}>
+                <button className="EstiloButtonCrearCursoC">Editar</button>
+                </Link>
+            );
+        }
+    }
     render() {
         return (
             <>
@@ -28,12 +62,28 @@ class Main8 extends React.Component {
                         </form>
                         <button className="button buttonMisCursos">Guardar</button>
                         <button className="button buttonMisCursos">Publicar</button>
-                        <Link className="buttonAlgo"  to={{pathname:this.props.location.state.location, state:{InfoClass: this.props.location.state.InfoClass}}}> 
-                            <button className="button buttonMisCursos">Cancelar</button>
-                        </Link>
+                        {this.Botones()}
                     </div>
-                    <div>
-
+                    <div className="CardsCrearContenido">
+                        <div className="CardCrearCursoContenido">
+                            <h3>Teoría</h3>
+                            {this.Botones2()}
+                            <button className="EstiloButtonCrearCursoC">Borrar contenido</button>  
+                        </div>
+                        <div className="CardCrearCursoContenido">
+                            <h3>Minijuego</h3>
+                            <Link>
+                            <button className="EstiloButtonCrearCursoC">Editar</button>
+                            </Link>
+                            <button className="EstiloButtonCrearCursoC">Borrar contenido</button>
+                        </div>
+                        <div className="CardCrearCursoContenido">
+                            <h3>Examen</h3>
+                            <Link>
+                            <button className="EstiloButtonCrearCursoC">Editar</button>
+                            </Link>
+                            <button className="EstiloButtonCrearCursoC">Borrar contenido</button>
+                        </div>
                     </div>
                 </div>
             </>

@@ -8,31 +8,6 @@ class CrearCursoTeorico extends React.Component {
             ConteCurso: ""
         }
     }
-    Botones = () => {
-        if (this.props.location.state.location == "/misCursos") {
-            return (
-                <>
-                    <Link className="ButtonCCurso2" to="/misCursos">
-                        <button className="ButtonCCurso">Atrás</button>
-                    </Link>
-                    <Link className="ButtonCCurso2" to="/misCursos">
-                        <button className="ButtonCCurso">Guardar</button>
-                    </Link>
-                </>
-            );
-        } else {
-            return (
-                <>
-                    <Link className="ButtonCCurso2" to={{ pathname: "/clase/" + this.props.location.state.InfoClass.id, state: { InfoClass: this.props.location.state.InfoClass } }}>
-                        <button className="ButtonCCurso">Atrás</button>
-                    </Link>
-                    <Link className="ButtonCCurso2" to={{ pathname: "/clase/" + this.props.location.state.InfoClass.id, state: { InfoClass: this.props.location.state.InfoClass } }}>
-                        <button className="ButtonCCurso">Guardar</button>
-                    </Link>
-                </>
-            );
-        }
-    }
     Accion1 = () => {
         let Texto = document.getElementById("TextoCurso");
         if (Texto.value != "") {
@@ -62,6 +37,21 @@ class CrearCursoTeorico extends React.Component {
             }
         } else {
 
+        }
+    }
+    Botones = () =>{
+        if(this.props.location.state.location == '/misCursos'){
+            return(
+                <Link className="buttonAlgo" to={{pathname:"/CrearCurso", state:{location: this.props.location.state.location}}}>
+                <button className="button buttonMisCursos">Guardar</button>
+                </Link>
+            );
+        } else{
+            return(
+            <Link className="buttonAlgo" to={{pathname:"/CrearCurso", state:{location: this.props.location.state.location, InfoClass: this.props.location.state.InfoClass}}}>
+            <button className="button buttonMisCursos">Guardar</button>
+            </Link>
+            );
         }
     }
     render() {
@@ -96,8 +86,8 @@ class CrearCursoTeorico extends React.Component {
                             </div>
 
                         </div>
+                        <button className="button buttonMisCursos">Cancelar</button>
                         {this.Botones()}
-
                     </div>
                 </div>
             </>

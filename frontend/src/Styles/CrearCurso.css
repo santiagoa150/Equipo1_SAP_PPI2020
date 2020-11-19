@@ -16,9 +16,32 @@
     grid-template-columns: 30% 70%;
     grid-template-rows: 100%;
 }
+.EstiloButtonCrearCursoC{
+    width: 180px;
+    height: 30px;
+    margin-top: 20px;
+}
 .buttonAlgo{
     width: 100%;
     text-align: center;
+}
+.CardsCrearContenido{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    min-height: calc(100vh - 71px);
+}
+.CardCrearCursoContenido{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: start;
+    box-shadow: 5px 5px 10px black;
+    border-radius: 5px;
+    background-color: #F6EBE9;
+    width: 200px;
+    height: 200px;
 }
 .editarInfo{
     background-color:#F6EBE9;
@@ -205,6 +228,24 @@
     box-shadow: 2px 0 10px black;
 }
 @media(max-width: 600px) {
+    .CardsCrearContenido{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-flow: column;
+        width: 100%;
+        min-height: 700px;
+    }
+    .editarInfo{
+        grid-column: 1/2;
+        grid-row: 1/2;
+    }
+    .PadreCursoCrear{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 500px max-content;
+    }
     .MainCrearCurso {
         grid-template-columns: 100%;
         grid-template-rows: 650px max-content;

@@ -48,6 +48,7 @@ ReactDOM.render(
                     <Didactico />
                 </Route>
                 <Route path="/CrearCurso" component={CrearCurso}/>
+                <Route path="/CrearCursoTeorico" component={CrearCursoTeorico}/>
                 <Route path="/Clase" component={Clase}/>
                 <Route path="/" >
                     <Home />
