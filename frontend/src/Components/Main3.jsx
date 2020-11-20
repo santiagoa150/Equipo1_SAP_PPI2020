@@ -1,14 +1,22 @@
 import React from 'react';
 import '../Styles/Main3.css';
-import { Cursos } from '../Utiles/Mocks/Cursos';
+import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 
 class Main3 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            filtrado: Cursos.filter(Esito => Esito.Tipo == this.props.location.state.pagina)
+            filtrado: []
         }
+    }
+    componentDidMount = () => {
+        axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/${this.props.location.state.pagina}`)
+            .then(res => {
+            this.setState({ filtrado: res.data })
+        }).catch(err => {
+            console.error(err);
+        });
     }
     render() {
         return (
@@ -21,7 +29,7 @@ class Main3 extends React.Component {
                                 <option className="None" value="0">Materia</option>
                                 {this.state.filtrado.map((Esito, index) => {
                                     return (
-                                        <option key={index} value={Esito.Materia}>{Esito.Materia}</option>
+                                        <option key={index} value={Esito.materia}>{Esito.materia}</option>
                                     );
                                 })}
                             </select>
@@ -39,11 +47,11 @@ class Main3 extends React.Component {
                                         <h3 className="TitleC TitlesI">{Esito.titulo}</h3>
                                     </div>
                                     <div className="CursoIC" key={index}>
-                                        <img className="ImgCI" src={Esito.Url} />
+                                        <img className="ImgCI" src={Esito.logo} />
                                         <div className="CursoIC2">
                                             <div className="InfoContMini">
-                                                <h5 className="TitlesI">Tematica: <br /> {Esito.Tematica}</h5>
-                                                <h5 className="TitlesI">Materia: <br /> {Esito.Materia}</h5>
+                                                <h5 className="TitlesI">Tematica: <br /> {Esito.tematica}</h5>
+                                                <h5 className="TitlesI">Materia: <br /> {Esito.materia}</h5>
                                             </div>
                                             <div id="BottonCI">
                                                 {/* <img className="Edit2" src="/Images/InfoCurso.png" /> */}

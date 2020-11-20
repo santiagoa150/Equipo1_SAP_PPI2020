@@ -22,7 +22,7 @@ class Principal extends React.Component {
     prueba = () => {
         aja = false;
         try {
-            let x = (UsuarioI[0].FechaN).getFullYear();
+            let x = (UsuarioI[0].fecha_n).getFullYear();
         }
         catch (e) {
             aja = true;

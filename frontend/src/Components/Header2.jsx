@@ -8,7 +8,13 @@ let x, bool = false;
 
 class Header2 extends React.Component {
     componentDidMount(){
-        document.getElementById("profile").style.backgroundImage = "url("+ UsuarioI[0].image + ")";
+        let avatar = '';
+        if(UsuarioI[0].avatar == null){
+            avatar= 'https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png'
+        }else{
+            avatar= UsuarioI[0].avatar;
+        }
+        document.getElementById("profile").style.backgroundImage = "url("+ avatar +")";
      }
     constructor(props) {
         super(props);
@@ -16,7 +22,6 @@ class Header2 extends React.Component {
     }
     ureles = () => {
         x = this.props.location.pathname;
-        console.log(this.props.Pagina);
         let pathfin = x.substr(x.length - 1);
             if (pathfin != "_") {
                 return <>

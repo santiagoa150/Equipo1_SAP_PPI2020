@@ -12,6 +12,17 @@ router.get('/usuario-sesion/:usuario', (req, res) => {
         }
     });
 });
+/* registro usuario - Get corre*/
+router.get('/correo-sesion/:correo', (req, res) => {
+    const { correo } = req.params;
+    mysqlconection.query('SELECT * FROM usuarios WHERE correo = ?', [correo], (error, rows, fields) => {
+        if (error) {
+            console.error(error);
+        } else {
+            res.json(rows);
+        }
+    });
+});
 /* registrar usuario */
 router.post('/registro-sesion', (req, res) => {
     const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, tipo_registro } = req.body;

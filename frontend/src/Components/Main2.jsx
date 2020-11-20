@@ -19,7 +19,7 @@ class Main2 extends React.Component {
                     </div>
                     <div className="conten">                    
                         <h2 className="tecto">Video introductorio</h2><br/>
-                        <iframe className="video" src="https://www.youtube.com/embed/McGjmFXrdn0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+                        <iframe className="video" src="https://www.youtube.com/embed/McGjmFXrdn0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" frameBorder="0"></iframe>
                     </div>
                     <div className="conten">
                         <h2 className="tecto">Nuestras Redes</h2><br/>

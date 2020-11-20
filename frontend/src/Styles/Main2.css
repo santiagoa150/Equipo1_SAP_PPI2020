@@ -24,6 +24,10 @@
     margin: 1vw;
     
 }
+.tecto{
+    text-align: justify;
+    padding: 5px;
+}
 @media(max-width:570px){
     .conten{
         width: 48vh;

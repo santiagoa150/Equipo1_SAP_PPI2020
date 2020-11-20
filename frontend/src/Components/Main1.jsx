@@ -12,7 +12,6 @@ let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
 let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
 let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
 let FechaMin = (FechaY - 100) + "-" + FechaM + "-" + FechaD;
-
 class Main1 extends React.Component {
     constructor(props) {
         super(props);
@@ -20,29 +19,10 @@ class Main1 extends React.Component {
             Tipo: "",
             Bool: false,
             UserB: false,
+            UserB2: false,
             ConB2: false,
-            data: []
+            data: [],
         }
-    }
-
-    getInicioSesionCom = () =>{
-        let User = document.getElementById("IUC");
-        axios.get(`http://localhost:3883/Usu/usuario-sesion/${User.value}`)
-            .then(res =>{                
-                this.setState({data: res.data});
-                console.log(this.state.data);
-            }).catch(err =>{
-                console.log(err.massage);
-            })
-    }
-    getInicioSesionCel = () =>{
-        let User = document.getElementById("IUCel");
-        axios.get(`http://localhost:3883/Usu/usuario-sesion/${User.value}`)
-        .then(res =>{
-            this.setState({data: res.data.results});
-        }).catch(err =>{
-            console.log(err.massage);
-        })
     }
     RegistrarCom = () => {
         document.getElementById("GridCom2Div2").style.display = "block";
@@ -92,14 +72,41 @@ class Main1 extends React.Component {
         else {
             años = ttY - tY - 1;
         }
+
         if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
+            
+            this.setState({UserB:false,UserB2:false});
             if (this.state.UserB == false) {
-                UserName.style.color = "red";
-                UserName.value = "Usuario invalido";
-                this.Time(UserName, "text");
+                axios.get(`http://localhost:3883/Usu/usuario-sesion/${UserName.value}`)
+                .then(res =>{  
+                    if(res.data.length > 0){
+                        UserName.style.color = "red";
+                        UserName.value = "Usuario invalido";
+                        this.Time(UserName, "text");
+                    }else{
+                        this.setState({UserB: true});
+                    }
+                }).catch(err =>{
+                    console.error(err);
+                });             
+            }
+
+            if (this.state.UserB2 == false) {
+                axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
+                .then(res =>{  
+                    if(res.data.length > 0){
+                        Correo.style.color = "red";
+                        Correo.value = "Usuario invalido";
+                        this.Time(Correo, "text");
+                    }else{
+                        this.setState({UserB2: true});
+                    }
+                }).catch(err =>{
+                    console.error(err);
+                });             
             }
             if (Contraseña.value == Contraseña2.value) {
-                if (this.state.UserB == true) {
+                if (this.state.UserB && this.state.UserB2) {
                     Usuarios.push({
                         Nombre: Nombre.value,
                         Apellido: Apellido.value,
@@ -187,13 +194,39 @@ class Main1 extends React.Component {
             años = ttY - tY - 1;
         }
         if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
+                        
+            this.setState({UserB:false,UserB2:false});
             if (this.state.UserB == false) {
-                UserName.style.color = "red";
-                UserName.value = "Usuario invalido";
-                this.Time(UserName, "text");
+                axios.get(`http://localhost:3883/Usu/usuario-sesion/${UserName.value}`)
+                .then(res =>{  
+                    if(res.data.length > 0){
+                        UserName.style.color = "red";
+                        UserName.value = "Usuario invalido";
+                        this.Time(UserName, "text");
+                    }else{
+                        this.setState({UserB: true});
+                    }
+                }).catch(err =>{
+                    console.error(err);
+                });             
+            }
+
+            if (this.state.UserB2 == false) {
+                axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
+                .then(res =>{  
+                    if(res.data.length > 0){
+                        Correo.style.color = "red";
+                        Correo.value = "Usuario invalido";
+                        this.Time(Correo, "text");
+                    }else{
+                        this.setState({UserB2: true});
+                    }
+                }).catch(err =>{
+                    console.error(err);
+                });             
             }
             if (Contraseña.value == Contraseña2.value) {
-                if (this.state.UserB == true) {
+                if (this.state.UserB && this.state.UserB2) {
                     Usuarios.push({
                         Nombre: Nombre.value,
                         Apellido: Apellido.value,
@@ -286,62 +319,106 @@ class Main1 extends React.Component {
     IniciarSCom = () => {
         let Usuario = document.getElementById("IUC");
         let Contraseña = document.getElementById("ICC");
-        this.getInicioSesionCom();
-        if (Usuario.value != "" && Contraseña.value != "") {
-            if(this.state.data.length==0){
-                Usuario.style.color = "red";
-                Usuario.value = "El usuario no existe";
-                this.Time(Usuario, "text");
-            }else {
-
-            }           
-        } else {
-            if (Usuario.value == "") {
-                Usuario.style.color = "red";
-                Usuario.value = "Dato no ingresado.";
-                this.Time(Usuario, "text");
-            } if (Contraseña.value == "") {
-                Contraseña.type="text";
-                Contraseña.style.color = "red";
-                Contraseña.value = "Dato no ingresado.";
-                this.Time(Contraseña, "password");
-            }
-        }
+        axios.get(`http://localhost:3883/Usu/usuario-sesion/${Usuario.value}`)
+            .then(res =>{                
+                this.setState({data: res.data});
+                if (Usuario.value != "" && Contraseña.value != "") {
+                    if(this.state.data.length==0){
+                        Usuario.style.color = "red";
+                        Usuario.value = "El usuario no existe";
+                        this.Time(Usuario, "text");
+                    }else {
+                        if(this.state.data[0].contraseña == Contraseña.value){
+                            UsuarioI.push({
+                                id_usuario: this.state.data[0].id_usuario,
+                                nombre:this.state.data[0].nombre,
+                                apellido:this.state.data[0].apellido,
+                                genero:this.state.data[0].genero,
+                                fecha_n: new Date(this.state.data[0].fecha_n),
+                                edad:this.state.data[0].edad,
+                                avatar:this.state.data[0].avatar,
+                                usuario:this.state.data[0].usuario,
+                                contraseña:this.state.data[0].contraseña,
+                                correo:this.state.data[0].correo,
+                                registro_sistema:this.state.data[0].registro_sistema
+                            }
+                            );
+                            this.setState({Bool: true});
+                            console.log(this.state.Bool);
+                        }else{
+                            Contraseña.type="text";
+                            Contraseña.style.color = "red";
+                            Contraseña.value = "La contraseña no coincide.";
+                            this.Time(Contraseña, "password");
+                        }
+                    }           
+                } else {
+                    if (Usuario.value == "") {
+                        Usuario.style.color = "red";
+                        Usuario.value = "Dato no ingresado.";
+                        this.Time(Usuario, "text");
+                    } if (Contraseña.value == "") {
+                        Contraseña.type="text";
+                        Contraseña.style.color = "red";
+                        Contraseña.value = "Dato no ingresado.";
+                        this.Time(Contraseña, "password");
+                    }
+                }
+            }).catch(err =>{
+                console.log(err.massage);
+            })
     }
     IniciarSCel = () => {
         let Usuario = document.getElementById("IUCel");
         let Contraseña = document.getElementById("ICCel");
-        this.getInicioSesionCel();
-        if (Usuario.value != "" && Contraseña.value != "") {
-            for (let i = 0; i < Usuarios.length; i++) {
-                if (Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value) {
-                    UsuarioI.push({
-                        Nombre: Usuarios[i].Nombre,
-                        Apellido: Usuarios[i].Apellido,
-                        UserName: Usuarios[i].UserName,
-                        Correo: Usuarios[i].Correo,
-                        Edad: Usuarios[i].Edad,
-                        FechaN: Usuarios[i].FechaN,
-                        Sexo: Usuarios[i].Sexo,
-                        Contraseña: Usuarios[i].Contraseña,
-                        id: Usuarios[i].id,
-                        image: Usuarios[i].image
-                    });
-
-                    this.setState({ Bool: true });
+        axios.get(`http://localhost:3883/Usu/usuario-sesion/${Usuario.value}`)
+            .then(res =>{                
+                this.setState({data: res.data});
+                if (Usuario.value != "" && Contraseña.value != "") {
+                    if(this.state.data.length==0){
+                        Usuario.style.color = "red";
+                        Usuario.value = "El usuario no existe";
+                        this.Time(Usuario, "text");
+                    }else {
+                        if(this.state.data[0].contraseña == Contraseña.value){
+                            UsuarioI.push({
+                                id_usuario: this.state.data[0].id_usuario,
+                                nombre:this.state.data[0].nombre,
+                                apellido:this.state.data[0].apellido,
+                                genero:this.state.data[0].genero,
+                                fecha_n: new Date(this.state.data[0].fecha_n),
+                                edad:this.state.data[0].edad,
+                                avatar:this.state.data[0].avatar,
+                                usuario:this.state.data[0].usuario,
+                                contraseña:this.state.data[0].contraseña,
+                                correo:this.state.data[0].correo,
+                                registro_sistema:this.state.data[0].registro_sistema
+                            }
+                            );
+                            this.setState({Bool: true});
+                            console.log(this.state.Bool);
+                        }else{
+                            Contraseña.type="text";
+                            Contraseña.style.color = "red";
+                            Contraseña.value = "La contraseña no coincide.";
+                            this.Time(Contraseña, "password");
+                        }
+                    }           
+                } else {
+                    if (Usuario.value == "") {
+                        Usuario.style.color = "red";
+                        Usuario.value = "Dato no ingresado.";
+                        this.Time(Usuario, "text");
+                    } if (Contraseña.value == "") {
+                        Contraseña.type="text";
+                        Contraseña.style.color = "red";
+                        Contraseña.value = "Dato no ingresado.";
+                        this.Time(Contraseña, "password");
+                    }
                 }
-            }
-        } else {
-            if (Usuario.value == "") {
-                Usuario.style.color = "red";
-                Usuario.value = "Dato no ingresado.";
-                this.Time(Usuario, "text");
-            } if (Contraseña.value == "") {
-                Contraseña.style.color = "red";
-                Contraseña.value = "Dato no ingresado.";
-                this.Time(Contraseña, "password");
-            }
-        }
+            }).catch(err =>{
+                console.log(err.massage);
+            })
     }
     render() {
         return (

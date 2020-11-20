@@ -3,7 +3,6 @@ import React from 'react';
 import Header2 from '../Components/Header2';
 import Main3 from '../Components/Main3';
 import Footer from '../Components/Footer';
-
 import {UsuarioI} from "../Utiles/Mocks/UsuarioI";
 import {Redirect, withRouter} from 'react-router-dom';
 
@@ -18,7 +17,7 @@ class Integrados extends React.Component {
     prueba=()=>{
         aja =false;
         try{
-            let x = (UsuarioI[0].FechaN).getFullYear();
+            let x = (UsuarioI[0].fecha_n).getFullYear();
         }
         catch(e){
             aja=true;
