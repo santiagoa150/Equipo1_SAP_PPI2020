@@ -98,14 +98,13 @@ text-align: center;
     margin: 4px 0 0 4px;
 }
 #Elprota{
-
     width: 70%;
 }
 #Elprota::-webkit-file-upload-button{
     width: 30%;
 }
 #Elprota , #Elprota::-webkit-file-upload-button{
-    height:  30px;
+    height:  50px;
 
 }
 .SubImg{
@@ -120,7 +119,19 @@ text-align: center;
     width: 100%;
 
 }
+#classBotonConfirPerfil{
+    width: 60%;
+    height: 30px;
+    margin-top: 5px;
+    display: none;
+}
+.PINFOCONTRASEÑA{
+    border: none;
+    background-color: #f7ebe8;
+    cursor: auto !important;
+}
 #Elprota::-webkit-file-upload-button{
+    color: #FFA987;
     font-weight: bold;
     background: #FFA987;
     border: 0;
@@ -130,7 +141,7 @@ text-align: center;
 }
 #Elprota::-webkit-file-upload-button:hover{
     background-color: #444140;
-    color: white;
+    color:#444140;
     transition: all 700ms;
 }
 .PrevImg{

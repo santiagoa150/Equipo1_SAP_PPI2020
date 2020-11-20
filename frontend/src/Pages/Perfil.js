@@ -47,110 +47,107 @@ class Perfil extends React.Component {
     }
 
     Edit = () => {
-        if (this.state.Ola == true) {
-            alert("Los datos que no desean ser cambiados se deben dejar en blanco.")
             document.getElementById("GroupIP2").style.display = "flex";
             let ArreClas = document.getElementsByClassName("Apar");
             let ArreClas2 = document.getElementsByClassName("PInfo2");
             let ArreClas3 = document.getElementsByClassName("Edit");
+            document.getElementById("EdadDisPar").style.display = "none";
+            document.getElementById("classBotonConfirPerfil").style.display = "block";
             for (let i = 0; i < ArreClas.length; i++) {
                 ArreClas[i].style.display = "block";
             } for (let i = 0; i < ArreClas2.length; i++) {
                 ArreClas2[i].style.display = "none";
             }
             for (let i = 0; i < ArreClas3.length; i++) {
-                ArreClas3[i].style.backgroundImage = "url(/Images/Confirmar.png)";
+                ArreClas3[i].style.opacity = "0";
+                ArreClas3[i].style.cursor = "default";
             }
-            this.setState({ Ola: false })
-        } else {
-            let Contraseña = document.getElementById("CP"), Contraseña2 = document.getElementById("CP2");
-            let Nombre = document.getElementById("NP"), Apellido = document.getElementById("AP");
-            let User = document.getElementById("UP"), correo = document.getElementById("EP");
-            let Sexo = document.getElementById("SP"), FechaN = document.getElementById("FP");
-            let edad = new Date(FechaN.value);
-            let tD = edad.getDate() + 1;
-            let tM = edad.getMonth() + 1;
-            let tY = edad.getFullYear();
-            let ttD = Fecha.getDate() + 1;
-            let ttM = Fecha.getMonth() + 1;
-            let ttY = Fecha.getFullYear();
-            let años;
-            if (tM == ttM) {
-                if (tD <= ttD) {
-                    años = ttY - tY;
-                } else {
-                    años = ttY - tY - 1;
-                }
-            }
-            else if (tM < ttM) {
+            
+        this.setState({Ola: true});
+    }
+    Edit2 = () =>{
+        let Contraseña = document.getElementById("CP"), Contraseña2 = document.getElementById("CP2");
+        let Nombre = document.getElementById("NP"), Apellido = document.getElementById("AP");
+        let User = document.getElementById("UP"), correo = document.getElementById("EP");
+        let Sexo = document.getElementById("SP"), FechaN = document.getElementById("FP");
+        let edad = new Date(FechaN.value);
+        let tD = edad.getDate() + 1;
+        let tM = edad.getMonth() + 1;
+        let tY = edad.getFullYear();
+        let ttD = Fecha.getDate() + 1;
+        let ttM = Fecha.getMonth() + 1;
+        let ttY = Fecha.getFullYear();
+        let años;
+        if (tM == ttM) {
+            if (tD <= ttD) {
                 años = ttY - tY;
-            }
-            else {
+            } else {
                 años = ttY - tY - 1;
             }
-
-            /*Contraseña*/
-            if (Contraseña.value != "" && Contraseña2.value != "") {
-                if (Contraseña.value == Contraseña2.value) {
-                    Usuarios[UsuarioI[0].id].Contraseña = Contraseña.value;
-                    UsuarioI[0].Contraseña = Usuarios[UsuarioI[0].id].Contraseña;
-                }
-            }
-            /*Nombre*/
-            if (Nombre.value != "") {
-                Usuarios[UsuarioI[0].id].Nombre = Nombre.value;
-                UsuarioI[0].Nombre = Usuarios[UsuarioI[0].id].Nombre;
-            }
-            /*Apellido*/
-            if (Apellido.value != "") {
-                Usuarios[UsuarioI[0].id].Apellido = Apellido.value;
-                UsuarioI[0].Apellido = Usuarios[UsuarioI[0].id].Apellido;
-            }
-            /*UserName*/
-            if (User.value != "" && this.state.UserB) {
-                Usuarios[UsuarioI[0].id].UserName = User.value;
-                UsuarioI[0].UserName = Usuarios[UsuarioI[0].id].UserName;
-            }
-            /*Correo*/
-            if (correo.value != "") {
-                Usuarios[UsuarioI[0].id].Correo = correo.value;
-                UsuarioI[0].Correo = Usuarios[UsuarioI[0].id].Correo;
-            }
-            /*Sexo*/
-            if (Sexo.value != 0) {
-                Usuarios[UsuarioI[0].id].Sexo = Sexo.value;
-                UsuarioI[0].Sexo = Usuarios[UsuarioI[0].id].Sexo;
-            }
-            /*Fecha*/
-            if (FechaN.value != "") {
-                Usuarios[UsuarioI[0].id].FechaN = new Date(edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1));
-                Usuarios[UsuarioI[0].id].Edad = años;
-                UsuarioI[0].FechaN = Usuarios[UsuarioI[0].id].FechaN;
-                UsuarioI[0].Edad = Usuarios[UsuarioI[0].id].Edad;
-            }
-
-            document.getElementById("GroupIP2").style.display = "none";
-            let ArreClas = document.getElementsByClassName("Apar");
-            let ArreClas2 = document.getElementsByClassName("PInfo2");
-            let ArreClas3 = document.getElementsByClassName("Edit");
-            for (let i = 0; i < ArreClas.length; i++) {
-                ArreClas[i].style.display = "none";
-            } for (let i = 0; i < ArreClas2.length; i++) {
-                ArreClas2[i].style.display = "block";
-            }
-            for (let i = 0; i < ArreClas3.length; i++) {
-                ArreClas3[i].style.backgroundImage = "url(/Images/Lapiz.png)";
-            }
-
-
-
-            this.setState({
-                Ola: true,
-                Bool: true
-            })
-
+        }
+        else if (tM < ttM) {
+            años = ttY - tY;
+        }
+        else {
+            años = ttY - tY - 1;
         }
 
+        /*Contraseña*/
+        if (Contraseña.value != "" && Contraseña2.value != "") {
+            if (Contraseña.value == Contraseña2.value) {
+                Usuarios[UsuarioI[0].id].Contraseña = Contraseña.value;
+                UsuarioI[0].Contraseña = Usuarios[UsuarioI[0].id].Contraseña;
+            }
+        }
+        /*Nombre*/
+        if (Nombre.value != "") {
+            Usuarios[UsuarioI[0].id].Nombre = Nombre.value;
+            UsuarioI[0].Nombre = Usuarios[UsuarioI[0].id].Nombre;
+        }
+        /*Apellido*/
+        if (Apellido.value != "") {
+            Usuarios[UsuarioI[0].id].Apellido = Apellido.value;
+            UsuarioI[0].Apellido = Usuarios[UsuarioI[0].id].Apellido;
+        }
+        /*UserName*/
+        if (User.value != "" && this.state.UserB) {
+            Usuarios[UsuarioI[0].id].UserName = User.value;
+            UsuarioI[0].UserName = Usuarios[UsuarioI[0].id].UserName;
+        }
+        /*Correo*/
+        if (correo.value != "") {
+            Usuarios[UsuarioI[0].id].Correo = correo.value;
+            UsuarioI[0].Correo = Usuarios[UsuarioI[0].id].Correo;
+        }
+        /*Sexo*/
+        if (Sexo.value != 0) {
+            Usuarios[UsuarioI[0].id].Sexo = Sexo.value;
+            UsuarioI[0].Sexo = Usuarios[UsuarioI[0].id].Sexo;
+        }
+        /*Fecha*/
+        if (FechaN.value != "") {
+            Usuarios[UsuarioI[0].id].FechaN = new Date(edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1));
+            Usuarios[UsuarioI[0].id].Edad = años;
+            UsuarioI[0].FechaN = Usuarios[UsuarioI[0].id].FechaN;
+            UsuarioI[0].Edad = Usuarios[UsuarioI[0].id].Edad;
+        }
+
+        document.getElementById("GroupIP2").style.display = "none";
+        let ArreClas = document.getElementsByClassName("Apar");
+        let ArreClas2 = document.getElementsByClassName("PInfo2");
+        let ArreClas3 = document.getElementsByClassName("Edit");
+        document.getElementById("EdadDisPar").style.display = "flex";
+        document.getElementById("classBotonConfirPerfil").style.display = "none";
+        for (let i = 0; i < ArreClas.length; i++) {
+            ArreClas[i].style.display = "none";
+        } for (let i = 0; i < ArreClas2.length; i++) {
+            ArreClas2[i].style.display = "block";
+        }
+        for (let i = 0; i < ArreClas3.length; i++) {
+            ArreClas3[i].style.opacity = "1";
+        }
+
+        this.setState({Ola: false});
     }
 
     UserName = () => {
@@ -262,7 +259,6 @@ class Perfil extends React.Component {
                                 <div id="FotoPerfíl" onClick={this.Activate}>
 
                                 </div>
-
                             </div>
                         </div>
                         <div id="InfoPContainer">
@@ -270,7 +266,7 @@ class Perfil extends React.Component {
                                 <p className="PInfo">Nombre:</p>
                                 <input className="None Apar PInfo" id="NP" type="text" placeholder={UsuarioI[0].Nombre} autoComplete="off" />
                                 <p className="PInfo PInfo2">{UsuarioI[0].Nombre}</p>
-                                <div className="Edit" onClick={this.Edit}>
+                                <div className="Edit" id="NPEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
@@ -278,7 +274,7 @@ class Perfil extends React.Component {
                                 <p className="PInfo">Apellido:</p>
                                 <input className="None Apar PInfo" id="AP" type="text" placeholder={UsuarioI[0].Apellido} autoComplete="off" />
                                 <p className="PInfo PInfo2"> {UsuarioI[0].Apellido}</p>
-                                <div className="Edit" onClick={this.Edit}>
+                                <div className="Edit" id="APEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
@@ -286,7 +282,7 @@ class Perfil extends React.Component {
                                 <p className="PInfo">Usuario:</p>
                                 <input className="None Apar PInfo" id="UP" type="text" placeholder={UsuarioI[0].UserName} onChange={this.UserName} autoComplete="off" />
                                 <p className="PInfo PInfo2">{UsuarioI[0].UserName}</p>
-                                <div className="Edit" onClick={this.Edit}>
+                                <div className="Edit" id="UPEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
@@ -294,22 +290,22 @@ class Perfil extends React.Component {
                                 <p className="PInfo">Correo:</p>
                                 <input className="None Apar PInfo" id="EP" type="email" placeholder={UsuarioI[0].Correo} autoComplete="off" />
                                 <p className="PInfo PInfo2">{UsuarioI[0].Correo}</p>
-                                <div className="Edit" onClick={this.Edit}>
+                                <div className="Edit" id="EPEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
                             <div className="GroupIP">
                                 <p className="PInfo">Contraseña:</p>
-                                <input className="None Apar PInfo" id="CP" type="password" placeholder={UsuarioI[0].Contraseña} autoComplete="off" />
-                                <p className="PInfo PInfo2">{UsuarioI[0].Contraseña}</p>
-                                <div className="Edit" onClick={this.Edit}>
+                                <input className="None Apar PInfo" id="CP" type="password" autoComplete="off" />
+                                <input className="PInfo PInfo2 PINFOCONTRASEÑA" type="password" disabled value={UsuarioI[0].Contraseña}/>
+                                <div className="Edit" id="CPEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
                             <div id="GroupIP2">
                                 <p className="PInfo">Confirmar Contraseña:</p>
-                                <input className="None Apar PInfo" id="CP2" type="password" placeholder={UsuarioI[0].Contraseña} autoComplete="off" />
-                                <div className="Edit" onClick={this.Edit}>
+                                <input className="None Apar PInfo" id="CP2" type="password" autoComplete="off" />
+                                <div className="Edit" id="CP2EDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
@@ -322,7 +318,7 @@ class Perfil extends React.Component {
                                     <option value="Otro">Otro</option>
                                 </select>
                                 <p className="PInfo PInfo2">{UsuarioI[0].Sexo}</p>
-                                <div className="Edit" onClick={this.Edit}>
+                                <div className="Edit" id="SPEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
@@ -331,17 +327,18 @@ class Perfil extends React.Component {
                                 <p className="PInfo">Fecha de nacimiento:</p>
                                 <input className="None Apar PInfo" id="FP" type="date" max={FechaH} min={FechaMin} autoComplete="off" />
                                 <p className="PInfo PInfo2">{Fecha2}</p>
-                                <div className="Edit" onClick={this.Edit}>
+                                <div className="Edit" id="FPEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
-                            <div className="GroupIP">
+                            <div className="GroupIP" id="EdadDisPar">
                                 <p className="PInfo">Edad:</p>
                                 <p className="PInfo">{UsuarioI[0].Edad}</p>
-                                <div className="Edit2" onClick={this.Edit}>
+                                <div className="Edit2" id="EDEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
+                            <button id="classBotonConfirPerfil" className="button" onClick={this.Edit2}>Confirmar</button>
                             {this.state.Bool && <Redirect to={{ pathname: this.props.location.state.x, x: this.props.location.state.x }}></Redirect>}
                         </div>
                         <div id="ButtonPContainer">
