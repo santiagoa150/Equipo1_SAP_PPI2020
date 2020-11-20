@@ -35,7 +35,7 @@ router.get('/get_cursos-Comunidad_Integrado/:categoria', (req, res) => {
     } else {
         */
         arreglo = [categoria];
-        queryCursos = 'SELECT * FROM cursos WHERE categoria=? AND privacidad= false';
+        queryCursos = 'SELECT * FROM cursos LEFT JOIN usuarios ON usuarios.id_usuario = cursos.id_creador WHERE cursos.categoria=? AND cursos.privacidad= false';
     /*}*/
     mysqlConnection.query(queryCursos, arreglo, (err, rows, fields) => {
         if (err) {

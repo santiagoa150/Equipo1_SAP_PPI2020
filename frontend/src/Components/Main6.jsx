@@ -1,6 +1,6 @@
 import React from 'react';
 import '../Styles/Main6.css';
-
+import axios from 'axios';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import { Progreso } from '../Utiles/Mocks/progreso';
 import { Cursos } from '../Utiles/Mocks/Cursos';
@@ -12,12 +12,15 @@ class Main6 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            DataCursC:[],
+            DataProgresos:[],
             Progresos: Progreso.filter(Esito => Esito.idUsuario == UsuarioI[0].id),
             CursosC: Cursos.filter(Esito => Esito.idCreador == UsuarioI[0].id)
         }
     }
 
     componentDidMount() {
+        axios.get();
         /*Cursos Iniciados*/
         if (this.state.Progresos.length > 5) {
             document.getElementById("Main6I").style.overflowY = "scroll";

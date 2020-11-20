@@ -23,6 +23,17 @@ router.get('/correo-sesion/:correo', (req, res) => {
         }
     });
 });
+/*Get User ID*/
+router.get('/ID-Get/:id_usuario', (req, res) => {
+    const { id_usuario } = req.params;
+    mysqlconection.query('SELECT * FROM usuarios WHERE id_usuario = ?', [id_usuario], (error, rows, fields) => {
+        if (error) {
+            console.error(error);
+        } else {
+            res.json(rows);
+        }
+    });
+});
 /* registrar usuario */
 router.post('/registro-sesion', (req, res) => {
     const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, tipo_registro } = req.body;
