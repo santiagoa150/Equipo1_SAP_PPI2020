@@ -5,8 +5,9 @@ const mysqlConnection = require('../db/db');
 /* Traer cursos (Integrados y Comunidad)*/
 router.get('/get_cursos-Comunidad_Integrado/:categoria', (req, res) => {
     const { categoria } = req.params;
+    /*
     const { materia, fecha_c, titulo } = req.body;
-    console.log(materia);
+    */
     let queryCursos;
     let arreglo;
     /*
