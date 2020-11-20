@@ -14,18 +14,22 @@ class Main6 extends React.Component {
         this.state = {
             DataCursC:[],
             DataProgresos:[],
-            Progresos: Progreso.filter(Esito => Esito.idUsuario == UsuarioI[0].id),
             CursosC: Cursos.filter(Esito => Esito.idCreador == UsuarioI[0].id)
         }
     }
 
-    componentDidMount() {
-        axios.get();
+    async componentDidMount() {
+        await axios.get(`http://localhost:3883/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
+        .then(res =>{
+            this.setState({DataProgresos: res.data});
+        }).catch(err =>{
+            console.error(err);
+        })
         /*Cursos Iniciados*/
-        if (this.state.Progresos.length > 5) {
+        if (this.state.DataProgresos.length > 5) {
             document.getElementById("Main6I").style.overflowY = "scroll";
         }
-        if (this.state.Progresos.length == 0) {
+        if (this.state.DataProgresos.length == 0) {
             document.getElementById("CardsInner").style.display = "flex";
             document.getElementById("CardsInner").style.justifyContent = "center";
             document.getElementById("CardsInner").style.alignItems = "center";
@@ -47,7 +51,7 @@ class Main6 extends React.Component {
         if (!bool) {
             document.getElementById("CardsInner").style.display = "block";
             document.getElementById("CursosI").innerHTML = "Cursos iniciado ▼";
-            if (this.state.Progresos.length == 0) {
+            if (this.state.DataProgresos.length == 0) {
                 document.getElementById("CardsInner").style.display = "flex";
                 document.getElementById("CardsInner").style.justifyContent = "center";
                 document.getElementById("CardsInner").style.alignItems = "center";
@@ -87,19 +91,19 @@ class Main6 extends React.Component {
                             <button className="button buttonMisCursos CIMB" id="CursosI" onClick={this.Accion1}>Cursos iniciado ▼</button>
                         </div>
                         <div id="CardsInner">
-                            {this.state.Progresos.map((Esito, index) => {
+                            {this.state.DataProgresos.map((Esito, index) => {
                                 return (
                                     <>
                                         <div key={index} className="CardCIMisC">
                                             <div className="marignC">
-                                                <h3 className="marignO">{Cursos[Esito.idCurso].titulo}</h3>
-                                                <p className="marignO">{Cursos[Esito.idCurso].Tipo}</p>
+                                                <h3 className="marignO">{Esito.titulo}</h3>
+                                                <p className="marignO">{Esito.categoria}</p>
                                             </div>
                                             <Link className="ReanudarC" to={{
                                                 pathname: "/Curso",
                                                 state: {
-                                                    id: Esito.idCurso,
-                                                    pagina: Esito.Tipo
+                                                    id: Esito.id,
+                                                    pagina: Esito.categoria
                                                 }
                                             }}>
                                                 <button className="Reanudar">Reanudar</button>

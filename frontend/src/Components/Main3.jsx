@@ -8,10 +8,12 @@ class Main3 extends React.Component {
         super(props);
         this.state = {
             filtrado: [],
-            variablependeja: ""
+            variablependeja: ""/*,
+            body: {materia: "", fecha_c: "", titulo: "asfsfas"}*/
         }
     }
     componentDidMount = () => {
+        
         axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/${this.props.location.state.pagina}`)
             .then(res => {
                 this.setState({ filtrado: res.data })
