@@ -245,11 +245,11 @@ class Main5 extends React.Component {
                 </div>
                 <div className="contM5">
                     <div className="franja">
-                        <div id="botonear"><input type="button" value="Unirse" onClick={this.UnirUser} /><input type="button" value="Crear" onClick={this.CrearClase} /></div>
-                        <div id="conclases">
+                        <div id="infop">
                         <div className="ButtonMisCursosC">
+                                    <input type="button" value="Crear" onClick={this.CrearClase} />
                                     <input type="button" value="Clases creadas ▼" id="ClasesC" onClick={this.Accion1} />
-                                </div>
+                        </div>
                             <div id="clasesP">
 
                                 <div id="clasesP2">
@@ -283,7 +283,12 @@ class Main5 extends React.Component {
                                     })}
                                 </div>
                             </div>
+                            {/*<div id="botonear"><input type="button" value="Unirse" onClick={this.UnirUser} /><input type="button" value="Crear" onClick={this.CrearClase} /></div>*/}
+                        </div>
+                        <div id="conclases">
+                        
                             <div className="ButtonMisCursosC">
+                                    <input type="button" value="Unirse" onClick={this.UnirUser} />
                                     <input type="button" value="Clases inscritas ▼" id="ClasesP" onClick={this.Accion2} />
                                 </div>
                             <div id="contidU">

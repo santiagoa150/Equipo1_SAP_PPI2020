@@ -3,7 +3,6 @@
     display: flex;
     flex-flow: column;
     background-color:#F7EBE8;
-    justify-content: center;    
 }
 .franja{
     display: flex;
@@ -12,11 +11,7 @@
     padding-block-start: 2vh;
     padding-block-end: 2vh;
 }
-#infop{
-    display: flex;
-    flex-flow: column;
-    justify-content: space-around;
-}
+
 #imgclases{
     width: 30vw;
     height: 30vw;
@@ -64,14 +59,13 @@
     justify-content: flex-start;
     align-items: center;
 }
-#conclases{
+#conclases,#infop{
     width: 50%;
     display: flex;
     flex-flow: column;
-    justify-content: space-around;
 }
-#conclases input{
-    width: 100%;
+#infop input,#conclases input{
+    width: 98%;
     height: 30px;
     background-color: #FFA987;
     border: transparent;
@@ -263,7 +257,7 @@
         align-items: center;
         height: 300px;
     }
-    #conclases{
+    #infop,#conclases{
         width: 100%;
     }  
     .franja{       
