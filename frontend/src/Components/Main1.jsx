@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
-
+import axios from 'axios';
 import '../Styles/Main1.css';
 import { Redirect, Link } from 'react-router-dom';
 
@@ -20,10 +20,30 @@ class Main1 extends React.Component {
             Tipo: "",
             Bool: false,
             UserB: false,
-            ConB2: false
+            ConB2: false,
+            data: []
         }
     }
 
+    getInicioSesionCom = () =>{
+        let User = document.getElementById("IUC");
+        axios.get(`http://localhost:3883/Usu/usuario-sesion/${User.value}`)
+            .then(res =>{
+                console.log(res.data);
+                this.setState({data: res.data.results});
+            }).catch(err =>{
+                console.log(err.massage);
+            })
+    }
+    getInicioSesionCel = () =>{
+        let User = document.getElementById("IUCel");
+        axios.get(`http://localhost:3883/Usu/usuario-sesion/${User.value}`)
+        .then(res =>{
+            this.setState({data: res.data.results});
+        }).catch(err =>{
+            console.log(err.massage);
+        })
+    }
     RegistrarCom = () => {
         document.getElementById("GridCom2Div2").style.display = "block";
         document.getElementById("LogoInicialC").style.display = "none";
@@ -266,25 +286,12 @@ class Main1 extends React.Component {
     IniciarSCom = () => {
         let Usuario = document.getElementById("IUC");
         let Contraseña = document.getElementById("ICC");
-
+        this.getInicioSesionCom();
         if (Usuario.value != "" && Contraseña.value != "") {
-            for (let i = 0; i < Usuarios.length; i++) {
-                if (Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value) {
-                    UsuarioI.push({
-                        Nombre: Usuarios[i].Nombre,
-                        Apellido: Usuarios[i].Apellido,
-                        UserName: Usuarios[i].UserName,
-                        Correo: Usuarios[i].Correo,
-                        Edad: Usuarios[i].Edad,
-                        FechaN: Usuarios[i].FechaN,
-                        Sexo: Usuarios[i].Sexo,
-                        Contraseña: Usuarios[i].Contraseña,
-                        id: Usuarios[i].id,
-                        image: Usuarios[i].image
-                    });
-                    this.setState({ Bool: true })
-                }
-            }
+            if(this.state.data){
+                console.log("holi");
+            } 
+            
         } else {
             if (Usuario.value == "") {
                 Usuario.style.color = "red";
@@ -300,7 +307,7 @@ class Main1 extends React.Component {
     IniciarSCel = () => {
         let Usuario = document.getElementById("IUCel");
         let Contraseña = document.getElementById("ICCel");
-
+        this.getInicioSesionCel();
         if (Usuario.value != "" && Contraseña.value != "") {
             for (let i = 0; i < Usuarios.length; i++) {
                 if (Usuarios[i].UserName == Usuario.value && Usuarios[i].Contraseña == Contraseña.value) {

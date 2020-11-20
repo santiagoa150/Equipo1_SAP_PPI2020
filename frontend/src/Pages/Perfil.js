@@ -180,14 +180,11 @@ class Perfil extends React.Component {
         let inpu = document.getElementById("Elprota");
         if (inpu.files && inpu.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
                 document.getElementById("PrevImg").src = e.target.result;
                 aja2 = e.target.result;
             }
-
             reader.readAsDataURL(inpu.files[0]);
-
         }
     }
     Subir2 = () => {
