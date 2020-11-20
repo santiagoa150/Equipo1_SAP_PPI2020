@@ -28,9 +28,9 @@ class Main1 extends React.Component {
     getInicioSesionCom = () =>{
         let User = document.getElementById("IUC");
         axios.get(`http://localhost:3883/Usu/usuario-sesion/${User.value}`)
-            .then(res =>{
-                console.log(res.data);
-                this.setState({data: res.data.results});
+            .then(res =>{                
+                this.setState({data: res.data});
+                console.log(this.state.data);
             }).catch(err =>{
                 console.log(err.massage);
             })
@@ -288,16 +288,20 @@ class Main1 extends React.Component {
         let Contraseña = document.getElementById("ICC");
         this.getInicioSesionCom();
         if (Usuario.value != "" && Contraseña.value != "") {
-            if(this.state.data){
-                console.log("holi");
-            } 
-            
+            if(this.state.data.length==0){
+                Usuario.style.color = "red";
+                Usuario.value = "El usuario no existe";
+                this.Time(Usuario, "text");
+            }else {
+
+            }           
         } else {
             if (Usuario.value == "") {
                 Usuario.style.color = "red";
                 Usuario.value = "Dato no ingresado.";
                 this.Time(Usuario, "text");
             } if (Contraseña.value == "") {
+                Contraseña.type="text";
                 Contraseña.style.color = "red";
                 Contraseña.value = "Dato no ingresado.";
                 this.Time(Contraseña, "password");
