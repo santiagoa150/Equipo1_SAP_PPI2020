@@ -2,8 +2,6 @@ import React from 'react';
 import '../Styles/Main6.css';
 import axios from 'axios';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
-import { Progreso } from '../Utiles/Mocks/progreso';
-import { Cursos } from '../Utiles/Mocks/Cursos';
 import { Link } from 'react-router-dom';
 
 let bool = true, bool2 = true;
@@ -12,12 +10,11 @@ class Main6 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            DataCursC:[],
             DataProgresos:[],
-            CursosC: Cursos.filter(Esito => Esito.idCreador == UsuarioI[0].id)
+            DataCursosC:[]
         }
     }
-
+    
     async componentDidMount() {
         await axios.get(`http://localhost:3883/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
         .then(res =>{
@@ -25,6 +22,15 @@ class Main6 extends React.Component {
         }).catch(err =>{
             console.error(err);
         })
+
+        await axios.get(`http://localhost:3883/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
+        .then(res =>{
+            console.log(res.data);
+            this.setState({DataCursosC: res.data})
+        }).catch(err =>{
+           console.error(err); 
+        })
+        
         /*Cursos Iniciados*/
         if (this.state.DataProgresos.length > 5) {
             document.getElementById("Main6I").style.overflowY = "scroll";
@@ -36,10 +42,10 @@ class Main6 extends React.Component {
             document.getElementById("CardsInner").innerHTML = "<p>No has iniciado ningún curso.</p>";
         }
         /*Cursos Creados*/
-        if (this.state.CursosC.length >= 2) {
+        if (this.state.DataCursosC.length >= 2) {
             document.getElementById("Main6C").style.overflowY = "scroll";
         }
-        if (this.state.CursosC.length == 0) {
+        if (this.state.DataCursosC.length == 0) {
             document.getElementById("CardsInner2").style.display = "flex";
             document.getElementById("CardsInner2").style.justifyContent = "center";
             document.getElementById("CardsInner2").style.alignItems = "center";
@@ -68,7 +74,7 @@ class Main6 extends React.Component {
         if (!bool2) {
             document.getElementById("CardsInner2").style.display = "block";
             document.getElementById("CursosC").innerHTML = "Mis cursos ▼";
-            if (this.state.CursosC.length == 0) {
+            if (this.state.DataCursosC.length == 0) {
                 document.getElementById("CardsInner2").style.display = "flex";
                 document.getElementById("CardsInner2").style.justifyContent = "center";
                 document.getElementById("CardsInner2").style.alignItems = "center";
@@ -123,21 +129,21 @@ class Main6 extends React.Component {
                             <button className="button buttonMisCursos" id="CursosC" onClick={this.Accion2}>Mis cursos ▼</button>
                         </div>
                         <div id="CardsInner2">
-                            {this.state.CursosC.map((Esito, index) => {
+                            {this.state.DataCursosC.map((Esito, index) => {
                                 return (
                                     <div id="MaxContC" key={index}>
                                         <div className="InfoContMinI2">
                                             <h3 className="TitleC TitlesI">{Esito.titulo}</h3>
                                         </div>
-                                        <div className="CursoIC" key={index}>
-                                            <img className="ImgCI" src={Esito.Url} />
+                                        <div className="CursoIC">
+                                            <img className="ImgCI" src={Esito.logo} />
                                             <div className="CursoIC2">
                                                 <div className="InfoContMini">
-                                                    <h5 className="TitlesI">Tematica: <br /> {Esito.Tematica}</h5>
-                                                    <h5 className="TitlesI">Materia: <br /> {Esito.Materia}</h5>
+                                                    <h5 className="TitlesI">Tematica: <br /> {Esito.tematica}</h5>
+                                                    <h5 className="TitlesI">Materia: <br /> {Esito.materia}</h5>
                                                 </div>
                                                 <div id="BottonCI">
-                                                    <img className="Edit2" src="/Images/InfoCurso.png" />
+                                                    <img className="Edit2" src="/Images/Basura.png" />
                                                     <Link to={{
                                                         pathname: "/EditarCurso",
                                                         state: {

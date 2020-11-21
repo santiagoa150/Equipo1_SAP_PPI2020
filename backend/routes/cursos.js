@@ -48,11 +48,23 @@ router.get('/get_cursos-Comunidad_Integrado/:categoria', (req, res) => {
 /*Traer curso(Información)*/
 router.get('/get_cursos-Comunidad_Integrado/Curso/:id', (req, res) => {
     const { id } = req.params;
-    queryTraerCurso = 'SELECT * FROM cursos WHERE id=?';
+    let queryTraerCurso = 'SELECT * FROM cursos WHERE id=?';
     mysqlConnection.query(queryTraerCurso, [id], (err, rows, fields) => {
         if (err) {
             console.err(err);
         } else {
+            res.json(rows);
+        }
+    });
+});
+/*Traer cursos creados*/
+router.get('/get_cursos_Mis_cursos/Creados/:id_creador', (req, res) =>{
+    const {id_creador} = req.params;
+    let queryTraerCurso2 = 'SELECT * FROM cursos WHERE id_creador=?';
+    mysqlConnection.query(queryTraerCurso2, [id_creador], (err, rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
             res.json(rows);
         }
     });

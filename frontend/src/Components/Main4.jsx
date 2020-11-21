@@ -29,7 +29,7 @@ class Main4 extends React.Component {
 
                     <Link id="DidaCurso" to={{pathname:"/Didactico",
                     state:{
-                        id:this.props.id
+                        id: this.state.CursoData[0]?.id
                     }}}>
                         <button className="LinkCursoMain4">Jugar</button>
                     </Link>

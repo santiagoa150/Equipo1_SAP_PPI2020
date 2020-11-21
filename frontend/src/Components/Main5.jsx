@@ -5,18 +5,26 @@ import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import { Clases } from '../Utiles/Mocks/Clases';
 import { User_clase } from '../Utiles/Mocks/User_clase';
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
+import axios from 'axios';
 let bool = true, bool2 = true,SubirUsu  = new Array(), i = 0;
 class Main5 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            DataClase: [],
             Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
             Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
+        await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
+        .then(res =>{
+            this.setState({DataClase: res.data})    
+        }).catch(err =>{
+            console.error(err);
+        })
         /*CLASES CREADAS*/
-        if (this.state.Clase.length == 0) {
+        if (this.state.DataClase.length == 0) {
             document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
             document.getElementById("clasesP2").style.display = "flex";
             document.getElementById("clasesP2").style.justifyContent = "center";
@@ -32,7 +40,7 @@ class Main5 extends React.Component {
         if (!bool) {
             document.getElementById("clasesP2").style.display = "block";
             document.getElementById("ClasesC").value = "Clases creadas ▼";
-            if (this.state.Clase.length == 0) {
+            if (this.state.DataClase.length == 0) {
                 document.getElementById("clasesP2").style.display = "flex";
                 document.getElementById("clasesP2").style.justifyContent = "center";
                 document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
@@ -253,29 +261,24 @@ class Main5 extends React.Component {
                             <div id="clasesP">
 
                                 <div id="clasesP2">
-                                    {this.state.Clase.map((Esito, Index) => {
+                                    {this.state.DataClase.map((Esito, Index) => {
                                         let variable = 0;
-                                        for (let i = 0; i < User_clase.length; i++) {
-                                            if (Esito.id == User_clase[i].idclase) {
-                                                variable = variable + 1;
-                                            }
-                                        }
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
-                                                    <h3>{Esito.titulo}</h3>
+                                                    <h3 className="TitleCardClase">{Esito.titulo}</h3>
                                                     <h4>Fecha de creacion: <br />
-                                                        {Esito.fechaC.toLocaleDateString()}
+                                                        {new Date(Esito.fecha_c).toLocaleDateString()}
                                                     </h4>
                                                 </div>
-                                                <div className="botoncard"><Link to={{ pathname: "/Clase/" + Esito.id, state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                <div className="botoncard"><Link to={{ pathname: "/Clase/" + Esito.id_clase, state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
                                                     <div className="InfoClassCard">
-                                                        <h4 className="InfoClassCardConte">Id: {Esito.id}</h4>
-                                                        <h4 className="InfoClassCardConte DisCel">Usuarios: {variable}</h4>
+                                                        <h4 className="InfoClassCardConte">Id: {Esito.id_clase}</h4>
+                                                        <h4 className="InfoClassCardConte DisCel">Usuarios: {Esito.cont_usuarios}</h4>
                                                     </div>
                                                 </div>
                                                 <div className="UsuarioInfoCardAbajo">
-                                                    <h4 className="InfoClassCardConte DisCom">Usuarios: {variable}</h4>
+                                                    <h4 className="InfoClassCardConte DisCom">Usuarios: {Esito.cont_usuarios}</h4>
                                                 </div>
                                             </div>
 

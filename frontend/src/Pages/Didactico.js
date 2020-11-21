@@ -2,17 +2,22 @@ import React from 'react';
 
 import '../Styles/Cursos.css';
 import { Link, withRouter } from 'react-router-dom';
-import { Cursos } from '../Utiles/Mocks/Cursos';
-
 import Header from "../Components/Header5";
 import Footer from "../Components/Footer";
+import axios from 'axios';
 class Didactico extends React.Component {
-    componentDidMount() {
+    async componentDidMount() {
+        await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
+        .then(res =>{
+            this.setState({DataCurso: res.data});
+        }).catch(err =>{
+            console.error(err);
+        })
     }
     constructor(props) {
         super(props);
         this.state = {
-            Curso: Cursos[this.props.location.state.id]
+            DataCurso: []
         }
     }
 
@@ -20,7 +25,7 @@ class Didactico extends React.Component {
         return (
             <>
                 <Header />
-                <iframe className="formGames" src="./Games/sudokus.html"></iframe>
+                <iframe className="formGames" src={this.state.DataCurso[0]?.contenido_d}></iframe>
                 <Footer />
             </>
         );
