@@ -132,7 +132,7 @@ class Main3 extends React.Component {
                         </div>
                     </div>
                     <div className="CardCI">
-                        {this.state.actual.map((Esito, index) => {
+                        {this.state.actual.reverse().map((Esito, index) => {
                             if (Esito.categoria == "Integrado") {
                                 return (
                                     <div id="MaxContC" key={index}>
