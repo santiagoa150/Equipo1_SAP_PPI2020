@@ -6,9 +6,10 @@ const mysqlConnection = require('../db/db');
 /*Usuario inicia un curso*/
 router.post('/user-init-curso/:id_curso', (req, res) => {
     const { id_curso } = req.params;
-    const { id_usuario } = req.body;
+    const { id_usuario } = req.body; 
+    console.log("=================" + id_usuario);
     let queryUserInitCurso = 'INSERT INTO usuario_calificacion(id_usuario, id_curso) VALUES (?,?)';
-    mysqlconection.query(queryUserInitCurso, [id_curso, id_usuario], (err, results, fields) => {
+    mysqlconection.query(queryUserInitCurso, [id_usuario, id_curso], (err, results, fields) => {
         if (err) {
             console.error(err);
         } else {
@@ -33,13 +34,26 @@ router.put('/guardar_valoracion-Comunidad_Integrado/Curso/:id_curso', (req, res)
 router.get('/traer-cursosIniciados/misCursos/:id_usuario', (req, res) => {
     const { id_usuario } = req.params;
     let queryTraerCursosIniciados = `SELECT *
-FROM cursos
-JOIN usuario_calificacion
-ON cursos.id=usuario_calificacion.id_curso WHERE usuario_calificacion.id_usuario = ?`;
+    FROM cursos
+    JOIN usuario_calificacion
+    ON cursos.id=usuario_calificacion.id_curso WHERE usuario_calificacion.id_usuario = ?`;
     mysqlconection.query(queryTraerCursosIniciados, [id_usuario], (err, rows, fields) => {
         if (err) {
             console.error(err);
         } else {
+            res.json(rows);
+        }
+    });
+});
+
+/*GET - UsuarioCalificación*/
+router.get('/traer-UsuarioCalificacion/Integrado-Comunidad/:id_usuario', (req,res) =>{
+    const {id_usuario} = req.params;
+    let queryGetUsuarioCalificacion = 'SELECT * from usuario_calificacion WHERE id_usuario=?';
+    mysqlConnection.query(queryGetUsuarioCalificacion, [id_usuario], (err, rows, fields) =>{
+        if(err){
+            console.error(err);
+        }else{
             res.json(rows);
         }
     });

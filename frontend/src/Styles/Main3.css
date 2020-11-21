@@ -92,14 +92,36 @@
     align-items: center;
     justify-content: space-around
 }
+.blancoText{
+    color:white;
+}
+.redText{
+    color: #ff595e;
+}
+.orangeText{
+    color: #ff924c;
+}
+.yellowText{
+    color: #ffca3a;
+}
+.greenText{
+    color: #8ac926;
+}
 .minicont{
+    align-items: center;
     border-radius: 0 0 10px 10px;
     padding:0.5px;
     background-color: #444140;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around
+    display: grid;
+    grid-template-columns: 5% 90% 5%;
+}
+.gridComunidadTitle{
+    grid-column: 2/3;
+}
+.gridComunidadVal{
+    margin: 0;
+    grid-column: 3/4;
 }
 .TitleC {
     color: white;
