@@ -13,7 +13,8 @@ class Main3 extends React.Component {
             posicion:0,
             tamaño:0,
             array:[],
-            actual:[]
+            actual:[], 
+            despaginar:0
         }
     }
      componentDidMount = async () => {
@@ -30,15 +31,16 @@ class Main3 extends React.Component {
         let filtrado;
         let tamaño;
         let filtro=document.getElementById("filt").value;
+        let tam=4;
         if( filtro=="" ){
             console.log("HOla");
-            let x=Math.ceil(this.state.filtrar.length/4);
+            let x=Math.ceil(this.state.filtrar.length/tam);
             filtrado = this.state.filtrar;
             tamaño = x;
         
         }else{           
             let arrays1=this.state.filtrar.filter(Esito=> Esito.usuario?.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize())||Esito.titulo.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize())||Esito.materia.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize())||Esito.tematica.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize()) );
-            let x=Math.ceil(arrays1.length/4);
+            let x=Math.ceil(arrays1.length/tam);
                 filtrado= arrays1;          
                 tamaño= x; 
         }
@@ -48,7 +50,7 @@ class Main3 extends React.Component {
         let arrays=[];
         for(let i=0;i<tamaño;i++){            
             let array2=[];
-            for(let j=0;j<4&&cont<filtrado.length;j++){
+            for(let j=0;j<tam&&cont<filtrado.length;j++){
                 array2.push(filtrado[cont]);
                 cont++;
             }
@@ -88,6 +90,37 @@ class Main3 extends React.Component {
         if(this.state.posicion>=this.state.tamaño-1){
             return(<div><p>No hay mas cursos para mostrar</p></div>);
         }
+    } 
+    flech=()=>{
+        if(this.state.despaginar==0){
+            this.state.despaginar=1;
+        }       
+        if(this.state.despaginar!=1 && this.state.tamaño>3){
+            return(
+               <input className="botonescamb" type="button" value="◄" onClick={() =>{
+                this.setState({
+                    despaginar:this.state.despaginar-1
+                });
+            }} />
+            );  
+        }
+    }
+    flech2=()=>{
+        if(this.state.despaginar==this.state.tamaño-1){
+            this.state.despaginar=this.state.tamaño-2;
+        }
+        if(this.state.despaginar!=this.state.tamaño-2&&this.state.tamaño>3){
+          return(
+            <input className="botonescamb" type="button" value="►" onClick={() =>{
+                this.setState({
+                    despaginar:this.state.despaginar+1
+                });
+            }} />
+            );  
+        }
+    }
+    movflech2=()=>{       
+        this.setState({despaginar:this.state.despaginar+1});
     }
         render() {
         return (
@@ -163,19 +196,22 @@ class Main3 extends React.Component {
                         })}
                         {this.final()}                        
                         <div id="Paginacion">
+                            {this.flech()}
                             {this.state.array.map((Esito, index) =>{
-                                if(index != this.state.posicion){
+                                if(index != this.state.posicion && (this.state.despaginar==index || this.state.despaginar==index-1 ||this.state.despaginar==index+1)){
                                 return(<><input className="botonescamb" type="button" value={index+1} onClick={() =>{
                                     this.setState({
                                         posicion:index,
+                                        despaginar:index,
                                         actual: this.state.array[index]
                                     });
                                 }}/></>);
                                                                     
-                            }else{
+                            }else if(this.state.despaginar==index || this.state.despaginar==index-1 ||this.state.despaginar==index+1){
                                 return(<><input className="botonescamb2" type="button" value={index+1}/></>); 
                             }
                             })}
+                            {this.flech2()}
                         </div>
                     </div>
                 </div>
