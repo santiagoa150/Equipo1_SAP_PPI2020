@@ -33,18 +33,18 @@ class Principal extends React.Component {
         let x = this.props.location.state.x;
         if (x == "/Principal" || x == "/principal") {
             return (<Main2 />);
-        } else if (x=="/Integrados") {
+        } else if (x == "/Integrados") {
             return (<Main3 />)
         } else if (x == "/Clases") {
             return (<Main5 />)
-        } else if (x =="/misCursos") {
+        } else if (x == "/misCursos") {
             return (<Main6 />)
         }
     }
     Accion1 = () => {
         if (this.props.location.state.x == "/Integrados") {
             return (
-            <Header2 Componente={this.props.location.state.x} Pagina={this.props.location.state.pagina} />);
+                <Header2 Componente={this.props.location.state.x} Pagina={this.props.location.state.pagina} />);
         } else {
             return (
                 <Header2 Componente={this.props.location.state.x} />);
@@ -60,10 +60,14 @@ class Principal extends React.Component {
 
                     </div>
                     <div id="MP">
-                        {this.Ruta()}
-
-                        <Footer /></div>
-                    <div id="MeP"> <Menu Ruta={this.props.location.state.x} /></div>
+                        <div className="blur">
+                            {this.Ruta()}
+                        </div>
+                        <Footer />
+                    </div>
+                    <div id="MeP">
+                        <Menu Ruta={this.props.location.state.x} />
+                    </div>
                 </div>
                 {this.prueba()}
                 {aja && <Redirect to="/" />}

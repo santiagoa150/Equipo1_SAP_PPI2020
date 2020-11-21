@@ -19,11 +19,6 @@ class menu extends React.Component {
     render() { 
         return <>
         <div id="conatinerM">
-            <Link className="esquina" to={this.props.Ruta}>
-            <div id="XimageC">
-                <img className="tama" onClick={this.Close} src="https://images.vexels.com/media/users/3/155473/isolated/preview/faa3172dd52035d0c227d7ecab4d6024-doodle-cruzado-x-by-vexels.png" />
-            </div>
-            </Link>
             <Link className="linkm" to="/principal">
                 <input type="button" value="Inicio"/>
             </Link>

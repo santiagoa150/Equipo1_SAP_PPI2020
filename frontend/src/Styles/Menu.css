@@ -2,6 +2,7 @@
  display:flex;
  flex-flow: column;
  align-items: center;
+ justify-content: flex-start !important;
  background-color:#444140 ;
  height: 100%;
 }
@@ -52,19 +53,24 @@
     filter:invert(100%);
 }
 @media(max-width:620px){
+    #gridP{
+        display: grid;
+        grid-template-rows:max-content max-content;
+        grid-template-columns:90% 10%;
+    }
     .esquina{
         display: block;
     }
+    #MeP{
+        grid-column: 1/2;
+        width: 90%;
+        height: calc(90vh - 2vw);
+    }
+    .blur{
+        filter: blur(2px);
+    }
     #MP{
         display: none;
-    }
-    #HP{
-        display: none;
-    }
-    #MeP{
-        grid-row-start: 1;   
-        grid-column-end: 3;
-        height: 100vh;
     }
     #conatinerM{
         display:flex;

@@ -3,23 +3,70 @@ import '../Styles/Main3.css';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import {UsuarioI} from '../Utiles/Mocks/UsuarioI';
-class Main3 extends React.Component {
+
+class Main3 extends React.Component {    
     constructor(props) {
-        super(props);
+        super(props); 
         this.state = {
             filtrado: [],
-            variablependeja: ""/*,
-            body: {materia: "", fecha_c: "", titulo: "asfsfas"}*/
+            filtrar: [],
+            posicion:0,
+            tamaño:0,
+            array:[],
+            actual:[]
         }
     }
-    componentDidMount = () => {
+     componentDidMount = async () => {
         
-        axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/${this.props.location.state.pagina}`)
+        await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/${this.props.location.state.pagina}`)
             .then(res => {
-                this.setState({ filtrado: res.data })
+                this.setState({ filtrar: res.data});
+                this.filtrando();             
             }).catch(err => {
                 console.error(err);
             });
+    }
+    filtrando=()=>{
+        let filtrado;
+        let tamaño;
+        let filtro=document.getElementById("filt").value;
+        if( filtro=="" ){
+            console.log("HOla");
+            let x=Math.ceil(this.state.filtrar.length/4);
+            filtrado = this.state.filtrar;
+            tamaño = x;
+        
+        }else{           
+            let arrays1=this.state.filtrar.filter(Esito=> Esito.usuario?.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize())||Esito.titulo.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize())||Esito.materia.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize())||Esito.tematica.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize()) );
+            let x=Math.ceil(arrays1.length/4);
+                filtrado= arrays1;          
+                tamaño= x; 
+        }
+
+
+        let cont=0;
+        let arrays=[];
+        for(let i=0;i<tamaño;i++){            
+            let array2=[];
+            for(let j=0;j<4&&cont<filtrado.length;j++){
+                array2.push(filtrado[cont]);
+                cont++;
+            }
+            arrays.push(array2);
+        }
+        if(arrays[0]){
+            this.setState({ 
+                filtrado:filtrado,
+                tamaño:tamaño,
+                array:arrays,
+                actual: arrays[this.state.posicion]});
+        }else{
+            this.setState({ 
+                filtrado:filtrado,
+                tamaño:tamaño,
+                array:arrays,
+                actual: []});  
+        }
     }
     Accion1 = (prop) =>{
         if(prop == UsuarioI[0].id_usuario){
@@ -31,10 +78,15 @@ class Main3 extends React.Component {
         }else{
             return(
                 <>
-                <img className="Edit2" src="/Images/Star.png" />
+                    <img className="Edit2" src="/Images/Star.png" />
                 </>
             );
             
+        }
+    }
+    final=()=>{
+        if(this.state.posicion>=this.state.tamaño-1){
+            return(<div><p>No hay mas cursos para mostrar</p></div>);
         }
     }
         render() {
@@ -43,23 +95,11 @@ class Main3 extends React.Component {
                 <div className="flex">
                     <div className="Filtros">
                         <div className="Filtros2">
-                            <input placeholder="Nombre" className="FiltrosC2" />
-                            <select className="FiltrosC">
-                                <option className="None" value="0">Materia</option>
-                                {this.state.filtrado.map((Esito, index) => {
-                                    return (
-                                        <option key={index} value={Esito.materia}>{Esito.materia}</option>
-                                    );
-                                })}
-                            </select>
-                            <select className="FiltrosC">
-                                <option className="None" value="0">Año de creación</option>
-                                <option>2020</option>
-                            </select>
+                            <input id="filt" placeholder="Buscar" className="FiltrosC2" onChange={this.filtrando}/>
                         </div>
                     </div>
                     <div className="CardCI">
-                        {this.state.filtrado.map((Esito, index) => {
+                        {this.state.actual.map((Esito, index) => {
                             if (Esito.categoria == "Integrado") {
                                 return (
                                     <div id="MaxContC" key={index}>
@@ -121,7 +161,22 @@ class Main3 extends React.Component {
                                 );
                             }
                         })}
-                        <div><p>No hay mas cursos para mostrar</p></div>
+                        {this.final()}                        
+                        <div id="Paginacion">
+                            {this.state.array.map((Esito, index) =>{
+                                if(index != this.state.posicion){
+                                return(<><input className="botonescamb" type="button" value={index+1} onClick={() =>{
+                                    this.setState({
+                                        posicion:index,
+                                        actual: this.state.array[index]
+                                    });
+                                }}/></>);
+                                                                    
+                            }else{
+                                return(<><input className="botonescamb2" type="button" value={index+1}/></>); 
+                            }
+                            })}
+                        </div>
                     </div>
                 </div>
             </>
