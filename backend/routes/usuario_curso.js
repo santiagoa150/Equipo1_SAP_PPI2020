@@ -7,7 +7,6 @@ const mysqlConnection = require('../db/db');
 router.post('/user-init-curso/:id_curso', (req, res) => {
     const { id_curso } = req.params;
     const { id_usuario } = req.body; 
-    console.log("=================" + id_usuario);
     let queryUserInitCurso = 'INSERT INTO usuario_calificacion(id_usuario, id_curso) VALUES (?,?)';
     mysqlconection.query(queryUserInitCurso, [id_usuario, id_curso], (err, results, fields) => {
         if (err) {

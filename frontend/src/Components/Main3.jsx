@@ -87,19 +87,25 @@ class Main3 extends React.Component {
         if (prop == UsuarioI[0].id_usuario) {
             return (
                 <>
-                    <img className="Edit2" src="/Images/Lapiz.png" />
+                    <Link to={{ pathname: "/CrearCurso", state: { location: "/Integrados", InfoClass: prop2 } }}>
+                        <img className="Edit2" src="/Images/Lapiz.png" />
+                    </Link>
                 </>
             );
         } else {
-            Data = this.state.dataCursosI.filter(filtro => filtro.id_curso == prop && !filtro.valoracion_curso);
+            Data = this.state.dataCursosI.filter(filtro => filtro.id_curso == prop2&& filtro.valoracion_curso != 0);
             if(Data.length == 0){  
             return (
                 <>
                     <img className="Edit2" src="/Images/Star.png" />
                 </>
             );
-            }else{
-                /*FALTA ESTILO*/
+            }else{ 
+                return (
+                    <>
+                        <img className="Edit2 coloralter" src="/Images/Star.png" />
+                    </>
+                );
             }
         }
         
@@ -224,7 +230,7 @@ class Main3 extends React.Component {
                                                     <h5 className="TitlesI">Materia: <br /> {Esito.materia}</h5>
                                                 </div>
                                                 <div id="BottonCI">
-                                                    {/* <img className="Edit2" src="/Images/InfoCurso.png" /> */}                        
+                                                    {/* <img className="Edit2" src="/Images/InfoCurso.png" /> */}
                                                     {this.IniciarCurso(Esito.id,Esito.id_creador)}
                                                 </div>
                                             </div>
@@ -244,8 +250,8 @@ class Main3 extends React.Component {
                                                     <h5 className="TitlesI">Tematica: <br /> {Esito.tematica}</h5>
                                                     <h5 className="TitlesI">Materia: <br /> {Esito.materia}</h5>
                                                 </div>
-                                                <div id="BottonCI">
-                                                    {this.Accion1(Esito.id_usuario, Esito.id)}
+                                                <div id="BottonCI">                          
+                                                    {this.Accion1(Esito.id_creador, Esito.id)}
                                                     {this.IniciarCurso(Esito.id,  Esito.id_creador)}
                                                 </div>
                                             </div>
@@ -263,18 +269,20 @@ class Main3 extends React.Component {
                         <div id="Paginacion">
                             {this.flech()}
                             {this.state.array.map((Esito, index) => {
-                                if (index != this.state.posicion && (this.state.despaginar == index || this.state.despaginar == index - 1 || this.state.despaginar == index + 1)) {
-                                    return (<><input className="botonescamb" type="button" value={index + 1} onClick={() => {
+                                try{
+                                const f=index;
+                                if (f != this.state.posicion && (this.state.despaginar == f || this.state.despaginar == f - 1 || this.state.despaginar == f + 1)) {
+                                    return (<><input key={index} className="botonescamb" type="button" value={f + 1} onClick={() => {
                                         this.setState({
-                                            posicion: index,
-                                            despaginar: index,
-                                            actual: this.state.array[index]
+                                            posicion: f,
+                                            despaginar: f,
+                                            actual: this.state.array[f]
                                         });
                                     }} /></>);
 
-                                } else if (this.state.despaginar == index || this.state.despaginar == index - 1 || this.state.despaginar == index + 1) {
-                                    return (<><input className="botonescamb2" type="button" value={index + 1} /></>);
-                                }
+                                } else if (this.state.despaginar == f|| this.state.despaginar == f - 1 || this.state.despaginar == f + 1) {
+                                    return (<><input key={index} className="botonescamb2" type="button" value={f + 1} /></>);
+                                }}catch(err){}
                             })}
                             {this.flech2()}
                         </div>

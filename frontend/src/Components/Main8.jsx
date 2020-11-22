@@ -14,10 +14,20 @@ class Main8 extends React.Component {
                         </Link>
                 </>
             );
-        } else {
+        } else if (this.props.location.state.location == "/Clase") {
             return (
                 <>
                         <Link className="buttonAlgo"  to={{pathname:'/clase/'+ this.props.location.state.InfoClass.id, state:{InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location}}}> 
+                            <button className="button buttonMisCursos">Cancelar</button>
+                        </Link>
+                </>
+            );
+        } else {
+            return (
+                <>
+                        <Link className="buttonAlgo"  to={{pathname:'/Integrados', state:{
+                            pagina:"Comunidad"
+                        }}}> 
                             <button className="button buttonMisCursos">Cancelar</button>
                         </Link>
                 </>

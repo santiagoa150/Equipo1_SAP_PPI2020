@@ -145,7 +145,7 @@ class Main6 extends React.Component {
                                                 <div id="BottonCI">
                                                     <img className="Edit2" src="/Images/Basura.png" />
                                                     <Link to={{
-                                                        pathname: "/EditarCurso",
+                                                        pathname: "/crearCurso",
                                                         state: {
                                                             id: Esito.id
                                                         }
