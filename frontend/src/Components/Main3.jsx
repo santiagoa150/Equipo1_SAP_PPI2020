@@ -3,7 +3,6 @@ import '../Styles/Main3.css';
 import axios from 'axios';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
-let dataGetCursoIniciado = [];
 class Main3 extends React.Component {
     constructor(props) {
         super(props);
@@ -22,11 +21,26 @@ class Main3 extends React.Component {
             dataCursosI: [],
             form:{
                 id_usuario: UsuarioI[0].id_usuario
+            },
+            modal1:{
+                modal1bool: false,
+                modal1title: "",
+                modal1Id: 0,
+                modalValoracion: 0,
+                modalCantVotantes: 0
+            },
+            form2:{
+                valoracion: 0,
+                cant_votantes: 0
             }
+            
         }
     }
-    componentDidMount = async () => {
-
+    componentDidMount = () => {
+        this.getCursos();
+        this.getCursoIniciado();
+    }
+    getCursos = async () =>{
         await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/${this.props.location.state.pagina}`)
             .then(res => {
                 this.setState({ filtrar: res.data });
@@ -34,8 +48,6 @@ class Main3 extends React.Component {
             }).catch(err => {
                 console.error(err);
             }); 
-
-        this.getCursoIniciado();
     }
     filtrando = () => {
         let filtrado;
@@ -81,7 +93,7 @@ class Main3 extends React.Component {
             });
         }
     }
-    Accion1 = (prop, prop2) => {
+    Accion1 = (prop, prop2, prop3, prop4, prop5) => {
         
         let Data;
         if (prop == UsuarioI[0].id_usuario) {
@@ -97,18 +109,104 @@ class Main3 extends React.Component {
             if(Data.length == 0){  
             return (
                 <>
-                    <img className="Edit2" src="/Images/Star.png" />
+                    <img className="Edit2" src="/Images/Star.png" onClick={()=> this.modal1(prop2,prop3, prop4,prop5)}/>
                 </>
             );
             }else{ 
                 return (
                     <>
-                        <img className="Edit2 coloralter" src="/Images/Star.png" />
+                        <img className="Edit2 cursorNone" src="/Images/Medalla.png" />
                     </>
                 );
             }
         }
         
+    }
+    modal1 =(prop, prop2, prop3, prop4) =>{
+        
+        let Data = this.state.dataCursosI.filter(filter => filter.id_curso == prop && filter.id_usuario == UsuarioI[0].id_usuario && filter.valoracion_curso == 0)
+        if(Data.length != 0){       
+        this.setState({modal1: {
+            modal1bool: !this.state.modal1.modal1bool,
+            modal1title: prop2,
+            modal1Id: prop,
+            modalValoracion: prop3,
+            modalCantVotantes: prop4
+        }});
+        
+    }
+    }
+    modal1Return = () =>{
+        if(this.state.modal1.modal1bool){
+            return(
+                <>
+                    <div className="ModalFondo">
+                        <div className="Modal1">
+                            <div className="ModalTitle">
+                                <h2>Valora el curso {this.state.modal1.modal1title}</h2>
+                            </div>
+                            <div className="RangeNumber">
+                                <input type="range"step="0.1" className="slider" id="num" min="1" max="5" defaultValue="1" onMouseMove={()=> this.MouseMoveModal1Range()} onInput={() => this.cos1()}/>
+                                <input type="text"  disabled  className="numberModal1" id="con1" value="1"/>
+                            </div>
+                            <button className="button buttonModal1" onClick={() => {this.putCalificacionCurso(this.state.modal1.modal1Id); this.putCalificacionCurso2(this.state.modal1.modal1Id, this.state.modal1.modalValoracion, this.state.modal1.modalCantVotantes)}}>Calificar</button>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+    }
+    MouseMoveModal1Range = () =>{
+    
+                
+    }
+    cos1 = () =>{
+        document.getElementById("con1").value = document.getElementById("num").value;
+                let slider = document.getElementById("num");
+                let x = slider.value;
+                console.log(slider.value);
+                let color = 'linear-gradient(90deg, rgb(239, 202, 8)' + ((x-1) * 25)+ '%, rgb(214,214,214)' + ((x-1) * 25) + '%)';
+                document.getElementById("num").style.background = color;
+    }
+    putCalificacionCurso = async(prop) =>{
+        /*UsuarioCalificación*/
+        await axios.put(`http://localhost:3883/UsuCur/Put_Usuario-calificacion/Comunidad/${UsuarioI[0].id_usuario}&${prop}`)
+            .then(res =>{
+                console.log("SEHIZO EL PRIMER PUT");
+            }).catch(err =>{
+                if(err){
+                    console.log(err);
+                }
+            });
+    }
+    putCalificacionCurso2 = (prop, prop2, prop3) =>{
+        let valoracion =(prop2 * prop3);
+        let valoracion2 = valoracion + parseFloat(document.getElementById("num").value);
+        let cant_votantes = prop3 + 1;
+        let valoracion3 = valoracion2 /cant_votantes;
+        console.log("Una:" + valoracion + "Dos:"+  valoracion2 + "Tres:" + valoracion3);
+            let form2={
+                valoracion: valoracion3,
+                cant_votantes: cant_votantes
+            }
+            
+                /*Cursos*/
+        axios.put(`http://localhost:3883/Cur/put_cursos_valoracion/comunidad/${prop}`, form2)
+        .then(res =>{
+
+        }).catch(err =>{
+            if(err){
+                console.error(err);
+            }
+        });
+        this.setState({modal1: {
+            modal1bool: !this.state.modal1.modal1bool,
+            modal1title: ""
+        }});
+        this.getCursos();
+        this.getCursoIniciado();
+        this.modal1Return();
+
     }
     final = () => {
         if (this.state.posicion >= this.state.tamaño - 1) {
@@ -149,17 +247,19 @@ class Main3 extends React.Component {
         this.setState({ despaginar: this.state.despaginar + 1 });
     }
     colorcito = (prop, prop2) => {
+        let propcito = (Math.round(prop * 10)) /10;
+        
         if (prop2 == 0) {
-            return (<p className="gridComunidadVal blancoText">{prop}</p>)
+            return (<p className="gridComunidadVal blancoText">{propcito}</p>)
         } else {
-            if (prop < 3) {
-                return (<p className="gridComunidadVal redText">{prop}</p>)
-            } else if (prop < 4) {
-                return (<p className="gridComunidadVal orangeText">{prop}</p>)
-            } else if (prop < 4.5) {
-                return (<p className="gridComunidadVal yellowText">{prop}</p>)
+            if (propcito < 3) {
+                return (<p className="gridComunidadVal redText">{propcito}</p>)
+            } else if (propcito< 4) {
+                return (<p className="gridComunidadVal orangeText">{propcito}</p>)
+            } else if (propcito< 4.5) {
+                return (<p className="gridComunidadVal yellowText">{propcito}</p>)
             } else {
-                return (<p className="gridComunidadVal greenText">{prop}</p>)
+                return (<p className="gridComunidadVal greenText">{propcito}</p>)
             }
         }
     }
@@ -178,7 +278,8 @@ class Main3 extends React.Component {
                 <Link to={{
                     pathname: "/Curso",
                     state: {
-                        id: prop
+                        id: prop,
+                        pagina: this.props.location
                     }
                 }}>
                     <button className="button buttonI">Iniciar curso</button>
@@ -208,6 +309,7 @@ class Main3 extends React.Component {
     render() {
         return (
             <>
+                {this.modal1Return()}
                 <div className="flex">
                     <div className="Filtros">
                         <div className="Filtros2">
@@ -251,7 +353,7 @@ class Main3 extends React.Component {
                                                     <h5 className="TitlesI">Materia: <br /> {Esito.materia}</h5>
                                                 </div>
                                                 <div id="BottonCI">                          
-                                                    {this.Accion1(Esito.id_creador, Esito.id)}
+                                                    {this.Accion1(Esito.id_creador, Esito.id, Esito.titulo, Esito.valoracion, Esito.cant_votantes)}
                                                     {this.IniciarCurso(Esito.id,  Esito.id_creador)}
                                                 </div>
                                             </div>
@@ -291,7 +393,8 @@ class Main3 extends React.Component {
                 {this.state.IniciarCursoPost.booleano && <Redirect to={{
                     pathname: "/Curso",
                     state: {
-                        id: this.state.IniciarCursoPost.idEnviar
+                        id: this.state.IniciarCursoPost.idEnviar,
+                        pagina: this.props.location
                     }
                 }}/> }
             </>

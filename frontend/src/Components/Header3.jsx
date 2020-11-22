@@ -23,15 +23,14 @@ class Header3 extends React.Component {
         return (
             <>
                 <div id="Header3Container">
-                    <Link to="/misCursos">
+                    <div className="linkAtrasCurso">
+                    <Link to={this.props.location.state.pagina} >
                         <div id="AtrasCurso">
 
                         </div>
                     </Link>
+                    </div>
                     <h2 id="TitleCurso">{this.state.data[0]?.titulo}</h2>
-                    <Link className="GuardarCurso" to="/misCursos">
-                        <button className="button GuardarCurso2">Guardar</button>
-                    </Link>
                 </div>
             </>
         );

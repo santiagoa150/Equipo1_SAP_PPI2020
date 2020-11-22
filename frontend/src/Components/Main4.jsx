@@ -11,7 +11,7 @@ class Main4 extends React.Component {
             console.error(err);
         })
 
-        document.getElementById("TeoriaCurso").innerHTML = this.state.CursoData[0].contenido_t;
+        document.getElementById("TeoriaCurso").innerHTML = this.state.CursoData[0]?.contenido_t;
     }
     constructor(props) {
         super(props);

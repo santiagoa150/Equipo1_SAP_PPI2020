@@ -25,7 +25,6 @@ class Main6 extends React.Component {
 
         await axios.get(`http://localhost:3883/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
         .then(res =>{
-            console.log(res.data);
             this.setState({DataCursosC: res.data})
         }).catch(err =>{
            console.error(err); 
@@ -108,8 +107,8 @@ class Main6 extends React.Component {
                                             <Link className="ReanudarC" to={{
                                                 pathname: "/Curso",
                                                 state: {
-                                                    id: Esito.id,
-                                                    pagina: Esito.categoria
+                                                    id: Esito.id_curso,
+                                                    pagina: '/misCursos'
                                                 }
                                             }}>
                                                 <button className="Reanudar">Reanudar</button>
@@ -123,9 +122,11 @@ class Main6 extends React.Component {
                     </div>
                     <div id="Main6C">
                         <div className="ButtonMisCursosC">
-                            <Link to={{pathname:"/CrearCurso", state: {location: "/misCursos"}}} className="ButtonMisCursosC">
+                            <div className="ButtonMisCursosC">
+                            <Link className="jodeteLink" to={{pathname:"/CrearCurso", state: {location: "/misCursos"}}} >
                                 <button className="button buttonMisCursos">Crear curso</button>
                             </Link>
+                            </div>
                             <button className="button buttonMisCursos" id="CursosC" onClick={this.Accion2}>Mis cursos ▼</button>
                         </div>
                         <div id="CardsInner2">

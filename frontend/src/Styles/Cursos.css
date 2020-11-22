@@ -1,8 +1,8 @@
 #Header3Container {
     padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    justify-content: center;
     background-color: #444140;
 }
 .formGames{
@@ -52,18 +52,25 @@
 }
 
 #TitleCurso {
+    grid-column: 2/3;
     color: white;
     margin-left: 4px;
     margin-top: 0;
     margin-bottom: 0;
-    width: 70%;
+    width: 100%;
     justify-content: center;
-    height: 45px;
+    min-height: 45px;
     display: flex;
     align-items: center;
 }
-
+.linkAtrasCurso{
+    display: flex;
+    justify-content: center;
+}
 #AtrasCurso {
+    display: flex;
+    align-items: center;
+    grid-column: 1/2;
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -89,6 +96,11 @@
 }
 
 @media(max-width:720px){
+    #Header3Container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
     #Main4Container {
         grid-template-columns: 1fr;
         grid-template-rows: max-content max-content max-content;

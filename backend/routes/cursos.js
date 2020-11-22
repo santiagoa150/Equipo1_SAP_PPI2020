@@ -1,3 +1,4 @@
+const e = require('express');
 const { Router } = require('express');
 const router = Router();
 const mysqlConnection = require('../db/db');
@@ -68,5 +69,18 @@ router.get('/get_cursos_Mis_cursos/Creados/:id_creador', (req, res) =>{
             res.json(rows);
         }
     });
+});
+
+/*Actualizar curso// actualizar valoración curso*/
+router.put('/put_cursos_valoracion/comunidad/:id', (req, res) =>{
+    const {id} = req.params;
+    const {valoracion, cant_votantes} = req.body;
+    console.log(id + " " + valoracion +  " " + cant_votantes);
+    let queryPutCursosValoracion = 'UPDATE cursos SET valoracion=?,cant_votantes=? WHERE id=?';
+    mysqlConnection.query(queryPutCursosValoracion, [valoracion, cant_votantes, id], (err, results,fields) =>{
+        if(err){
+            console.error(err);
+        }
+    })
 });
 module.exports = router;
