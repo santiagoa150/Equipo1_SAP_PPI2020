@@ -1,12 +1,15 @@
 import React from 'react';
-
 import '../Styles/Header2.css';
 import '../Styles/Header2.css';
 import { withRouter, Link } from 'react-router-dom';
 import { UsuarioI} from '../Utiles/Mocks/UsuarioI';
 let x, bool = false;
-
 class Header2 extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
     componentDidMount(){
         let avatar = '';
         if(UsuarioI[0].avatar == null){
@@ -16,10 +19,8 @@ class Header2 extends React.Component {
         }
         document.getElementById("profile").style.backgroundImage = "url("+ avatar +")";
      }
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
+     
+    /*METODOS QUE HACEN EL CORRECTO FUNCIONAMIENTO DEL MENÚ*/
     ureles = () => {
         x = this.props.location.pathname;
         let pathfin = x.substr(x.length - 1);
@@ -76,10 +77,8 @@ class Header2 extends React.Component {
             <>
                 <div id="Header2Container">
                     {this.ureles()}
-
                     <div id="logo">
                     </div>
-
                     <Link to={{
                         pathname: "/Perfíl", state: {
                             x: x,
@@ -87,17 +86,13 @@ class Header2 extends React.Component {
                             x3: this.props.Pagina
                         }
                     }}>
-                        
                         <div id="profile">
                         </div>
                     </Link>
                 </div>
             </>
-            
         );
-       
     }
-    
 }
 
 export default withRouter(Header2);

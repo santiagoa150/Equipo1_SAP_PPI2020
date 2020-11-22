@@ -70,7 +70,7 @@
     background-color: transparent;
 }
 #PopUpPerfíl{
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
@@ -85,10 +85,13 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    justify-content: space-between;
-    background-color: white;
+    justify-content: space-around;
+    background-color: #7c7c7c;
     min-height: 70vh;
     border-radius: 10px;
+}
+.BotonesCont{
+    width: 60%;
 }
 #formProta{
 width: 100%;
@@ -101,10 +104,10 @@ text-align: center;
     width: 70%;
 }
 #Elprota::-webkit-file-upload-button{
-    width: 30%;
+    width: 40px;
 }
 #Elprota , #Elprota::-webkit-file-upload-button{
-    height:  50px;
+    height:  40px;
 
 }
 .SubImg{
@@ -114,7 +117,8 @@ text-align: center;
     margin: 0 0 10px 0;
 }
 .SubImg2{
-    background-color: #FFA987;
+    margin-top: 5px;
+    background-color: white;
     height: 30px;
     width: 100%;
 
@@ -145,10 +149,11 @@ text-align: center;
     transition: all 700ms;
 }
 .PrevImg{
-    border:1px solid black;
+    background-color: white;
+    border:2px solid#444140;
     border-radius: 50%;
-width: 200px;
-height: 200px;
+    width: 200px;
+    height: 200px;
 }
 #FotoPerfíl{
     width: 100%;

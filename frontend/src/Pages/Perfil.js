@@ -1,25 +1,32 @@
 import React from 'react';
-
 import '../Styles/Perfil.css';
 import Header from '../Components/Header1';
 import Footer from '../Components/Footer';
 import axios from 'axios';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
-import { Usuarios } from '../Utiles/Mocks/Usuarios';
-
 import { Link, Redirect, withRouter } from 'react-router-dom';
-
-let Fecha2 = "";
 let Fecha = new Date();
 let FechaY = Fecha.getFullYear();
 let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
 let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
 let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
 let FechaMin = (FechaY - 100) + "-" + FechaM + "-" + FechaD;
-let aja, aja2, aja3 = false;
+let Sesion, aja2;
 
 class Perfil extends React.Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            Ola: true,
+            UserB: false,
+            UserB2: false,
+            ConB: false,
+            ConB2: false,
+            Bool: false,
+            Fecha2: "",
+            Modal1: false
+        }
+    }
     componentDidMount() {
         let avatar = '';
         if (UsuarioI[0].avatar == null) {
@@ -29,30 +36,22 @@ class Perfil extends React.Component {
         }
         document.getElementById("FotoPerfíl").style.backgroundImage = "url(" + avatar + ")";
     }
-    constructor(props) {
-        super(props);
-        this.state = {
-            Ola: true,
-            UserB: false,
-            UserB2: false,
-            ConB: false,
-            ConB2: false,
-            Bool: false
-        }
-    }
-    prueba = () => {
-        aja = false;
+    componentWillMount() {
+        Sesion = false;
         try {
             let x = (UsuarioI[0].fecha_n).getFullYear();
         }
         catch (e) {
-            aja = true;
+            Sesion = true;
         }
+        this.FechaFormat();
     }
-    fechapendeja = () => {
-        Fecha2 = (UsuarioI[0].fecha_n).getFullYear() + "-" + ((UsuarioI[0].fecha_n).getMonth() + 1) + "-" + (UsuarioI[0].fecha_n).getDate();
+    /*ESTA FUNCIOÓN SIRVE PARA CAMBIAR EL FORMATO DE LA FECHA Y PODER PINTARLA*/
+    FechaFormat = () => {
+        this.setState({ Fecha2: (UsuarioI[0].fecha_n).getFullYear() + "-" + ((UsuarioI[0].fecha_n).getMonth() + 1) + "-" + (UsuarioI[0].fecha_n).getDate() });
     }
-
+    /*EDICIÓN DE INFORMACIÓN*/
+    /*Esta función habilita la posibilidad de editar información.*/
     Edit = () => {
         document.getElementById("GroupIP2").style.display = "flex";
         let ArreClas = document.getElementsByClassName("Apar");
@@ -69,10 +68,11 @@ class Perfil extends React.Component {
             ArreClas3[i].style.opacity = "0";
             ArreClas3[i].style.cursor = "default";
         }
-
         this.setState({ Ola: true });
     }
+    /*Esta función comprueba y realiza la actualización de información*/
     Edit2 = () => {
+        /*
         let Contraseña = document.getElementById("CP"), Contraseña2 = document.getElementById("CP2");
         let Nombre = document.getElementById("NP"), Apellido = document.getElementById("AP");
         let User = document.getElementById("UP"), correo = document.getElementById("EP");
@@ -142,7 +142,7 @@ class Perfil extends React.Component {
             this.Time(correo, "text");
         }
         if (this.state.UserB && this.state.UserB2) {
-            /*
+            
             if (Contraseña.value != "" && Contraseña2.value != "") {
                 if (Contraseña.value == Contraseña2.value) {
                     Usuarios[UsuarioI[0].id_usuario].contraseña = Contraseña.value;
@@ -175,7 +175,7 @@ class Perfil extends React.Component {
                 UsuarioI[0].fecha_n = Usuarios[UsuarioI[0].id_usuario].fecha_n;
                 UsuarioI[0].edad = Usuarios[UsuarioI[0].id_usuario].edad;
             }
-            */
+            
             document.getElementById("GroupIP2").style.display = "none";
             let ArreClas = document.getElementsByClassName("Apar");
             let ArreClas2 = document.getElementsByClassName("PInfo2");
@@ -192,17 +192,46 @@ class Perfil extends React.Component {
             }
 
             this.setState({ Ola: false });
-        }
+            
+        }*/
     }
+    /*ESTA FUNCIÓN CIERRA LA SESIÓN ACTUAL DEL USUARIO*/
     Borrartusdatos = () => {
         UsuarioI.splice(0, 1);
     }
-    Close = () => {
-        document.getElementById("PopUpPerfíl").style.display = "none";
+    /*MODAL1*/
+    /*Esta función activa o desactiva el modal*/
+    Modal1 = () => {
+        this.setState({ Modal1: !this.state.Modal1 })
     }
-    Activate = () => {
-        document.getElementById("PopUpPerfíl").style.display = "flex";
+    /*Esta función returna o no el Modal1*/
+    Modal1Return = () => {
+        if (this.state.Modal1) {
+            return (
+                <>
+                    <div id="PopUpPerfíl">
+                        <div id="ContenedorPopUp">
+                            <form id="formProta" encType="multipart/form-data">
+                                <input id="Elprota" accept="image/*" onChange={this.Subir} type="file" />
+                            </form>
+                            <img id="PrevImg" className="PrevImg" />
+                            <div className="BotonesCont">
+                                <Link className="SubImg" to={{
+                                    pathname: "/Perfíl",
+                                    state: { x: this.props.location.state.x }
+                                }}>
+                                    <button className="button SubImg2" onClick={() => { this.Subir2(); this.Modal1() }}>Subir</button>
+                                </Link>
+                                <button className="button SubImg2" onClick={this.Modal1}>Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            );
+        }
     }
+    /*ACTUALIZAR AVATAR*/
+    /*Esta función realiza la vista previa de la foto de perfíl*/
     Subir = () => {
         let inpu = document.getElementById("Elprota");
         if (inpu.files && inpu.files[0]) {
@@ -214,16 +243,16 @@ class Perfil extends React.Component {
             reader.readAsDataURL(inpu.files[0]);
         }
     }
-    Subir2 = () => {
+    /*Esta funcion actualiza el avatar del usuario.*/
+    Subir2 = async () => {
         let inpu = document.getElementById("Elprota");
         if (inpu.files && inpu.files[0]) {
+            await this.putAvatar();
             UsuarioI[0].avatar = aja2;
-            Usuarios[UsuarioI[0].id_usuario].image = aja2;
-
             document.getElementById("FotoPerfíl").style.backgroundImage = "url(" + UsuarioI[0].avatar + ")";
-            document.getElementById("PopUpPerfíl").style.display = "none";
         }
     }
+    /*Funcion timer*/
     Time = (Propi, Propi2) => {
         setTimeout(function () {
             Propi.type = Propi2;
@@ -231,6 +260,7 @@ class Perfil extends React.Component {
             Propi.value = "";
         }, 1500)
     }
+    /*Retorno del botón atrás dependiendo desde la cual se accedió.*/
     Accion1 = () => {
         if (this.props.location.state.x == "/Principal_") {
             if (this.props.location.state.pagina == "undefined") {
@@ -263,35 +293,29 @@ class Perfil extends React.Component {
 
         }
     }
+    /*TODOS LOS AXIOS*/
+    /*PUTS*/
+    putAvatar = () => {
+        let form = {
+            avatar: aja2 + ""
+        }
+        axios.put(`http://localhost:3883/Usu/actualizacion-perfil/imagen/${UsuarioI[0].id_usuario}`, form)
+            .then(res => {
+
+            }).catch(err => {
+                console.error(err);
+            })
+    }
     render() {
-
-
-
         return (
             <>
-                <div id="PopUpPerfíl">
-                    <div id="ContenedorPopUp">
-                        <div id="XimageC" className="EsitoPapi">
-                            <img id="Ximage" onClick={this.Close} src="https://images.vexels.com/media/users/3/155473/isolated/preview/faa3172dd52035d0c227d7ecab4d6024-doodle-cruzado-x-by-vexels.png" />
-                        </div>
-                        <form id="formProta" encType="multipart/form-data">
-                            <input id="Elprota" accept="image/*" onChange={this.Subir} type="file" />
-                        </form>
-                        <img id="PrevImg" className="PrevImg" />
-                        <Link className="SubImg" to={{
-                            pathname: "/Perfíl",
-                            state: { x: this.props.location.state.x }
-                        }}>
-                            <button className="button SubImg2" onClick={this.Subir2}>Subir</button>
-                        </Link>
-                    </div>
-                </div>
+                {this.Modal1Return()}
                 <Header />
                 <div className="centrar">
                     <div id="PerfilContainer">
                         <div id="FotoContainer">
                             <div id="FotoAndEC">
-                                <div id="FotoPerfíl" onClick={this.Activate}>
+                                <div id="FotoPerfíl" onClick={this.Modal1}>
 
                                 </div>
                             </div>
@@ -357,11 +381,10 @@ class Perfil extends React.Component {
 
                                 </div>
                             </div>
-                            {this.fechapendeja()}
                             <div className="GroupIP">
                                 <p className="PInfo">Fecha de nacimiento:</p>
                                 <input className="None Apar PInfo" id="FP" type="date" max={FechaH} min={FechaMin} autoComplete="off" />
-                                <p className="PInfo PInfo2">{Fecha2}</p>
+                                <p className="PInfo PInfo2">{this.state.Fecha2}</p>
                                 <div className="Edit" id="FPEDIT" onClick={this.Edit}>
 
                                 </div>
@@ -385,10 +408,8 @@ class Perfil extends React.Component {
                         </div>
                     </div>
                 </div>
-
                 <Footer />
-
-                {this.prueba()}
+                {Sesion && <Redirect to="/" />}
             </>
         );
     }

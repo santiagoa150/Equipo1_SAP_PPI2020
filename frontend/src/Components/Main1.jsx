@@ -1,10 +1,8 @@
 import React from 'react';
-
-import { Usuarios } from '../Utiles/Mocks/Usuarios';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import axios from 'axios';
 import '../Styles/Main1.css';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 let Fecha = new Date();
 let FechaY = Fecha.getFullYear();
@@ -24,6 +22,7 @@ class Main1 extends React.Component {
             data: [],
         }
     }
+    /*METODOS DE LOS MODALES EN COMPUTADOR Y TELÉFONO*/
     RegistrarCom = () => {
         document.getElementById("GridCom2Div2").style.display = "block";
         document.getElementById("LogoInicialC").style.display = "none";
@@ -46,132 +45,29 @@ class Main1 extends React.Component {
         document.getElementById("RegistroCel").style.display = "none";
         document.getElementById("InicioCel").style.display = "none";
     }
+    /*REGISTRO DE USUARIO*/
+    /*Registro de usuario en computador*/
     RegistrarUsuCom = () => {
+        let Comp = "Comp";
         let Nombre = document.getElementById("NRC"), Apellido = document.getElementById("ARC");
         let UserName = document.getElementById("DRC"), Correo = document.getElementById("CRC");
         let Sexo = document.getElementById("SRC"), Edad = document.getElementById("ERC");
         let Contraseña = document.getElementById("CoRC"), Contraseña2 = document.getElementById("Co2RC");
-        let edad = new Date(Edad.value);
-        let tD = edad.getDate() + 1;
-        let tM = edad.getMonth() + 1;
-        let tY = edad.getFullYear();
-        let ttD = Fecha.getDate() + 1;
-        let ttM = Fecha.getMonth() + 1;
-        let ttY = Fecha.getFullYear();
-        let años;
-        if (tM == ttM) {
-            if (tD <= ttD) {
-                años = ttY - tY;
-            } else {
-                años = ttY - tY - 1;
-            }
-        }
-        else if (tM < ttM) {
-            años = ttY - tY;
-        }
-        else {
-            años = ttY - tY - 1;
-        }
-
-        if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
-            
-            this.setState({UserB:false,UserB2:false});
-            if (this.state.UserB == false) {
-                axios.get(`http://localhost:3883/Usu/usuario-sesion/${UserName.value}`)
-                .then(res =>{  
-                    if(res.data.length > 0){
-                        UserName.style.color = "red";
-                        UserName.value = "Usuario invalido";
-                        this.Time(UserName, "text");
-                    }else{
-                        this.setState({UserB: true});
-                    }
-                }).catch(err =>{
-                    console.error(err);
-                });             
-            }
-
-            if (this.state.UserB2 == false) {
-                axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
-                .then(res =>{  
-                    if(res.data.length > 0){
-                        Correo.style.color = "red";
-                        Correo.value = "Usuario invalido";
-                        this.Time(Correo, "text");
-                    }else{
-                        this.setState({UserB2: true});
-                    }
-                }).catch(err =>{
-                    console.error(err);
-                });             
-            }
-            if (Contraseña.value == Contraseña2.value) {
-                if (this.state.UserB && this.state.UserB2) {
-                    Usuarios.push({
-                        Nombre: Nombre.value,
-                        Apellido: Apellido.value,
-                        UserName: UserName.value,
-                        Correo: Correo.value,
-                        Edad: años,
-                        FechaN: new Date(edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1)),
-                        Sexo: Sexo.value,
-                        Contraseña: Contraseña.value,
-                        id: Usuarios.length,
-                        image: "https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png"
-                    });
-                    Nombre.value = "";
-                    Apellido.value = "";
-                    UserName.value = "";
-                    Correo.value = "";
-                    Edad.value = "";
-                    Contraseña.value = "";
-                    Contraseña2.value = "";
-                    this.IniciarCom();
-                }
-            }
-        } else {
-            if (Nombre.value == "") {
-                Nombre.style.color = "red";
-                Nombre.value = "Dato no ingresado.";
-                this.Time(Nombre, "text");
-            } if (Apellido.value == "") {
-                Apellido.style.color = "red";
-                Apellido.value = "Dato no ingresado.";
-                this.Time(Apellido, "text");
-            } if (UserName.value == "") {
-                UserName.style.color = "red";
-                UserName.value = "Dato no ingresado."
-                this.Time(UserName, "text");
-            } if (Correo.value == "") {
-                Correo.style.color = "red";
-                Correo.value = "Dato no ingresado.";
-                this.Time(Correo, "email")
-            } if (Edad.value == "") {
-                Edad.type = "text";
-                Edad.style.color = "red";
-                Edad.value = "Dato no ingresado.";
-                this.Time(Edad, "date");
-            } if (Contraseña.value == "") {
-                Contraseña.type = "text";
-                Contraseña.style.color = "red";
-                Contraseña.value = "Dato no ingresado.";
-                this.Time(Contraseña, "password")
-            } if (Contraseña2.value == "") {
-                Contraseña2.type = "text";
-                Contraseña2.style.color = "red";
-                Contraseña2.value = "Dato no ingresado.";
-                this.Time(Contraseña2, "password");
-            }
-        }
-
+        this.RegistroGlobal(Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, Comp);
     }
+    /*Registro de usuario en celular*/
     RegistrarUsuCel = () => {
+        let Cel = "Cel";
         let Nombre = document.getElementById("NRCe");
         let Apellido = document.getElementById("ARCe");
         let UserName = document.getElementById("DRCe");
         let Correo = document.getElementById("CRCe");
         let Sexo = document.getElementById("SRCe"), Edad = document.getElementById("ERCe");
         let Contraseña = document.getElementById("CoRCe"), Contraseña2 = document.getElementById("Co2RCe");
+        this.RegistroGlobal(Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, Cel);
+    }
+    /*Registro de usuario global*/
+    RegistroGlobal = async (Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, tipe) => {
         let edad = new Date(Edad.value);
         let tD = edad.getDate() + 1;
         let tM = edad.getMonth() + 1;
@@ -194,51 +90,27 @@ class Main1 extends React.Component {
             años = ttY - tY - 1;
         }
         if (Nombre.value != "" && Apellido.value != "" && UserName.value != "" && Correo.value != "" && Edad.value != "" && Contraseña.value != "" && Contraseña2.value != "") {
-                        
-            this.setState({UserB:false,UserB2:false});
+            this.state.UserB = false; this.state.UserB2 = false;
             if (this.state.UserB == false) {
-                axios.get(`http://localhost:3883/Usu/usuario-sesion/${UserName.value}`)
-                .then(res =>{  
-                    if(res.data.length > 0){
-                        UserName.style.color = "red";
-                        UserName.value = "Usuario invalido";
-                        this.Time(UserName, "text");
-                    }else{
-                        this.setState({UserB: true});
-                    }
-                }).catch(err =>{
-                    console.error(err);
-                });             
+                await this.getUserNameRegistro(UserName);
             }
-
             if (this.state.UserB2 == false) {
-                axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
-                .then(res =>{  
-                    if(res.data.length > 0){
-                        Correo.style.color = "red";
-                        Correo.value = "Usuario invalido";
-                        this.Time(Correo, "text");
-                    }else{
-                        this.setState({UserB2: true});
-                    }
-                }).catch(err =>{
-                    console.error(err);
-                });             
+                await this.getCorreoRegistro(Correo);
             }
             if (Contraseña.value == Contraseña2.value) {
                 if (this.state.UserB && this.state.UserB2) {
-                    Usuarios.push({
-                        Nombre: Nombre.value,
-                        Apellido: Apellido.value,
-                        UserName: UserName.value,
-                        Correo: Correo.value,
-                        Edad: años,
-                        FechaN: new Date(edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1)),
-                        Sexo: Sexo.value,
-                        Contraseña: Contraseña.value,
-                        id: Usuarios.length,
-                        image: "https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png"
-                    });
+                    let form = {
+                        nombre: Nombre.value,
+                        apellido: Apellido.value,
+                        genero: Sexo.value,
+                        fecha_n: edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1),
+                        edad: años,
+                        usuario: UserName.value,
+                        contraseña: Contraseña.value,
+                        correo: Correo.value,
+                        registro_sistema: 1
+                    }
+                    await this.postUser(form);
                     Nombre.value = "";
                     Apellido.value = "";
                     UserName.value = "";
@@ -246,179 +118,175 @@ class Main1 extends React.Component {
                     Edad.value = "";
                     Contraseña.value = "";
                     Contraseña2.value = "";
-                    this.IniciarCel();
+                    if(tipe == "Comp"){
+                        this.IniciarCom();
+                    }else{
+                        this.IniciarCel();
+                    }
                 }
             }
+            /*Datos errados en el registro*/
         } else {
             if (Nombre.value == "") {
-                Nombre.style.color = "red";
-                Nombre.value = "Dato no ingresado.";
-                this.Time(Nombre, "text");
+                this.Time(Nombre, "text", "Dato no ingresado.");
             } if (Apellido.value == "") {
-                Apellido.style.color = "red";
-                Apellido.value = "Dato no ingresado.";
-                this.Time(Apellido, "text");
+                this.Time(Apellido, "text", "Dato no ingresado.");
             } if (UserName.value == "") {
-                UserName.style.color = "red";
-                UserName.value = "Dato no ingresado."
-                this.Time(UserName, "text");
+                this.Time(UserName, "text", "Dato no ingresado.");
             } if (Correo.value == "") {
-                Correo.style.color = "red";
-                Correo.value = "Dato no ingresado.";
-                this.Time(Correo, "email")
+                this.Time(Correo, "email", "Dato no ingresado.")
             } if (Edad.value == "") {
-                Edad.type = "text";
-                Edad.style.color = "red";
-                Edad.value = "Dato no ingresado.";
-                this.Time(Edad, "date");
+                this.Time(Edad, "date", "Dato no ingresado.");
             } if (Contraseña.value == "") {
-                Contraseña.type = "text";
-                Contraseña.style.color = "red";
-                Contraseña.value = "Dato no ingresado.";
-                this.Time(Contraseña, "password")
+                this.Time(Contraseña, "password", "Dato no ingresado.")
             } if (Contraseña2.value == "") {
-                Contraseña2.type = "text";
-                Contraseña2.style.color = "red";
-                Contraseña2.value = "Dato no ingresado.";
-                this.Time(Contraseña2, "password");
+                this.Time(Contraseña2, "password", "Dato no ingresado.");
             }
         }
 
     }
-    Time = (Propi, Propi2) => {
+    /*INICIO DE SESIÓN DE USUARIO*/
+    /*Inicio de sesión en computador*/
+    IniciarSCom = () => {
+        let Usuario = document.getElementById("IUC");
+        let Contraseña = document.getElementById("ICC");
+        if (Usuario.value != "" && Contraseña.value != "") {
+            this.getUserNameInicioSesion(Usuario, Contraseña);
+        } else {
+            if (Usuario.value == "") {
+                this.Time(Usuario, "text", "Dato no ingresado.");
+            } if (Contraseña.value == "") {
+                this.Time(Contraseña, "password", "Dato no ingresado.");
+            }
+        }
+    }
+    /*Inicio de sesión en celular*/
+    IniciarSCel = () => {
+        let Usuario = document.getElementById("IUCel");
+        let Contraseña = document.getElementById("ICCel");
+        if (Usuario.value != "" && Contraseña.value != "") {
+            this.getUserNameInicioSesion(Usuario, Contraseña);
+        } else {
+            if (Usuario.value == "") {
+                this.Time(Usuario, "text", "Dato no ingresado.");
+            } if (Contraseña.value == "") {
+                this.Time(Contraseña, "password", "Dato no ingresado.");
+            }
+        }
+    }
+    /*Inicio de sesión global*/
+    IniciarSGlobal = async (Usuario, Contraseña) => {
+        if (this.state.data.length == 0) {
+            this.Time(Usuario, "text", "El usuario no existe");
+        } else {
+            if (this.state.data[0].contraseña == Contraseña.value && this.state.data[0].registro_sistema == 1) {
+                let edad = new Date(this.state.data[0].fecha_n);
+                let tD = edad.getDate() + 1;
+                let tM = edad.getMonth() + 1;
+                let tY = edad.getFullYear();
+                let ttD = Fecha.getDate() + 1;
+                let ttM = Fecha.getMonth() + 1;
+                let ttY = Fecha.getFullYear();
+                let años;
+                if (tM == ttM) {
+                    if (tD <= ttD) {
+                        años = ttY - tY;
+                    } else {
+                        años = ttY - tY - 1;
+                    }
+                }
+                else if (tM < ttM) {
+                    años = ttY - tY;
+                }
+                else {
+                    años = ttY - tY - 1;
+                }
+                if(this.state.data[0].edad != años){
+                    await this.putEdad(años);
+                }
+                UsuarioI.push({
+                    id_usuario: this.state.data[0].id_usuario,
+                    nombre: this.state.data[0].nombre,
+                    apellido: this.state.data[0].apellido,
+                    genero: this.state.data[0].genero,
+                    fecha_n: new Date(this.state.data[0].fecha_n),
+                    edad: años,
+                    avatar: this.state.data[0].avatar,
+                    usuario: this.state.data[0].usuario,
+                    contraseña: this.state.data[0].contraseña,
+                    correo: this.state.data[0].correo,
+                    registro_sistema: this.state.data[0].registro_sistema
+                }
+                );
+                this.setState({ Bool: true });
+            } else {
+                this.Time(Contraseña, "password", "La contraseña no coincide.");
+            }
+        }
+    }
+    /*TIMER PARA ALERTAS Y DATOS ERRADOS*/
+    Time = (Propi, Propi2, Propi3) => {
+        Propi.type = "text";
+        Propi.style.color = "red";
+        Propi.value = Propi3;
+        Propi.style.border = "2px solid #ff595e";
         setTimeout(function () {
             Propi.type = Propi2;
             Propi.style.color = "black";
             Propi.value = "";
+            Propi.style.border = "1px solid black";
         }, 1500)
     }
-    UserName = () => {
-        let user = document.getElementById("DRC");
-        for (let i = 0; i < Usuarios.length; i++) {
-            if (Usuarios[i].UserName != user.value) {
-                this.setState({ UserB: true });
-                user.style.color = "black";
-            } else {
-                this.setState({ UserB: false });
-                user.style.color = "red";
-            }
+    /*TODOS LOS AXIOS*/
+    /*TODOS LOS GETS*/
+    /*Axio para traer un usuario por su UserName // Este se utiliza en el registro*/
+    getUserNameRegistro = async (UserName) => {
+        const response = await axios.get(`http://localhost:3883/Usu/usuario-sesion/${UserName.value}`)
+        if (response.length > 0) {
+            this.Time(UserName, "text", "Usuario invalido");
+        } else {
+            this.setState({ UserB: true });
         }
     }
-    UserName2 = () => {
-        let user = document.getElementById("DRCe");
-        for (let i = 0; i < Usuarios.length; i++) {
-            if (Usuarios[i].UserName != user.value) {
-                this.setState({ UserB: true });
-                user.style.color = "black";
-            } else {
-                this.setState({ UserB: false });
-                user.style.color = "red";
-            }
+    /*Axio para traer un usuario por su Correo*/
+    getCorreoRegistro = async (Correo) => {
+        const response = await axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
+        if (response.length > 0) {
+            this.Time(Correo, "text", "Usuario invalido");
+        } else {
+            this.setState({ UserB2: true });
         }
     }
-    IniciarSCom = () => {
-        let Usuario = document.getElementById("IUC");
-        let Contraseña = document.getElementById("ICC");
-        axios.get(`http://localhost:3883/Usu/usuario-sesion/${Usuario.value}`)
-            .then(res =>{                
-                this.setState({data: res.data});
-                if (Usuario.value != "" && Contraseña.value != "") {
-                    if(this.state.data.length==0){
-                        Usuario.style.color = "red";
-                        Usuario.value = "El usuario no existe";
-                        this.Time(Usuario, "text");
-                    }else {
-                        if(this.state.data[0].contraseña == Contraseña.value){
-                            UsuarioI.push({
-                                id_usuario: this.state.data[0].id_usuario,
-                                nombre:this.state.data[0].nombre,
-                                apellido:this.state.data[0].apellido,
-                                genero:this.state.data[0].genero,
-                                fecha_n: new Date(this.state.data[0].fecha_n),
-                                edad:this.state.data[0].edad,
-                                avatar:this.state.data[0].avatar,
-                                usuario:this.state.data[0].usuario,
-                                contraseña:this.state.data[0].contraseña,
-                                correo:this.state.data[0].correo,
-                                registro_sistema:this.state.data[0].registro_sistema
-                            }
-                            );
-                            this.setState({Bool: true});
-                            console.log(this.state.Bool);
-                        }else{
-                            Contraseña.type="text";
-                            Contraseña.style.color = "red";
-                            Contraseña.value = "La contraseña no coincide.";
-                            this.Time(Contraseña, "password");
-                        }
-                    }           
-                } else {
-                    if (Usuario.value == "") {
-                        Usuario.style.color = "red";
-                        Usuario.value = "Dato no ingresado.";
-                        this.Time(Usuario, "text");
-                    } if (Contraseña.value == "") {
-                        Contraseña.type="text";
-                        Contraseña.style.color = "red";
-                        Contraseña.value = "Dato no ingresado.";
-                        this.Time(Contraseña, "password");
-                    }
-                }
-            }).catch(err =>{
+    /*Axio para traer un usuario por su UserName // Este se utiliza en el inicio de sesión*/
+    getUserNameInicioSesion = async (Usuario, Contraseña) => {
+        await axios.get(`http://localhost:3883/Usu/usuario-sesion/${Usuario.value.toLowerCase()}`)
+            .then(res => {
+                this.setState({ data: res.data });
+                this.IniciarSGlobal(Usuario, Contraseña);
+            }).catch(err => {
                 console.log(err.massage);
             })
     }
-    IniciarSCel = () => {
-        let Usuario = document.getElementById("IUCel");
-        let Contraseña = document.getElementById("ICCel");
-        axios.get(`http://localhost:3883/Usu/usuario-sesion/${Usuario.value}`)
-            .then(res =>{                
-                this.setState({data: res.data});
-                if (Usuario.value != "" && Contraseña.value != "") {
-                    if(this.state.data.length==0){
-                        Usuario.style.color = "red";
-                        Usuario.value = "El usuario no existe";
-                        this.Time(Usuario, "text");
-                    }else {
-                        if(this.state.data[0].contraseña == Contraseña.value){
-                            UsuarioI.push({
-                                id_usuario: this.state.data[0].id_usuario,
-                                nombre:this.state.data[0].nombre,
-                                apellido:this.state.data[0].apellido,
-                                genero:this.state.data[0].genero,
-                                fecha_n: new Date(this.state.data[0].fecha_n),
-                                edad:this.state.data[0].edad,
-                                avatar:this.state.data[0].avatar,
-                                usuario:this.state.data[0].usuario,
-                                contraseña:this.state.data[0].contraseña,
-                                correo:this.state.data[0].correo,
-                                registro_sistema:this.state.data[0].registro_sistema
-                            }
-                            );
-                            this.setState({Bool: true});
-                            console.log(this.state.Bool);
-                        }else{
-                            Contraseña.type="text";
-                            Contraseña.style.color = "red";
-                            Contraseña.value = "La contraseña no coincide.";
-                            this.Time(Contraseña, "password");
-                        }
-                    }           
-                } else {
-                    if (Usuario.value == "") {
-                        Usuario.style.color = "red";
-                        Usuario.value = "Dato no ingresado.";
-                        this.Time(Usuario, "text");
-                    } if (Contraseña.value == "") {
-                        Contraseña.type="text";
-                        Contraseña.style.color = "red";
-                        Contraseña.value = "Dato no ingresado.";
-                        this.Time(Contraseña, "password");
-                    }
+    /*TODOS LOS POST*/
+    /*Axio que registra a un usuario en el sistema*/
+    postUser = async (form) => {
+        console.log("ola: " + form);
+        await axios.post(`http://localhost:3883/Usu/registro-sesion`, form)
+            .then(res => {
+
+            }).catch(err => {
+                if (err) {
+                    console.log(err);
                 }
-            }).catch(err =>{
-                console.log(err.massage);
             })
+    }
+    /*TODOS LOS PUT*/
+    /*Axio que actualiza la edad de un usuario al entrar al sistema*/
+    putEdad = (edad) =>{
+        let form={
+            edad:edad
+        }
+        axios.put(`http://localhost:3883/Usu/put-usuarios-edad/${this.state.data[0].id_usuario}`, form);
     }
     render() {
         return (
@@ -463,7 +331,8 @@ class Main1 extends React.Component {
                         </div>
                         <div className="GridCom2Div1">
                             <select className="B2" id="SRCe">
-                                <option className="None" value="0">Sexo</option>
+
+                                <option className="None" value="none">Sexo</option>
                                 <option value="Hombre">Hombre</option>
                                 <option value="Mujer">Mujer</option>
                                 <option value="Otro">Otro</option>
@@ -517,7 +386,7 @@ class Main1 extends React.Component {
                             </div>
                             <div className="GridCom2Div1">
                                 <select className="B2" id="SRC">
-                                    <option className="None" value="None">Sexo</option>
+                                    <option className="None" value="none">Sexo</option>
                                     <option value="Hombre">Hombre</option>
                                     <option value="Mujer">Mujer</option>
                                     <option value="Otro">Otro</option>

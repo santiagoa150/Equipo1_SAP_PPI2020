@@ -1,10 +1,13 @@
+const e = require('express');
 const { Router } = require('express');
 const router = Router();
 const mysqlconection = require('../db/db');
-/* inicio de sesion */
+/*TODOS LOS GETS*/
+/*Este get se utiliza en el inicio de sesión para saber si un usuario esta registrado o no.
+También se utiliza en el registro para saber si el usuario ya está en la plataforma.*/
 router.get('/usuario-sesion/:usuario', (req, res) => {
     const { usuario } = req.params;
-    mysqlconection.query('SELECT * FROM usuarios WHERE usuario = ?', [usuario], (error, rows, fields) => {
+    mysqlconection.query('SELECT * FROM usuarios WHERE LOWER(usuario)=?', [usuario], (error, rows, fields) => {
         if (error) {
             console.error(error);
         } else {
@@ -12,7 +15,7 @@ router.get('/usuario-sesion/:usuario', (req, res) => {
         }
     });
 });
-/* registro usuario - Get corre*/
+/*Este get se utiliza en el registro de usuarios para saber si el correo ya está en la plataforma.*/
 router.get('/correo-sesion/:correo', (req, res) => {
     const { correo } = req.params;
     mysqlconection.query('SELECT * FROM usuarios WHERE correo = ?', [correo], (error, rows, fields) => {
@@ -23,7 +26,7 @@ router.get('/correo-sesion/:correo', (req, res) => {
         }
     });
 });
-/*Get User ID*/
+/*Este get se utiliza en diversas paginas para obtener la información del usuario por la Id.*/
 router.get('/ID-Get/:id_usuario', (req, res) => {
     const { id_usuario } = req.params;
     mysqlconection.query('SELECT * FROM usuarios WHERE id_usuario = ?', [id_usuario], (error, rows, fields) => {
@@ -34,11 +37,13 @@ router.get('/ID-Get/:id_usuario', (req, res) => {
         }
     });
 });
-/* registrar usuario */
+/*TODOS LOS POST*/
+/*Este post se utiliza para registrar un usuario nuevo en la plataforma.*/
 router.post('/registro-sesion', (req, res) => {
-    const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, tipo_registro } = req.body;
-    let usuarioA = [nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, tipo_registro];
-    let queryUsuario = 'INSERT INTO usuarios(nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, tipo_registro) VALUES(?,?,?,?,?,?,?,?,?)';
+    const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, registro_sistema} = req.body;
+    let usuarioA = [nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, registro_sistema];
+    console.log(usuarioA);
+    let queryUsuario = 'INSERT INTO usuarios(nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, registro_sistema) VALUES(?,?,?,?,?,?,?,?,?)';
     mysqlconection.query(queryUsuario, usuarioA, (err, results, fields) => {
         if (err) {
             console.error(err);
@@ -47,31 +52,8 @@ router.post('/registro-sesion', (req, res) => {
         }
     });
 });
-/* cerrar sesion */
-router.put('/cerrar-sesion/estado/:id', (req, res) => {
-    const { id } = req.params;
-    let querycerrarsesion = 'UPTADE usuarios SET estado=false WHERE id=?';
-    mysqlconection.query(querycerrarsesion, [id], (err, results, fields) => {
-        if (err) {
-            console.error(err);
-        } else {
-            res.json({ message: 'se cerro sesion correctamente.' });
-        }
-    });
-});
-/* iniciar sesion */
-router.put('/inicio-sesion/estado/:id', (req, res) => {
-    const { id } = req.params;
-    let queryiniciarsesion = 'UPTADE usuarios SET estado=true WHERE id=?';
-    mysqlconection.query(queryiniciarsesion, [id], (err, results, fields) => {
-        if (err) {
-            console.error(err);
-        } else {
-            res.json({ message: 'se inicio sesion correctamente.' });
-        }
-    });
-});
-/* actualizar informacion */
+/*TODOS LOS PUT*/
+/*Este put se utiliza en el perfíl para actualizar toda la información del usuario.*/
 router.put('/actualizacion-perfil/datos/:id', (req, res) => {
     const { id } = req.params;
     const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo } = req.body;
@@ -84,12 +66,13 @@ router.put('/actualizacion-perfil/datos/:id', (req, res) => {
         }
     });
 });
-/* cambiar imagen */
-router.put('/actualizacion-perfil/imagen/:id', (req, res) => {
-    const { id } = req.params;
+
+/*Este put se utiliza para actualizar el avatar de un usuario.*/
+router.put('/actualizacion-perfil/imagen/:id_usuario', (req, res) => {
+    const { id_usuario } = req.params;
     const { avatar } = req.body;
-    let queryimagen = 'UPTADE usuarios SET avatar=? WHERE id=?';
-    mysqlconection.query(queryimagen, [avatar, id], (err, results, fields) => {
+    let queryimagen = 'UPDATE usuarios SET avatar = ? WHERE id_usuario=?';
+    mysqlconection.query(queryimagen, [avatar, id_usuario], (err, results, fields) => {
         if (err) {
             console.error(err);
         } else {
@@ -97,5 +80,16 @@ router.put('/actualizacion-perfil/imagen/:id', (req, res) => {
         }
     });
 });
-
+/*Este put se utiliza para actualizar la edad del usuario al iniciar sesión.*/
+router.put('/put-usuarios-edad/:id_usuario', (req, res) =>{
+    const {id_usuario} = req.params;
+    const {edad} = req.body;
+    console.log(edad);
+    let queryPutEdad = 'UPDATE usuarios SET edad=? WHERE id_usuario=?';
+    mysqlconection.query(queryPutEdad, [edad,id_usuario],(err, results, fields) =>{
+        if(err){
+            console.error(err);
+        }
+    });
+})
 module.exports = router;

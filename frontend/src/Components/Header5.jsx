@@ -2,9 +2,6 @@ import React from 'react';
 import {withRouter, Link} from 'react-router-dom';
 import axios from 'axios';
 import '../Styles/Cursos.css';
-
-
-
 class Header5 extends React.Component {
     constructor(props) {
         super(props);
@@ -12,7 +9,11 @@ class Header5 extends React.Component {
             DataCurso: []
          }
     }
-    async componentDidMount() {
+    componentDidMount() {
+        this.getCursoComunidad();
+    }
+    /*Metodo que trae la información del curso al que se entra.*/
+    getCursoComunidad= async() =>{
         await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
         .then(res =>{
             this.setState({DataCurso: res.data});
@@ -20,9 +21,7 @@ class Header5 extends React.Component {
             console.error(err);
         })
     }
-
     render() { 
-        
         return (
             <>
                 <div id="Header3Container">
@@ -31,7 +30,6 @@ class Header5 extends React.Component {
                         id: this.state.DataCurso[0]?.id
                     }}}>
                     <div id="AtrasCurso">
-
                     </div>
                     </Link>
                          <h2 id="TitleCurso">{this.state.DataCurso[0]?.titulo}</h2>

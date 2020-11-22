@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser')
 const app = express();
 const usuarios = require('./routes/usuarios');
 const cursos = require('./routes/cursos');
@@ -7,6 +8,8 @@ const clases = require('./routes/clases');
 const usuarios_clases = require('./routes/usuario_clases');
 const usuario_cursos = require('./routes/usuario_curso');
 app.use(cors({origin: '*'}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.set('port', process.env.PORT || 3883);
 app.use(express.json());
 app.use('/Usu', usuarios);

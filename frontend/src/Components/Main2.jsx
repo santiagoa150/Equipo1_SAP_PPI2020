@@ -1,12 +1,11 @@
 import React from 'react';
 import '../Styles/Main2.css';
-import {withRouter, Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 class Main2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {  }
     }
-    
     render() { 
         return (
             <>            

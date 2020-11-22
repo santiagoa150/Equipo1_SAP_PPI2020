@@ -1,6 +1,6 @@
 import React from 'react';
 import '../Styles/Header4.css';
-import {withRouter, Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 class Header4 extends React.Component {
     constructor(props) {
         super(props);
@@ -16,5 +16,4 @@ class Header4 extends React.Component {
          );
     }
 }
- 
 export default withRouter(Header4);
