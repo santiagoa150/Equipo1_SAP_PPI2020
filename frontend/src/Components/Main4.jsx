@@ -3,6 +3,12 @@ import axios from 'axios';
 import '../Styles/Cursos.css';
 import { Link, withRouter } from 'react-router-dom';
 class Main4 extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            CursoData : []
+        }
+    }
     async componentDidMount() {
         await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
         .then(res =>{
@@ -10,16 +16,8 @@ class Main4 extends React.Component {
         }).catch(err =>{
             console.error(err);
         })
-
         document.getElementById("TeoriaCurso").innerHTML = this.state.CursoData[0]?.contenido_t;
     }
-    constructor(props) {
-        super(props);
-        this.state = {
-            CursoData : []
-        }
-    }
-
     render() {
         return (
             <>

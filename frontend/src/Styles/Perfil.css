@@ -85,7 +85,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
     background-color: #7c7c7c;
     min-height: 70vh;
     border-radius: 10px;
@@ -135,18 +135,42 @@ text-align: center;
     cursor: auto !important;
 }
 #Elprota::-webkit-file-upload-button{
-    color: #FFA987;
+    color: transparent;
     font-weight: bold;
-    background: #FFA987;
+    background: #444140;
     border: 0;
     border-radius: 0;
     cursor: pointer;
     transition: all 700ms;
+    background-image: url(/Images/UploadWhite.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 #Elprota::-webkit-file-upload-button:hover{
-    background-color: #444140;
-    color:#444140;
+    background-color: white;
+    background-image: url(/Images/Upload.png);
     transition: all 700ms;
+}
+.TitleModal1Perfíl{
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    background-color: #444140;
+    color: white;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.TitleModal1Perfíl h2{
+    margin: 2px;
+}
+.MainModal1Perfíl{
+    width: 100%;
+    min-height: calc(70vh - 50px);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-around;
 }
 .PrevImg{
     background-color: white;

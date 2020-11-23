@@ -281,6 +281,9 @@ margin-bottom: 3px;
     .CardCI {
         width: 80%;
     }
+    .Modal1{
+        width: 90%;
+    }
 }
 
 @media(max-width:525px) {

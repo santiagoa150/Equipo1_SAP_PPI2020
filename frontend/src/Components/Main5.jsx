@@ -6,7 +6,7 @@ import { Clases } from '../Utiles/Mocks/Clases';
 import { User_clase } from '../Utiles/Mocks/User_clase';
 import { Usuarios } from '../Utiles/Mocks/Usuarios';
 import axios from 'axios';
-let bool = true, bool2 = true,SubirUsu  = new Array(), i = 0;
+let bool = true, bool2 = true, SubirUsu = new Array(), i = 0;
 class Main5 extends React.Component {
     constructor(props) {
         super(props);
@@ -18,11 +18,11 @@ class Main5 extends React.Component {
     }
     async componentDidMount() {
         await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
-        .then(res =>{
-            this.setState({DataClase: res.data})    
-        }).catch(err =>{
-            console.error(err);
-        })
+            .then(res => {
+                this.setState({ DataClase: res.data })
+            }).catch(err => {
+                console.error(err);
+            })
         /*CLASES CREADAS*/
         if (this.state.DataClase.length == 0) {
             document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
@@ -36,6 +36,8 @@ class Main5 extends React.Component {
             document.getElementById("contidU2").style.justifyContent = "center";
         }
     }
+    /*METODOS SIMPLES*/
+    /*Permite ocultar y/o mostrar las clases creadas*/
     Accion1 = () => {
         if (!bool) {
             document.getElementById("clasesP2").style.display = "block";
@@ -52,6 +54,7 @@ class Main5 extends React.Component {
             bool = false
         }
     }
+    /*Permite ocultar y/o mostrar las clases inscritas*/
     Accion2 = () => {
         if (!bool2) {
             document.getElementById("contidU2").style.display = "block";
@@ -68,6 +71,7 @@ class Main5 extends React.Component {
             bool2 = false
         }
     }
+    /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     CrearClase = () => {
         document.getElementById("PopUp1").style.display = "flex";
     }
@@ -100,7 +104,7 @@ class Main5 extends React.Component {
                     idclase: leng,
                     fechaU: new Date(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate() + 1))
                 });
-            }            
+            }
             this.setState({
                 Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
                 Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
@@ -115,7 +119,6 @@ class Main5 extends React.Component {
         return this;
     }
     SubirUsuario1 = () => {
-
         if (document.getElementById("UsuarioClase").value == "") {
             document.getElementById("UsuarioClase").style.color = "red"
             document.getElementById("UsuarioClase").value = "No ingresado"
@@ -127,23 +130,24 @@ class Main5 extends React.Component {
             let j = document.getElementById("UsuarioClase").value;
             let inner = document.getElementById("UsuariosIN").innerHTML;
             for (let k = 0; k < Usuarios.length; k++) {
-                if (Usuarios[k].UserName == j ) {
-                    if(Usuarios[k].id == UsuarioI[0].id){
+                if (Usuarios[k].UserName == j) {
+                    if (Usuarios[k].id == UsuarioI[0].id) {
                         document.getElementById("UsuarioClase").style.color = "red"
                         document.getElementById("UsuarioClase").value = "Eres tú"
                         setTimeout(function () {
                             document.getElementById("UsuarioClase").value = "";
                             document.getElementById("UsuarioClase").style.color = "black";
                         }, 1000);
-                    }else{
+                    } else {
                         inner = inner + '<div class="Etiqueta"><p>Usuario:' + j + '</p></div>';
                         document.getElementById("UsuariosIN").innerHTML = inner;
                         SubirUsu[i] = j;
                         document.getElementById("UsuarioClase").value = "";
                         console.log("Esto es SubirUsu" + SubirUsu[i]);
-                    i++;}
+                        i++;
+                    }
                 } else {
-                    document.getElementById("UsuarioClase").style.color = "red"                    
+                    document.getElementById("UsuarioClase").style.color = "red"
                     document.getElementById("UsuarioClase").value = "No existe"
                     setTimeout(function () {
                         document.getElementById("UsuarioClase").value = "";
@@ -155,6 +159,7 @@ class Main5 extends React.Component {
 
         }
     }
+    /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
     UnirUser = () => {
         document.getElementById("PopUp2").style.display = "flex";
     }
@@ -252,50 +257,54 @@ class Main5 extends React.Component {
                     </div>
                 </div>
                 <div className="contM5">
+                    <div className="buscadorClases">
+                        <div className="filtroClasesSearch">
+                            <div className="filtroClasesSearch2">
+                                <input type="text" className="FiltrosC2 buscadorClases2" placeholder="buscar"></input>
+                            </div>
+                        </div>
+                        <div className="BotonMore">
+                            <img className="BotonMoreImage" src="/Images/Mas.png" />
+                        </div>
+                    </div>
                     <div className="franja">
                         <div id="infop">
-                        <div className="ButtonMisCursosC">
-                                    <input type="button" value="Crear" onClick={this.CrearClase} />
-                                    <input type="button" value="Clases creadas ▼" id="ClasesC" onClick={this.Accion1} />
-                        </div>
+                            <div className="ButtonMisCursosC">
+                                <input type="button" value="Clases creadas ▼" id="ClasesC" onClick={this.Accion1} />
+                            </div>
                             <div id="clasesP">
 
                                 <div id="clasesP2">
                                     {this.state.DataClase.map((Esito, Index) => {
-                                        let variable = 0;
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
                                                     <h3 className="TitleCardClase">{Esito.titulo}</h3>
-                                                    <h4>Fecha de creacion: <br />
+                                                    <Link to={{ pathname: "/Clase/" + Esito.id_clase, state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                </div>
+                                                <div className="botoncard">
+                                                    <h4 className="FechaCClase">Fecha de creacion: <br />
                                                         {new Date(Esito.fecha_c).toLocaleDateString()}
                                                     </h4>
-                                                </div>
-                                                <div className="botoncard"><Link to={{ pathname: "/Clase/" + Esito.id_clase, state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
                                                     <div className="InfoClassCard">
+                                                        <h4 className="InfoClassCardConte ">Usuarios: {Esito.cont_usuarios}</h4>
                                                         <h4 className="InfoClassCardConte">Id: {Esito.id_clase}</h4>
-                                                        <h4 className="InfoClassCardConte DisCel">Usuarios: {Esito.cont_usuarios}</h4>
                                                     </div>
-                                                </div>
-                                                <div className="UsuarioInfoCardAbajo">
-                                                    <h4 className="InfoClassCardConte DisCom">Usuarios: {Esito.cont_usuarios}</h4>
+
                                                 </div>
                                             </div>
-
                                         </>);
                                     })}
                                 </div>
                             </div>
-                            {/*<div id="botonear"><input type="button" value="Unirse" onClick={this.UnirUser} /><input type="button" value="Crear" onClick={this.CrearClase} /></div>*/}
                         </div>
                         <div id="conclases">
-                        
+
                             <div className="ButtonMisCursosC">
-                                    <input type="button" value="Unirse" onClick={this.UnirUser} />
-                                    <input type="button" value="Clases inscritas ▼" id="ClasesP" onClick={this.Accion2} />
-                                </div>
+                                <input type="button" value="Clases inscritas ▼" id="ClasesP" onClick={this.Accion2} />
+                            </div>
                             <div id="contidU">
-                                
+
                                 <div id="contidU2">
                                     {this.state.Usuario_C.map((Esito, Index) => {
                                         let variable = 0;
@@ -308,18 +317,15 @@ class Main5 extends React.Component {
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
-                                                    <h3>{Clases[Esito.idclase].titulo}</h3>
-                                                    <h4>Fecha de creacion:<br />
-                                                        {Clases[Esito.idclase].fechaC.toLocaleDateString()}
-                                                    </h4>
+                                                    <h3 className="TitleCardClase">{Clases[Esito.idclase].titulo}</h3>
+                                                    <Link to={{ pathname: "/Clase/" + Esito.idclase, state: { InfoClass: Clases[Esito.idclase] } }}><input type="button" value="Ir" /></Link>
                                                 </div>
                                                 <div className="botoncard">
-                                                    <Link  to={{pathname: "/Clase/" + Esito.idclase, state:{InfoClass: Clases[Esito.idclase]}}}><input type="button" value="Ir"/></Link>
+                                                <h4 className="FechaCClase">Fecha de creacion:<br />
+                                                        {Clases[Esito.idclase].fechaC.toLocaleDateString()}
+                                                    </h4>
+                                                    <h4 className="InfoClassCardConte">Usuarios: {variable}</h4>
                                                     <h4 className="InfoClassCardConte">Id: {Esito.idclase}</h4>
-                                                    <h4 className="InfoClassCardConte DisCel">Usuarios: {variable}</h4>
-                                                </div>
-                                                <div className="UsuarioInfoCardAbajo">
-                                                    <h4 className="InfoClassCardConte DisCom">Usuarios: {variable}</h4>
                                                 </div>
                                             </div>
                                         </>);

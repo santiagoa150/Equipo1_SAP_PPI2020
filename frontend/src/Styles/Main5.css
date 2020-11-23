@@ -12,16 +12,21 @@
     padding-block-end: 2vh;
 }
 .TitleCardClase{
-    max-width: 95%;
+    max-width: 60%;
+    
+    text-align: center;
 }
 .titulo{
-    padding-left: 2.5%;
+    background-color: #444140;
+    color:white;
+    border-radius: 10px 10px 0 0;
+    grid-row: 1/2;
+    width: calc(100% + 1px);
+    grid-column: 1/4;
+    min-height: max-content;
     display: flex;
-    flex-flow: column;
-    align-items: flex-start;
-}
-.botoncard{
-    padding-right: 2.5%;
+    justify-content: space-around;
+    align-items: center;
 }
 #imgclases{
     width: 30vw;
@@ -51,7 +56,6 @@
 #clasesP, #contidU{
     display: flex;
     justify-content: center;
-    margin: 10px;
     height: calc((90vh - 2vw - 25px) /2) ;
     overflow: hidden;
     overflow-y: scroll;
@@ -85,20 +89,24 @@
     margin-block-end: 10px;
 }
 .cardsclas{
-    margin-bottom: 10px;
-    background-color:#ffffff;
-    display: flex;
-    justify-content: space-around;
-    width: 98%;
-    border:black 1px solid;
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+    grid-template-rows: max-content max-content;
+    margin-top: 10px;
+    background-color:  #7c7c7c;
+    width: 90%;
+    border: #7c7c7c 1px solid;
     border-radius: 10px;
-    box-shadow: 3px 3px 8px black;
+    box-shadow: 5px 5px 10px black;
 }
 .cardsclas input{
-    width: 15vw !important;
-    height: 30px;
-    background-color: #FFA987;
+    width: 35px !important; 
+    height: 35px !important;
+    background-color: white !important;
     border: transparent;
+}
+.cardsclas input:hover{
+    background-color: #7c7c7c !important;
 }
 .PopUp1, .PopUp2{
     display: none;
@@ -224,19 +232,77 @@
 }
 .InfoClassCard{
     display: flex;
-    width: 100%;
+    width: 50%;
     height: 50px;
-
     justify-content: center;
     align-items: center;
 }
 .InfoClassCardConte{
     margin: 0 5px 0 5px;
 }
+.buscadorClases{
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 1fr;
+}
+.filtroClasesSearch{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+.filtroClasesSearch2{
+    border-radius: 10px;
+    background-color: #444140;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.BotonMore{
+    margin-left: 10px;
+    display: flex;
+    justify-content: flex-start;
+    grid-column: 3/4;
+    grid-row: 1/2;
+}
+.BotonMoreImage{
+    cursor: pointer;
+    width: 40px;
+}
+.buscadorClases2{
+    width: 50% !important;
+}
+.botoncard{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    grid-column: 1/4;
+    grid-row: 2/3 !important;
+    align-items: center;
+}
 @media(min-width:620px){
     .DisCom{display: none;}
 }
 @media(max-width:620px){ 
+    .BotonMore{
+        margin-left: 0px;
+        margin-right: 10px;
+    }
+    .filtroClasesSearch2{
+        width: 95%;
+    }
+    .buscadorClases{
+        align-items: center;
+        justify-content: space-between;
+        display: flex;
+    }
+    .BotonMoreImage{
+        width: 35px;
+    }
     .DisCel{display: none;}
     .PopUp2_{
 
@@ -263,6 +329,7 @@
     }
 
     #clasesP, #contidU{
+        width: 100%;
         display: flex;
         flex-flow: column;
         justify-content: flex-start;
@@ -285,26 +352,38 @@
     background-size: 100%;
     margin:10px;
 }
+.TitleCardClase{
+    max-width: 90%;
+    text-align: center;
+}
+.cardsclas input{
+    margin-right: 10px;
+}
 .cardsclas{
-    background-color:#ffffff;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 100%;
     grid-template-rows: max-content max-content;
-    width: 80vw;
-    border:black 1px solid;
-    border-radius: 10px;
+    width: 88vw;
 }
-.titulo{
-    margin-left: 10px;
-    grid-row: 1/2;
-    grid-column: 1/2;
-}
-.botoncard{
+.InfoClassCard{
     display: flex;
     flex-flow: column;
     align-items: center;
+    width: 60%;
+}
+.titulo{
     grid-row: 1/2;
-    grid-column: 2/3;
+    grid-column: 1/2;
+}
+.FechaCClase{
+    width: 30%;
+}
+.botoncard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row: 2/3;
+    grid-column: 1/2;
 }
 .UsuarioInfoCardAbajo{
     text-align: center;

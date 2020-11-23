@@ -17,14 +17,14 @@ class Perfil extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Ola: true,
             UserB: false,
             UserB2: false,
             ConB: false,
             ConB2: false,
             Bool: false,
             Fecha2: "",
-            Modal1: false
+            Modal1: false,
+            renderizar: false
         }
     }
     componentDidMount() {
@@ -68,11 +68,20 @@ class Perfil extends React.Component {
             ArreClas3[i].style.opacity = "0";
             ArreClas3[i].style.cursor = "default";
         }
-        this.setState({ Ola: true });
     }
     /*Esta función comprueba y realiza la actualización de información*/
-    Edit2 = () => {
-        /*
+    Edit2 = async () => {
+        this.setState({renderizar: false});
+        let form = {
+            nombre: UsuarioI[0].nombre,
+            apellido: UsuarioI[0].apellido,
+            genero: UsuarioI[0].genero,
+            fecha_n: UsuarioI[0].fecha_n.getFullYear() + "-" + (UsuarioI[0].fecha_n.getMonth() + 1) + "-" + (UsuarioI[0].fecha_n.getDate() + 1),
+            edad: UsuarioI[0].edad,
+            usuario: UsuarioI[0].usuario,
+            contraseña: UsuarioI[0].contraseña,
+            correo: UsuarioI[0].correo
+        }
         let Contraseña = document.getElementById("CP"), Contraseña2 = document.getElementById("CP2");
         let Nombre = document.getElementById("NP"), Apellido = document.getElementById("AP");
         let User = document.getElementById("UP"), correo = document.getElementById("EP");
@@ -98,84 +107,88 @@ class Perfil extends React.Component {
         else {
             años = ttY - tY - 1;
         }
-
         this.setState({ UserB: false, UserB2: false });
-        if (User.value != UsuarioI[0].usuario) {
-            if (this.state.UserB == false) {
-                axios.get(`http://localhost:3883/Usu/usuario-sesion/${User.value}`)
-                    .then(res => {
-                        if (res.data.length > 0) {
-                            User.style.color = "red";
-                            User.value = "Usuario invalido";
-                            this.Time(User, "text");
-                        } else {
-                            this.setState({ UserB: true });
-                        }
-                    }).catch(err => {
-                        console.error(err);
-                    });
+        if (User.value != "") {
+            if (User.value.toLowerCase() != UsuarioI[0].usuario.toLowerCase()) {
+                if (this.state.UserB == false) {
+                    console.log("No debería 1")
+                    await this.getUsuarioUserName(User);
+                }
+            } else {
+                this.Time(User, "text", "Este ya es tu usuario");
             }
         } else {
-            User.style.color = "red";
-            User.value = "Este ya es tu usuario";
-            this.Time(User, "text");
+            await this.setState({
+                UserB: true,
+            })
         }
-
-        if (correo.value != UsuarioI[0].correo) {
-            if (this.state.UserB2 == false) {
-                axios.get(`http://localhost:3883/Usu/correo-sesion/${correo.value}`)
-                    .then(res => {
-                        if (res.data.length > 0) {
-                            correo.style.color = "red";
-                            correo.value = "Correo invalido";
-                            this.Time(correo, "text");
-                        } else {
-                            this.setState({ UserB2: true });
-                        }
-                    }).catch(err => {
-                        console.error(err);
-                    });
+        if (correo.value != "") {
+            if (correo.value != UsuarioI[0].correo) {
+                if (this.state.UserB2 == false) {
+                    console.log("No debería");
+                    await this.getUsuarioCorreo(correo);
+                }
+            } else {
+                this.Time(correo, "text", "Este ya es tu correo");
             }
         } else {
-            correo.style.color = "red";
-            correo.value = "Este ya es tu correo";
-            this.Time(correo, "text");
+            await this.setState({
+                UserB2: true,
+            })
         }
         if (this.state.UserB && this.state.UserB2) {
-            
             if (Contraseña.value != "" && Contraseña2.value != "") {
                 if (Contraseña.value == Contraseña2.value) {
-                    Usuarios[UsuarioI[0].id_usuario].contraseña = Contraseña.value;
-                    UsuarioI[0].contraseña = Usuarios[UsuarioI[0].id_usuario].contraseña;
+                    UsuarioI[0].contraseña = Contraseña.value;
+                    form.contraseña = Contraseña.value;
+                }
+            } else {
+                if (Contraseña.value != "" && Contraseña2.value == "") {
+                    this.Time(Contraseña2, "password", "Dato sin llenar.");
+                }
+                if (Contraseña2.value != "" && Contraseña.value == "") {
+                    this.Time(Contraseña, "password", "Dato sin llenar.");
                 }
             }
             if (Nombre.value != "") {
-                Usuarios[UsuarioI[0].id_usuario].nombre = Nombre.value;
-                UsuarioI[0].nombre = Usuarios[UsuarioI[0].id_usuario].nombre;
+                UsuarioI[0].nombre = Nombre.value;
+                form.nombre = Nombre.value;
             }
             if (Apellido.value != "") {
-                Usuarios[UsuarioI[0].id_usuario].apellido = Apellido.value;
-                UsuarioI[0].apellido = Usuarios[UsuarioI[0].id_usuario].apellido;
+                UsuarioI[0].apellido = Apellido.value;
+                form.apellido = Apellido.value;
             }
             if (User.value != "" && this.state.UserB) {
-                Usuarios[UsuarioI[0].id_usuario].usuario = User.value;
-                UsuarioI[0].usuario = Usuarios[UsuarioI[0].id_usuario].usuario;
+                UsuarioI[0].usuario = User.value;
+                form.usuario = User.value;
             }
-            if (correo.value != "") {
-                Usuarios[UsuarioI[0].id_usuario].correo = correo.value;
-                UsuarioI[0].correo = Usuarios[UsuarioI[0].id_usuario].correo;
+            if (correo.value != "" && this.state.UserB2) {
+                UsuarioI[0].correo = correo.value;
+                form.correo = correo.value;
             }
-            if (Sexo.value != 0) {
-                Usuarios[UsuarioI[0].id_usuario].genero = Sexo.value;
-                UsuarioI[0].genero = Usuarios[UsuarioI[0].id_usuario].genero;
+            if (Sexo.value != "none") {
+                UsuarioI[0].genero = Sexo.value;
+                form.genero = Sexo.value;
             }
             if (FechaN.value != "") {
-                Usuarios[UsuarioI[0].id_usuario].fecha_n = new Date(edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1));
-                Usuarios[UsuarioI[0].id_usuario].edad = años;
-                UsuarioI[0].fecha_n = Usuarios[UsuarioI[0].id_usuario].fecha_n;
-                UsuarioI[0].edad = Usuarios[UsuarioI[0].id_usuario].edad;
+                UsuarioI[0].fecha_n = new Date(edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1));
+                UsuarioI[0].edad = años;
+                form.fecha_n = edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1);
+                form.edad = años;
             }
-            
+            if(Nombre.value != "" || Apellido.value != "" || Sexo.value != 0 || FechaN.value != "" || User.value != "" || Contraseña.value != "" || correo.value != ""){
+                if(Contraseña.value == Contraseña2.value){
+                    await this.putInformacion(form);
+                }
+            }
+            Nombre.value = "";
+            Apellido.value = "";
+            Contraseña.value = "";
+            Contraseña2.value = "";
+            Sexo.value = "none";
+            FechaN.value = "";
+            correo.value = "";
+            User.value = "";
             document.getElementById("GroupIP2").style.display = "none";
             let ArreClas = document.getElementsByClassName("Apar");
             let ArreClas2 = document.getElementsByClassName("PInfo2");
@@ -189,11 +202,9 @@ class Perfil extends React.Component {
             }
             for (let i = 0; i < ArreClas3.length; i++) {
                 ArreClas3[i].style.opacity = "1";
+                ArreClas3[i].style.cursor = "pointer";
             }
-
-            this.setState({ Ola: false });
-            
-        }*/
+        }
     }
     /*ESTA FUNCIÓN CIERRA LA SESIÓN ACTUAL DEL USUARIO*/
     Borrartusdatos = () => {
@@ -211,18 +222,23 @@ class Perfil extends React.Component {
                 <>
                     <div id="PopUpPerfíl">
                         <div id="ContenedorPopUp">
-                            <form id="formProta" encType="multipart/form-data">
-                                <input id="Elprota" accept="image/*" onChange={this.Subir} type="file" />
-                            </form>
-                            <img id="PrevImg" className="PrevImg" />
-                            <div className="BotonesCont">
-                                <Link className="SubImg" to={{
-                                    pathname: "/Perfíl",
-                                    state: { x: this.props.location.state.x }
-                                }}>
-                                    <button className="button SubImg2" onClick={() => { this.Subir2(); this.Modal1() }}>Subir</button>
-                                </Link>
-                                <button className="button SubImg2" onClick={this.Modal1}>Cancelar</button>
+                            <div className="TitleModal1Perfíl">
+                                <h2>Cambia tu foto</h2>
+                            </div>
+                            <div className="MainModal1Perfíl">
+                                <form id="formProta" encType="multipart/form-data">
+                                    <input id="Elprota" accept="image/*" onChange={this.Subir} type="file" />
+                                </form>
+                                <img id="PrevImg" className="PrevImg" />
+                                <div className="BotonesCont">
+                                    <Link className="SubImg" to={{
+                                        pathname: "/Perfíl",
+                                        state: { x: this.props.location.state.x }
+                                    }}>
+                                        <button className="button SubImg2" onClick={() => { this.Subir2(); this.Modal1() }}>Subir</button>
+                                    </Link>
+                                    <button className="button SubImg2" onClick={this.Modal1}>Cancelar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,10 +269,15 @@ class Perfil extends React.Component {
         }
     }
     /*Funcion timer*/
-    Time = (Propi, Propi2) => {
+    Time = (Propi, Propi2, Propi3) => {
+        Propi.type = "text";
+        Propi.style.color = "red";
+        Propi.style.border = "2px solid #ff595e";
+        Propi.value = Propi3;
         setTimeout(function () {
             Propi.type = Propi2;
             Propi.style.color = "black";
+            Propi.style.border = "1px solid black";
             Propi.value = "";
         }, 1500)
     }
@@ -295,6 +316,7 @@ class Perfil extends React.Component {
     }
     /*TODOS LOS AXIOS*/
     /*PUTS*/
+    /*Este put actualiza el avatar del usuario.*/
     putAvatar = () => {
         let form = {
             avatar: aja2 + ""
@@ -305,6 +327,46 @@ class Perfil extends React.Component {
             }).catch(err => {
                 console.error(err);
             })
+    }
+    /*Este put actualiza la información del usuario.*/
+    putInformacion = async (form) =>{
+        await axios.put(`http://localhost:3883/Usu/actualizacion-perfil/datos/${UsuarioI[0].id_usuario}`, form)
+        .then(res =>{
+        this.setState({renderizar: true});
+        }).catch(err =>{
+            if(err){
+                console.log(err);
+            }
+        })
+    }
+    /*GETS*/
+    /*Este get nos trae la información de un usaurio dependiendo de su UserName*/
+    getUsuarioUserName = async (User) => {
+        await axios.get(`http://localhost:3883/Usu/usuario-sesion/${User.value}`)
+            .then(res => {
+                if (res.data.length > 0) {
+                    this.Time(User, "text", "Usuario invalido");
+                } else {
+                    this.setState({
+                        UserB: true,
+                    });
+                }
+            }).catch(err => {
+                console.error(err);
+            });
+    }
+    /*Este get nos trae*/
+    getUsuarioCorreo = async (correo) => {
+        await axios.get(`http://localhost:3883/Usu/correo-sesion/${correo.value}`)
+            .then(res => {
+                if (res.data.length > 0) {
+                    this.Time(correo, "text", "Correo invalido");
+                } else {
+                    this.setState({ UserB2: true});
+                }
+            }).catch(err => {
+                console.error(err);
+            });
     }
     render() {
         return (
@@ -371,9 +433,9 @@ class Perfil extends React.Component {
                             <div className="GroupIP">
                                 <p className="PInfo">Sexo:</p>
                                 <select className="None Apar PInfo" id="SP">
-                                    <option className="None" value="0">Sexo</option>
-                                    <option value="Hombre">Hombre</option>
-                                    <option value="Mujer">Mujer</option>
+                                    <option className="None" value="none">Sexo</option>
+                                    <option value="Masculino">Hombre</option>
+                                    <option value="Femenino">Mujer</option>
                                     <option value="Otro">Otro</option>
                                 </select>
                                 <p className="PInfo PInfo2">{UsuarioI[0].genero}</p>

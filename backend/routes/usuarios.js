@@ -54,11 +54,11 @@ router.post('/registro-sesion', (req, res) => {
 });
 /*TODOS LOS PUT*/
 /*Este put se utiliza en el perfíl para actualizar toda la información del usuario.*/
-router.put('/actualizacion-perfil/datos/:id', (req, res) => {
-    const { id } = req.params;
+router.put('/actualizacion-perfil/datos/:id_usuario', (req, res) => {
+    const { id_usuario } = req.params;
     const { nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo } = req.body;
-    let queryactualizarperfil = 'UPTADE usuarios SET nombre=?, apellido=?, genero=?, fecha_n=?, edad=?, usuario=?, contraseña=?, correo=? WHERE id=?';
-    mysqlconection.query(queryactualizarperfil, [nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, id], (err, results, fields) => {
+    let queryactualizarperfil = 'UPDATE usuarios SET nombre=?, apellido=?, genero=?, fecha_n=?, edad=?, usuario=?, contraseña=?, correo=? WHERE id_usuario=?';
+    mysqlconection.query(queryactualizarperfil, [nombre, apellido, genero, fecha_n, edad, usuario, contraseña, correo, id_usuario], (err, results, fields) => {
         if (err) {
             console.error(err);
         } else {
