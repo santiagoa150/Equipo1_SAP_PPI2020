@@ -3,7 +3,8 @@ const { Router } = require('express');
 const router = Router();
 const mysqlConnection = require('../db/db');
 
-/* Traer cursos (Integrados y Comunidad)*/
+/*TODOS LOS GETS*/
+/*Este metodo se usa en integrado/comunidad para traer todos los cursos*/
 router.get('/get_cursos-Comunidad_Integrado/:categoria', (req, res) => {
     const { categoria } = req.params;
     /*
@@ -46,7 +47,7 @@ router.get('/get_cursos-Comunidad_Integrado/:categoria', (req, res) => {
         }
     });
 });
-/*Traer curso(Información)*/
+/*Este metodo trae la información de un curso*/
 router.get('/get_cursos-Comunidad_Integrado/Curso/:id', (req, res) => {
     const { id } = req.params;
     let queryTraerCurso = 'SELECT * FROM cursos WHERE id=?';
@@ -58,7 +59,7 @@ router.get('/get_cursos-Comunidad_Integrado/Curso/:id', (req, res) => {
         }
     });
 });
-/*Traer cursos creados*/
+/*Este metodo trae todos los cursos creados*/
 router.get('/get_cursos_Mis_cursos/Creados/:id_creador', (req, res) =>{
     const {id_creador} = req.params;
     let queryTraerCurso2 = 'SELECT * FROM cursos WHERE id_creador=?';
@@ -70,7 +71,56 @@ router.get('/get_cursos_Mis_cursos/Creados/:id_creador', (req, res) =>{
         }
     });
 });
-
+/*Este get trae los cursos que hacen parte de una clase*/
+router.get('/get_cursos_informacion/Clase/:id_clase', (req, res) =>{
+    const {id_clase} = req.params;
+    let queryTraerCurso3 = 'SELECT * FROM cursos WHERE id_clase=?';
+    mysqlConnection.query(queryTraerCurso3, [id_clase], (err, rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
+/*Este get trae la id de un curso al crearlo*/
+router.get('/get_cursos_id/misCursos_Clase_CreateCurso/:id_creador', (req,res)=>{
+    const {id_creador} = req.params;
+    let queryGetIdCursoCreado = 'SELECT id FROM `cursos` WHERE id_creador=? AND logo="/Images/Cursos/Default.png" AND titulo IS null AND tematica IS null AND materia IS null'
+    mysqlConnection.query(queryGetIdCursoCreado, [id_creador], (err, rows, fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
+/*TODOS LOS POST*/
+/*Este post permite guardar un curso nuevo en la database*/
+router.post('/post_cursos_informacion/misCursos', (req, res) =>{
+    const {id_creador, id_clase, fecha_c, logo} = req.body;
+    let queryNewCurso = "";
+    if(id_clase == null){
+        queryNewCurso = 'INSERT INTO cursos(id_creador, fecha_c, logo) VALUES(?,?,?)';
+        mysqlConnection.query(queryNewCurso, [id_creador, fecha_c,logo], (err, results, fields) =>{
+            if(err){
+                console.error(err);
+            }else{
+                res.json({message: 'Curso registrado'});
+            }
+        })
+    }else{
+        queryNewCurso = 'INSERT INTO cursos(id_creador,id_clase,fecha_c,logo) VALUES(?,?,?,?)';
+        mysqlConnection.query(queryNewCurso, [id_creador, id_clase, fecha_c,logo], (err,results,fields) =>{
+            if(err){
+                console.error(err);
+            }else{
+                res.json({message: 'Curso registrado'});
+            }
+        });
+    }
+});
+/*TODOS LOS PUTS*/
 /*Actualizar curso// actualizar valoración curso*/
 router.put('/put_cursos_valoracion/comunidad/:id', (req, res) =>{
     const {id} = req.params;
@@ -82,5 +132,27 @@ router.put('/put_cursos_valoracion/comunidad/:id', (req, res) =>{
             console.error(err);
         }
     })
+});
+/*Actualizar la información básica al crear un curso*/
+router.put('/put_cursos_infoBasica/CrearCurso/:id', (req, res) =>{
+    const {id} = req.params;
+    const {titulo, tematica, materia, logo} = req.body;
+    let queryPutInfoBasica = 'UPDATE cursos SET titulo=?,tematica=?,materia=?,logo=? WHERE id=?';
+    mysqlConnection.query(queryPutInfoBasica, [titulo,tematica,materia,logo,id] , (err, results, fields) =>{
+        if(err){
+            console.error(err);
+        }
+    });
+});
+/*TODOS LOS DELETE*/
+/*Este delete se utiliza para borrar un curso creado*/
+router.delete('/delete-curso-informacion/paginas/:id&:id_creador', (req,res) =>{
+    const {id, id_creador} = req.params;
+    let queryDeleteCurso = 'DELETE FROM cursos WHERE id=? AND id_creador=?';
+    mysqlConnection.query(queryDeleteCurso, [id, id_creador], (err, rows, fields)=>{
+        if(err){
+            console.log(err);
+        }
+    });
 });
 module.exports = router;

@@ -161,6 +161,17 @@ text-align: center;
     justify-content: center;
     align-items: center;
 }
+.TitleModal1Perfíl2{
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    background-color: #444140;
+    color: white;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 .TitleModal1Perfíl h2{
     margin: 2px;
 }
@@ -178,6 +189,18 @@ text-align: center;
     border-radius: 50%;
     width: 200px;
     height: 200px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+.PrevImg2{
+    background-color: white;
+    border:3px solid#444140;
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
 }
 #FotoPerfíl{
     width: 100%;

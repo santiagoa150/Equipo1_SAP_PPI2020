@@ -12,17 +12,13 @@ class Main5 extends React.Component {
         super(props);
         this.state = {
             DataClase: [],
-            Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
-            Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
+            DataClaseI: [],
+            Modal1: false
         }
     }
     async componentDidMount() {
-        await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
-            .then(res => {
-                this.setState({ DataClase: res.data })
-            }).catch(err => {
-                console.error(err);
-            })
+        await this.getClasesC();
+        await this.getClasesI();
         /*CLASES CREADAS*/
         if (this.state.DataClase.length == 0) {
             document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
@@ -30,7 +26,7 @@ class Main5 extends React.Component {
             document.getElementById("clasesP2").style.justifyContent = "center";
         }
 
-        if (this.state.Usuario_C.length == 0) {
+        if (this.state.DataClaseI.length == 0) {
             document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>"
             document.getElementById("contidU2").style.display = "flex";
             document.getElementById("contidU2").style.justifyContent = "center";
@@ -59,7 +55,7 @@ class Main5 extends React.Component {
         if (!bool2) {
             document.getElementById("contidU2").style.display = "block";
             document.getElementById("ClasesP").value = "Clases inscritas ▼";
-            if (this.state.Usuario_C.length == 0) {
+            if (this.state.DataClaseI.length == 0) {
                 document.getElementById("contidU2").style.display = "flex";
                 document.getElementById("contidU2").style.justifyContent = "center";
                 document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>";
@@ -71,13 +67,91 @@ class Main5 extends React.Component {
             bool2 = false
         }
     }
-    /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    CrearClase = () => {
-        document.getElementById("PopUp1").style.display = "flex";
+    /*Este metodo hace el switch del modal en celular*/
+    Switch = () => {
+        let titl1 = document.getElementById("DisPrimero");
+        if (titl1.style.display == "none" || titl1.style.display == "") {
+            document.getElementById("DisSegundo").style.display = "none";
+            titl1.style.display = "block";
+            document.getElementById("PopUp1Apar").style.display = "block";
+            document.getElementById("PopUp2Apar").style.display = "none";
+        } else {
+            document.getElementById("DisSegundo").style.display = "block";
+            titl1.style.display = "none";
+            document.getElementById("PopUp1Apar").style.display = "none";
+            document.getElementById("PopUp2Apar").style.display = "grid";
+        }
     }
-    Close1 = () => {
-        document.getElementById("PopUp1").style.display = "none";
-        document.getElementById("UsuariosIN").innerHTML = "";
+    /*MODAL1*/
+    /*Metodo que determina si el modal 1 se pinta o no*/
+    Modal1 = () => {
+        this.setState({
+            Modal1: !this.state.Modal1
+        })
+    }
+    /*Metodo que retorna el modal 1*/
+    Modal1Return = () => {
+        if (this.state.Modal1) {
+            return (
+                <div className="Modal1ClasesR">
+                    <div className="DisCom BotonesMoverCel">
+                        <button className="BotonFlechita" onClick={() => this.Switch()}>◄</button>
+                        <p id="DisSegundo">Crear clase</p>
+                        <p id="DisPrimero">Unirse a una clase</p>
+                        <button className="BotonFlechita" onClick={() => this.Switch()}>►</button>
+                    </div>
+                    <div className="PopUp2_ AparCom2" id="PopUp1Apar">
+                        <div className="titleModal1Class DisCel">
+                            <h2 className="titleModal1ClasH2">Unirse a una clase</h2>
+                        </div>
+                        <div className="ContainerPopUp2">
+                            <div className="infoContainerModalClass">
+                                <div className="infoContainerModalClass2">
+                                    <p>Si quieres unirte a una clase debes ingresar la id de la clase y esperar que el creador acepte la petición de unirte o pedirle al creador que te una y debes aceptar la invitación a unirse.</p>
+                                </div>
+                            </div>
+                            <div className="Group GroupC3">
+                                <div>
+                                    <div>
+                                        <p className="Group">Id clase</p>
+                                        <input type="text" className="inputCrearClase Group" id="UsuarioClase2" autoComplete="off" />
+                                    </div>
+                                </div>
+                                <input type="button" className="inputCrearClase2" onClick={this.SubirUsuario2} />
+                            </div>
+                            <button className="BotonMadreClase bmargintop" onClick={this.Modal1}>Cancelar</button>
+                        </div>
+                    </div>
+                    <div className="PopUp1_ AparCom" id="PopUp2Apar">
+                        <div className="titleModal1Class titleModal1Class2 DisCel">
+                            <h2 className="titleModal1ClasH2">Crear clase</h2>
+                        </div>
+                        <div id="PopUpPart1">
+                            <div className="GroupC">
+                                <p className="Group">Nombre</p>
+                                <input type="text" id="NombreClase" className="Group inputCrearClase" autoComplete="off" />
+                            </div>
+                            <div className="GroupC">
+                                <p className="Group">Usuario</p>
+                                <div className="Group GroupC2">
+                                    <input type="text" className="inputCrearClase" id="UsuarioClase" autoComplete="off" />
+                                    <input type="button" className="inputCrearClase2_" onClick={this.SubirUsuario1} />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="PopUpPart2">
+                            <div id="UsuariosIN">
+                            </div>
+                        </div>
+                        <div id="XimageCrearClase">
+                            <button onClick={this.Modal1} className="BotonMadreClase">Cancelar</button>
+                            <button onClick={this.CrearClase2} className="BotonMadreClase">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
     }
     CrearClase2 = () => {
         let Nombre = document.getElementById("NombreClase");
@@ -159,14 +233,6 @@ class Main5 extends React.Component {
 
         }
     }
-    /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    UnirUser = () => {
-        document.getElementById("PopUp2").style.display = "flex";
-    }
-    Close2 = () => {
-        document.getElementById("PopUp2").style.display = "none";
-        document.getElementById("UsuarioClase2").value = "";
-    }
     SubirUsuario2 = () => {
         let i = document.getElementById("UsuarioClase2");
         if (i.value != "") {
@@ -211,51 +277,34 @@ class Main5 extends React.Component {
             }, 1000);
         }
     }
+    /*AXIOS*/
+    /*GETS*/
+    /*Este get trae las clases creadas*/
+    getClasesC = async () => {
+        await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
+            .then(res => {
+                this.setState({ DataClase: res.data })
+            }).catch(err => {
+                console.error(err);
+            })
+    }
+    /*Este get trae las clases inscritas*/
+    getClasesI = async () => {
+        console.log("");
+        await axios.get(`http://localhost:3883/UsuCla/get-usario_claseJOINclases-todo/${UsuarioI[0].id_usuario}`)
+            .then(res => {
+                this.setState({
+                    DataClaseI: res.data
+                });
+            }).catch(err => {
+                console.error(err);
+            })
+
+    }
     render() {
         return (
             <>
-                <div className="PopUp2" id="PopUp2">
-                    <div className="PopUp2_">
-                        <h3>Agregar Usuario</h3>
-                        <div className="Group GroupC2 GroupC3">
-                            <div>
-                                <div>
-                                    <p className="Group">Id clase</p>
-                                    <input type="text" className="inputCrearClase Group" id="UsuarioClase2" autoComplete="off" />
-                                </div>
-                            </div>
-                            <input type="button" className="inputCrearClase2" onClick={this.SubirUsuario2} />
-                        </div>
-                        <button className="BotonMadreClase bmargintop" onClick={this.Close2}>Cancelar</button>
-                    </div>
-                </div>
-                <div className="PopUp1" id="PopUp1">
-                    <div className="PopUp1_">
-                        <div id="PopUpPart1">
-                            <h3>Crear clase</h3>
-                            <div className="GroupC">
-                                <p className="Group">Nombre</p>
-                                <input type="text" id="NombreClase" className="Group inputCrearClase" autoComplete="off" />
-                            </div>
-                            <div className="GroupC">
-                                <p className="Group">Usuario</p>
-                                <div className="Group GroupC2">
-                                    <input type="text" className="inputCrearClase" id="UsuarioClase" autoComplete="off" />
-                                    <input type="button" className="inputCrearClase2" onClick={this.SubirUsuario1} />
-                                </div>
-                            </div>
-                        </div>
-                        <div id="PopUpPart2">
-                            <div id="UsuariosIN">
-
-                            </div>
-                        </div>
-                        <div id="XimageCrearClase">
-                            <button onClick={this.Close1} className="BotonMadreClase">Cancelar</button>
-                            <button onClick={this.CrearClase2} className="BotonMadreClase">Aceptar</button>
-                        </div>
-                    </div>
-                </div>
+                {this.Modal1Return()}
                 <div className="contM5">
                     <div className="buscadorClases">
                         <div className="filtroClasesSearch">
@@ -264,7 +313,7 @@ class Main5 extends React.Component {
                             </div>
                         </div>
                         <div className="BotonMore">
-                            <img className="BotonMoreImage" src="/Images/Mas.png" />
+                            <img className="BotonMoreImage" src="/Images/Mas.png" onClick={() => this.Modal1()} />
                         </div>
                     </div>
                     <div className="franja">
@@ -280,7 +329,7 @@ class Main5 extends React.Component {
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
                                                     <h3 className="TitleCardClase">{Esito.titulo}</h3>
-                                                    <Link to={{ pathname: "/Clase/" + Esito.id_clase, state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                    <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
                                                 </div>
                                                 <div className="botoncard">
                                                     <h4 className="FechaCClase">Fecha de creacion: <br />
@@ -304,28 +353,20 @@ class Main5 extends React.Component {
                                 <input type="button" value="Clases inscritas ▼" id="ClasesP" onClick={this.Accion2} />
                             </div>
                             <div id="contidU">
-
                                 <div id="contidU2">
-                                    {this.state.Usuario_C.map((Esito, Index) => {
-                                        let variable = 0;
-                                        for (let i = 0; i < User_clase.length; i++) {
-                                            if (Clases[Esito.idclase].id == User_clase[i].idclase) {
-                                                variable = variable + 1;
-                                            }
-                                        }
-
+                                    {this.state.DataClaseI.map((Esito, Index) => {
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
-                                                    <h3 className="TitleCardClase">{Clases[Esito.idclase].titulo}</h3>
-                                                    <Link to={{ pathname: "/Clase/" + Esito.idclase, state: { InfoClass: Clases[Esito.idclase] } }}><input type="button" value="Ir" /></Link>
+                                                    <h3 className="TitleCardClase">{Esito.titulo}</h3>
+                                                    <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
                                                 </div>
                                                 <div className="botoncard">
-                                                <h4 className="FechaCClase">Fecha de creacion:<br />
-                                                        {Clases[Esito.idclase].fechaC.toLocaleDateString()}
+                                                    <h4 className="FechaCClase">Fecha de creacion:<br />
+                                                        {new Date(Esito.fecha_c).toLocaleDateString()}
                                                     </h4>
-                                                    <h4 className="InfoClassCardConte">Usuarios: {variable}</h4>
-                                                    <h4 className="InfoClassCardConte">Id: {Esito.idclase}</h4>
+                                                    <h4 className="InfoClassCardConte">Usuarios: {Esito.cont_usuarios}</h4>
+                                                    <h4 className="InfoClassCardConte">Id: {Esito.id_clase}</h4>
                                                 </div>
                                             </div>
                                         </>);
@@ -335,7 +376,6 @@ class Main5 extends React.Component {
                         </div>
                     </div>
                 </div>
-                {this.ComponentCharge}
             </>
         );
     }

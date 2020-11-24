@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const mysqlConnection = require('../db/db');
 
+/*TODOS LOS GETS*/
 /*Traer Clases las clases creadas*/
 router.get('/Get-Clases-Creadas/:id_creador', (req, res) =>{
     const {id_creador} = req.params;
@@ -14,5 +15,4 @@ router.get('/Get-Clases-Creadas/:id_creador', (req, res) =>{
         }
     });
 });
-
 module.exports = router;

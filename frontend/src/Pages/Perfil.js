@@ -71,7 +71,7 @@ class Perfil extends React.Component {
     }
     /*Esta función comprueba y realiza la actualización de información*/
     Edit2 = async () => {
-        this.setState({renderizar: false});
+        this.setState({ renderizar: false });
         let form = {
             nombre: UsuarioI[0].nombre,
             apellido: UsuarioI[0].apellido,
@@ -176,8 +176,8 @@ class Perfil extends React.Component {
                 form.fecha_n = edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1);
                 form.edad = años;
             }
-            if(Nombre.value != "" || Apellido.value != "" || Sexo.value != 0 || FechaN.value != "" || User.value != "" || Contraseña.value != "" || correo.value != ""){
-                if(Contraseña.value == Contraseña2.value){
+            if (Nombre.value != "" || Apellido.value != "" || Sexo.value != 0 || FechaN.value != "" || User.value != "" || Contraseña.value != "" || correo.value != "") {
+                if (Contraseña.value == Contraseña2.value) {
                     await this.putInformacion(form);
                 }
             }
@@ -253,8 +253,33 @@ class Perfil extends React.Component {
         if (inpu.files && inpu.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                document.getElementById("PrevImg").src = e.target.result;
                 aja2 = e.target.result;
+                
+                    document.getElementById("body").innerHTML = "<canvas id='tempCanvas' width='300' height='300' style='display:none'></canvas>";
+                    var canvas = document.getElementById("tempCanvas");
+                    var ctx = canvas.getContext("2d");
+                    var cw = canvas.width;
+                    var ch = canvas.height;
+                    var maxW = 300;
+                    var maxH = 300;
+                    var img = new Image;
+                    img.src = this.result;
+                    img.onload = function () {
+                        var iw = img.width;
+                        var ih = img.height;
+                        if (ih > 300 || iw > 300) {
+                        var scale = Math.min((maxW / iw), (maxH / ih));
+                        var iwScaled = iw * scale;
+                        var ihScaled = ih * scale;
+                        canvas.width = iwScaled;
+                        canvas.height = ihScaled;
+                        ctx.drawImage(img, 0, 0, iwScaled, ihScaled);
+                        aja2 = canvas.toDataURL("image/jpeg");
+                        console.log(canvas.toDataURL("image/jpeg"));
+                        document.getElementById("tempCanvas").remove();
+                    }
+                }
+                document.getElementById("PrevImg").src = aja2;
             }
             reader.readAsDataURL(inpu.files[0]);
         }
@@ -329,15 +354,15 @@ class Perfil extends React.Component {
             })
     }
     /*Este put actualiza la información del usuario.*/
-    putInformacion = async (form) =>{
+    putInformacion = async (form) => {
         await axios.put(`http://localhost:3883/Usu/actualizacion-perfil/datos/${UsuarioI[0].id_usuario}`, form)
-        .then(res =>{
-        this.setState({renderizar: true});
-        }).catch(err =>{
-            if(err){
-                console.log(err);
-            }
-        })
+            .then(res => {
+                this.setState({ renderizar: true });
+            }).catch(err => {
+                if (err) {
+                    console.log(err);
+                }
+            })
     }
     /*GETS*/
     /*Este get nos trae la información de un usaurio dependiendo de su UserName*/
@@ -362,7 +387,7 @@ class Perfil extends React.Component {
                 if (res.data.length > 0) {
                     this.Time(correo, "text", "Correo invalido");
                 } else {
-                    this.setState({ UserB2: true});
+                    this.setState({ UserB2: true });
                 }
             }).catch(err => {
                 console.error(err);
@@ -469,6 +494,9 @@ class Perfil extends React.Component {
                             </Link>
                         </div>
                     </div>
+                </div>
+                <div className="None" id="body">
+
                 </div>
                 <Footer />
                 {Sesion && <Redirect to="/" />}

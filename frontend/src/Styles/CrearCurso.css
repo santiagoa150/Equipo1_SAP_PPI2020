@@ -1,7 +1,6 @@
 .LogoCrearCurso {
     width: 30vh;
 }
-
 .MainCrearCurso {
     width: 100%;
     height: 100vh;
@@ -21,6 +20,34 @@
     height: 30px;
     margin-top: 20px;
 }
+.EstiloButtonCrearCursoC:hover{
+    background-color: #444140;
+    color: white;
+    transition: all 700ms;
+}
+.imagenEditCrearC{
+    width: 150px;
+}
+.EncabezadoCrearC{
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.BotonesContaCrearC{
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.ButtonMetodosCrearC{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid #444140;
+    padding: 5px;
+}
 .buttonAlgo{
     width: 100%;
     text-align: center;
@@ -28,6 +55,7 @@
 .CardsCrearContenido{
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     align-items: center;
     width: 100%;
     min-height: calc(100vh - 71px);
@@ -39,12 +67,13 @@
     justify-content: start;
     box-shadow: 5px 5px 10px black;
     border-radius: 5px;
-    background-color: #F6EBE9;
+    background-color: #7c7c7c;
+    color: black;
     width: 200px;
     height: 200px;
 }
 .editarInfo{
-    background-color:#F6EBE9;
+    background-color:#7c7c7c;
     justify-content: space-around;
     width: 100%;
     height: 100%;
@@ -186,7 +215,7 @@
 
 .ICCUrso, .TextAreaCCurso {
     border-radius: 5px;
-    background-color: wheat;
+    background-color: #F6EBE9;
 }
 
 .ICCUrso {

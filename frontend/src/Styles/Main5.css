@@ -55,12 +55,21 @@
 }
 #clasesP, #contidU{
     display: flex;
+    width: 100%;
     justify-content: center;
-    height: calc((90vh - 2vw - 25px) /2) ;
+    height: calc(60vh);
     overflow: hidden;
     overflow-y: scroll;
 }
-
+#ClasesP, #ClasesC{
+    background-color: white !important;
+    border: 1px solid #7c7c7c !important;
+}
+#ClasesP:hover, #ClasesC:hover{
+    color: white;
+    background-color: #444140 !important;
+    border: 1px solid #444140 !important;
+}
 #clasesP::-webkit-scrollbar, #contidU::-webkit-scrollbar{
     background-color:  #F6EBE9;
     width: 12px;
@@ -70,6 +79,7 @@
 
 }
 #clasesP2, #contidU2{
+    width: 90%;
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
@@ -108,8 +118,27 @@
 .cardsclas input:hover{
     background-color: #7c7c7c !important;
 }
+.Modal1ClasesR{
+    position: fixed;
+
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    background-color: rgb(0, 0, 0, 0.8);
+    grid-template-columns: 12.5% 35% 5% 35% 12.5%;
+    grid-template-rows: 15% 1fr 15%;
+}
+.PopUp2_{
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+.PopUp1_{
+    grid-column: 4/5;
+    grid-row: 2/3;
+}
 .PopUp1, .PopUp2{
-    display: none;
+    display: flex;
     left: 0;
     top: 0;
     justify-content: center;
@@ -125,27 +154,37 @@
 }
 .inputCrearClase2{
     margin-left: 5px;
-    height: 39px;
+    height: 49px;
     width: 49px;
-    background-color: black;
-    background-image: url(/Images/File2.png);
+    background-color: white;
+    background-image: url(/Images/Upload.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
 }
-.inputCrearClase2:hover{
+.inputCrearClase2_{
+    margin-left: 5px;
+    height: 39px;
+    width: 49px;
     background-color: white;
-    background-image: url(/Images/File.png);
+    background-image: url(/Images/Upload.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
-.GroupC2{
-    display: flex;
-    width: 100%;
+.inputCrearClase2:hover, .inputCrearClase2_:hover{
+    background-color: #444140;
 }
+
 .GroupC{
     display: flex;
     flex-flow: column;
     align-items: flex-start;
-    width: 50%;
+    width: 80%;
+}
+.GroupC2{
+    display: flex;
+    width: 80% !important;
 }
 .Group{
     margin: 0;
@@ -155,11 +194,17 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    grid-row: 2/3;
+    grid-row: 3/4;
     grid-column: 1/3;
 }
+.holaClase{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 .BotonMadreClase{
-    background-color: #FFA987;
+    background-color: #f6ebe9;
     height: 30px;
     width: 200px;
     margin: 0 10px 0 10px;
@@ -167,17 +212,16 @@
 #PopUpPart1{
     display: flex;
     flex-flow: column;
-
     align-items: center;
     justify-content: space-around;
-    grid-row: 1/2;
+    grid-row: 2/3;
     grid-column: 1/2;
 }
 #PopUpPart2{
     display: flex;
     align-items: center;
     justify-content: center;
-    grid-row: 1/2;
+    grid-row: 2/3;
     grid-column: 2/3;
     padding: 5px;
 }
@@ -193,24 +237,63 @@
     justify-content: center;
     align-items: center;
 }
+.ContainerPopUp2{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
 .PopUp1_{
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-rows: 1fr max-content;
+    grid-template-rows: max-content 1fr max-content max-content;
     border-radius: 10px;
-    background-color: white;
-    width: 50%;
-    height: 70%;
+    background-color: #7c7c7c;
+    width: 100%;
+    height: 100%;
 }
 .PopUp2_{
     display: flex;
     flex-flow: column;
     align-items: center;
     border-radius: 10px;
-    background-color: white;
-    width: 50%;
+    background-color: #7c7c7c;
+    width: 100%;
     height: max-content;
+    height: 100%;
+}
+.infoContainerModalClass{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 270px;
+    align-items: center;
+}
+.infoContainerModalClass2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
     padding: 10px;
+    width: calc(70% - 20px);
+    height: 230px;
+    background-color:#f6ebe9;
+}
+.titleModal1ClasH2{
+    margin: 10px 0 10px 0;
+}
+.titleModal1Class{
+    display: flex;
+    justify-content: center;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    background-color: #444140;
+    color: white;
+}
+.titleModal1Class2{
+    grid-row: 1/2;
+    grid-column: 1/3;
 }
 #UsuariosIN{
     padding: 10px;
@@ -218,7 +301,7 @@
     flex-wrap: wrap;
     width: 90%;
     height: 80%;
-    background-color: wheat;
+    background-color: #f6ebe9;
     border-radius: 10px;
     border:1px solid #444140;
 }
@@ -227,8 +310,9 @@
 }
 .GroupC3{
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-around;
+    width: 100% !important;
 }
 .InfoClassCard{
     display: flex;
@@ -286,8 +370,53 @@
 }
 @media(min-width:620px){
     .DisCom{display: none;}
+    .AparCom{
+        display: grid !important;
+    }
+    .AparCom2{
+        display: flex !important;
+    }
 }
-@media(max-width:620px){ 
+@media(max-width:620px){
+    .ContainerPopUp2{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        height: 100%;
+    }
+    .BotonFlechita{
+        border-radius: 10px;
+        width: 10vw;
+        height: 10vw;
+    } 
+    .BotonFlechita:hover{
+        background-color: #7c7c7c;
+    }
+    #DisPrimero{
+        display: none;
+    }
+    .BotonesMoverCel{
+        color: white;
+        justify-content: space-around;
+        align-items: center;
+        display: flex;
+        width: 90%;
+        background-color: #444140;
+        height: 50px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    } 
+    #UsuariosIN{
+        height: 60%;
+    }
+    .Modal1ClasesR{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+    }
     .BotonMore{
         margin-left: 0px;
         margin-right: 10px;
@@ -305,15 +434,15 @@
     }
     .DisCel{display: none;}
     .PopUp2_{
-
+        display: none;
         width: 90%;
+        height: 70%;
     }
     .PopUp1_{
         grid-template-columns: 100%;
-        grid-template-rows: 1fr 1fr max-content;
+        grid-template-rows: max-content 1fr max-content;
         width: 90%;
-        min-height: 90vh;
-        overflow-y: scroll;
+        height: 70%;
     }
     #XimageCrearClase{
         grid-row: 3/4;
@@ -334,7 +463,9 @@
         flex-flow: column;
         justify-content: flex-start;
         align-items: center;
-        height: 300px;
+        height: max-content;
+        padding-bottom: 10px;
+        max-height: 600px;
     }
     #infop,#conclases{
         width: 100%;

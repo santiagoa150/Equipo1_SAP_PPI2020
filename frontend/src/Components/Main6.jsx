@@ -2,33 +2,28 @@ import React from 'react';
 import '../Styles/Main6.css';
 import axios from 'axios';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 let bool = true, bool2 = true;
-
+let Fecha = new Date();
+let FechaY = Fecha.getFullYear();
+let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
+let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
+let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
 class Main6 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             DataProgresos:[],
-            DataCursosC:[]
+            DataCursosC:[],
+            boolRedirec: false,
+            idCursoCreado: 0
         }
     }
     
     async componentDidMount() {
-        await axios.get(`http://localhost:3883/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
-        .then(res =>{
-            this.setState({DataProgresos: res.data});
-        }).catch(err =>{
-            console.error(err);
-        })
-
-        await axios.get(`http://localhost:3883/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
-        .then(res =>{
-            this.setState({DataCursosC: res.data})
-        }).catch(err =>{
-           console.error(err); 
-        })
+        await this.getCursosI();
+        await this.getCursosC();
         
         /*Cursos Iniciados*/
         if (this.state.DataProgresos.length > 5) {
@@ -51,7 +46,8 @@ class Main6 extends React.Component {
             document.getElementById("CardsInner2").innerHTML = "<p>No has creado ningún curso.</p>";
         }
     }
-
+/*METODOS SIMPLES*/
+/*Este metodo muestra o no los cursos iniciados*/
     Accion1 = () => {
         if (!bool) {
             document.getElementById("CardsInner").style.display = "block";
@@ -69,6 +65,7 @@ class Main6 extends React.Component {
             bool = false
         }
     }
+/*Este metodo muestra o no los cursos creados*/
     Accion2 = () => {
         if (!bool2) {
             document.getElementById("CardsInner2").style.display = "block";
@@ -85,6 +82,69 @@ class Main6 extends React.Component {
             document.getElementById("CursosC").innerHTML = "Mis cursos ►";
             bool2 = false
         }
+    }
+/*AXIOS*/
+/*GETS*/
+/*Este metodo trae todos los cursos iniciados*/
+    getCursosI = async () =>{
+        await axios.get(`http://localhost:3883/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
+        .then(res =>{
+            this.setState({DataProgresos: res.data});
+        }).catch(err =>{
+            console.error(err);
+        })
+    }
+/*Este metodo trae todos los cursos creados*/
+    getCursosC = async () =>{
+        await axios.get(`http://localhost:3883/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
+        .then(res =>{
+            this.setState({DataCursosC: res.data})
+        }).catch(err =>{
+           console.error(err); 
+        })
+    }
+/*Este metodo trae el id de un curso a la hora de crearlo*/
+    getCrearCurso = async () =>{
+        await axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}`)
+        .then(res =>{
+            this.setState({
+                idCursoCreado: res.data[0].id,
+                boolRedirec: !this.state.boolRedirec
+            })  
+        }).catch(err =>{
+            if(err){
+                console.error(err);
+            }
+        })
+    }    
+/*POST*/
+/*Este metodo crea un curso nuevo*/
+    postNewCurso = async () =>{
+        let form = {
+            id_creador: UsuarioI[0].id_usuario,
+            id_clase: null,
+            fecha_c: FechaH,
+            logo: "/Images/Cursos/Default.png"
+        }
+        await axios.post(`http://localhost:3883/Cur/post_cursos_informacion/misCursos/`, form)
+        .then(res =>{
+
+        }).catch(err =>{
+            if(err){
+                console.error(err);
+            }
+        });
+    }
+/*DELETES*/
+/*Este delete elimina un curso creado*/
+    deleteCursoC = async (id) =>{
+        await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
+        .then(res =>{
+        }).catch(err =>{
+            if(err){
+                console.error(err);
+            }
+        })
     }
     render() {
         return (
@@ -123,9 +183,7 @@ class Main6 extends React.Component {
                     <div id="Main6C">
                         <div className="ButtonMisCursosC">
                             <div className="ButtonMisCursosC">
-                            <Link className="jodeteLink" to={{pathname:"/CrearCurso", state: {location: "/misCursos"}}} >
-                                <button className="button buttonMisCursos">Crear curso</button>
-                            </Link>
+                                <button className="button buttonMisCursos" onClick={() => {this.postNewCurso();this.getCursosC();this.getCrearCurso()}}>Crear curso</button>
                             </div>
                             <button className="button buttonMisCursos" id="CursosC" onClick={this.Accion2}>Mis cursos ▼</button>
                         </div>
@@ -144,11 +202,12 @@ class Main6 extends React.Component {
                                                     <h5 className="TitlesI">Materia: <br /> {Esito.materia}</h5>
                                                 </div>
                                                 <div id="BottonCI">
-                                                    <img className="Edit2" src="/Images/Basura.png" />
+                                                    <img className="Edit2" onClick={()=> {this.deleteCursoC(Esito.id); this.getCursosC();}} src="/Images/Basura.png" />
                                                     <Link to={{
                                                         pathname: "/crearCurso",
                                                         state: {
-                                                            id: Esito.id
+                                                            idCursoC: Esito.id,
+                                                            location: "/misCursos"
                                                         }
                                                     }}>
                                                         <button className="button buttonI">Editar curso</button>
@@ -161,8 +220,8 @@ class Main6 extends React.Component {
                             })}
                         </div>
                     </div>
+                        {this.state.boolRedirec && <Redirect to={{pathname:"/CrearCurso", state:{location: "/misCursos", idCursoC: this.state.idCursoCreado}}}/>}
                 </div>
-
             </>
         );
     }
