@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter, Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 let aja2;
 class Main8 extends React.Component {
     constructor(props) {
@@ -13,35 +14,37 @@ class Main8 extends React.Component {
                 bool1: false,
                 bool2: false,
                 bool3: false
+            },
+            repintar: false,
+            Modal2: {
+                return: false,
+                numero: 0
             }
         }
     }
-    async componentDidMount() {
+    async componentWillMount() {
+        await this.getInfoCursoCreados();
+    }
+    async componentDidUpdate() {
         await this.getInfoCursoCreados();
     }
     /*METODOS DE RETORNO DE BOTONES*/
     /*Retorno del boton cancelar*/
     Botones = () => {
+        let variable = 0;
         if (this.state.DataInfoCurso2[0]?.titulo == null && this.state.DataInfoCurso2[0]?.tematica == null && this.state.DataInfoCurso2[0]?.materia == null) {
             if (this.props.location.state.location == "/misCursos") {
-                return (
-                    <>
-                        <button className="button buttonMisCursos" onClick={() => this.comprobacionCampos(1)}>Cancelar</button>
-                    </>
-                );
+                variable = 1;
             } else if (this.props.location.state.location == "/Clase") {
-                return (
-                    <>
-                        <button className="button buttonMisCursos" onClick={() => this.comprobacionCampos(2)}>Cancelar</button>
-                    </>
-                );
+                variable = 2;
             } else {
-                return (
-                    <>
-                        <button className="button buttonMisCursos" onClick={() => this.comprobacionCampos(3)}>Cancelar</button>
-                    </>
-                );
+                variable = 3;
             }
+            return (
+                <>
+                    <button className="button buttonMisCursos elefantito" onClick={() => this.comprobacionCampos(variable)}>Cancelar</button>
+                </>
+            );
         } else {
             if (this.props.location.state.location == "/misCursos") {
                 return (
@@ -72,6 +75,7 @@ class Main8 extends React.Component {
             }
         }
     }
+    /*Retorno del botón editar en curso teorico*/
     Botones2 = () => {
         if (this.props.location.state.location == '/misCursos') {
             return (
@@ -86,6 +90,22 @@ class Main8 extends React.Component {
                 </Link>
             );
         }
+    }
+    /*Retorno del botón eliminar curso*/
+    DeleteButons = () => {
+        let numero = 0;
+        if (this.props.location.state.location == "/misCursos") {
+            numero = 1;
+        } else if (this.props.location.state.location == "/Clase") {
+            numero = 2;
+        } else {
+            numero = 3;
+        }
+        return (
+            <>
+                <img src="/Images/Basura.png" onClick={() => this.Modal2(numero)} className="ButtonMetodosCrearC"></img>
+            </>
+        );
     }
     /*ACTUALIZACIÓN DE INFORMACIÓN DE UN CURSO*/
     /*Este metodo actualiza la información requerida de un curso*/
@@ -109,9 +129,8 @@ class Main8 extends React.Component {
                 materia: materia.value,
                 logo: this.state.DataInfoCurso[0].logo
             }
-            await this.putInfoRequerida(numero, form);
-            
-            console.log("hola");
+            await this.putInfoRequerida(form);
+
             if (numero == 1) {
                 this.setState({
                     boleanosRedirect: {
@@ -131,6 +150,47 @@ class Main8 extends React.Component {
                     }
                 });
             }
+        }
+    }
+    guardarInfoCurso = async () => {
+        let titulo = document.getElementById("Titulo");
+        let tematica = document.getElementById("Tematica");
+        let materia = document.getElementById("Materia");
+
+        if (titulo.value == "" && tematica.value == "" && materia.value == "") {
+            if (titulo.value == "") {
+                this.Time(titulo, "text", "Campo sin ingresar");
+            } if (tematica.value == "") {
+                this.Time(tematica, "text", "Campo sin ingresar")
+            } if (materia.value == "") {
+                this.Time(materia, "text", "Campo sin ingresar")
+            }
+        } else if (titulo.value == this.state.DataInfoCurso2[0].titulo && tematica.value == this.state.DataInfoCurso2[0].tematica && materia.value == this.state.DataInfoCurso2[0].materia && this.state.DataInfoCurso[0].logo == this.state.DataInfoCurso2[0].logo) {
+            document.getElementById("AlertasCrearCurso").innerHTML = "No hay nada para guardar.";
+            document.getElementById("AlertasCrearCursoDiv").style.display = "flex";
+            document.getElementById("AlertasCrearCurso").style.color = "#ff595e";
+            setTimeout(function () {
+                document.getElementById("AlertasCrearCurso").innerHTML = " ";
+            document.getElementById("AlertasCrearCursoDiv").style.display = "none";
+            }, 1500);
+        } else {
+            let form = {
+                titulo: titulo.value,
+                tematica: tematica.value,
+                materia: materia.value,
+                logo: this.state.DataInfoCurso[0].logo
+            }
+            await this.putInfoRequerida(form);
+            this.setState({
+                repintar: !this.state.repintar
+            });
+            document.getElementById("AlertasCrearCurso").innerHTML = "Cambios guardados";
+            document.getElementById("AlertasCrearCursoDiv").style.display = "flex";
+            document.getElementById("AlertasCrearCurso").style.color = "#8ac926";
+            setTimeout(function () {
+                document.getElementById("AlertasCrearCurso").innerHTML = " ";
+            document.getElementById("AlertasCrearCursoDiv").style.display = "none";
+            }, 1500);
         }
     }
     /*TIMER*/
@@ -225,6 +285,65 @@ class Main8 extends React.Component {
             );
         }
     }
+    /*MODAL2*/
+    /*Esta función activa o desactiva el modal 2*/
+    Modal2 = (prop) => {
+        this.setState({
+            Modal2: {
+                return: !this.state.Modal2.return,
+                numero: prop
+            }
+        })
+    }
+    /*Esta función returna o no el Modal2*/
+    Modal2Return = () => {
+        if (this.state.Modal2.return) {
+            return (
+                <>
+                    <div id="PopUpPerfíl">
+                        <div id="ContenedorPopUp2">
+                            <div className="TitleModal1Perfíl3">
+                                <h2>¿Estas seguro de que quieres eliminar el curso {this.state.DataInfoCurso[0].titulo}?</h2>
+                            </div>
+                            <div className="MainModal2Perfíl">
+                                <div className="BotonesCont">
+                                    <button className="button SubImg2" onClick={() => {
+                                        this.deleteCurso(this.state.Modal2.numero);
+                                        if (this.state.Modal2.numero == 1) {
+                                            this.setState({
+                                                boleanosRedirect: {
+                                                    bool1: true
+                                                }, Modal2:{
+                                                    numero: 0
+                                                }
+                                            });
+                                        } else if (this.state.Modal2.numero == 2) {
+                                            this.setState({
+                                                boleanosRedirect: {
+                                                    bool2: true
+                                                }, Modal2:{
+                                                    numero: 0
+                                                }
+                                            });
+                                        } else {
+                                            this.setState({
+                                                boleanosRedirect: {
+                                                    bool3: true
+                                                }, Modal2:{
+                                                    numero: 0
+                                                }
+                                            });
+                                        }
+                                    }}>Si</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal2(0)}>No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+    }
     /*AXIOS*/
     /*GETS*/
     /*Traer la información del curso que se está creando o editando*/
@@ -242,8 +361,8 @@ class Main8 extends React.Component {
             })
     }
     /*PUTS*/
-    putInfoRequerida = (numero, form) => {
-         axios.put(`http://localhost:3883/Cur/put_cursos_infoBasica/CrearCurso/${this.state.DataInfoCurso[0].id}`, form)
+    putInfoRequerida = (form) => {
+        axios.put(`http://localhost:3883/Cur/put_cursos_infoBasica/CrearCurso/${this.state.DataInfoCurso[0].id}`, form)
             .then(res => {
             }).catch(err => {
                 if (err) {
@@ -251,10 +370,22 @@ class Main8 extends React.Component {
                 }
             });
     }
+    /*DELETES*/
+    deleteCurso = async (numero) => {
+        await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${this.state.DataInfoCurso[0].id}&${UsuarioI[0].id_usuario}`)
+            .then(res => {
+            }).catch(err => {
+                if (err) {
+                    console.error(err);
+                }
+            })
+
+    }
     render() {
         return (
             <>
                 {this.Modal1Return()}
+                {this.Modal2Return()}
                 <div className="PadreCursoCrear">
                     <div className="OpcionesCrearCurso editarInfo">
                         <div className="EncabezadoCrearC">
@@ -266,21 +397,24 @@ class Main8 extends React.Component {
                         <form className="FormCurso">
                             <div className="Cien">
                                 <p className="Group ">Título</p>
-                                <input type="text" className="Group ICCUrso" id="Titulo" value={this.state.DataInfoCurso[0]?.titulo} />
+                                <input type="text" className="Group ICCUrso" id="Titulo" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.titulo} />
                             </div>
                             <div className="Cien">
                                 <p className="Group">Tematica</p>
-                                <input type="text" className="Group ICCUrso" id="Tematica" value={this.state.DataInfoCurso[0]?.tematica} />
+                                <input type="text" className="Group ICCUrso" id="Tematica" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.tematica} />
                             </div>
                             <div className="Cien">
                                 <p className="Group">Materia</p>
-                                <input type="text" className="Group ICCUrso" id="Materia" value={this.state.DataInfoCurso[0]?.materia} />
+                                <input type="text" className="Group ICCUrso" id="Materia" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.materia} />
                             </div>
                         </form>
                         <div className="BotonesContaCrearC">
-                            <img src="/Images/Basura.png" className="ButtonMetodosCrearC"></img>
-                            <img src="/Images/Save.png" className="ButtonMetodosCrearC"></img>
+                            {this.DeleteButons()}
+                            <img src="/Images/Save.png" onClick={() => this.guardarInfoCurso()} className="ButtonMetodosCrearC"></img>
                             <img src="/Images/Publicar.png" className="ButtonMetodosCrearC"></img>
+                        </div>
+                        <div id="AlertasCrearCursoDiv">
+                            <p id="AlertasCrearCurso"></p>
                         </div>
                         {this.Botones()}
                     </div>
@@ -292,16 +426,16 @@ class Main8 extends React.Component {
                         </div>
                         <div className="CardCrearCursoContenido">
                             <h3>Minijuego</h3>
-                            <Link>
-                                <button className="EstiloButtonCrearCursoC">Editar</button>
-                            </Link>
+
+                            <button className="EstiloButtonCrearCursoC">Editar</button>
+
                             <button className="EstiloButtonCrearCursoC">Borrar contenido</button>
                         </div>
                         <div className="CardCrearCursoContenido">
                             <h3>Examen</h3>
-                            <Link>
-                                <button className="EstiloButtonCrearCursoC">Editar</button>
-                            </Link>
+
+                            <button className="EstiloButtonCrearCursoC">Editar</button>
+
                             <button className="EstiloButtonCrearCursoC">Borrar contenido</button>
                         </div>
                     </div>

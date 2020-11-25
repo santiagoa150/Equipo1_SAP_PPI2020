@@ -225,7 +225,7 @@ class Main3 extends React.Component {
         if (prop == UsuarioI[0].id_usuario) {
             return (
                 <>
-                    <Link to={{ pathname: "/CrearCurso", state: { location: "/Integrados", InfoClass: prop2 } }}>
+                    <Link to={{ pathname: "/CrearCurso", state: { location: "/Integrados", idCursoC: prop2 } }}>
                         <img className="Edit2" src="/Images/Lapiz.png" />
                     </Link>
                 </>

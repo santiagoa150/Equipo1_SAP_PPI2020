@@ -10,7 +10,7 @@ class Header4 extends React.Component {
         return ( 
             <>
             <div id="Header4Container">
-                <h2>Crear curso</h2>
+                <h2>Edición de curso</h2>
             </div>
             </>
          );
