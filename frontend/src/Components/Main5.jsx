@@ -12,11 +12,27 @@ class Main5 extends React.Component {
         super(props);
         this.state = {
             DataClase: [],
+            DataClasef: [],
+            array: [],
+            actual: [],
+            posicion: 0,
+            despaginar: 0,
+            tamaño: 0,
             DataClaseI: [],
-            Modal1: false
+            DataClaseIF: [],
+            arrayI: [],
+            actualI: [],
+            posicionI: 0,
+            despaginarI: 0,
+            tamañoI: 0,
+            Modal1: false,
+            Modal2: false,
+            Modal3: false,
+            ModalClase: 0,
+            Modalconusu: 0 
         }
     }
-    async componentDidMount() {
+   async componentDidMount() {
         await this.getClasesC();
         await this.getClasesI();
         /*CLASES CREADAS*/
@@ -36,7 +52,7 @@ class Main5 extends React.Component {
     /*Permite ocultar y/o mostrar las clases creadas*/
     Accion1 = () => {
         if (!bool) {
-            document.getElementById("clasesP2").style.display = "block";
+            document.getElementById("clasesP2").style.display = "flex";
             document.getElementById("ClasesC").value = "Clases creadas ▼";
             if (this.state.DataClase.length == 0) {
                 document.getElementById("clasesP2").style.display = "flex";
@@ -53,7 +69,7 @@ class Main5 extends React.Component {
     /*Permite ocultar y/o mostrar las clases inscritas*/
     Accion2 = () => {
         if (!bool2) {
-            document.getElementById("contidU2").style.display = "block";
+            document.getElementById("contidU2").style.display = "flex";
             document.getElementById("ClasesP").value = "Clases inscritas ▼";
             if (this.state.DataClaseI.length == 0) {
                 document.getElementById("contidU2").style.display = "flex";
@@ -152,6 +168,67 @@ class Main5 extends React.Component {
             );
         }
 
+    }
+    /*MODAL2*/
+    /*Metodo que determina si el modal 2 se pinta o no*/
+    Modal2 = (prop) => {
+        this.setState({
+            Modal2: !this.state.Modal2,
+            ModalClase: prop
+        })
+    }
+    /*Metodo que retorna el modal 2*/
+    Modal2Return = () => {
+        if (this.state.Modal2) {
+            return (
+                <>
+                    <div id="PopUpPerfíl">
+                        <div id="ContenedorPopUp2">
+                            <div className="TitleModal1Perfíl3">
+                                <h2>¿Estas seguro de que quieres eliminar la clase?</h2>
+                            </div>
+                            <div className="MainModal2Perfíl">
+                                <div className="BotonesCont">
+                                    <button className="button SubImg2" onClick={() => { this.deleteClase() }}>Si</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal2(0)}>No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+    }
+    /*MODAL3*/
+    /*Metodo que determina si el modal 3 se pinta o no*/
+    Modal3 = (prop, prop2) => {
+        this.setState({
+            Modal3: !this.state.Modal3,
+            ModalClase: prop,
+            Modalconusu:prop2
+        })
+    }
+    /*Metodo que retorna el modal 3*/
+    Modal3Return = () => {
+        if (this.state.Modal3) {
+            return (
+                <>
+                    <div id="PopUpPerfíl">
+                        <div id="ContenedorPopUp2">
+                            <div className="TitleModal1Perfíl3">
+                                <h2>¿Estas seguro de que quieres salirte de la clase?</h2>
+                            </div>
+                            <div className="MainModal2Perfíl">
+                                <div className="BotonesCont">
+                                    <button className="button SubImg2" onClick={() => { this.Salirclase() }}>Si</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal3(0,0)}>No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            );
+        }
     }
     CrearClase2 = () => {
         let Nombre = document.getElementById("NombreClase");
@@ -283,33 +360,225 @@ class Main5 extends React.Component {
     getClasesC = async () => {
         await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.setState({ DataClase: res.data })
+                this.setState({ DataClase: res.data });
+                this.filtrando();
             }).catch(err => {
                 console.error(err);
             })
     }
     /*Este get trae las clases inscritas*/
     getClasesI = async () => {
-        console.log("");
         await axios.get(`http://localhost:3883/UsuCla/get-usario_claseJOINclases-todo/${UsuarioI[0].id_usuario}`)
             .then(res => {
                 this.setState({
                     DataClaseI: res.data
                 });
+                this.filtrandoI();
             }).catch(err => {
                 console.error(err);
             })
-
     }
+    /*DELETES*/
+    /*Elimina clases creadas*/
+    deleteClase = async () => {
+        await axios.delete(`http://localhost:3883/Cla/Delete-Clases-todo/Clases/${this.state.ModalClase}`)
+            .then(res => {
+                this.getClasesC();
+                this.setState({
+                    Modal2: false
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    Salirclase = async () => {
+        await axios.delete(`http://localhost:3883/UsuCla/Delete-Clases-todo/Clases/:id_clase&:id_usuario/${this.state.ModalClase}`)
+            .then(res => {
+                this.getClasesI();
+                this.setState({
+                    Modal3: false
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    /*METODOS DE PAGINACIÓN Y FILTRADO de las clases creadas*/
+    /*Este metodo realiza la paginación y el filtrado de las clases creadas*/
+    filtrando = () => {
+        let filtrado;
+        let tamaño;
+        let filtro = document.getElementById("filt").value;
+        let tam = 3;
+        if (filtro == "") {
+            let x = Math.ceil(this.state.DataClase.length / tam);
+            filtrado = this.state.DataClase.reverse();
+            tamaño = x;
+
+        } else {
+            let arrays1 = this.state.DataClase.filter(Esito => ("" + Esito.cont_usuarios).toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.titulo.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || (new Date(Esito.fecha_c).toLocaleDateString()).includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()));
+            let x = Math.ceil(arrays1.length / tam);
+            filtrado = arrays1.reverse();
+            tamaño = x;
+        }
+
+        let cont = 0;
+        let arrays = [];
+        for (let i = 0; i < tamaño; i++) {
+            let array2 = [];
+            for (let j = 0; j < tam && cont < filtrado.length; j++) {
+                array2.push(filtrado[cont]);
+                cont++;
+            }
+            arrays.push(array2);
+        }
+        if (arrays[0]) {
+            this.setState({
+                DataClasef: filtrado,
+                tamaño: tamaño,
+                array: arrays,
+                actual: arrays[this.state.posicion]
+            });
+        } else {
+            this.setState({
+                DataClasef: filtrado,
+                tamaño: tamaño,
+                array: arrays,
+                actual: []
+            });
+        }
+    }
+    /*Determina renderizado de la flecha a la izquierda de las clases creadas*/
+    flech = () => {
+        if (this.state.despaginar == 0) {
+            this.state.despaginar = 1;
+        }
+        if (this.state.despaginar == this.state.tamaño - 1) {
+            this.state.despaginar = this.state.tamaño - 2;
+        }
+        if (this.state.despaginar != 1 && this.state.tamaño > 3) {
+            return (
+                <input className="botonescamb" type="button" value="◄" onClick={() => {
+                    this.setState({
+                        despaginar: this.state.despaginar - 1
+                    });
+                }} />
+            );
+        }
+    }
+    /*Determina renderizado de la flecha a la derecha de las clases creados*/
+    flech2 = () => {
+
+        if (this.state.despaginar != this.state.tamaño - 2 && this.state.tamaño > 3) {
+            return (
+                <input className="botonescamb" type="button" value="►" onClick={() => {
+                    this.setState({
+                        despaginar: this.state.despaginar + 1
+                    });
+                }} />
+            );
+        }
+    }
+    /*Metodo que determina el final de la paginación de las clases creadas*/
+    final = () => {
+        if (this.state.posicion >= this.state.tamaño - 1) {
+            return (<div><p>No hay mas clases para mostrar</p></div>);
+        }
+    }
+    /*METODOS DE PAGINACIÓN Y FILTRADO de las clases inscritas*/
+    /*Este metodo realiza la paginación y el filtrado de las clases inscritas*/
+    filtrandoI = () => {
+        let filtrado;
+        let tamaño;
+        let filtro = document.getElementById("filt").value;
+        let tam = 3;
+        if (filtro == "") {
+            let x = Math.ceil(this.state.DataClaseI.length / tam);
+            filtrado = this.state.DataClaseI.reverse();
+            tamaño = x;
+        } else {
+            let arrays1 = this.state.DataClaseI.filter(Esito => ("" + Esito.cont_usuarios).toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.titulo.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || (new Date(Esito.fecha_c).toLocaleDateString()).includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.usuario.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()));
+            let x = Math.ceil(arrays1.length / tam);
+            filtrado = arrays1.reverse();
+            tamaño = x;
+        }
+
+        let cont = 0;
+        let arrays = [];
+        for (let i = 0; i < tamaño; i++) {
+            let array2 = [];
+            for (let j = 0; j < tam && cont < filtrado.length; j++) {
+                array2.push(filtrado[cont]);
+                cont++;
+            }
+            arrays.push(array2);
+        }
+        if (arrays[0]) {
+            this.setState({
+                DataClaseIf: filtrado,
+                tamañoI: tamaño,
+                arrayI: arrays,
+                actualI: arrays[this.state.posicionI]
+            });
+        } else {
+            this.setState({
+                DataClaseIf: filtrado,
+                tamañoI: tamaño,
+                arrayI: arrays,
+                actualI: []
+            });
+        }
+    }
+    /*Determina renderizado de la flecha a la izquierda de las clases incritas*/
+    flechI = () => {
+        if (this.state.despaginarI == 0) {
+            this.state.despaginarI = 1;
+        }
+        if (this.state.despaginarI == this.state.tamañoI - 1) {
+            this.state.despaginarI = this.state.tamañoI - 2;
+        }
+        if (this.state.despaginarI != 1 && this.state.tamañoI > 3) {
+            return (
+                <input className="botonescamb" type="button" value="◄" onClick={() => {
+                    this.setState({
+                        despaginarI: this.state.despaginarI - 1
+                    });
+                }} />
+            );
+        }
+    }
+    /*Determina renderizado de la flecha a la derecha de las clases incritas*/
+    flech2I = () => {
+
+        if (this.state.despaginarI != this.state.tamañoI - 2 && this.state.tamañoI > 3) {
+            return (
+                <input className="botonescamb" type="button" value="►" onClick={() => {
+                    this.setState({
+                        despaginarI: this.state.despaginarI + 1
+                    });
+                }} />
+            );
+        }
+    }
+    /*Metodo que determina el final de la paginación de las clases inscritas*/
+    finalI = () => {
+        if (this.state.posicionI >= this.state.tamañoI - 1) {
+            return (<div><p>No hay mas clases para mostrar</p></div>);
+        }
+    }
+
     render() {
         return (
             <>
                 {this.Modal1Return()}
+                {this.Modal2Return()}
+                {this.Modal3Return()}
                 <div className="contM5">
                     <div className="buscadorClases">
                         <div className="filtroClasesSearch">
                             <div className="filtroClasesSearch2">
-                                <input type="text" className="FiltrosC2 buscadorClases2" placeholder="buscar"></input>
+                                <input type="text" id="filt" autoComplete="off" className="FiltrosC2 buscadorClases2" onChange={() => { this.filtrando(); this.filtrandoI() }} placeholder="buscar"></input>
                             </div>
                         </div>
                         <div className="BotonMore">
@@ -324,12 +593,15 @@ class Main5 extends React.Component {
                             <div id="clasesP">
 
                                 <div id="clasesP2">
-                                    {this.state.DataClase.map((Esito, Index) => {
+                                    {this.state.actual?.map((Esito, Index) => {
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
                                                     <h3 className="TitleCardClase">{Esito.titulo}</h3>
-                                                    <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                    <div className="botoclassCreados">
+                                                        <img className="botoneliminar" src="./images/Basura.png" onClick={() => this.Modal2(Esito.id_clase)} />
+                                                        <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                    </div>
                                                 </div>
                                                 <div className="botoncard">
                                                     <h4 className="FechaCClase">Fecha de creacion: <br />
@@ -344,6 +616,28 @@ class Main5 extends React.Component {
                                             </div>
                                         </>);
                                     })}
+                                    {this.final()}
+                                    <div id="Paginacion2">
+                                        {this.flech()}
+                                        {this.state.array?.map((Esito, index) => {
+                                            try {
+                                                const f = index;
+                                                if (f != this.state.posicion && (this.state.despaginar == f || this.state.despaginar == f - 1 || this.state.despaginar == f + 1)) {
+                                                    return (<><input key={index} className="botonescamb" type="button" value={f + 1} onClick={() => {
+                                                        this.setState({
+                                                            posicion: f,
+                                                            despaginar: f,
+                                                            actual: this.state.array[f]
+                                                        });
+                                                    }} /></>);
+
+                                                } else if (this.state.despaginar == f || this.state.despaginar == f - 1 || this.state.despaginar == f + 1) {
+                                                    return (<><input key={index} className="botonescamb2" type="button" value={f + 1} /></>);
+                                                }
+                                            } catch (err) { }
+                                        })}
+                                        {this.flech2()}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -354,12 +648,15 @@ class Main5 extends React.Component {
                             </div>
                             <div id="contidU">
                                 <div id="contidU2">
-                                    {this.state.DataClaseI.map((Esito, Index) => {
+                                    {this.state.actualI.map((Esito, Index) => {
                                         return (<>
                                             <div className="cardsclas" key={Index}>
                                                 <div className="titulo">
                                                     <h3 className="TitleCardClase">{Esito.titulo}</h3>
-                                                    <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                    <div className="botoclassCreados">
+                                                        <img className="botoneliminar" src="./images/Basura.png" onClick={() => this.Modal3(Esito.id_clase, Esito.cont_usuarios)} />
+                                                        <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                    </div>
                                                 </div>
                                                 <div className="botoncard">
                                                     <h4 className="FechaCClase">Fecha de creacion:<br />
@@ -371,6 +668,28 @@ class Main5 extends React.Component {
                                             </div>
                                         </>);
                                     })}
+                                    {this.finalI()}
+                                    <div id="PaginacionI">
+                                        {this.flechI()}
+                                        {this.state.arrayI?.map((Esito, index) => {
+                                            try {
+                                                const f = index;
+                                                if (f != this.state.posicionI && (this.state.despaginarI == f || this.state.despaginarI == f - 1 || this.state.despaginarI == f + 1)) {
+                                                    return (<><input key={index} className="botonescamb" type="button" value={f + 1} onClick={() => {
+                                                        this.setState({
+                                                            posicionI: f,
+                                                            despaginarI: f,
+                                                            actualI: this.state.arrayI[f]
+                                                        });
+                                                    }} /></>);
+
+                                                } else if (this.state.despaginarI == f || this.state.despaginarI == f - 1 || this.state.despaginarI == f + 1) {
+                                                    return (<><input key={index} className="botonescamb2" type="button" value={f + 1} /></>);
+                                                }
+                                            } catch (err) { }
+                                        })}
+                                        {this.flech2I()}
+                                    </div>
                                 </div>
                             </div>
                         </div>

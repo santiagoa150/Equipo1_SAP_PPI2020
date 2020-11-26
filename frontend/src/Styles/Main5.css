@@ -1,24 +1,37 @@
-.contM5{
+.contM5 {
     min-height: calc(90vh - 2vw - 25px);
     display: flex;
     flex-flow: column;
-    background-color:#F7EBE8;
+    background-color: #F7EBE8;
 }
-.franja{
+
+.franja {
     display: flex;
     justify-content: space-around;
-    background-color:#F7EBE8;
+    background-color: #F7EBE8;
     padding-block-start: 2vh;
     padding-block-end: 2vh;
 }
-.TitleCardClase{
+
+.TitleCardClase {
     max-width: 60%;
-    
     text-align: center;
 }
-.titulo{
+.botoclassCreados{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.botoneliminar {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.titulo {
     background-color: #444140;
-    color:white;
+    color: rgb(31, 24, 24);
     border-radius: 10px 10px 0 0;
     grid-row: 1/2;
     width: calc(100% + 1px);
@@ -28,32 +41,37 @@
     justify-content: space-around;
     align-items: center;
 }
-#imgclases{
+
+#imgclases {
     width: 30vw;
     height: 30vw;
     max-width: 50vh;
     max-height: 50vh;
     background-repeat: no-repeat;
     background-size: 100%;
-    margin:10px;
+    margin: 10px;
     border-radius: 50%;
 }
-#botonear{
-    margin:10px;
+
+#botonear {
+    margin: 10px;
     display: flex;
     justify-content: space-around;
 }
-#botonear input{
+
+#botonear input {
     width: 45%;
     height: 30px;
     background-color: #FFA987;
     border: transparent;
 }
-#contid{
-    margin:10px;
+
+#contid {
+    margin: 10px;
     text-align: center;
 }
-#clasesP, #contidU{
+
+#clasesP, #contidU {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -61,36 +79,42 @@
     overflow: hidden;
     overflow-y: scroll;
 }
-#ClasesP, #ClasesC{
+
+#ClasesP, #ClasesC {
     background-color: white !important;
     border: 1px solid #7c7c7c !important;
 }
-#ClasesP:hover, #ClasesC:hover{
+
+#ClasesP:hover, #ClasesC:hover {
     color: white;
     background-color: #444140 !important;
     border: 1px solid #444140 !important;
 }
-#clasesP::-webkit-scrollbar, #contidU::-webkit-scrollbar{
-    background-color:  #F6EBE9;
+
+#clasesP::-webkit-scrollbar, #contidU::-webkit-scrollbar {
+    background-color: #F6EBE9;
     width: 12px;
 }
-#clasesP::-webkit-scrollbar-thumb,  #contidU::-webkit-scrollbar-thumb{
-    background-color: #444140;
 
+#clasesP::-webkit-scrollbar-thumb, #contidU::-webkit-scrollbar-thumb {
+    background-color: #444140;
 }
-#clasesP2, #contidU2{
+
+#clasesP2, #contidU2 {
     width: 90%;
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
     align-items: center;
 }
-#conclases,#infop{
+
+#conclases, #infop {
     width: 50%;
     display: flex;
     flex-flow: column;
 }
-#infop input,#conclases input{
+
+#infop input, #conclases input {
     width: 98%;
     height: 30px;
     background-color: #FFA987;
@@ -98,29 +122,32 @@
     margin-block-start: 10px;
     margin-block-end: 10px;
 }
-.cardsclas{
+
+.cardsclas {
     display: grid;
     grid-template-columns: 30% 40% 30%;
     grid-template-rows: max-content max-content;
     margin-top: 10px;
-    background-color:  #7c7c7c;
+    background-color: #7c7c7c;
     width: 90%;
     border: #7c7c7c 1px solid;
     border-radius: 10px;
     box-shadow: 5px 5px 10px black;
 }
-.cardsclas input{
-    width: 35px !important; 
+
+.cardsclas input {
+    width: 35px !important;
     height: 35px !important;
     background-color: white !important;
     border: transparent;
 }
-.cardsclas input:hover{
+
+.cardsclas input:hover {
     background-color: #7c7c7c !important;
 }
-.Modal1ClasesR{
-    position: fixed;
 
+.Modal1ClasesR {
+    position: fixed;
     top: 0;
     width: 100%;
     height: 100vh;
@@ -129,15 +156,18 @@
     grid-template-columns: 12.5% 35% 5% 35% 12.5%;
     grid-template-rows: 15% 1fr 15%;
 }
-.PopUp2_{
+
+.PopUp2_ {
     grid-column: 2/3;
     grid-row: 2/3;
 }
-.PopUp1_{
+
+.PopUp1_ {
     grid-column: 4/5;
     grid-row: 2/3;
 }
-.PopUp1, .PopUp2{
+
+.PopUp1, .PopUp2 {
     display: flex;
     left: 0;
     top: 0;
@@ -148,11 +178,13 @@
     width: 100%;
     height: 100vh;
 }
-.inputCrearClase{
+
+.inputCrearClase {
     width: 100%;
     height: 35px;
 }
-.inputCrearClase2{
+
+.inputCrearClase2 {
     margin-left: 5px;
     height: 49px;
     width: 49px;
@@ -162,7 +194,8 @@
     background-repeat: no-repeat;
     background-position: center center;
 }
-.inputCrearClase2_{
+
+.inputCrearClase2_ {
     margin-left: 5px;
     height: 39px;
     width: 49px;
@@ -172,24 +205,28 @@
     background-repeat: no-repeat;
     background-position: center center;
 }
-.inputCrearClase2:hover, .inputCrearClase2_:hover{
+
+.inputCrearClase2:hover, .inputCrearClase2_:hover {
     background-color: #444140;
 }
 
-.GroupC{
+.GroupC {
     display: flex;
     flex-flow: column;
     align-items: flex-start;
     width: 80%;
 }
-.GroupC2{
+
+.GroupC2 {
     display: flex;
     width: 80% !important;
 }
-.Group{
+
+.Group {
     margin: 0;
 }
-#XimageCrearClase{
+
+#XimageCrearClase {
     height: 35px;
     width: 100%;
     display: flex;
@@ -197,19 +234,22 @@
     grid-row: 3/4;
     grid-column: 1/3;
 }
-.holaClase{
+
+.holaClase {
     width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-.BotonMadreClase{
+
+.BotonMadreClase {
     background-color: #f6ebe9;
     height: 30px;
     width: 200px;
     margin: 0 10px 0 10px;
 }
-#PopUpPart1{
+
+#PopUpPart1 {
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -217,7 +257,8 @@
     grid-row: 2/3;
     grid-column: 1/2;
 }
-#PopUpPart2{
+
+#PopUpPart2 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -225,7 +266,8 @@
     grid-column: 2/3;
     padding: 5px;
 }
-.Etiqueta{
+
+.Etiqueta {
     margin: 2px;
     padding: 2px 10px 2px 10px;
     width: max-content;
@@ -237,14 +279,16 @@
     justify-content: center;
     align-items: center;
 }
-.ContainerPopUp2{
+
+.ContainerPopUp2 {
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: space-around;
     width: 100%;
 }
-.PopUp1_{
+
+.PopUp1_ {
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: max-content 1fr max-content max-content;
@@ -253,7 +297,8 @@
     width: 100%;
     height: 100%;
 }
-.PopUp2_{
+
+.PopUp2_ {
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -263,14 +308,16 @@
     height: max-content;
     height: 100%;
 }
-.infoContainerModalClass{
+
+.infoContainerModalClass {
     display: flex;
     justify-content: center;
     width: 100%;
     height: 270px;
     align-items: center;
 }
-.infoContainerModalClass2{
+
+.infoContainerModalClass2 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -278,12 +325,14 @@
     padding: 10px;
     width: calc(70% - 20px);
     height: 230px;
-    background-color:#f6ebe9;
+    background-color: #f6ebe9;
 }
-.titleModal1ClasH2{
+
+.titleModal1ClasH2 {
     margin: 10px 0 10px 0;
 }
-.titleModal1Class{
+
+.titleModal1Class {
     display: flex;
     justify-content: center;
     border-radius: 10px 10px 0 0;
@@ -291,11 +340,13 @@
     background-color: #444140;
     color: white;
 }
-.titleModal1Class2{
+
+.titleModal1Class2 {
     grid-row: 1/2;
     grid-column: 1/3;
 }
-#UsuariosIN{
+
+#UsuariosIN {
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
@@ -303,28 +354,33 @@
     height: 80%;
     background-color: #f6ebe9;
     border-radius: 10px;
-    border:1px solid #444140;
+    border: 1px solid #444140;
 }
-.bmargintop{
+
+.bmargintop {
     margin-top: 10px;
 }
-.GroupC3{
+
+.GroupC3 {
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
     width: 100% !important;
 }
-.InfoClassCard{
+
+.InfoClassCard {
     display: flex;
     width: 50%;
     height: 50px;
     justify-content: center;
     align-items: center;
 }
-.InfoClassCardConte{
+
+.InfoClassCardConte {
     margin: 0 5px 0 5px;
 }
-.buscadorClases{
+
+.buscadorClases {
     align-items: center;
     margin-top: 10px;
     width: 100%;
@@ -332,35 +388,41 @@
     grid-template-columns: 20% 60% 20%;
     grid-template-rows: 1fr;
 }
-.filtroClasesSearch{
+
+.filtroClasesSearch {
     width: 100%;
     display: flex;
     justify-content: center;
     grid-column: 2/3;
     grid-row: 1/2;
 }
-.filtroClasesSearch2{
+
+.filtroClasesSearch2 {
     border-radius: 10px;
     background-color: #444140;
     width: 100%;
     display: flex;
     justify-content: center;
 }
-.BotonMore{
+
+.BotonMore {
     margin-left: 10px;
     display: flex;
     justify-content: flex-start;
     grid-column: 3/4;
     grid-row: 1/2;
 }
-.BotonMoreImage{
+
+.BotonMoreImage {
     cursor: pointer;
     width: 40px;
 }
-.buscadorClases2{
+
+.buscadorClases2 {
     width: 50% !important;
 }
-.botoncard{
+
+.botoncard {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -368,17 +430,21 @@
     grid-row: 2/3 !important;
     align-items: center;
 }
-@media(min-width:620px){
-    .DisCom{display: none;}
-    .AparCom{
+
+@media(min-width:620px) {
+    .DisCom {
+        display: none;
+    }
+    .AparCom {
         display: grid !important;
     }
-    .AparCom2{
+    .AparCom2 {
         display: flex !important;
     }
 }
-@media(max-width:620px){
-    .ContainerPopUp2{
+
+@media(max-width:620px) {
+    .ContainerPopUp2 {
         display: flex;
         flex-flow: column;
         align-items: center;
@@ -386,18 +452,18 @@
         width: 100%;
         height: 100%;
     }
-    .BotonFlechita{
+    .BotonFlechita {
         border-radius: 10px;
         width: 10vw;
         height: 10vw;
-    } 
-    .BotonFlechita:hover{
+    }
+    .BotonFlechita:hover {
         background-color: #7c7c7c;
     }
-    #DisPrimero{
+    #DisPrimero {
         display: none;
     }
-    .BotonesMoverCel{
+    .BotonesMoverCel {
         color: white;
         justify-content: space-around;
         align-items: center;
@@ -407,57 +473,58 @@
         height: 50px;
         border-radius: 10px;
         margin-bottom: 20px;
-    } 
-    #UsuariosIN{
+    }
+    #UsuariosIN {
         height: 60%;
     }
-    .Modal1ClasesR{
+    .Modal1ClasesR {
         display: flex;
         flex-flow: column;
         align-items: center;
         justify-content: center;
     }
-    .BotonMore{
+    .BotonMore {
         margin-left: 0px;
         margin-right: 10px;
     }
-    .filtroClasesSearch2{
+    .filtroClasesSearch2 {
         width: 95%;
     }
-    .buscadorClases{
+    .buscadorClases {
         align-items: center;
         justify-content: space-between;
         display: flex;
     }
-    .BotonMoreImage{
+    .BotonMoreImage {
         width: 35px;
     }
-    .DisCel{display: none;}
-    .PopUp2_{
+    .DisCel {
+        display: none;
+    }
+    .PopUp2_ {
         display: none;
         width: 90%;
         height: 70%;
     }
-    .PopUp1_{
+    .PopUp1_ {
         grid-template-columns: 100%;
         grid-template-rows: max-content 1fr max-content;
         width: 90%;
         height: 70%;
     }
-    #XimageCrearClase{
+    #XimageCrearClase {
         grid-row: 3/4;
         grid-column: 1/2;
     }
-    #PopUpPart1{
+    #PopUpPart1 {
         grid-row: 1/2;
         grid-column: 1/2;
     }
-    #PopUpPart2{
+    #PopUpPart2 {
         grid-row: 2/3;
-        grid-column:1/2;
+        grid-column: 1/2;
     }
-
-    #clasesP, #contidU{
+    #clasesP, #contidU {
         width: 100%;
         display: flex;
         flex-flow: column;
@@ -467,59 +534,59 @@
         padding-bottom: 10px;
         max-height: 600px;
     }
-    #infop,#conclases{
+    #infop, #conclases {
         width: 100%;
-    }  
-    .franja{       
+    }
+    .franja {
         flex-flow: column;
         align-items: center;
     }
-    #ClasesC, #ClasesP{
+    #ClasesC, #ClasesP {
         height: 35px;
     }
-#imgclases{
-    width: 40vw;
-    height: 40vw;
-    background-size: 100%;
-    margin:10px;
-}
-.TitleCardClase{
-    max-width: 90%;
-    text-align: center;
-}
-.cardsclas input{
-    margin-right: 10px;
-}
-.cardsclas{
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: max-content max-content;
-    width: 88vw;
-}
-.InfoClassCard{
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    width: 60%;
-}
-.titulo{
-    grid-row: 1/2;
-    grid-column: 1/2;
-}
-.FechaCClase{
-    width: 30%;
-}
-.botoncard{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-row: 2/3;
-    grid-column: 1/2;
-}
-.UsuarioInfoCardAbajo{
-    text-align: center;
-    grid-row: 2/3;
-    grid-column: 1/3;
-    margin-bottom: 10px;
-}
+    #imgclases {
+        width: 40vw;
+        height: 40vw;
+        background-size: 100%;
+        margin: 10px;
+    }
+    .TitleCardClase {
+        max-width: 90%;
+        text-align: center;
+    }
+    .cardsclas input {
+        margin-right: 10px;
+    }
+    .cardsclas {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: max-content max-content;
+        width: 88vw;
+    }
+    .InfoClassCard {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        width: 60%;
+    }
+    .titulo {
+        grid-row: 1/2;
+        grid-column: 1/2;
+    }
+    .FechaCClase {
+        width: 30%;
+    }
+    .botoncard {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-row: 2/3;
+        grid-column: 1/2;
+    }
+    .UsuarioInfoCardAbajo {
+        text-align: center;
+        grid-row: 2/3;
+        grid-column: 1/3;
+        margin-bottom: 10px;
+    }
 }

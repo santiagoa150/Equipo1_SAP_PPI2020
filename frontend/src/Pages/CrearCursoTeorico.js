@@ -24,7 +24,6 @@ class CrearCursoTeorico extends React.Component {
     }
     async componentDidMount() {
         await this.getContenidoT();
-
         if (this.state.dataContenidoT[0]?.contenido_t == null) {
             this.setState({ bool: false });
             document.getElementById("SubirBoton").disabled = false;
@@ -37,8 +36,9 @@ class CrearCursoTeorico extends React.Component {
             document.getElementById("tablero2").style.display = "block";
             document.getElementById("tablero1").style.display = "none";
         }
-
-        this.setState({ Bloques: this.state.dataContenidoT[0]?.contenido_t.split("<!--->") });
+        if (this.state.dataContenidoT[0]?.contenido_t?.include("<!--->")) {
+            this.setState({ Bloques: this.state.dataContenidoT[0].contenido_t?.split("<!--->") });
+        }
     }
     componentDidUpdate() {
         this.Pintarvistaprevia();
@@ -169,13 +169,13 @@ class CrearCursoTeorico extends React.Component {
         }
     }
     /*Renderizado de los objetos del más*/
-    renderContentMas = (index) =>{
-        if(index < this.state.Bloques.length){
-            return(
+    renderContentMas = (index) => {
+        if ((index + 1) < this.state.Bloques.length) {
+            return (
                 <>
-                <div className='elHueco' id={"elHueco" + (index+1)}></div>
-                                            <div className="RayaCrearContenidoT" id={"rayita" + (index+1)}></div>
-                                            <img className="MasCrearContenidoT" id={"mas" + (index+1)} src="/Images/Mas2.png" onClick={() => { this.hueco(index + 1) }} />
+                    <div className='elHueco' id={"elHueco" + (index + 1)}></div>
+                    <div className="RayaCrearContenidoT" id={"rayita" + (index + 1)}></div>
+                    <img className="MasCrearContenidoT" id={"mas" + (index + 1)} src="/Images/Mas2.png" onClick={() => { this.hueco(index + 1) }} />
                 </>
             )
         }
@@ -242,10 +242,10 @@ class CrearCursoTeorico extends React.Component {
                     for (let i = 0; i < copia.length; i++) {
                         auxiliar.push(copia[i]);
                     }
-                    
-                document.getElementById("elHueco" + this.state.index).style.display ="none"; 
-                document.getElementById("rayita" + this.state.index).style.display ="block";
-                document.getElementById("mas" + this.state.index).style.display ="block";
+
+                    document.getElementById("elHueco" + this.state.index).style.display = "none";
+                    document.getElementById("rayita" + this.state.index).style.display = "block";
+                    document.getElementById("mas" + this.state.index).style.display = "block";
                 } else {
                     auxiliar[this.state.index] = cont;
                 }
@@ -267,9 +267,9 @@ class CrearCursoTeorico extends React.Component {
                 for (let i = 0; i < copia.length; i++) {
                     auxiliar.push(copia[i]);
                 }
-                document.getElementById("elHueco" + this.state.index).style.display ="none"; 
-                document.getElementById("rayita" + this.state.index).style.display ="block";
-                document.getElementById("mas" + this.state.index).style.display ="block";
+                document.getElementById("elHueco" + this.state.index).style.display = "none";
+                document.getElementById("rayita" + this.state.index).style.display = "block";
+                document.getElementById("mas" + this.state.index).style.display = "block";
             } else {
                 auxiliar[this.state.index] = cont;
             }
@@ -319,9 +319,9 @@ class CrearCursoTeorico extends React.Component {
     }
     hueco = (prop) => {
         /**/
-        document.getElementById("elHueco" + prop).style.display ="block";
-        document.getElementById("rayita" + prop).style.display ="none";
-        document.getElementById("mas" + prop).style.display ="none";
+        document.getElementById("elHueco" + prop).style.display = "block";
+        document.getElementById("rayita" + prop).style.display = "none";
+        document.getElementById("mas" + prop).style.display = "none";
         this.state.anexando = true;
         this.state.creando = false;
         this.state.index = prop;
@@ -413,7 +413,7 @@ class CrearCursoTeorico extends React.Component {
                                             </div>
                                         </div>
                                         <div className="MasCrearContenidoT2" id={"hueco" + (index+1)}>
-                                            {this.renderContentMas(index+1)}
+                                            {this.renderContentMas(index)}
                                         </div>
                                     </>
                                 );

@@ -168,10 +168,6 @@ class Main3 extends React.Component {
         }
 
     }
-    /*Determina la posición de la paginación*/
-    movflech2 = () => {
-        this.setState({ despaginar: this.state.despaginar + 1 });
-    }
     /*Metodo que determina el final de la paginación*/
     final = () => {
         if (this.state.posicion >= this.state.tamaño - 1) {
