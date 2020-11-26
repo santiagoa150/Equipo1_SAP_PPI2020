@@ -95,6 +95,18 @@ router.get('/get_cursos_id/misCursos_Clase_CreateCurso/:id_creador', (req,res)=>
         }
     });
 });
+/*Este get trae el contenido teorico de un curso para modificarlo*/
+router.get('/get_cursos_id-ContenidoT/crearContenidoTeorico/:id', (req, res) =>{
+    const {id} = req.params;
+    let queryTraerContT = 'SELECT contenido_t FROM cursos WHERE id=?';
+    mysqlConnection.query(queryTraerContT, [id], (err, rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
 /*TODOS LOS POST*/
 /*Este post permite guardar un curso nuevo en la database*/
 router.post('/post_cursos_informacion/misCursos', (req, res) =>{
@@ -139,6 +151,37 @@ router.put('/put_cursos_infoBasica/CrearCurso/:id', (req, res) =>{
     const {titulo, tematica, materia, logo} = req.body;
     let queryPutInfoBasica = 'UPDATE cursos SET titulo=?,tematica=?,materia=?,logo=? WHERE id=?';
     mysqlConnection.query(queryPutInfoBasica, [titulo,tematica,materia,logo,id] , (err, results, fields) =>{
+        if(err){
+            console.error(err);
+        }
+    });
+});
+/*Actualizar la privacidad de un curso*/
+router.put('/put_cursos_privacidad/CrearCurso/:id&:privacidad', (req, res) =>{
+    const {id, privacidad} = req.params;
+    let queryPutPrivacidad = 'UPDATE cursos SET privacidad=? WHERE id=?';
+    mysqlConnection.query(queryPutPrivacidad, [privacidad,id], (err,results,fields)=>{
+        if(err){
+            console.error(err);
+        }
+    });
+});
+/*Actualizar el contenido teoríco de un curso*/
+router.put('/put_cursos_contenido-t/CrearCursoTeorico/:id', (req,res) =>{
+    const {id} = req.params;
+    const {contenido_t} = req.body;
+    let queryPutContenidoT = 'UPDATE cursos SET contenido_t =? WHERE id=?';
+    mysqlConnection.query(queryPutContenidoT, [contenido_t, id], (err, results,fields) =>{
+        if(err){
+            console.error(err);
+        }
+    });
+});
+/*Este put se utiliza en la creación de curso para colocar el contenido teoríco como null*/
+router.put('/put_cursos_contenido-t_setNull/CrearCurso/:id', (req,res) =>{
+    const {id} = req.params;
+    let queryPutNullContenidoT = 'UPDATE cursos SET contenido_t = null WHERE id=?';
+    mysqlConnection.query(queryPutNullContenidoT, [id], (err,results,fields) =>{
         if(err){
             console.error(err);
         }

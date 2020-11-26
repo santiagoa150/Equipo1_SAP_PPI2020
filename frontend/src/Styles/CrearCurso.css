@@ -1,6 +1,7 @@
 .LogoCrearCurso {
     width: 30vh;
 }
+
 .MainCrearCurso {
     width: 100%;
     height: 100vh;
@@ -8,22 +9,26 @@
     grid-template-columns: 70% 30%;
     grid-template-rows: 100%;
 }
-.PadreCursoCrear{
+
+.PadreCursoCrear {
     width: 100%;
     min-height: calc(100vh - 71px);
     display: grid;
     grid-template-columns: 30% 70%;
     grid-template-rows: 100%;
 }
-.EstiloButtonCrearCursoC{
+
+.EstiloButtonCrearCursoC {
     width: 180px;
     height: 30px;
     margin-top: 20px;
 }
-#AlertasCrearCurso{ 
+
+#AlertasCrearCurso {
     margin: 0;
 }
-#AlertasCrearCursoDiv{
+
+#AlertasCrearCursoDiv {
     border-radius: 10px;
     display: none;
     justify-content: center;
@@ -31,28 +36,39 @@
     background-color: white;
     padding: 1px;
 }
-.EstiloButtonCrearCursoC:hover{
+
+.CenterCrearC {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.EstiloButtonCrearCursoC:hover {
     background-color: #444140;
     color: white;
     transition: all 700ms;
 }
-.imagenEditCrearC{
+
+.imagenEditCrearC {
     width: 150px;
 }
-.EncabezadoCrearC{
+
+.EncabezadoCrearC {
     display: flex;
     width: 100%;
     align-items: flex-end;
     justify-content: space-around;
     flex-wrap: wrap;
 }
-.BotonesContaCrearC{
+
+.BotonesContaCrearC {
     width: 60%;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
-.ButtonMetodosCrearC{
+
+.ButtonMetodosCrearC {
     width: 40px;
     height: 40px;
     background-color: white;
@@ -60,11 +76,13 @@
     border: 1px solid #444140;
     padding: 5px;
 }
-.buttonAlgo{
+
+.buttonAlgo {
     width: 100%;
     text-align: center;
 }
-.CardsCrearContenido{
+
+.CardsCrearContenido {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -72,7 +90,8 @@
     width: 100%;
     min-height: calc(100vh - 71px);
 }
-.CardCrearCursoContenido{
+
+.CardCrearCursoContenido {
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -84,17 +103,20 @@
     width: 200px;
     height: 200px;
 }
-.editarInfo{
-    background-color:#7c7c7c;
+
+.editarInfo {
+    background-color: #7c7c7c;
     justify-content: space-around;
     width: 100%;
     height: 100%;
     grid-column: 1/2;
     grid-row: 1/2;
 }
+
 .TableroCrearC {
     display: flex;
-    justify-content: center;
+    flex-flow: column;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: 100%;
@@ -116,7 +138,7 @@
 }
 
 .ButtonCCurso:hover, .ButonSubir:hover {
-    background-color: wheat !important;
+    background-color: #444140 !important;
     color: black;
 }
 
@@ -140,7 +162,7 @@
 }
 
 .XImageSubImage:hover {
-    background-color: wheat !important;
+    background-color: #444140 !important;
 }
 
 .SubIMG:focus {
@@ -152,12 +174,12 @@
     background-position: center;
     background-size: 80%;
     background-repeat: no-repeat;
-    color: wheat;
+    color: #F6EBE9;
     border-radius: 0;
     border: 0;
     width: 35px;
     height: 100%;
-    background-color: wheat;
+    background-color: #F6EBE9;
     transition: all 1000ms;
 }
 
@@ -192,11 +214,27 @@
 #Titulo {
     background-image: url(/images/Titulo.png);
 }
-
+.centerIMG{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+.centerImg{
+    width: 300px;
+}
 .ButonSubir {
-    margin-left: 20px;
+    margin-top: 10px;
     height: 35px;
+    margin-left: 10px;
     width: 100px;
+}
+
+.Cosa {
+    width: 100px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 .Cien2Ele {
@@ -213,6 +251,7 @@
     height: 35px;
     background-color: white;
 }
+
 .MiniButonCrear1 {
     background-repeat: no-repeat;
     background-position: center;
@@ -221,6 +260,7 @@
     height: 35px;
     background-color: white;
 }
+
 .Cien {
     width: 80%;
 }
@@ -260,23 +300,136 @@
     justify-content: space-around;
 }
 
+.cardcontenidoTeorico {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.contenido {
+    width: calc(100% - 62px);
+}
+
+.basuraCrearCT {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.hoverCreadorT:hover {
+    background-color: #7c7c7c !important;
+    color: black !important;
+}
+
 .MainTablero {
     overflow: hidden;
     overflow-y: scroll;
-    background-color: wheat;
+    background-color: #F6EBE9;
     width: 95%;
-    height: 95%;
+    height: 90%;
 }
-.MainTablero::-webkit-scrollbar{
-    background-color:  wheat;
+
+#tablero2, #tablero1 {
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.VistaPreviaMainTablero {
+    display: none;
+    background-color: #F6EBE9;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.colorcitoReturnSelectCT {
+    background-color: wheat !important;
+}
+
+.basuraCrearCTContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.EditorSelectCrearCT {
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 5px 0 5px 0;
+    width: 95%;
+    background-color: #444140;
+}
+
+.MainTablero::-webkit-scrollbar {
+    background-color: #F6EBE9;
     width: 15px;
 }
-.MainTablero::-webkit-scrollbar-thumb{
+
+.MainTablero::-webkit-scrollbar-thumb {
     background-color: #444140;
     box-shadow: 2px 0 10px black;
 }
+
+.BotonSelectCrearCurso {
+    width: 40%;
+    height: 30px;
+    margin: 0 10px 0 10px;
+}
+
+.BotonSelectCrearCurso:hover {
+    color: black;
+    background-color: #7c7c7c !important;
+}
+
+.flex-wrap {
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.ReanudarCursoTeorico{
+    text-decoration: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.MasCrearContenidoT2{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: max-content;
+}
+.elHueco{
+    display: none;
+    width: 100%;
+    height: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+.MasCrearContenidoT{
+    width: 20px;
+    position: relative;
+    top: -7px;
+    grid-column: 7/8;
+    grid-row: 1/2;
+    cursor: pointer;
+}
+.RayaCrearContenidoT{
+    width: 100%;
+    height: 4px;
+    background-color: #444140;
+    grid-column: 1/13;
+    grid-row: 1/2;
+}
 @media(max-width: 600px) {
-    .CardsCrearContenido{
+    .centerImg{
+        width: 90%;
+    }
+    .EditorSelectCrearCT {
+        margin: 10px 0 10px 0;
+    }
+    .CardsCrearContenido {
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -284,11 +437,11 @@
         width: 100%;
         min-height: 700px;
     }
-    .editarInfo{
+    .editarInfo {
         grid-column: 1/2;
         grid-row: 1/2;
     }
-    .PadreCursoCrear{
+    .PadreCursoCrear {
         width: 100%;
         display: grid;
         grid-template-columns: 100%;
@@ -297,6 +450,18 @@
     .MainCrearCurso {
         grid-template-columns: 100%;
         grid-template-rows: 650px max-content;
+    }
+    .contenido{
+        width: calc(100% - 35px);
+        text-align: justify;
+        margin-right: 10px;
+    }
+    .basuraCrearCTContainer {
+        flex-flow: column;
+        width: 35px;
+    }
+    .basuraCrearCT{
+        margin: 10px 0 0 0;
     }
     .InfoCrearC {
         grid-row: 1/2;
@@ -308,6 +473,7 @@
         grid-column: 1/2;
     }
     .MainTablero {
+        overflow-y: hidden;
         width: 95%;
         height: 97%;
     }

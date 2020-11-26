@@ -254,7 +254,6 @@ class Perfil extends React.Component {
             var reader = new FileReader();
             reader.onload = function (e) {
                 aja2 = e.target.result;
-                
                     document.getElementById("body").innerHTML = "<canvas id='tempCanvas' width='300' height='300' style='display:none'></canvas>";
                     var canvas = document.getElementById("tempCanvas");
                     var ctx = canvas.getContext("2d");
