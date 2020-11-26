@@ -445,7 +445,7 @@
         width: 100%;
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: 500px max-content;
+        grid-template-rows: 570px max-content;
     }
     .MainCrearCurso {
         grid-template-columns: 100%;
