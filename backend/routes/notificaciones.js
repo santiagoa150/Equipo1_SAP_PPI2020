@@ -11,6 +11,8 @@ router.get('/get_notificaciones_count/Header2/:id_creador_clase&:id_otro_usuario
     mySqlConnection.query(queryGetNotificaciones, [id_creador_clase, id_otro_usuario], (err,rows,fields) =>{
         if(err){
             console.error(err);
+        }else{
+            res.json(rows);
         }
     });
 });

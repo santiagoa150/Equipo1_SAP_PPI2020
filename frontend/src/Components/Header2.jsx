@@ -21,12 +21,12 @@ class Header2 extends React.Component {
             avatar = UsuarioI[0].avatar;
         }
         document.getElementById("profile").style.backgroundImage = "url(" + avatar + ")";
-        this.getNoficaciones();
+        this.getNotificaciones();
     }
     componentDidUpdate(){
         setTimeout(function(){
-            this.getNoficaciones();
-        }, 300000)
+            this.getNotificaciones();
+        }, 300000);
     }
     /*METODOS QUE HACEN EL CORRECTO FUNCIONAMIENTO DEL MENÚ*/
     ureles = () => {
@@ -97,7 +97,7 @@ class Header2 extends React.Component {
     /*ACIOS*/
     /*GETS*/
     /*Este get sirve para traer todas las notificaciones de un usuario*/
-    getNoficaciones = async () => {
+    getNotificaciones = async () => {
         await axios.get(`http://localhost:3883/Not/get_notificaciones_count/Header2/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
         .then(res =>{
             this.setState({dataNotificaciones: res.data})

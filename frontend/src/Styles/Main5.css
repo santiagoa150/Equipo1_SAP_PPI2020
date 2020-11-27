@@ -146,7 +146,6 @@
 .cardsclas input:hover {
     background-color: #7c7c7c !important;
 }
-
 .Modal1ClasesR {
     position: fixed;
     top: 0;
@@ -184,7 +183,10 @@
     width: 100%;
     height: 35px;
 }
-
+.inputCrearClase3{
+    width: calc(100%);
+    height: 35px;
+}
 .inputCrearClase2 {
     margin-left: 5px;
     height: 49px;
@@ -242,7 +244,10 @@
     justify-content: space-around;
     align-items: center;
 }
-
+.CositaCambiar{
+    display: flex;
+    width: 100%;
+}
 .BotonMadreClase {
     background-color: #f6ebe9;
     height: 30px;
