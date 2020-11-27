@@ -137,8 +137,6 @@ class Main1 extends React.Component {
                         this.IniciarCel();
                     }
                 }
-            }else{
-                this.Time(Contraseña2, "password", "Los datos no coinciden.")
             }
             /*Datos errados en el registro*/
         } else {
@@ -158,7 +156,7 @@ class Main1 extends React.Component {
                 this.Time(Contraseña2, "password", "Dato no ingresado.");
             }
         }             
-        document.getElementById("carga").style.display="block";
+        document.getElementById("carga").style.display="none";
     }
     /*INICIO DE SESIÓN DE USUARIO*/
     /*Inicio de sesión en computador*/
@@ -190,9 +188,11 @@ class Main1 extends React.Component {
         }
     }    
     /*Inicio de sesión global*/
-    IniciarSGlobal = async (Usuario, Contraseña) => {
+    IniciarSGlobal = async (Usuario, Contraseña) => {        
+        document.getElementById("carga").style.display="block";
         if (this.state.data.length == 0) {
-            this.Time(Usuario, "text", "El usuario no existe");
+            document.getElementById("carga").style.display="none";
+            this.Time(Usuario, "text", "El usuario no existe");     
         } else {
             if (this.state.data[0].contraseña == Contraseña.value && this.state.data[0].registro_sistema == 1) {
                 let edad = new Date(this.state.data[0].fecha_n);
@@ -235,6 +235,7 @@ class Main1 extends React.Component {
                 );
                 this.setState({ Bool: true });
             } else {
+                document.getElementById("carga").style.display="none";
                 this.Time(Contraseña, "password", "La contraseña no coincide.");
             }
         }
@@ -257,7 +258,7 @@ class Main1 extends React.Component {
     /*Axio para traer un usuario por su UserName // Este se utiliza en el registro*/
     getUserNameRegistro = async (UserName) => {
         const response = await axios.get(`http://localhost:3883/Usu/usuario-sesion/${UserName.value}`)
-        if (response.data.length > 0) {
+        if (response.length > 0) {
             this.Time(UserName, "text", "Usuario invalido");
         } else {
             this.setState({ UserB: true });
@@ -265,19 +266,12 @@ class Main1 extends React.Component {
     }
     /*Axio para traer un usuario por su Correo*/
     getCorreoRegistro = async (Correo) => {
-        await axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
-        .then(response =>{
-            if (response.data.length > 0) {
-                this.Time(Correo, "text", "Correo invalido");
-            } else {
-                this.setState({ UserB2: true });
-            }
-        }).catch(err =>{
-            if(err){
-                console.error(err);
-            }
-        })
-        
+        const response = await axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
+        if (response.length > 0) {
+            this.Time(Correo, "text", "Usuario invalido");
+        } else {
+            this.setState({ UserB2: true });
+        }
     }
     /*Axio para traer un usuario por su UserName // Este se utiliza en el inicio de sesión*/
     getUserNameInicioSesion = async (Usuario, Contraseña) => {
