@@ -29,10 +29,10 @@ class Main5 extends React.Component {
             Modal2: false,
             Modal3: false,
             ModalClase: 0,
-            Modalconusu: 0 
+            Modalconusu: 0
         }
     }
-   async componentDidMount() {
+    async componentDidMount() {
         await this.getClasesC();
         await this.getClasesI();
         /*CLASES CREADAS*/
@@ -205,7 +205,7 @@ class Main5 extends React.Component {
         this.setState({
             Modal3: !this.state.Modal3,
             ModalClase: prop,
-            Modalconusu:prop2
+            Modalconusu: prop2
         })
     }
     /*Metodo que retorna el modal 3*/
@@ -221,7 +221,7 @@ class Main5 extends React.Component {
                             <div className="MainModal2Perfíl">
                                 <div className="BotonesCont">
                                     <button className="button SubImg2" onClick={() => { this.Salirclase() }}>Si</button>
-                                    <button className="button SubImg2" onClick={() => this.Modal3(0,0)}>No</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal3(0, 0)}>No</button>
                                 </div>
                             </div>
                         </div>
@@ -378,31 +378,46 @@ class Main5 extends React.Component {
                 console.error(err);
             })
     }
+    /*PUTS*/
+    /*Este put permite actualizar la cantidad de usaurios de una clase*/
+    putUsariosClase = async () =>{
+        console.log("hola");
+        axios.put(`http://localhost:3883/Cla/Put-Clases-cantidad_usuarios/Clases/${this.state.ModalClase}`)
+            .then(res =>{
+
+            }).catch(err =>{
+
+            });
+    }
     /*DELETES*/
     /*Elimina clases creadas*/
     deleteClase = async () => {
-        await axios.delete(`http://localhost:3883/Cla/Delete-Clases-todo/Clases/${this.state.ModalClase}`)
+        axios.delete(`http://localhost:3883/Cla/Delete-Clases-todo/Clases/${this.state.ModalClase}`)
             .then(res => {
-                this.getClasesC();
-                this.setState({
-                    Modal2: false
-                });
             })
             .catch(err => {
                 console.log(err);
             })
+
+
+        this.getClasesC();
+        this.setState({
+            Modal2: false
+        });
     }
+    /*Permite salirse de una clase en la que se participa*/
     Salirclase = async () => {
-        await axios.delete(`http://localhost:3883/UsuCla/Delete-Clases-todo/Clases/:id_clase&:id_usuario/${this.state.ModalClase}`)
+        axios.delete(`http://localhost:3883/UsuCla/Delete-Clases-todo/Clases/${this.state.ModalClase}&${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.getClasesI();
-                this.setState({
-                    Modal3: false
-                });
             })
             .catch(err => {
                 console.log(err);
             })
+        this.putUsariosClase();
+        this.getClasesI();
+        this.setState({
+            Modal3: false
+        });
     }
     /*METODOS DE PAGINACIÓN Y FILTRADO de las clases creadas*/
     /*Este metodo realiza la paginación y el filtrado de las clases creadas*/
@@ -654,7 +669,7 @@ class Main5 extends React.Component {
                                                 <div className="titulo">
                                                     <h3 className="TitleCardClase">{Esito.titulo}</h3>
                                                     <div className="botoclassCreados">
-                                                        <img className="botoneliminar" src="./images/Basura.png" onClick={() => this.Modal3(Esito.id_clase, Esito.cont_usuarios)} />
+                                                        <img className="botoneliminar" src="./images/Salir.png" onClick={() => this.Modal3(Esito.id_clase, Esito.cont_usuarios)} />
                                                         <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
                                                     </div>
                                                 </div>
@@ -662,8 +677,10 @@ class Main5 extends React.Component {
                                                     <h4 className="FechaCClase">Fecha de creacion:<br />
                                                         {new Date(Esito.fecha_c).toLocaleDateString()}
                                                     </h4>
-                                                    <h4 className="InfoClassCardConte">Usuarios: {Esito.cont_usuarios}</h4>
-                                                    <h4 className="InfoClassCardConte">Id: {Esito.id_clase}</h4>
+                                                    <div className="InfoClassCard">
+                                                        <h4 className="InfoClassCardConte ">Usuarios: {Esito.cont_usuarios}</h4>
+                                                        <h4 className="InfoClassCardConte">Id: {Esito.id_clase}</h4>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </>);

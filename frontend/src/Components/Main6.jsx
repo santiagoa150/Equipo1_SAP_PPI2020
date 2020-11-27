@@ -5,11 +5,7 @@ import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import { Link, Redirect } from 'react-router-dom';
 
 let bool = true, bool2 = true;
-let Fecha = new Date();
-let FechaY = Fecha.getFullYear();
-let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
-let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
-let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
+let newDate;
 class Main6 extends React.Component {
     constructor(props) {
         super(props);
@@ -108,7 +104,7 @@ class Main6 extends React.Component {
                             </div>
                             <div className="MainModal2Perfíl">
                                 <div className="BotonesCont">
-                                    <button className="button SubImg2" onClick={() => { this.deleteCursoC(this.state.Modal1.id); this.getCursosC();this.setState({Modal1:{return: !this.state.Modal1.return, title: "", id: 0}});}}>Si</button>
+                                    <button className="button SubImg2" onClick={() => { this.deleteCursoC(this.state.Modal1.id); this.setState({Modal1:{return: !this.state.Modal1.return, title: "", id: 0}}); }}>Si</button>
                                     <button className="button SubImg2" onClick={()=> this.Modal1("")}>No</button>
                                 </div>
                             </div>
@@ -140,7 +136,7 @@ class Main6 extends React.Component {
     }
     /*Este metodo trae el id de un curso a la hora de crearlo*/
     getCrearCurso = async () => {
-        await axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}`)
+         axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
             .then(res => {
                 this.setState({
                     idCursoCreado: res.data[0].id,
@@ -155,16 +151,23 @@ class Main6 extends React.Component {
     /*POST*/
     /*Este metodo crea un curso nuevo*/
     postNewCurso = async () => {
+        let Fecha = new Date();
+        let FechaY = Fecha.getFullYear();
+        let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
+        let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
+        let FechaH = FechaY + "-" + FechaM + "-" + FechaD + " ";
+        let Horas = "" + (Fecha.getHours().toString()).padStart(2,0);
+        let minutos = "" + (Fecha.getMinutes().toString()).padStart(2,0);
+        let seconds = "" + (Fecha.getSeconds().toString()).padStart(2,0);
+        newDate = FechaH + Horas + ":" + minutos + ":" + seconds;
         let form = {
             id_creador: UsuarioI[0].id_usuario,
             id_clase: null,
-            fecha_c: FechaH,
+            fecha_c: newDate,
             logo: "/Images/Cursos/Default.png"
         }
-        await axios.post(`http://localhost:3883/Cur/post_cursos_informacion/misCursos/`, form)
-            .then(res => {
-
-            }).catch(err => {
+        axios.post(`http://localhost:3883/Cur/post_cursos_informacion/misCursos/`, form)
+            .catch(err => {
                 if (err) {
                     console.error(err);
                 }
@@ -173,13 +176,14 @@ class Main6 extends React.Component {
     /*DELETES*/
     /*Este delete elimina un curso creado*/
     deleteCursoC = async (id) => {
-        await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
+         axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
             .then(res => {
             }).catch(err => {
                 if (err) {
                     console.error(err);
                 }
             })
+            this.getCursosC();
     }
     render() {
         return (
@@ -218,7 +222,7 @@ class Main6 extends React.Component {
                     <div id="Main6C">
                         <div className="ButtonMisCursosC">
                             <div className="ButtonMisCursosC">
-                                <button className="button buttonMisCursos" onClick={() => { this.postNewCurso(); this.getCursosC(); this.getCrearCurso() }}>Crear curso</button>
+                                <button className="button buttonMisCursos" onClick={() => { this.postNewCurso(); this.getCrearCurso() }}>Crear curso</button>
                             </div>
                             <button className="button buttonMisCursos" id="CursosC" onClick={this.Accion2}>Mis cursos ▼</button>
                         </div>

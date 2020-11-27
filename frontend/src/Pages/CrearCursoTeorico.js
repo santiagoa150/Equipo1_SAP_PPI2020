@@ -36,9 +36,11 @@ class CrearCursoTeorico extends React.Component {
             document.getElementById("tablero2").style.display = "block";
             document.getElementById("tablero1").style.display = "none";
         }
-        if (this.state.dataContenidoT[0]?.contenido_t?.include("<!--->")) {
+        console.log(this.state.dataContenidoT[0]?.contenido_t);
+        if (this.state.dataContenidoT[0]?.contenido_t != "") {
             this.setState({ Bloques: this.state.dataContenidoT[0].contenido_t?.split("<!--->") });
-        }
+        } 
+        
     }
     componentDidUpdate() {
         this.Pintarvistaprevia();

@@ -84,10 +84,10 @@ router.get('/get_cursos_informacion/Clase/:id_clase', (req, res) =>{
     });
 });
 /*Este get trae la id de un curso al crearlo*/
-router.get('/get_cursos_id/misCursos_Clase_CreateCurso/:id_creador', (req,res)=>{
-    const {id_creador} = req.params;
-    let queryGetIdCursoCreado = 'SELECT id FROM `cursos` WHERE id_creador=? AND logo="/Images/Cursos/Default.png" AND titulo IS null AND tematica IS null AND materia IS null'
-    mysqlConnection.query(queryGetIdCursoCreado, [id_creador], (err, rows, fields) =>{
+router.get('/get_cursos_id/misCursos_Clase_CreateCurso/:id_creador&:fecha_c', (req,res)=>{
+    const {id_creador, fecha_c} = req.params;
+    let queryGetIdCursoCreado = 'SELECT id FROM `cursos` WHERE id_creador=? AND fecha_c=?'
+    mysqlConnection.query(queryGetIdCursoCreado, [id_creador, fecha_c], (err, rows, fields) =>{
         if(err){
             console.error(err);
         }else{
@@ -113,7 +113,7 @@ router.post('/post_cursos_informacion/misCursos', (req, res) =>{
     const {id_creador, id_clase, fecha_c, logo} = req.body;
     let queryNewCurso = "";
     if(id_clase == null){
-        queryNewCurso = 'INSERT INTO cursos(id_creador, fecha_c, logo) VALUES(?,?,?)';
+        queryNewCurso = 'INSERT INTO cursos(id_creador, fecha_c, logo, contenido_t) VALUES(?,?,?,"")';
         mysqlConnection.query(queryNewCurso, [id_creador, fecha_c,logo], (err, results, fields) =>{
             if(err){
                 console.error(err);
@@ -122,7 +122,7 @@ router.post('/post_cursos_informacion/misCursos', (req, res) =>{
             }
         })
     }else{
-        queryNewCurso = 'INSERT INTO cursos(id_creador,id_clase,fecha_c,logo) VALUES(?,?,?,?)';
+        queryNewCurso = 'INSERT INTO cursos(id_creador,id_clase,fecha_c,logo, contenido_t) VALUES(?,?,?,?,"")';
         mysqlConnection.query(queryNewCurso, [id_creador, id_clase, fecha_c,logo], (err,results,fields) =>{
             if(err){
                 console.error(err);

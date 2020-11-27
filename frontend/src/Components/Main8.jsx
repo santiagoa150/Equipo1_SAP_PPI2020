@@ -150,6 +150,12 @@ class Main8 extends React.Component {
             );
         }
     }
+    /*Retorno de la clase del candado*/
+    claseImgCandado = (prop) =>{
+        if(prop == 0){
+            return("");
+        }
+    }
     /*ACTUALIZACIÓN DE INFORMACIÓN DE UN CURSO*/
     /*Este metodo actualiza la información requerida de un curso*/
     comprobacionCampos = async (numero, prop2) => {
@@ -166,13 +172,16 @@ class Main8 extends React.Component {
                 this.Time(materia, "text", "Campo sin ingresar")
             }
         } else {
+            console.log(this.state.DataInfoCurso);
             let form = {
                 titulo: titulo.value,
                 tematica: tematica.value,
                 materia: materia.value,
                 logo: this.state.DataInfoCurso[0].logo
             }
+            console.log(form);
             await this.putInfoRequerida(form);
+            
             if (prop2 == 1) {
                 if (numero == 1) {
                     this.setState({
@@ -314,6 +323,7 @@ class Main8 extends React.Component {
             document.getElementById("LogoCursoCrearCursoC").src = aja2;
             let Data = this.state.DataInfoCurso;
             Data[0].logo = aja2;
+            console.log(Data);
             this.setState({
                 DataInfoCurso: Data
             });
@@ -552,7 +562,7 @@ class Main8 extends React.Component {
                         <div className="BotonesContaCrearC">
                             {this.DeleteButons()}
                             <img src="/Images/Save.png" onClick={() => this.guardarInfoCurso()} className="ButtonMetodosCrearC"></img>
-                            <img src="/Images/Publicar.png" className="ButtonMetodosCrearC" onClick={() => { this.putPrivacidad(); this.getInfoCursoCreados() }}></img>
+                            <img src={()=> this.claseImgCandado(this.state.DataInfoCurso[0]?.privacidad)} className="ButtonMetodosCrearC" onClick={() => { this.putPrivacidad(); this.getInfoCursoCreados() }}></img>
                         </div>
                         <div id="AlertasCrearCursoDiv">
                             <p id="AlertasCrearCurso"></p>

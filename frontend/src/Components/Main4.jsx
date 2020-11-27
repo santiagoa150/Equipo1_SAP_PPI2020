@@ -10,13 +10,17 @@ class Main4 extends React.Component {
         }
     }
     async componentDidMount() {
+        await this.getInfoCurso();
+    }
+
+    getInfoCurso = async() =>{
         await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
         .then(res =>{
             this.setState({CursoData: res.data});
+            document.getElementById("TeoriaCurso").innerHTML = this.state.CursoData[0].contenido_t;
         }).catch(err =>{
             console.error(err);
         })
-        document.getElementById("TeoriaCurso").innerHTML = this.state.CursoData[0]?.contenido_t;
     }
     render() {
         return (

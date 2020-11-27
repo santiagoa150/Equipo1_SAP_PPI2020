@@ -53,7 +53,7 @@ class Main3 extends React.Component {
             modalCantVotantes: prop4
         }});
         
-    }
+        }
     }
     /*Retorna el modal 1*/
     modal1Return = () =>{
@@ -258,7 +258,8 @@ class Main3 extends React.Component {
     }
     /*Este get trae todos los cursos iniciados*/
     getCursoIniciado = async ()=>{
-        await axios.get(`http://localhost:3883/UsuCur/traer-UsuarioCalificacion/Integrado-Comunidad/${UsuarioI[0].id_usuario}`)
+        console.log("hola");
+         axios.get(`http://localhost:3883/UsuCur/traer-UsuarioCalificacion/Integrado-Comunidad/${UsuarioI[0].id_usuario}`)
         .then(res => {
             this.setState({dataCursosI: res.data});
         }).catch(err => {

@@ -7,6 +7,7 @@ const cursos = require('./routes/cursos');
 const clases = require('./routes/clases');
 const usuarios_clases = require('./routes/usuario_clases');
 const usuario_cursos = require('./routes/usuario_curso');
+const notificaciones = require('./routes/notificaciones');
 app.use(cors({origin: '*'}));
 app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
@@ -17,6 +18,7 @@ app.use('/Cur', cursos);
 app.use('/Cla', clases);
 app.use('/UsuCla', usuarios_clases);
 app.use('/UsuCur', usuario_cursos);
+app.use('/Not', notificaciones);
 app.listen(app.get('port'), () => {
     console.log('server on port' + app.get('port'));
 });
