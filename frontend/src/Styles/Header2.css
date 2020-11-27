@@ -48,7 +48,13 @@
     /*bendito sea el calc*/
     height: max-content;
 }
-
+.Campana:hover .CositoCampana{
+   width: 35%;
+   height: 30%;
+   font-size: 12px;
+   position: relative;
+   left: 10%;
+}
 #logo {
     background-image: url(https://1.bp.blogspot.com/-4AYfdW1HnGQ/X02wnk_2J_I/AAAAAAAAPPk/znnHlLxw_bINf8jIvcaE3hxEruVJOjcawCLcBGAsYHQ/s16000/Logo.png);
     background-size: 100% 100%;
@@ -63,10 +69,20 @@
     max-height: 10vh;
 }
 .CositoCampana{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 45%;
-    height: 25%;
+    height: 30%;
     background-color: #d83535;
     border-radius: 20%;
+}
+.LInKNotificaciones{
+    text-decoration: none;
+}
+.CositoCampana p{
+    margin: 0;
+    color: black;
 }
 .ContenedorH2NotiPerfil{
     display: flex;

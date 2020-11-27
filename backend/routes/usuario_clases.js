@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const mysqlconection = require('../db/db');
 const router = Router();
 const mysqlConnection = require('../db/db');
 /*TODOS LOS GET*/
@@ -26,6 +27,21 @@ router.get('/get-usuario_claseJOINclases-nombre_apellido/clase/:id_clase', (req,
         }
     });
 });
+/*TODOS LOS POST*/
+/*Este post sirve para unirse a una clases*/
+router.post('/post-usuario_clase-Info/Clases', (req, res) =>{
+    const {id_usuario, id_clase, fecha_u} = req.body;
+    let queryNewUsuarioClase = 'INSERT INTO usuario_clase(id_usuario, id_clase, fecha_u) VALUES (?,?,?)';
+    mysqlconection.query(queryNewUsuarioClase, [id_usuario,id_clase,fecha_u], (err, rows, fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message: "CORRECTO"});
+        }
+    });
+});
+/*TODOS LOS DELETE*/
+/*Este delete sirve para borar una tubla de usuario_clase y se utiliza en clases, es decir, salirse de una clase*/
 router.delete('/Delete-Clases-todo/Clases/:id_clase&:id_usuario',(req, res) =>{
     const {id_clase, id_usuario} = req.params;
     let queryDeleteClase = 'DELETE FROM usuario_clase WHERE id_clase=? AND id_usuario=?';

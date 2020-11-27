@@ -8,7 +8,7 @@ const mySqlConnection = require('../db/db');
 /*Este get sirve para traer el conteo de las notificaciones en caso de tener*/
 router.get('/get_notificaciones_count/Header2/:id_creador_clase&:id_otro_usuario', (req,res) =>{
     const {id_creador_clase, id_otro_usuario} = req.params;
-    let queryGetNotificaciones = `SELECT COUNT(*) AS conteo FROM notificaciones WHERE (id_creador_clase=? AND estado='visto') OR (id_otro_usuario=? AND estado='visto')  `;
+    let queryGetNotificaciones = `SELECT COUNT(*) AS conteo FROM notificaciones WHERE (id_creador_clase=? AND estado='pendiente' AND tipo_notificacion=0) OR (id_otro_usuario=? AND estado='pendiente' AND tipo_notificacion=1) `;
     mySqlConnection.query(queryGetNotificaciones, [id_creador_clase, id_otro_usuario], (err,rows,fields) =>{
         if(err){
             console.error(err);
@@ -18,10 +18,10 @@ router.get('/get_notificaciones_count/Header2/:id_creador_clase&:id_otro_usuario
     });
 });
 /*TODOS LOS POST*/
-/*Este get sirve para crear las notificaciones de un usuario al que se le invitó a una clase*/
+/*Este post sirve para crear las notificaciones de un usuario al que se le invitó a una clase*/
 router.post('/post_notificaciones_info/Clases', (req,res) =>{
     const {id_clase, id_creador_clase, id_otro_usuario, tipo_notificacion} = req.body;
-    let quryPostNotificaion1 = 'INSERT INTO notificaciones(id_clase,id_creador_clase,id_otro_usuario,tipo_notificaicon) VALUES ()'
+    let quryPostNotificaion1 = 'INSERT INTO notificaciones(id_clase,id_creador_clase,id_otro_usuario,tipo_notificacion) VALUES (?,?,?,?)'
     mysqlconection.query(quryPostNotificaion1, [id_clase, id_creador_clase, id_otro_usuario, tipo_notificacion], (err,rows,fields) =>{
         if(err){
             console.error(err);

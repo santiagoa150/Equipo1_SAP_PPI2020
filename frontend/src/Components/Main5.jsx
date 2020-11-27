@@ -31,7 +31,10 @@ class Main5 extends React.Component {
             ModalClase: 0,
             Modalconusu: 0,
             CrearClase: [],
-            UsuariosCrearClase: []
+            UsuariosCrearClase: [],
+            UnirseClase: {
+                boolean: false
+            }
         }
     }
     async componentDidMount() {
@@ -242,7 +245,6 @@ class Main5 extends React.Component {
             );
         }
     }
-    /*METODOS A EDITAR*/
     /*METODOS DE CREACIÓN DE CLASE*/
     /*Este metodo sirve para subir los usuarios que se desean agregar a una clase*/
     SubirUsuario1 = async () => {
@@ -286,14 +288,14 @@ class Main5 extends React.Component {
             }
         } else {
             let Fecha = new Date();
-        let FechaY = Fecha.getFullYear();
-        let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
-        let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
-        let FechaH = FechaY + "-" + FechaM + "-" + FechaD + " ";
-        let Horas = "" + (Fecha.getHours().toString()).padStart(2,0);
-        let minutos = "" + (Fecha.getMinutes().toString()).padStart(2,0);
-        let seconds = "" + (Fecha.getSeconds().toString()).padStart(2,0);
-        newDate = FechaH + Horas + ":" + minutos + ":" + seconds;
+            let FechaY = Fecha.getFullYear();
+            let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
+            let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
+            let FechaH = FechaY + "-" + FechaM + "-" + FechaD + " ";
+            let Horas = "" + (Fecha.getHours().toString()).padStart(2, 0);
+            let minutos = "" + (Fecha.getMinutes().toString()).padStart(2, 0);
+            let seconds = "" + (Fecha.getSeconds().toString()).padStart(2, 0);
+            newDate = FechaH + Horas + ":" + minutos + ":" + seconds;
             let form = {
                 titulo: Nombre.value,
                 id_creador: UsuarioI[0].id_usuario,
@@ -304,48 +306,36 @@ class Main5 extends React.Component {
         }
         return this;
     }
-    SubirUsuario2 = () => {
+    SubirUsuario2 = async () => {
         let i = document.getElementById("UsuarioClase2");
         if (i.value != "") {
-            let bool1 = false;
-            for (let k = 0; k < Clases.length; k++) {
-                if (Clases[k].id == i.value) {
-                    bool1 = true;
+            let clase = await this.getClaseForId(i.value);
+            let bool = false;
+            console.log(this.state.DataClaseI);
+            for (let i = 0; i < this.state.DataClaseI.length; i++) {
+                if (UsuarioI[0].id_usuario == this.state.DataClaseI[i].id_usuario) {
+                    bool = true;
                 }
             }
-            if (bool1 == true) {
-                let fecha = new Date();
-                User_clase.push({
-                    id: User_clase.length,
-                    idusuario: UsuarioI[0].id,
-                    idclase: i.value,
-                    fechaU: new Date(fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate() + 1))
-                });
-                this.setState({
-                    Clase: Clases.filter(Esito => UsuarioI[0].id == Esito.idusuario),
-                    Usuario_C: User_clase.filter(Esito => UsuarioI[0].id == Esito.idusuario),
-                });
-                i.value = "";
-                document.getElementById("PopUp2").style.display = "none";
+            if (clase.data[0].id_creador != UsuarioI[0].id_usuario) {
+                if (clase.data[0].auto_u == 0) {
+                    if (!bool) {
+                        this.postNotificaciones0(clase.data[0].id_creador, i.value);
+                    }else{
+                        this.Time(i, "text", "Ya participas ahí");
+                    }
+                } else {
+                    if(!bool){
+                        this.postNewUsuarioClase(clase.data[0].id_clase);
+                    }else{
+                        this.Time(i, "text", "Ya participas ahí");
+                    }
+                }
             } else {
-                i.style.color = "red";
-                i.type = "text";
-                i.value = "Clase no encontrada.";
-                setTimeout(function () {
-                    i.value = "";
-                    i.style.color = "black";
-                    i.type = "number";
-                }, 1000);
+                this.Time(i, "text", "Dato invalido")
             }
         } else {
-            i.style.color = "red";
-            i.type = "text";
-            i.value = "Dato no ingresado.";
-            setTimeout(function () {
-                i.value = "";
-                i.style.color = "black";
-                i.type = "number";
-            }, 1000);
+            this.Time(i, "text", "Dato sin ingresar");
         }
     }
     /*AXIOS*/
@@ -386,45 +376,122 @@ class Main5 extends React.Component {
                 }
             })
     }
+    /*Este get trae una clase por ID*/
+    getClaseForId = async (prop) => {
+        return axios.get(`http://localhost:3883/Cla/Get-Clases-id_Min/clases/${prop}`)
+            .catch(err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+    }
     /*Este get trae la id de una clase a partir de su fecha*/
-    getFechaClase = async () =>{
+    getFechaClase = async () => {
         await axios.get(`http://localhost:3883/Cla/Get-Clases-id/clases/${newDate}`)
-        .then(res =>{
-            let data= res.data;
-            this.postNotificaciones1(data[0].id_clase);
-        }).catch(err =>{
-
-        });
+            .then(res => {
+                let data = res.data;
+                this.postNotificaciones1(data[0].id_clase);
+            }).catch(err => {
+                if(err){
+                    console.error(err);
+                }
+            });
     }
     /*PUTS*/
     /*Este put permite actualizar la cantidad de usaurios de una clase*/
     putUsariosClase = async () => {
-        console.log("hola");
         axios.put(`http://localhost:3883/Cla/Put-Clases-cantidad_usuarios/Clases/${this.state.ModalClase}`)
             .then(res => {
-
             }).catch(err => {
-
+                if(err){
+                    console.error(err);
+                }
             });
     }
     /*POST*/
     /*Este post sirve para crear una clase nueva*/
-    postNewClase = async (form) =>{
-       await axios.post(`http://localhost:3883/Cla/Post-Clases-NuevaClase` , form)
-            .then(res =>{
-                this.getFechaClase();
-            }).catch(err =>{
-                if(err){
+    postNewClase = async (form) => {
+        await axios.post(`http://localhost:3883/Cla/Post-Clases-NuevaClase`, form)
+            .then(res => {
+                if (this.state.UsuariosCrearClase.length > 0) {
+                    this.getFechaClase();
+                } else {
+                    this.setState({
+                        Modal1: !this.state.Modal1,
+                        CrearClase: [],
+                        UsuariosCrearClase: []
+                    });
+                    this.getClasesC();
+                }
+            }).catch(err => {
+                if (err) {
                     console.error(err);
                 }
             })
     }
+    /*Este post sirve para unirse a una clase*/
+    postNewUsuarioClase = async (id_clase) =>{
+            let Fecha = new Date();
+            let FechaY = Fecha.getFullYear();
+            let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
+            let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
+            let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
+            let form = await {
+                id_usuario: UsuarioI[0].id_usuario,
+                id_clase: id_clase,
+                fecha_u: FechaH
+            }
+        axios.post(`http://localhost:3883/UsuCla/post-usuario_clase-Info/Clases`, form)
+            .then(res =>{
+                this.state.ModalClase = id_clase;
+                this.putUsariosClase();
+                this.getClasesI(); 
+            }).then(res =>{
+                this.Modal1();
+            }).catch(err =>{
+                if(err){
+                    console.error(err);
+                }
+            });
+    }
     /*POST*/
-    /*Este put sirve para crear las notificaciones de los usuarios que se agregan en la creación de clases*/
-    postNotificaciones1 = async(id) =>{
-        for(let i = 0; i < this.state.UsuariosCrearClase.length; i++){
-            axios.post();
+    /*Este post sirve para crear las notificaciones de los usuarios que se agregan en la creación de clases*/
+    postNotificaciones1 = async (id_clase) => {
+        for (let i = 0; i < this.state.UsuariosCrearClase.length; i++) {
+            let form = {
+                id_clase: id_clase,
+                id_creador_clase: UsuarioI[0].id_usuario,
+                id_otro_usuario: this.state.UsuariosCrearClase[i],
+                tipo_notificacion: 1
+            }
+            axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
+                .then(res => {
+
+                }).catch(err => {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
         }
+        this.Modal1();
+        this.getClasesC();
+    }
+    /*Este post sirve para crear las notificaciones de los usuarios que se quieran unir a una clase*/
+    postNotificaciones0 = async (id_creador, id_clase) => {
+        let form = {
+            id_clase: id_clase,
+            id_creador_clase: id_creador,
+            id_otro_usuario: UsuarioI[0].id_usuario,
+            tipo_notificacion: 0
+        }
+        axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
+            .then(res => {
+                this.Modal1();
+            }).catch(err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
     }
     /*DELETES*/
     /*Elimina clases creadas*/
