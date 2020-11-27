@@ -15,6 +15,17 @@ router.get('/usuario-sesion/:usuario', (req, res) => {
         }
     });
 });
+/*Este get se utiliza en clases para traer el usuario y programar la notificación*/
+router.get('/get_clases_usuario-id/clases/:usuario', (req,res) =>{
+    const {usuario} = req.params;
+    mysqlconection.query('SELECT usuario, id_usuario FROM usuarios WHERE LOWER(usuario)=?', [usuario], (err, rows, fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
 /*Este get se utiliza en el registro de usuarios para saber si el correo ya está en la plataforma.*/
 router.get('/correo-sesion/:correo', (req, res) => {
     const { correo } = req.params;

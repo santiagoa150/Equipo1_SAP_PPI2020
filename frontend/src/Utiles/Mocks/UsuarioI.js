@@ -1,5 +1,5 @@
 export const UsuarioI = [
- /*{
+ {
         id_usuario: 2,
         nombre:'Santiago',
         apellido:'Álvarez',
@@ -11,5 +11,5 @@ export const UsuarioI = [
         contraseña:'Elefante51',
         correo:'santiagoa150@gmail.com',
         registro_sistema: true
-    }*/
+    }
 ]

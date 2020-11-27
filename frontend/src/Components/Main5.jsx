@@ -29,7 +29,9 @@ class Main5 extends React.Component {
             Modal2: false,
             Modal3: false,
             ModalClase: 0,
-            Modalconusu: 0
+            Modalconusu: 0,
+            CrearClase: [],
+            UsuariosCrearClase: []
         }
     }
     async componentDidMount() {
@@ -149,8 +151,8 @@ class Main5 extends React.Component {
                             </div>
                             <div className="GroupC">
                                 <p className="Group">Usuario</p>
-                                <div className="Group GroupC2">
-                                    <input type="text" className="inputCrearClase" id="UsuarioClase" autoComplete="off" />
+                                <div className="CositaCambiar">
+                                    <input type="text" className="inputCrearClase3" id="UsuarioClase" autoComplete="off" />
                                     <input type="button" className="inputCrearClase2_" onClick={this.SubirUsuario1} />
                                 </div>
                             </div>
@@ -230,6 +232,7 @@ class Main5 extends React.Component {
             );
         }
     }
+    /*METODOS A EDITAR*/
     CrearClase2 = () => {
         let Nombre = document.getElementById("NombreClase");
         let fecha = new Date();
@@ -269,45 +272,30 @@ class Main5 extends React.Component {
         }
         return this;
     }
-    SubirUsuario1 = () => {
-        if (document.getElementById("UsuarioClase").value == "") {
-            document.getElementById("UsuarioClase").style.color = "red"
-            document.getElementById("UsuarioClase").value = "No ingresado"
-            setTimeout(function () {
-                document.getElementById("UsuarioClase").value = "";
-                document.getElementById("UsuarioClase").style.color = "black";
-            }, 1000);
+    SubirUsuario1 = async () => {
+        let UsaurioSubir = document.getElementById("UsuarioClase");
+        if (UsaurioSubir.value == "") {
+            this.Time(UsaurioSubir, "text", "Dato vacio.");
         } else {
-            let j = document.getElementById("UsuarioClase").value;
             let inner = document.getElementById("UsuariosIN").innerHTML;
-            for (let k = 0; k < Usuarios.length; k++) {
-                if (Usuarios[k].UserName == j) {
-                    if (Usuarios[k].id == UsuarioI[0].id) {
-                        document.getElementById("UsuarioClase").style.color = "red"
-                        document.getElementById("UsuarioClase").value = "Eres tú"
-                        setTimeout(function () {
-                            document.getElementById("UsuarioClase").value = "";
-                            document.getElementById("UsuarioClase").style.color = "black";
-                        }, 1000);
-                    } else {
-                        inner = inner + '<div class="Etiqueta"><p>Usuario:' + j + '</p></div>';
+            await this.getUsuarioNotifi(UsaurioSubir);
+                if (this.state.CrearClase.length > 0) {
+                    if(UsaurioSubir.value.toLowerCase() == UsuarioI[0].usuario.toLowerCase()){
+                        this.Time(UsaurioSubir, "text", "Dato invalido");
+                    }else{
+                        let UsuariosSubir = this.state.UsuariosCrearClase;
+                        inner = inner + '<div class="Etiqueta"><p>Usuario:' + UsaurioSubir.value + '</p></div>';
                         document.getElementById("UsuariosIN").innerHTML = inner;
-                        SubirUsu[i] = j;
+                        UsuariosSubir.push(this.state.CrearClase[0].id_usuario);
                         document.getElementById("UsuarioClase").value = "";
-                        console.log("Esto es SubirUsu" + SubirUsu[i]);
-                        i++;
+                        this.setState({
+                            UsuariosCrearClase: UsuariosSubir
+                        });
+                        console.log(this.state.UsuariosCrearClase);
                     }
                 } else {
-                    document.getElementById("UsuarioClase").style.color = "red"
-                    document.getElementById("UsuarioClase").value = "No existe"
-                    setTimeout(function () {
-                        document.getElementById("UsuarioClase").value = "";
-                        document.getElementById("UsuarioClase").style.color = "black";
-                    }, 1000);
-                }
+                    this.Time(UsaurioSubir, "text", "Usuario invalido");
             }
-
-
         }
     }
     SubirUsuario2 = () => {
@@ -376,6 +364,20 @@ class Main5 extends React.Component {
                 this.filtrandoI();
             }).catch(err => {
                 console.error(err);
+            })
+    }
+    /*Este get trae u nusuari por su nickname para programar su notificación*/
+    getUsuarioNotifi = async (prop) =>{
+        let variable = prop.value.toLowerCase();
+        await axios.get(`http://localhost:3883/Usu/get_clases_usuario-id/clases/${variable}`)
+            .then(res =>{
+                this.setState({
+                    CrearClase: res.data
+                });
+            }).catch(err =>{
+                if(err){
+                    console.error(err);
+                }
             })
     }
     /*PUTS*/
@@ -582,7 +584,19 @@ class Main5 extends React.Component {
             return (<div><p>No hay mas clases para mostrar</p></div>);
         }
     }
-
+    /*TIMER PARA ALERTAS Y DATOS ERRADOS*/
+    Time = (Propi, Propi2, Propi3) => {
+        Propi.type = "text";
+        Propi.style.color = "red";
+        Propi.value = Propi3;
+        Propi.style.border = "2px solid #ff595e";
+        setTimeout(function () {
+            Propi.type = Propi2;
+            Propi.style.color = "black";
+            Propi.value = "";
+            Propi.style.border = "1px solid black";
+        }, 1500)
+    }
     render() {
         return (
             <>
