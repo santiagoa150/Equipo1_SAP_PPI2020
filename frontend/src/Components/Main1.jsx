@@ -124,6 +124,8 @@ class Main1 extends React.Component {
                         this.IniciarCel();
                     }
                 }
+            }else{
+                this.Time(Contraseña2, "password", "Los datos no coinciden.")
             }
             /*Datos errados en el registro*/
         } else {
@@ -242,7 +244,7 @@ class Main1 extends React.Component {
     /*Axio para traer un usuario por su UserName // Este se utiliza en el registro*/
     getUserNameRegistro = async (UserName) => {
         const response = await axios.get(`http://localhost:3883/Usu/usuario-sesion/${UserName.value}`)
-        if (response.length > 0) {
+        if (response.data.length > 0) {
             this.Time(UserName, "text", "Usuario invalido");
         } else {
             this.setState({ UserB: true });
@@ -250,12 +252,19 @@ class Main1 extends React.Component {
     }
     /*Axio para traer un usuario por su Correo*/
     getCorreoRegistro = async (Correo) => {
-        const response = await axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
-        if (response.length > 0) {
-            this.Time(Correo, "text", "Usuario invalido");
-        } else {
-            this.setState({ UserB2: true });
-        }
+        await axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
+        .then(response =>{
+            if (response.data.length > 0) {
+                this.Time(Correo, "text", "Correo invalido");
+            } else {
+                this.setState({ UserB2: true });
+            }
+        }).catch(err =>{
+            if(err){
+                console.error(err);
+            }
+        })
+        
     }
     /*Axio para traer un usuario por su UserName // Este se utiliza en el inicio de sesión*/
     getUserNameInicioSesion = async (Usuario, Contraseña) => {
@@ -270,7 +279,6 @@ class Main1 extends React.Component {
     /*TODOS LOS POST*/
     /*Axio que registra a un usuario en el sistema*/
     postUser = async (form) => {
-        console.log("ola: " + form);
         await axios.post(`http://localhost:3883/Usu/registro-sesion`, form)
             .then(res => {
 
