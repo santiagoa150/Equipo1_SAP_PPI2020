@@ -13,6 +13,7 @@ import Clases from './Pages/Clases';
 import Clase from './Pages/Clase';
 import CrearCursoTeorico from './Pages/CrearCursoTeorico';
 import CrearCurso from './Pages/CrearCurso';
+import Examen from './Pages/Examen';
 import {
     BrowserRouter as Router,
     Switch,
@@ -34,6 +35,9 @@ ReactDOM.render(
                 </Route>
                 <Route path="/Integrados" >
                     <Integrados />
+                </Route>
+                <Route path="/Examen" >
+                    <Examen />
                 </Route>
                 <Route path="/misCursos">
                     <MisCursos />

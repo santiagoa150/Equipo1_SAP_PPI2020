@@ -21,6 +21,18 @@ class Main1 extends React.Component {
             ConB2: false,
             data: [],
         }
+    }    
+    componentDidMount(){
+        document.getElementById("carga").style.display="none";
+    }    
+    componentWillUpdate(){
+        document.getElementById("carga").style.display="block";
+    }
+    componentDidUpdate(){
+        document.getElementById("carga").style.display="none";
+    }
+    componentWillUnmount(){
+        document.getElementById("carga").style.display="block";
     }
     /*METODOS DE LOS MODALES EN COMPUTADOR Y TELÉFONO*/
     RegistrarCom = () => {
@@ -67,7 +79,8 @@ class Main1 extends React.Component {
         this.RegistroGlobal(Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, Cel);
     }
     /*Registro de usuario global*/
-    RegistroGlobal = async (Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, tipe) => {
+    RegistroGlobal = async (Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, tipe) => {        
+        document.getElementById("carga").style.display="block";
         let edad = new Date(Edad.value);
         let tD = edad.getDate() + 1;
         let tM = edad.getMonth() + 1;
@@ -144,8 +157,8 @@ class Main1 extends React.Component {
             } if (Contraseña2.value == "") {
                 this.Time(Contraseña2, "password", "Dato no ingresado.");
             }
-        }
-
+        }             
+        document.getElementById("carga").style.display="block";
     }
     /*INICIO DE SESIÓN DE USUARIO*/
     /*Inicio de sesión en computador*/
@@ -175,7 +188,7 @@ class Main1 extends React.Component {
                 this.Time(Contraseña, "password", "Dato no ingresado.");
             }
         }
-    }
+    }    
     /*Inicio de sesión global*/
     IniciarSGlobal = async (Usuario, Contraseña) => {
         if (this.state.data.length == 0) {
@@ -299,7 +312,8 @@ class Main1 extends React.Component {
     render() {
         return (
             <>
-                {/*Inicio de sesión en celular*/}
+                {/*Inicio de sesión en celular*/}                
+                <div className="Cargando" id="carga"></div>
                 <div id="InicioCel">
                     <div id="InicioCel2">
                         <div id="XimageC">
