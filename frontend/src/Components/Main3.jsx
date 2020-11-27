@@ -38,7 +38,13 @@ class Main3 extends React.Component {
     }
     componentDidMount = () => {
         this.getCursos();
-        this.getCursoIniciado();
+        this.getCursoIniciado();        
+    }
+    componentWillUpdate(){
+        document.getElementById("carga").style.display="block";
+    }
+    componentDidUpdate(){        
+        document.getElementById("carga").style.display="none";
     }
     /*MODAL1*/
     /*Determina si el modal 1 se pinta o no*/
@@ -326,6 +332,7 @@ class Main3 extends React.Component {
     render() {
         return (
             <>
+                <div className="Cargando" id="carga"></div>
                 {this.modal1Return()}
                 <div className="flex">
                     <div className="Filtros">
@@ -378,7 +385,6 @@ class Main3 extends React.Component {
                                         <div className="minicont">
                                             <h3 className="TitleC TitlesI gridComunidadTitle">{Esito.usuario}</h3>
                                             {this.colorcito(Esito.valoracion, Esito.cant_votantes)}
-
                                         </div>
                                     </div>
                                 );

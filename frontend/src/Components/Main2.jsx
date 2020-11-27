@@ -6,9 +6,13 @@ class Main2 extends React.Component {
         super(props);
         this.state = {}
     }
+    componentDidMount(){       
+        document.getElementById("carga").style.display="none";        
+    }
     render() {
         return (
             <>
+                <div className="Cargando" id="carga"></div>
                 <div className="flex" >
                     <div className="conten">
                         <h2 className="tecto">Bienvenido</h2><br />

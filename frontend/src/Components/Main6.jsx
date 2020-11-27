@@ -20,8 +20,13 @@ class Main6 extends React.Component {
                 id: 0
             }
         }
+    }    
+    componentWidUpdate() {
+        document.getElementById("carga").style.display = "block";
     }
-
+    componentDidUpdate() {
+        document.getElementById("carga").style.display = "none";
+    }
     async componentDidMount() {
         await this.getCursosI();
         await this.getCursosC();
@@ -87,10 +92,13 @@ class Main6 extends React.Component {
     /*MODAL1*/
     /*Esta función activa o desactiva el modal1*/
     Modal1 = (prop, prop2) => {
-        this.setState({ Modal1: {
-            return: !this.state.Modal1.return,
-            title: prop,
-            id:prop2  }})
+        this.setState({
+            Modal1: {
+                return: !this.state.Modal1.return,
+                title: prop,
+                id: prop2
+            }
+        })
     }
     /*Esta función returna o no el Modal1*/
     Modal1Return = () => {
@@ -104,8 +112,8 @@ class Main6 extends React.Component {
                             </div>
                             <div className="MainModal2Perfíl">
                                 <div className="BotonesCont">
-                                    <button className="button SubImg2" onClick={() => { this.deleteCursoC(this.state.Modal1.id); this.setState({Modal1:{return: !this.state.Modal1.return, title: "", id: 0}}); }}>Si</button>
-                                    <button className="button SubImg2" onClick={()=> this.Modal1("")}>No</button>
+                                    <button className="button SubImg2" onClick={() => { this.deleteCursoC(this.state.Modal1.id); }}>Si</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal1("")}>No</button>
                                 </div>
                             </div>
                         </div>
@@ -120,6 +128,7 @@ class Main6 extends React.Component {
     getCursosI = async () => {
         await axios.get(`http://localhost:3883/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
             .then(res => {
+                document.getElementById("carga").style.display = "block";
                 this.setState({ DataProgresos: res.data });
             }).catch(err => {
                 console.error(err);
@@ -129,14 +138,16 @@ class Main6 extends React.Component {
     getCursosC = async () => {
         await axios.get(`http://localhost:3883/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.setState({ DataCursosC: res.data })
+                document.getElementById("carga").style.display = "block";
+                this.setState({ DataCursosC: res.data, 
+                    Modal1: { return: false, title: "", id: 0 } })
             }).catch(err => {
                 console.error(err);
             })
     }
     /*Este metodo trae el id de un curso a la hora de crearlo*/
     getCrearCurso = async () => {
-         axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
+        axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
             .then(res => {
                 this.setState({
                     idCursoCreado: res.data[0].id,
@@ -156,9 +167,9 @@ class Main6 extends React.Component {
         let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
         let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
         let FechaH = FechaY + "-" + FechaM + "-" + FechaD + " ";
-        let Horas = "" + (Fecha.getHours().toString()).padStart(2,0);
-        let minutos = "" + (Fecha.getMinutes().toString()).padStart(2,0);
-        let seconds = "" + (Fecha.getSeconds().toString()).padStart(2,0);
+        let Horas = "" + (Fecha.getHours().toString()).padStart(2, 0);
+        let minutos = "" + (Fecha.getMinutes().toString()).padStart(2, 0);
+        let seconds = "" + (Fecha.getSeconds().toString()).padStart(2, 0);
         newDate = FechaH + Horas + ":" + minutos + ":" + seconds;
         let form = {
             id_creador: UsuarioI[0].id_usuario,
@@ -176,18 +187,19 @@ class Main6 extends React.Component {
     /*DELETES*/
     /*Este delete elimina un curso creado*/
     deleteCursoC = async (id) => {
-         axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
-            .then(res => {
+        await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
+            .then(res => {                                
+                this.getCursosC();      
             }).catch(err => {
                 if (err) {
                     console.error(err);
                 }
-            })
-            this.getCursosC();
+            });         
     }
     render() {
         return (
             <>
+                <div className="Cargando" id="carga"></div>
                 {this.Modal1Return()}
                 <div id="Main6Container">
                     <div id="Main6I">
@@ -241,7 +253,7 @@ class Main6 extends React.Component {
                                                     <h5 className="TitlesI">Materia: <br /> {Esito.materia}</h5>
                                                 </div>
                                                 <div id="BottonCI">
-                                                    <img className="Edit2" onClick={() => {this.Modal1(Esito.titulo, Esito.id) }} src="/Images/Basura.png" />
+                                                    <img className="Edit2" onClick={() => { this.Modal1(Esito.titulo, Esito.id) }} src="/Images/Basura.png" />
                                                     <Link to={{
                                                         pathname: "/crearCurso",
                                                         state: {
