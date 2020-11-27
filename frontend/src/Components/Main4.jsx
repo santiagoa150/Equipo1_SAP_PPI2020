@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import '../Styles/Cursos.css';
+import '../Styles/pantcarga.css';
 import { Link, withRouter } from 'react-router-dom';
 class Main4 extends React.Component {
     constructor(props) {
@@ -12,7 +12,9 @@ class Main4 extends React.Component {
     async componentDidMount() {
         await this.getInfoCurso();
     }
-
+    componentDidUpdate(){
+        document.getElementById("carga").style.display="none";
+    }
     getInfoCurso = async() =>{
         await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
         .then(res =>{
@@ -24,7 +26,8 @@ class Main4 extends React.Component {
     }
     render() {
         return (
-            <>
+            <>  
+                <div className="Cargando" id="carga"></div>
                 <div id="Main4Container">
                     <div id="TeoriaCurso">
                     </div>
@@ -36,7 +39,10 @@ class Main4 extends React.Component {
                         <button className="LinkCursoMain4">Jugar</button>
                     </Link>
 
-                    <Link id="ExaCurso">
+                    <Link id="ExaCurso" to={{pathname:"/Examen",
+                    state:{
+                        id: this.state.CursoData[0]?.id
+                    }}}>
                         <button className="LinkCursoMain4">Pruebate</button>
                     </Link>
 
