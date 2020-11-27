@@ -1,5 +1,6 @@
 const e = require('express');
 const {Router} = require('express');
+const mysqlconection = require('../db/db');
 const router = Router();
 const mySqlConnection = require('../db/db');
 
@@ -16,5 +17,17 @@ router.get('/get_notificaciones_count/Header2/:id_creador_clase&:id_otro_usuario
         }
     });
 });
-
+/*TODOS LOS POST*/
+/*Este get sirve para crear las notificaciones de un usuario al que se le invitó a una clase*/
+router.post('/post_notificaciones_info/Clases', (req,res) =>{
+    const {id_clase, id_creador_clase, id_otro_usuario, tipo_notificacion} = req.body;
+    let quryPostNotificaion1 = 'INSERT INTO notificaciones(id_clase,id_creador_clase,id_otro_usuario,tipo_notificaicon) VALUES ()'
+    mysqlconection.query(quryPostNotificaion1, [id_clase, id_creador_clase, id_otro_usuario, tipo_notificacion], (err,rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
+        }
+    });
+});
 module.exports = router;

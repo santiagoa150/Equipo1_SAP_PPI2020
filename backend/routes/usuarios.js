@@ -100,6 +100,8 @@ router.put('/put-usuarios-edad/:id_usuario', (req, res) =>{
     mysqlconection.query(queryPutEdad, [edad,id_usuario],(err, results, fields) =>{
         if(err){
             console.error(err);
+        }else{
+            res.json({message: "CORRECTO"});
         }
     });
 })

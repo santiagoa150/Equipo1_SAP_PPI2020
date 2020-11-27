@@ -65,6 +65,8 @@ router.put('/Put_Usuario-calificacion/Comunidad/:id_usuario&:id_curso', (req,res
     mysqlConnection.query(queryPutValorCurso, [id_usuario,id_curso], (err, results, fields) =>{
         if(err){
             console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
         }
     });
 });

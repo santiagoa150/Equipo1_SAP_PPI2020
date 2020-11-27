@@ -32,6 +32,8 @@ router.delete('/Delete-Clases-todo/Clases/:id_clase&:id_usuario',(req, res) =>{
     mysqlConnection.query(queryDeleteClase, [id_clase, id_usuario], (err, rows, fields) =>{
         if(err){
             console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
         }
     });
 });

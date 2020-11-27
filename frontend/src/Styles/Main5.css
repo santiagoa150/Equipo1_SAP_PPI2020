@@ -254,7 +254,10 @@
     width: 200px;
     margin: 0 10px 0 10px;
 }
-
+.selectCrearClaseOption{
+    width: 100%;
+    height: 35px;
+}
 #PopUpPart1 {
     display: flex;
     flex-flow: column;
@@ -448,7 +451,11 @@
         display: flex !important;
     }
 }
-
+@media(max-width:920px){
+    .Modal1ClasesR {
+        grid-template-columns: 0.5% 48% 1% 48% 0.5%;
+    }
+}
 @media(max-width:620px) {
     .ContainerPopUp2 {
         display: flex;

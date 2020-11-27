@@ -142,6 +142,8 @@ router.put('/put_cursos_valoracion/comunidad/:id', (req, res) =>{
     mysqlConnection.query(queryPutCursosValoracion, [valoracion, cant_votantes, id], (err, results,fields) =>{
         if(err){
             console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
         }
     })
 });
@@ -153,6 +155,8 @@ router.put('/put_cursos_infoBasica/CrearCurso/:id', (req, res) =>{
     mysqlConnection.query(queryPutInfoBasica, [titulo,tematica,materia,logo,id] , (err, results, fields) =>{
         if(err){
             console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
         }
     });
 });
@@ -163,6 +167,8 @@ router.put('/put_cursos_privacidad/CrearCurso/:id&:privacidad', (req, res) =>{
     mysqlConnection.query(queryPutPrivacidad, [privacidad,id], (err,results,fields)=>{
         if(err){
             console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
         }
     });
 });
@@ -174,6 +180,8 @@ router.put('/put_cursos_contenido-t/CrearCursoTeorico/:id', (req,res) =>{
     mysqlConnection.query(queryPutContenidoT, [contenido_t, id], (err, results,fields) =>{
         if(err){
             console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
         }
     });
 });
@@ -184,6 +192,8 @@ router.put('/put_cursos_contenido-t_setNull/CrearCurso/:id', (req,res) =>{
     mysqlConnection.query(queryPutNullContenidoT, [id], (err,results,fields) =>{
         if(err){
             console.error(err);
+        }else{
+            res.json("CORRECTO")
         }
     });
 });
@@ -195,6 +205,8 @@ router.delete('/delete-curso-informacion/paginas/:id&:id_creador', (req,res) =>{
     mysqlConnection.query(queryDeleteCurso, [id, id_creador], (err, rows, fields)=>{
         if(err){
             console.log(err);
+        }else{
+            res.json("CORRECTO")
         }
     });
 });
