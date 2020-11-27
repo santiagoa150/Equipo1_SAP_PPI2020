@@ -175,7 +175,10 @@ class CrearCursoTeorico extends React.Component {
         if ((index + 1) < this.state.Bloques.length) {
             return (
                 <>
-                    <div className='elHueco' id={"elHueco" + (index + 1)}></div>
+                    <div className='elHueco' id={"elHueco" + (index + 1)}><p>Estás editando aquí.</p><img className="CancelarElHueco" src="/Images/Cancelar.png" onClick={()=> {this.setState({
+                        creando: true, anexando: false
+                    }); document.getElementById("elHueco" + (index + 1)).style.display="none";
+                    document.getElementById("rayita" + (index+1)).style.display ="block"; document.getElementById("mas" + (index+1)).style.display ="block";}}></img></div>
                     <div className="RayaCrearContenidoT" id={"rayita" + (index + 1)}></div>
                     <img className="MasCrearContenidoT" id={"mas" + (index + 1)} src="/Images/Mas2.png" onClick={() => { this.hueco(index + 1) }} />
                 </>
@@ -198,7 +201,6 @@ class CrearCursoTeorico extends React.Component {
         this.state.anexando = false;
         /*52*/
         document.getElementById("TextoCurso").value = document.getElementById("cont" + x).textContent;
-
     }
     /*Este metodo sube el contenido teorico a los bloques del editor*/
     SubirContenido = () => {
@@ -277,6 +279,8 @@ class CrearCursoTeorico extends React.Component {
             }
         }
         document.getElementById("ImagenesCurso").value = "";
+        document.getElementById("ImagenesCurso").disabled = false;
+        document.getElementById("TextoCurso").disabled = false;
         Texto.value = "";
         color.value = "#000000";
         this.setState({
@@ -321,7 +325,7 @@ class CrearCursoTeorico extends React.Component {
     }
     hueco = (prop) => {
         /**/
-        document.getElementById("elHueco" + prop).style.display = "block";
+        document.getElementById("elHueco" + prop).style.display = "flex";
         document.getElementById("rayita" + prop).style.display = "none";
         document.getElementById("mas" + prop).style.display = "none";
         this.state.anexando = true;

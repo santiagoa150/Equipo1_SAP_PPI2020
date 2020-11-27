@@ -27,7 +27,7 @@ class Main8 extends React.Component {
             },
             Modal3: {
                 return: false
-            }
+            },boolFoto: false
         }
     }
     async componentDidMount() {
@@ -153,7 +153,9 @@ class Main8 extends React.Component {
     /*Retorno de la clase del candado*/
     claseImgCandado = (prop) =>{
         if(prop == 0){
-            return("");
+            return("/Images/CandadoOpen.png");
+        }else{
+            return("/Images/CandadoClosed.png")
         }
     }
     /*ACTUALIZACIÓN DE INFORMACIÓN DE UN CURSO*/
@@ -172,14 +174,12 @@ class Main8 extends React.Component {
                 this.Time(materia, "text", "Campo sin ingresar")
             }
         } else {
-            console.log(this.state.DataInfoCurso);
             let form = {
                 titulo: titulo.value,
                 tematica: tematica.value,
                 materia: materia.value,
                 logo: this.state.DataInfoCurso[0].logo
             }
-            console.log(form);
             await this.putInfoRequerida(form);
             
             if (prop2 == 1) {
@@ -239,15 +239,7 @@ class Main8 extends React.Component {
             } if (materia.value == "") {
                 this.Time(materia, "text", "Campo sin ingresar");
             }
-        } else if (titulo.value == this.state.DataInfoCurso2[0].titulo && tematica.value == this.state.DataInfoCurso2[0].tematica && materia.value == this.state.DataInfoCurso2[0].materia && this.state.DataInfoCurso[0].logo == this.state.DataInfoCurso2[0].logo) {
-            document.getElementById("AlertasCrearCurso").innerHTML = "No hay nada para guardar.";
-            document.getElementById("AlertasCrearCursoDiv").style.display = "flex";
-            document.getElementById("AlertasCrearCurso").style.color = "#ff595e";
-            setTimeout(function () {
-                document.getElementById("AlertasCrearCurso").innerHTML = " ";
-                document.getElementById("AlertasCrearCursoDiv").style.display = "none";
-            }, 1500);
-        } else {
+        } else if(titulo.value != this.state.DataInfoCurso[0].titulo || tematica.value != this.state.DataInfoCurso[0].tematica || materia.value != this.state.DataInfoCurso[0].materia || this.state.boolFoto){
             let form = {
                 titulo: titulo.value,
                 tematica: tematica.value,
@@ -265,7 +257,15 @@ class Main8 extends React.Component {
                 document.getElementById("AlertasCrearCurso").innerHTML = " ";
                 document.getElementById("AlertasCrearCursoDiv").style.display = "none";
             }, 1500);
-        }
+        }else {
+            document.getElementById("AlertasCrearCurso").innerHTML = "No hay nada para guardar.";
+            document.getElementById("AlertasCrearCursoDiv").style.display = "flex";
+            document.getElementById("AlertasCrearCurso").style.color = "#ff595e";
+            setTimeout(function () {
+                document.getElementById("AlertasCrearCurso").innerHTML = " ";
+                document.getElementById("AlertasCrearCursoDiv").style.display = "none";
+            }, 1500);
+        } 
     }
     /*TIMER*/
     Time = (Propi, Propi2, Propi3) => {
@@ -325,7 +325,8 @@ class Main8 extends React.Component {
             Data[0].logo = aja2;
             console.log(Data);
             this.setState({
-                DataInfoCurso: Data
+                DataInfoCurso: Data,
+                boolFoto: true
             });
         }
     }
@@ -454,8 +455,10 @@ class Main8 extends React.Component {
     /*GETS*/
     /*Traer la información del curso que se está creando o editando*/
     getInfoCursoCreados = async () => {
-        await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.idCursoC}`)
+        console.log("AH BIEN");
+       axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.idCursoC}`)
             .then(res => {
+                console.log("AH BIEN 2");
                 this.setState({
                     DataInfoCurso: res.data,
                     DataInfoCurso2: res.data
@@ -478,7 +481,7 @@ class Main8 extends React.Component {
             });
     }
     /*Este put actualiza la la privacidad de un curso*/
-    putPrivacidad = async () => {
+    putPrivacidad = () => {
         let titulo = document.getElementById("Titulo");
         let tematica = document.getElementById("Tematica");
         let materia = document.getElementById("Materia");
@@ -488,17 +491,14 @@ class Main8 extends React.Component {
         } else {
             privacidad = 0;
         }
-        if (titulo.value != "" && tematica.value != materia.value != "") {
-            await axios.put(`http://localhost:3883/Cur/put_cursos_privacidad/CrearCurso/${this.state.DataInfoCurso[0].id}&${privacidad}`)
-                .then(res => {
-
-                }).catch(err => {
+        if (titulo.value != "" && tematica.value != "" && materia.value != "") {
+             axios.put(`http://localhost:3883/Cur/put_cursos_privacidad/CrearCurso/${this.state.DataInfoCurso[0].id}&${privacidad}`)
+             .catch(err => {
                     if (err) {
                         console.error(err);
                     }
                 })
         } else {
-            console.log("hola");
             if (titulo.value == "") {
                 this.Time(titulo, "text", "Campo sin ingresar");
             } if (tematica.value == "") {
@@ -562,7 +562,7 @@ class Main8 extends React.Component {
                         <div className="BotonesContaCrearC">
                             {this.DeleteButons()}
                             <img src="/Images/Save.png" onClick={() => this.guardarInfoCurso()} className="ButtonMetodosCrearC"></img>
-                            <img src={()=> this.claseImgCandado(this.state.DataInfoCurso[0]?.privacidad)} className="ButtonMetodosCrearC" onClick={() => { this.putPrivacidad(); this.getInfoCursoCreados() }}></img>
+                            <img src={this.claseImgCandado(this.state.DataInfoCurso[0]?.privacidad)} className="ButtonMetodosCrearC" onClick={() => {this.putPrivacidad(); this.getInfoCursoCreados();}}></img>
                         </div>
                         <div id="AlertasCrearCursoDiv">
                             <p id="AlertasCrearCurso"></p>

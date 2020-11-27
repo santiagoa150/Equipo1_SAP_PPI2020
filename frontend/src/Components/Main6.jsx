@@ -199,7 +199,7 @@ class Main6 extends React.Component {
                                 return (
                                     <>
                                         <div key={index} className="CardCIMisC">
-                                            <div className="marignC">
+                                            <div className="marignC2">
                                                 <h3 className="marignO">{Esito.titulo}</h3>
                                                 <p className="marignO">{Esito.categoria}</p>
                                             </div>
@@ -210,7 +210,7 @@ class Main6 extends React.Component {
                                                     pagina: '/misCursos'
                                                 }
                                             }}>
-                                                <button className="Reanudar">Reanudar</button>
+                                                <div className="Reanudar"></div>
                                             </Link>
                                         </div>
                                     </>

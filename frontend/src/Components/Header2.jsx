@@ -13,7 +13,7 @@ class Header2 extends React.Component {
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         let avatar = '';
         if (UsuarioI[0].avatar == null) {
             avatar = 'https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png'
@@ -21,9 +21,13 @@ class Header2 extends React.Component {
             avatar = UsuarioI[0].avatar;
         }
         document.getElementById("profile").style.backgroundImage = "url(" + avatar + ")";
-        await this.getNoficaciones();
+        this.getNoficaciones();
     }
-
+    componentDidUpdate(){
+        setTimeout(function(){
+            this.getNoficaciones();
+        }, 300000)
+    }
     /*METODOS QUE HACEN EL CORRECTO FUNCIONAMIENTO DEL MENÚ*/
     ureles = () => {
         x = this.props.location.pathname;
@@ -80,7 +84,19 @@ class Header2 extends React.Component {
     minieventico = () => {
         bool = true;
     }
-
+    /*FUNCIONAMIENTO DE LA CAMPANA*/
+    retornoCampana = () =>{
+        if(this.state.dataNotificaciones.length != 0){
+           return(
+               <div className="CositoCampana">
+                   <p>{this.state.dataNotificaciones[0]?.length}</p>
+               </div>
+           );
+        }
+    }
+    /*ACIOS*/
+    /*GETS*/
+    /*Este get sirve para traer todas las notificaciones de un usuario*/
     getNoficaciones = async () => {
         await axios.get(`http://localhost:3883/Not/get_notificaciones_count/Header2/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
         .then(res =>{
@@ -90,16 +106,6 @@ class Header2 extends React.Component {
                 console.error(err);
             }
         })
-    }
-    retornoCampana = () =>{
-        console.log(this.state.dataNotificaciones);
-        if(this.state.dataNotificaciones.length != 0){
-           return(
-               <div className="CositoCampana">
-                   <p>{this.state.dataNotificaciones[0]?.length}</p>
-               </div>
-           );
-        }
     }
     render() {
         return (

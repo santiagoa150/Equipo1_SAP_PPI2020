@@ -8,6 +8,7 @@
     background-color:#F6EBE9;
     min-height: calc(90vh - 25px - 2vw);
 }
+
 .conten{
     display: flex;
     align-items: center;

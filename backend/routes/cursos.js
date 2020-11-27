@@ -180,7 +180,7 @@ router.put('/put_cursos_contenido-t/CrearCursoTeorico/:id', (req,res) =>{
 /*Este put se utiliza en la creación de curso para colocar el contenido teoríco como null*/
 router.put('/put_cursos_contenido-t_setNull/CrearCurso/:id', (req,res) =>{
     const {id} = req.params;
-    let queryPutNullContenidoT = 'UPDATE cursos SET contenido_t = null WHERE id=?';
+    let queryPutNullContenidoT = 'UPDATE cursos SET contenido_t = "" WHERE id=?';
     mysqlConnection.query(queryPutNullContenidoT, [id], (err,results,fields) =>{
         if(err){
             console.error(err);

@@ -51,6 +51,7 @@
 
 .imagenEditCrearC {
     width: 150px;
+    height: 150px;
 }
 
 .EncabezadoCrearC {
@@ -73,7 +74,7 @@
     height: 40px;
     background-color: white;
     cursor: pointer;
-    border: 1px solid #444140;
+    border: 0;
     padding: 5px;
 }
 
@@ -400,11 +401,20 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: max-content;
 }
+.CancelarElHueco{
+    cursor: pointer;
+    width: 30px;
+}
 .elHueco{
+    box-sizing: border-box;
+    padding: 0 5px 0 5px;
+    grid-column: 1/13;
     display: none;
     width: 100%;
-    height: 20px;
-    background-color: white;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#7c7c7c;
     border-radius: 10px;
 }
 .MasCrearContenidoT{

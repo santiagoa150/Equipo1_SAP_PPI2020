@@ -74,21 +74,30 @@
     width: calc(100% - 30px);
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
     align-items: center;
     background-color:  #7c7c7c;
     border-radius: 5px;
     box-shadow: 5px 5px 10px black;
 }
+.marignC2{
+    width: calc(100% - 36px);
+    height: max-content;
+}
 .marignO{
     margin: 2px;
 }
 .ReanudarC{
-    width: 150px;
+    width: 35px;
+    height: 35px;
 }
 .Reanudar{
-    width: 100%;
-    height: 35px;
+    background-image: url(/Images/Play.png);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y:center;
+    background-size: 30px;
+    width: 30;
+    height: 30px;
 }
 .CIMB{
     margin-bottom: 10px;
