@@ -28,9 +28,13 @@ class Main6 extends React.Component {
         document.getElementById("carga").style.display = "none";
     }
     async componentDidMount() {
-        await this.getCursosI();
-        await this.getCursosC();
-
+        let I = await this.getCursosI();
+        let C = await this.getCursosC();        
+        
+        this.setState({ 
+            DataProgresos: I.data,
+            DataCursosC: C.data
+        });
         /*Cursos Iniciados*/
         if (this.state.DataProgresos.length > 5) {
             document.getElementById("Main6I").style.overflowY = "scroll";
@@ -113,7 +117,7 @@ class Main6 extends React.Component {
                             <div className="MainModal2Perfíl">
                                 <div className="BotonesCont">
                                     <button className="button SubImg2" onClick={() => { this.deleteCursoC(this.state.Modal1.id); }}>Si</button>
-                                    <button className="button SubImg2" onClick={() => this.Modal1("")}>No</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal1("","")}>No</button>
                                 </div>
                             </div>
                         </div>
@@ -126,28 +130,21 @@ class Main6 extends React.Component {
     /*GETS*/
     /*Este metodo trae todos los cursos iniciados*/
     getCursosI = async () => {
-        await axios.get(`http://localhost:3883/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
-            .then(res => {
-                document.getElementById("carga").style.display = "block";
-                this.setState({ DataProgresos: res.data });
-            }).catch(err => {
+        return axios.get(`http://localhost:3883/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
+            .catch(err => {
                 console.error(err);
             })
     }
     /*Este metodo trae todos los cursos creados*/
     getCursosC = async () => {
-        await axios.get(`http://localhost:3883/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
-            .then(res => {
-                document.getElementById("carga").style.display = "block";
-                this.setState({ DataCursosC: res.data, 
-                    Modal1: { return: false, title: "", id: 0 } })
-            }).catch(err => {
+        return axios.get(`http://localhost:3883/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
+            .catch(err => {
                 console.error(err);
             })
     }
     /*Este metodo trae el id de un curso a la hora de crearlo*/
     getCrearCurso = async () => {
-        axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
+        await axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
             .then(res => {
                 this.setState({
                     idCursoCreado: res.data[0].id,
@@ -189,7 +186,15 @@ class Main6 extends React.Component {
     deleteCursoC = async (id) => {
         await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
             .then(res => {                                
-                this.getCursosC();      
+                let x= this.getCursosC();
+                this.setState({
+                    Modal1: {
+                        return: !this.state.Modal1.return,
+                        title: "",
+                        id: ""
+                    },
+                    DataCursosC: x
+                })      
             }).catch(err => {
                 if (err) {
                     console.error(err);
