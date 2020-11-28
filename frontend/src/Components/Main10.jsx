@@ -68,7 +68,7 @@ class Main10 extends React.Component {
         if (Notification.tipo_notificacion == 0) {
             return "Estas solicitando a unirte a la clase " + Notification.titulo_clase;
         } else {
-            return "Estas invitando al usuario " + Notification.usuario + " a unirse a tu clase " + Notification.titulo_clase;
+            return "Estas invitando al usuario " + Notification.usuario2 + " a unirse a tu clase " + Notification.titulo_clase;
         }
     }
     /*Este metodo retorna el texto de las notificaciones en rechazados*/

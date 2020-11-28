@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Styles/Menu.css';
+import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 class Juego extends React.Component {
     constructor(props) {
@@ -11,22 +12,19 @@ class Juego extends React.Component {
             puntaje: 0,
             orden: [],
             cont: 0,
-            pos: 0,
-            fondo:""
+            pos: 0
         }
     }
     componentWillMount = () => {
         this.randome();
     }
     randome = () => {
-        let fondo = "fondo"+Math.floor(Math.random() * 19);
         let pos = Math.floor(Math.random() * this.state.preguntas.length);
         let obj = this.state.preguntas;
         this.state.preguntaact = this.state.preguntas[pos];
         this.state.pos = pos;
         obj.splice(this.state.pos, 1);
         this.state.preguntas = obj;
-        this.state.fondo = fondo;
     }
     opciones = () => {
         let opciones = [false,
@@ -64,17 +62,14 @@ class Juego extends React.Component {
             cont: cont,
         });
     }
-
+    
     /*Metodo que define si se pinta una pregunta o si se pinta un renderizado*/
     finalizar = () => {
         if (this.state.cont < this.state.cant) {
             return (
                 <>
                     <div className="cont_pregu">
-                        <div className="fimag">
-                            <img className="logo" src={"./images/Imagen" + this.state.preguntaact.categoria + ".png"} />
-                        </div>
-                        <h1 className="pregunta">{this.state.preguntaact.pregunta}</h1>
+                        <h1 className="pregunta">{this.state.preguntaact?.pregunta}</h1>
                     </div>
                     {this.opciones()}
                     <div className="opcionesJ">
@@ -82,22 +77,22 @@ class Juego extends React.Component {
                             if (Esito == 0) {
                                 return (
                                     <>
-                                        <button value={this.state.preguntaact.respuesta}className="botonJ" id={"boton" + Index} onClick={() => { this.evaluar(Index) }}>{this.state.preguntaact.respuesta}</button>
+                                        <button value={this.state.preguntaact?.respuesta}className="botonJ" id={"boton" + Index} onClick={() => { this.evaluar(Index) }}>{this.state.preguntaact.respuesta}</button>
                                     </>);
                             } else if (Esito == 1) {
                                 return (
                                     <>
-                                        <button value={this.state.preguntaact.opcion1}className="botonJ" id={"boton" + Index} onClick={() => { this.evaluar(Index) }} >{this.state.preguntaact.opcion1}</button>
+                                        <button value={this.state.preguntaact?.opcion1}className="botonJ" id={"boton" + Index} onClick={() => { this.evaluar(Index) }} >{this.state.preguntaact.opcion1}</button>
                                     </>);
                             } else if (Esito == 2) {
                                 return (
                                     <>
-                                        <button value={this.state.preguntaact.opcion2}className="botonJ" id={"boton" + Index} onClick={() => { this.evaluar(Index) }} >{this.state.preguntaact.opcion2}</button>
+                                        <button value={this.state.preguntaact?.opcion2}className="botonJ" id={"boton" + Index} onClick={() => { this.evaluar(Index) }} >{this.state.preguntaact.opcion2}</button>
                                     </>);
                             } else if (Esito == 3) {
                                 return (
                                     <>
-                                        <button value={this.state.preguntaact.opcion3}className="botonJ" id={"boton" + Index} onClick={() => { this.evaluar(Index) }} >{this.state.preguntaact.opcion3}</button>
+                                        <button value={this.state.preguntaact?.opcion3}className="botonJ" id={"boton" + Index} onClick={() => { this.evaluar(Index) }} >{this.state.preguntaact.opcion3}</button>
                                     </>);
                             }
                         })}

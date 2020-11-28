@@ -39,6 +39,7 @@ class Main5 extends React.Component {
         await this.getClasesC();
         await this.getClasesI();
         /*CLASES CREADAS*/
+        /*
         if (this.state.DataClase.length == 0) {
             document.getElementById("clasesP2").innerHTML = "<p>No hay clases creadas.</p>";
             document.getElementById("clasesP2").style.display = "flex";
@@ -49,7 +50,7 @@ class Main5 extends React.Component {
             document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>"
             document.getElementById("contidU2").style.display = "flex";
             document.getElementById("contidU2").style.justifyContent = "center";
-        }
+        }*/
         document.getElementById("carga").style.display = "none";
     }
     componentDidUpdate = () => {
@@ -324,7 +325,7 @@ class Main5 extends React.Component {
                 if (notifi.data[0].conteo == 0) {
                     if (clase.data[0].auto_u == 0) {
                         if (!bool) {
-                            this.postNotificaciones0(clase.data[0].id_creador, i.value, clase.data[0].titulo);
+                            this.postNotificaciones0(clase.data[0].id_creador, i.value, clase.data[0].titulo, clase.data[0].usuario);
                         } else {
                             this.Time(i, "text", "Ya participas ahí");
                         }
@@ -336,7 +337,7 @@ class Main5 extends React.Component {
                         }
                     }
                 }else {
-                    this.Time(i, "text", "PENDIENTE")
+                    this.Time(i, "text", "Pendiente")
                 }
             } else {
                 this.Time(i, "text", "Dato invalido")
@@ -351,8 +352,7 @@ class Main5 extends React.Component {
     getClasesC = async () => {
         await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.state.DataClase = res.data;
-                this.filtrando();
+                this.filtrando(res.data);
             }).catch(err => {
                 console.error(err);
             })
@@ -361,8 +361,7 @@ class Main5 extends React.Component {
     getClasesI = async () => {
         await axios.get(`http://localhost:3883/UsuCla/get-usario_claseJOINclases-todo/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.state.DataClaseI = res.data
-                this.filtrandoI();
+                this.filtrandoI(res.data);
             }).catch(err => {
                 console.error(err);
             })
@@ -383,7 +382,7 @@ class Main5 extends React.Component {
     }
     /*Este get trae un 1 si ya tenemos alguna invitacion de la case 0 si no*/
     getNotificurso = (prop) => {
-        return axios.get(`http://localhost:3883/Not/get_notificaciones_uclase/clases/${prop}&:${UsuarioI[0].id_usuario}`)
+        return axios.get(`http://localhost:3883/Not/get_notificaciones_uclase/clases/${prop}&${UsuarioI[0].id_usuario}`)
             .catch(err => {
                 if (err) {
                     console.error(err);
@@ -400,11 +399,11 @@ class Main5 extends React.Component {
             });
     }
     /*Este get trae la id de una clase a partir de su fecha*/
-    getFechaClase = async () => {
-        await axios.get(`http://localhost:3883/Cla/Get-Clases-id/clases/${newDate}`)
+    getFechaClase = async (prop) => {
+        await axios.get(`http://localhost:3883/Cla/Get-Clases-id/clases/${newDate}&${UsuarioI[0].id_usuario}`)
             .then(res => {
                 let data = res.data;
-                this.postNotificaciones1(data[0].id_clase);
+                this.postNotificaciones1(data[0].id_clase, prop);
             }).catch(err => {
                 if (err) {
                     console.error(err);
@@ -428,7 +427,7 @@ class Main5 extends React.Component {
         await axios.post(`http://localhost:3883/Cla/Post-Clases-NuevaClase`, form)
             .then(res => {
                 if (this.state.UsuariosCrearClase.length > 0) {
-                    this.getFechaClase();
+                    this.getFechaClase(form.titulo);
                 } else {
                     this.getClasesC();
                     this.setState({
@@ -445,6 +444,7 @@ class Main5 extends React.Component {
     }
     /*Este post sirve para unirse a una clase*/
     postNewUsuarioClase = async (id_clase) => {
+        document.getElementById("carga").style.display = "block";
         let Fecha = new Date();
         let FechaY = Fecha.getFullYear();
         let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
@@ -460,7 +460,11 @@ class Main5 extends React.Component {
                 this.state.ModalClase = id_clase;
                 this.putUsariosClase();
                 this.getClasesI();
-                this.Modal1();
+                this.setState({
+                    Modal1: false,
+                    UsuariosCrearClase: [],
+                    CrearClase: []
+                });
             }).catch(err => {
                 if (err) {
                     console.error(err);
@@ -469,15 +473,16 @@ class Main5 extends React.Component {
     }
     /*POST*/
     /*Este post sirve para crear las notificaciones de los usuarios que se agregan en la creación de clases*/
-    postNotificaciones1 = async (id_clase) => {
+    postNotificaciones1 = async (id_clase, prop) => {
         for (let i = 0; i < this.state.UsuariosCrearClase.length; i++) {
             let form = {
                 id_clase: id_clase,
                 id_creador_clase: UsuarioI[0].id_usuario,
                 id_otro_usuario: this.state.UsuariosCrearClase[i].id,
-                titulo_clase: this.state.UsuariosCrearClase[i].id,
-                usuario: this.state.UsuariosCrearClase[i].usuario,
-                tipo_notificacion: 1
+                titulo_clase: prop,
+                usuario: UsuarioI[0].usuario,
+                tipo_notificacion: 1,
+                usuario2: this.state.UsuariosCrearClase[i].usuario
             }
             axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
                 .then(res => {
@@ -492,14 +497,15 @@ class Main5 extends React.Component {
         this.getClasesC();
     }
     /*Este post sirve para crear las notificaciones de los usuarios que se quieran unir a una clase*/
-    postNotificaciones0 = async (id_creador, id_clase, titulo_clase) => {
+    postNotificaciones0 = async (id_creador, id_clase, titulo_clase, usuario) => {
         let form = {
             id_clase: id_clase,
             id_creador_clase: id_creador,
             id_otro_usuario: UsuarioI[0].id_usuario,
             tipo_notificacion: 0,
             usuario: UsuarioI[0].usuario,
-            titulo_clase: titulo_clase
+            titulo_clase: titulo_clase,
+            usuario2: usuario
         }
         axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
             .then(res => {
@@ -543,18 +549,18 @@ class Main5 extends React.Component {
     }
     /*METODOS DE PAGINACIÓN Y FILTRADO de las clases creadas*/
     /*Este metodo realiza la paginación y el filtrado de las clases creadas*/
-    filtrando = () => {
+    filtrando = (prop) => {
         let filtrado;
         let tamaño;
         let filtro = document.getElementById("filt").value;
         let tam = 3;
         if (filtro == "") {
-            let x = Math.ceil(this.state.DataClase.length / tam);
-            filtrado = this.state.DataClase.reverse();
+            let x = Math.ceil(prop.length / tam);
+            filtrado = prop.reverse();
             tamaño = x;
 
         } else {
-            let arrays1 = this.state.DataClase.filter(Esito => ("" + Esito.cont_usuarios).toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.titulo.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || (new Date(Esito.fecha_c).toLocaleDateString()).includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()));
+            let arrays1 = prop.filter(Esito => ("" + Esito.cont_usuarios).toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.titulo.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || (new Date(Esito.fecha_c).toLocaleDateString()).includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()));
             let x = Math.ceil(arrays1.length / tam);
             filtrado = arrays1.reverse();
             tamaño = x;
@@ -575,14 +581,20 @@ class Main5 extends React.Component {
                 DataClasef: filtrado,
                 tamaño: tamaño,
                 array: arrays,
-                actual: arrays[this.state.posicion]
+                actual: arrays[0],
+                DataClase: prop,
+                posicion: 0,
+                despaginar: 0
             });
         } else {
             this.setState({
                 DataClasef: filtrado,
                 tamaño: tamaño,
                 array: arrays,
-                actual: []
+                actual: [],
+                DataClase:prop,
+                posicion: 0,
+                despaginar: 0
             });
         }
     }
@@ -625,17 +637,17 @@ class Main5 extends React.Component {
     }
     /*METODOS DE PAGINACIÓN Y FILTRADO de las clases inscritas*/
     /*Este metodo realiza la paginación y el filtrado de las clases inscritas*/
-    filtrandoI = () => {
+    filtrandoI = (prop) => {
         let filtrado;
         let tamaño;
         let filtro = document.getElementById("filt").value;
         let tam = 3;
         if (filtro == "") {
-            let x = Math.ceil(this.state.DataClaseI.length / tam);
-            filtrado = this.state.DataClaseI.reverse();
+            let x = Math.ceil(prop.length / tam);
+            filtrado = prop.reverse();
             tamaño = x;
         } else {
-            let arrays1 = this.state.DataClaseI.filter(Esito => ("" + Esito.cont_usuarios).toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.titulo.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || (new Date(Esito.fecha_c).toLocaleDateString()).includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.usuario.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()));
+            let arrays1 = prop.filter(Esito => ("" + Esito.cont_usuarios).toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.titulo.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || (new Date(Esito.fecha_c).toLocaleDateString()).includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()) || Esito.usuario.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().includes(filtro.toLowerCase().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize()));
             let x = Math.ceil(arrays1.length / tam);
             filtrado = arrays1.reverse();
             tamaño = x;
@@ -653,17 +665,23 @@ class Main5 extends React.Component {
         }
         if (arrays[0]) {
             this.setState({
-                DataClaseIf: filtrado,
+                DataClaseIF: filtrado,
                 tamañoI: tamaño,
                 arrayI: arrays,
-                actualI: arrays[this.state.posicionI]
+                actualI: arrays[0],
+                DataClaseI: prop,
+                posicionI: 0,
+                despaginarI: 0
             });
         } else {
             this.setState({
-                DataClaseIf: filtrado,
+                DataClaseIF: filtrado,
                 tamañoI: tamaño,
                 arrayI: arrays,
-                actualI: []
+                actualI: [],
+                DataClaseI: prop,
+                posicionI: 0,
+                despaginarI: 0
             });
         }
     }
@@ -728,7 +746,7 @@ class Main5 extends React.Component {
                     <div className="buscadorClases">
                         <div className="filtroClasesSearch">
                             <div className="filtroClasesSearch2">
-                                <input type="text" id="filt" autoComplete="off" className="FiltrosC2 buscadorClases2" onChange={async () => { this.filtrando(); this.filtrandoI() }} placeholder="buscar"></input>
+                                <input type="text" id="filt" autoComplete="off" className="FiltrosC2 buscadorClases2" onChange={async () => { this.filtrando(this.state.DataClase); this.filtrandoI(this.state.DataClase) }} placeholder="buscar"></input>
                             </div>
                         </div>
                         <div className="BotonMore">

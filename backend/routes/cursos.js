@@ -1,5 +1,6 @@
 const e = require('express');
 const { Router } = require('express');
+const mysqlconection = require('../db/db');
 const router = Router();
 const mysqlConnection = require('../db/db');
 
@@ -100,6 +101,18 @@ router.get('/get_cursos_id-ContenidoT/crearContenidoTeorico/:id', (req, res) =>{
     const {id} = req.params;
     let queryTraerContT = 'SELECT contenido_t FROM cursos WHERE id=?';
     mysqlConnection.query(queryTraerContT, [id], (err, rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
+/*Este get trae el contenido evaluativo de un curso para mostrarlo y modificarlo*/
+router.get('/get_preguntas_informacion/ContenidoE/:id_curso', (req,res) =>{
+    const {id_curso} = req.params;
+    let queryTraerContE = 'SELECT * FROM preguntas WHERE id_curso=?';
+    mysqlconection.query(queryTraerContE, [id_curso], (err,rows,fields) =>{
         if(err){
             console.error(err);
         }else{

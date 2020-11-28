@@ -46,9 +46,9 @@ router.get('/get_notificaciones_uclase/clases/:id_clase&:id_otro_usuario', (req,
 /*TODOS LOS POST*/
 /*Este post sirve para crear las notificaciones de un usuario al que se le invitó a una clase*/
 router.post('/post_notificaciones_info/Clases', (req, res) => {
-    const { id_clase, id_creador_clase, id_otro_usuario, tipo_notificacion, titulo_clase, usuario } = req.body;
-    let quryPostNotificaion1 = 'INSERT INTO notificaciones(id_clase,id_creador_clase,id_otro_usuario,tipo_notificacion,titulo_clase,usuario) VALUES (?,?,?,?,?,?)'
-    mysqlconection.query(quryPostNotificaion1, [id_clase, id_creador_clase, id_otro_usuario, tipo_notificacion, titulo_clase, usuario], (err, rows, fields) => {
+    const { id_clase, id_creador_clase, id_otro_usuario, tipo_notificacion, titulo_clase, usuario,usuario2 } = req.body;
+    let quryPostNotificaion1 = 'INSERT INTO notificaciones(id_clase,id_creador_clase,id_otro_usuario,tipo_notificacion,titulo_clase,usuario, usuario2) VALUES (?,?,?,?,?,?,?)'
+    mysqlconection.query(quryPostNotificaion1, [id_clase, id_creador_clase, id_otro_usuario, tipo_notificacion, titulo_clase, usuario, usuario2], (err, rows, fields) => {
         if (err) {
             console.error(err);
         } else {

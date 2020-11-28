@@ -6,11 +6,13 @@ class Main4 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            CursoData : []
+            CursoData : [],
+            preguntas: []
         }
     }
     async componentDidMount() {
         await this.getInfoCurso();
+        await this.getPreguntas();
     }
     componentDidUpdate(){
         document.getElementById("carga").style.display="none";
@@ -23,6 +25,18 @@ class Main4 extends React.Component {
         }).catch(err =>{
             console.error(err);
         })
+    }
+    getPreguntas = async () =>{
+        await axios.get(`http://localhost:3883/Cur/get_preguntas_informacion/ContenidoE/${this.props.location.state.id}`)
+            .then(res =>{
+                this.setState({
+                    preguntas: res.data
+                });
+            }).catch(err =>{
+                if(err){
+                    console.error(err);
+                }
+            })
     }
     render() {
         return (
@@ -41,7 +55,9 @@ class Main4 extends React.Component {
 
                     <Link id="ExaCurso" to={{pathname:"/Examen",
                     state:{
-                        id: this.state.CursoData[0]?.id
+                        id: this.state.CursoData[0]?.id,
+                        cantidad: this.state.CursoData[0]?.cant_preguntas,
+                        preguntas: this.state.preguntas
                     }}}>
                         <button className="LinkCursoMain4">Pruebate</button>
                     </Link>
