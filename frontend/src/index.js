@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './Pages/Home';
-import Principal from './Pages/Principal';
-import Principal_ from './Pages/Principal_';
-import Perfil from './Pages/Perfil';
-import Integrados from './Pages/Inte_Comu';
-import Curso from './Pages/Curso';
-import Didactico from './Pages/Didactico';
-import MisCursos from './Pages/MisCursos';
-import Clases from './Pages/Clases';
-import Clase from './Pages/Clase';
-import CrearCursoTeorico from './Pages/CrearCursoTeorico';
-import CrearCurso from './Pages/CrearCurso';
-import Examen from './Pages/Examen';
-import Notificaciones from './Pages/Notificaciones';
+import Home from './Pages/Home.jsx';
+import Principal from './Pages/Principal.jsx';
+import Principal_ from './Pages/Principal_.jsx';
+import Perfil from './Pages/Perfil.jsx';
+import Integrados from './Pages/Inte_Comu.jsx';
+import Curso from './Pages/Curso.jsx';
+import Didactico from './Pages/Didactico.jsx';
+import MisCursos from './Pages/MisCursos.jsx';
+import Clases from './Pages/Clases.jsx';
+import Clase from './Pages/Clase.jsx';
+import CrearCursoTeorico from './Pages/CrearCursoTeorico.jsx';
+import CrearCurso from './Pages/CrearCurso.jsx';
+import Examen from './Pages/Examen.jsx';
+import Notificaciones from './Pages/Notificaciones.jsx';
 import {
     BrowserRouter as Router,
     Switch,
