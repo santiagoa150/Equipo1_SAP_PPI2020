@@ -49,7 +49,10 @@ class Main5 extends React.Component {
             document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>"
             document.getElementById("contidU2").style.display = "flex";
             document.getElementById("contidU2").style.justifyContent = "center";
-        }        
+        }
+        document.getElementById("carga").style.display = "none";
+    }
+    componentDidUpdate = () => {
         document.getElementById("carga").style.display = "none";
     }
     /*METODOS SIMPLES*/
@@ -260,7 +263,10 @@ class Main5 extends React.Component {
                     let UsuariosSubir = this.state.UsuariosCrearClase;
                     inner = inner + '<div class="Etiqueta"><p>Usuario:' + UsaurioSubir.value + '</p></div>';
                     document.getElementById("UsuariosIN").innerHTML = inner;
-                    UsuariosSubir.push(this.state.CrearClase[0].id_usuario);
+                    UsuariosSubir.push({
+                        id: this.state.CrearClase[0].id_usuario,
+                        usuario: UsaurioSubir.value
+                    });
                     document.getElementById("UsuarioClase").value = "";
                     this.setState({
                         UsuariosCrearClase: UsuariosSubir
@@ -275,7 +281,6 @@ class Main5 extends React.Component {
     CrearClase2 = () => {
         let Nombre = document.getElementById("NombreClase");
         let auto_u = document.getElementById("SelectCrearClase");
-        let fecha = new Date();
         if (Nombre.value == "" || auto_u.value == "null") {
             if (Nombre.value == "") {
                 this.Time(Nombre, "text", "Dato sin ingresar");
@@ -303,31 +308,35 @@ class Main5 extends React.Component {
             }
             this.postNewClase(form);
         }
-        return this;
     }
     SubirUsuario2 = async () => {
         let i = document.getElementById("UsuarioClase2");
         if (i.value != "") {
             let clase = await this.getClaseForId(i.value);
             let bool = false;
-            for (let x = 0; x < this.state.DataClaseI.length; x++) {
-                if (i.value == this.state.DataClaseI[x].id_clase) {
-                    bool = true;
-                }
-            }
             if (clase.data[0].id_creador != UsuarioI[0].id_usuario) {
-                if (clase.data[0].auto_u == 0) {
-                    if (!bool) {
-                        this.postNotificaciones0(clase.data[0].id_creador, i.value, clase.data[0].titulo);
-                    }else{
-                        this.Time(i, "text", "Ya participas ahí");
+                for (let x = 0; x < this.state.DataClaseI.length && !bool; x++) {
+                    if (i.value == this.state.DataClaseI[x].id_clase) {
+                        bool = true;
                     }
-                } else {
-                    if(!bool){
-                        this.postNewUsuarioClase(clase.data[0].id_clase);
-                    }else{
-                        this.Time(i, "text", "Ya participas ahí");
+                }
+                let notifi = await this.getNotificurso(i.value);
+                if (notifi.data[0].conteo == 0) {
+                    if (clase.data[0].auto_u == 0) {
+                        if (!bool) {
+                            this.postNotificaciones0(clase.data[0].id_creador, i.value, clase.data[0].titulo);
+                        } else {
+                            this.Time(i, "text", "Ya participas ahí");
+                        }
+                    } else {
+                        if (!bool) {
+                            this.postNewUsuarioClase(clase.data[0].id_clase);
+                        } else {
+                            this.Time(i, "text", "Ya participas ahí");
+                        }
                     }
+                }else {
+                    this.Time(i, "text", "PENDIENTE")
                 }
             } else {
                 this.Time(i, "text", "Dato invalido")
@@ -342,7 +351,7 @@ class Main5 extends React.Component {
     getClasesC = async () => {
         await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.state.DataClase= res.data;
+                this.state.DataClase = res.data;
                 this.filtrando();
             }).catch(err => {
                 console.error(err);
@@ -352,7 +361,7 @@ class Main5 extends React.Component {
     getClasesI = async () => {
         await axios.get(`http://localhost:3883/UsuCla/get-usario_claseJOINclases-todo/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.state.DataClaseI= res.data
+                this.state.DataClaseI = res.data
                 this.filtrandoI();
             }).catch(err => {
                 console.error(err);
@@ -373,18 +382,13 @@ class Main5 extends React.Component {
             })
     }
     /*Este get trae un 1 si ya tenemos alguna invitacion de la case 0 si no*/
-    getUsuarioNotifi = async (prop) => {
-        let variable = prop.value.toLowerCase();
-        await axios.get(`http://localhost:3883/Usu/get_clases_usuario-id/clases/${variable}`)
-            .then(res => {
-                this.setState({
-                    CrearClase: res.data
-                });
-            }).catch(err => {
+    getNotificurso = (prop) => {
+        return axios.get(`http://localhost:3883/Not/get_notificaciones_uclase/clases/${prop}&:${UsuarioI[0].id_usuario}`)
+            .catch(err => {
                 if (err) {
                     console.error(err);
                 }
-            })
+            });
     }
     /*Este get trae una clase por ID*/
     getClaseForId = async (prop) => {
@@ -402,7 +406,7 @@ class Main5 extends React.Component {
                 let data = res.data;
                 this.postNotificaciones1(data[0].id_clase);
             }).catch(err => {
-                if(err){
+                if (err) {
                     console.error(err);
                 }
             });
@@ -413,7 +417,7 @@ class Main5 extends React.Component {
         axios.put(`http://localhost:3883/Cla/Put-Clases-cantidad_usuarios/Clases/${this.state.ModalClase}`)
             .then(res => {
             }).catch(err => {
-                if(err){
+                if (err) {
                     console.error(err);
                 }
             });
@@ -426,12 +430,12 @@ class Main5 extends React.Component {
                 if (this.state.UsuariosCrearClase.length > 0) {
                     this.getFechaClase();
                 } else {
+                    this.getClasesC();
                     this.setState({
                         Modal1: !this.state.Modal1,
                         CrearClase: [],
                         UsuariosCrearClase: []
                     });
-                    this.getClasesC();
                 }
             }).catch(err => {
                 if (err) {
@@ -440,26 +444,25 @@ class Main5 extends React.Component {
             })
     }
     /*Este post sirve para unirse a una clase*/
-    postNewUsuarioClase = async (id_clase) =>{
-            let Fecha = new Date();
-            let FechaY = Fecha.getFullYear();
-            let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
-            let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
-            let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
-            let form = await {
-                id_usuario: UsuarioI[0].id_usuario,
-                id_clase: id_clase,
-                fecha_u: FechaH
-            }
+    postNewUsuarioClase = async (id_clase) => {
+        let Fecha = new Date();
+        let FechaY = Fecha.getFullYear();
+        let FechaM = (Fecha.getMonth().toString()).padStart(2, 0);
+        let FechaD = (Fecha.getDate().toString()).padStart(2, 0);
+        let FechaH = FechaY + "-" + FechaM + "-" + FechaD;
+        let form = await {
+            id_usuario: UsuarioI[0].id_usuario,
+            id_clase: id_clase,
+            fecha_u: FechaH
+        }
         axios.post(`http://localhost:3883/UsuCla/post-usuario_clase-Info/Clases`, form)
-            .then(res =>{
+            .then(res => {
                 this.state.ModalClase = id_clase;
                 this.putUsariosClase();
-                this.getClasesI(); 
-            }).then(res =>{
+                this.getClasesI();
                 this.Modal1();
-            }).catch(err =>{
-                if(err){
+            }).catch(err => {
+                if (err) {
                     console.error(err);
                 }
             });
@@ -471,7 +474,9 @@ class Main5 extends React.Component {
             let form = {
                 id_clase: id_clase,
                 id_creador_clase: UsuarioI[0].id_usuario,
-                id_otro_usuario: this.state.UsuariosCrearClase[i],
+                id_otro_usuario: this.state.UsuariosCrearClase[i].id,
+                titulo_clase: this.state.UsuariosCrearClase[i].id,
+                usuario: this.state.UsuariosCrearClase[i].usuario,
                 tipo_notificacion: 1
             }
             axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
@@ -487,14 +492,14 @@ class Main5 extends React.Component {
         this.getClasesC();
     }
     /*Este post sirve para crear las notificaciones de los usuarios que se quieran unir a una clase*/
-    postNotificaciones0 = async (id_creador, id_clase,titulo_clase) => {
+    postNotificaciones0 = async (id_creador, id_clase, titulo_clase) => {
         let form = {
             id_clase: id_clase,
             id_creador_clase: id_creador,
             id_otro_usuario: UsuarioI[0].id_usuario,
             tipo_notificacion: 0,
-            usuario:UsuarioI[0].usuario,
-            titulo_clase:titulo_clase
+            usuario: UsuarioI[0].usuario,
+            titulo_clase: titulo_clase
         }
         axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
             .then(res => {
@@ -508,32 +513,33 @@ class Main5 extends React.Component {
     /*DELETES*/
     /*Elimina clases creadas*/
     deleteClase = async () => {
-        axios.delete(`http://localhost:3883/Cla/Delete-Clases-todo/Clases/${this.state.ModalClase}`)
+        await axios.delete(`http://localhost:3883/Cla/Delete-Clases-todo/Clases/${this.state.ModalClase}`)
             .then(res => {
+                this.getClasesC();
+                this.setState({
+                    Modal2: false
+                });
             })
             .catch(err => {
                 console.log(err);
             })
 
 
-        this.getClasesC();
-        this.setState({
-            Modal2: false
-        });
     }
     /*Permite salirse de una clase en la que se participa*/
     Salirclase = async () => {
-        axios.delete(`http://localhost:3883/UsuCla/Delete-Clases-todo/Clases/${this.state.ModalClase}&${UsuarioI[0].id_usuario}`)
+        document.getElementById("carga").style.display = "block";
+        await axios.delete(`http://localhost:3883/UsuCla/Delete-Clases-todo/Clases/${this.state.ModalClase}&${UsuarioI[0].id_usuario}`)
             .then(res => {
+                this.putUsariosClase();
+                this.getClasesI();
+                this.setState({
+                    Modal3: false
+                });
             })
             .catch(err => {
                 console.log(err);
             })
-        this.putUsariosClase();
-        this.getClasesI();
-        this.setState({
-            Modal3: false
-        });
     }
     /*METODOS DE PAGINACIÓN Y FILTRADO de las clases creadas*/
     /*Este metodo realiza la paginación y el filtrado de las clases creadas*/
@@ -716,13 +722,13 @@ class Main5 extends React.Component {
             <>
                 {this.Modal1Return()}
                 {this.Modal2Return()}
-                {this.Modal3Return()}                
+                {this.Modal3Return()}
                 <div className="Cargando" id="carga"></div>
                 <div className="contM5">
                     <div className="buscadorClases">
                         <div className="filtroClasesSearch">
                             <div className="filtroClasesSearch2">
-                                <input type="text" id="filt" autoComplete="off" className="FiltrosC2 buscadorClases2" onChange={async() => { this.filtrando(); this.filtrandoI() }} placeholder="buscar"></input>
+                                <input type="text" id="filt" autoComplete="off" className="FiltrosC2 buscadorClases2" onChange={async () => { this.filtrando(); this.filtrandoI() }} placeholder="buscar"></input>
                             </div>
                         </div>
                         <div className="BotonMore">

@@ -32,9 +32,9 @@ router.get('/get_notificaciones_info/Notificaciones/:id_creador_clase&:id_otro_u
 
 /*Este get sirve para traer una notificacion en caso de tener ya la de un curso*/
 router.get('/get_notificaciones_uclase/clases/:id_clase&:id_otro_usuario', (req, res) => {
-    const { id_creador_clase, id_otro_usuario } = req.params;
+    const { id_clase, id_otro_usuario } = req.params;
     let queryGetNotificaciones = `SELECT COUNT(*) AS conteo FROM notificaciones WHERE id_clase=? AND id_otro_usuario=? `;
-    mySqlConnection.query(queryGetNotificaciones, [id_creador_clase, id_otro_usuario], (err, rows, fields) => {
+    mySqlConnection.query(queryGetNotificaciones, [id_clase, id_otro_usuario], (err, rows, fields) => {
         if (err) {
             console.error(err);
         } else {
