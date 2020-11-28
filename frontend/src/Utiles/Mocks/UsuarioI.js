@@ -1,13 +1,13 @@
 export const UsuarioI = [
  {
-        id_usuario: 2,
+        id_usuario: 1,
         nombre:'Santiago',
         apellido:'Álvarez',
         genero:'Masculino',
         fecha_n: new Date('2004-03-14'),
         edad:16,
         avatar:null,
-        usuario:'Zpidi',
+        usuario:'jucamo0713',
         contraseña:'Elefante51',
         correo:'santiagoa150@gmail.com',
         registro_sistema: true

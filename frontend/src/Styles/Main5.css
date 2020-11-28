@@ -29,7 +29,15 @@
     margin-right: 10px;
     cursor: pointer;
 }
-
+#PaginacionI #Paginacion2{
+    margin-top: 5px;
+    width: 100%;
+    height: 40px;
+    flex-flow: row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .titulo {
     background-color: #444140;
     color: rgb(31, 24, 24);
