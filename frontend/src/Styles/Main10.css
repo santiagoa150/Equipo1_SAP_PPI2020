@@ -1,0 +1,47 @@
+.Main10Container{
+    width: 100%;
+    min-height: calc(100vh - 50px);
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 100%;
+}
+.Main10Switch{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    grid-column: 1/2;
+    grid-row: 1/2;
+    background-color: #7c7c7c;
+}
+.Main10Contain{
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+.botonMain10{
+    font-size: 16px;
+    width: 80%;
+    border: 0;
+    background-color: #FFA998;
+    min-height: 35px;
+    margin: 10px 0 10px 0;
+}
+.colorDark{
+    background-color: #444140 !important;
+    color: white !important;
+}
+.colorDark:hover{
+    background-color: #FFA998 !important;
+    color: black !important;
+}
+@media(max-width:500px){
+    .Main10Container{
+        grid-template-columns: 15% 85%;
+    }
+    .botonMain10{
+        font-size: 0px;
+        width: 10vw;
+        height: 10vw;
+        color: transparent;
+    }
+}

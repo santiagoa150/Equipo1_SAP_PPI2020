@@ -7,6 +7,29 @@
     align-items: center;
     color:white;
 }
+#Header7Container{
+    width: 100%;
+    min-height: 50px;
+    background-color: #444140;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color:white;
+}
+.notificaciones{
+    width: 90%;
+    text-align: center;
+}
+.botonHeader7{
+    border: 0;
+    background-color: transparent;
+    width: 45px;
+    height: 45px;
+    background-image: url(/Images/Atrás.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center center;
+}
 .buttonClass{
     width: 150px;
     height: 35px;
@@ -15,4 +38,10 @@
 .buttonClass:hover{
     background-color: #FFA988;
     color: black;
+}
+@media(max-width: 600px){
+    .botonHeader7{
+        width: 35px;
+        height: 35px;
+    }
 }
