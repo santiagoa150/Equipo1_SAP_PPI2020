@@ -433,6 +433,7 @@ class Main3 extends React.Component {
                                     const f = index;
                                     if (f != this.state.posicion && (this.state.despaginar == f || this.state.despaginar == f - 1 || this.state.despaginar == f + 1)) {
                                         return (<><input key={index} className="botonescamb" type="button" value={f + 1} onClick={() => {
+                                            document.getElementById("carga").style.display = "block";
                                             this.setState({
                                                 posicion: f,
                                                 despaginar: f,

@@ -31,30 +31,30 @@ class Main6 extends React.Component {
         let I = await this.getCursosI();
         let C = await this.getCursosC();        
         
-        this.setState({ 
-            DataProgresos: I.data,
-            DataCursosC: C.data
-        });
         /*Cursos Iniciados*/
-        if (this.state.DataProgresos.length > 5) {
+        if ( I.data.length > 5) {
             document.getElementById("Main6I").style.overflowY = "scroll";
         }
-        if (this.state.DataProgresos.length == 0) {
+        if ( I.data.length == 0) {
             document.getElementById("CardsInner").style.display = "flex";
             document.getElementById("CardsInner").style.justifyContent = "center";
             document.getElementById("CardsInner").style.alignItems = "center";
             document.getElementById("CardsInner").innerHTML = "<p>No has iniciado ningún curso.</p>";
         }
         /*Cursos Creados*/
-        if (this.state.DataCursosC.length >= 2) {
+        if (C.data.length >= 2) {
             document.getElementById("Main6C").style.overflowY = "scroll";
         }
-        if (this.state.DataCursosC.length == 0) {
+        if (C.data.length == 0) {
             document.getElementById("CardsInner2").style.display = "flex";
             document.getElementById("CardsInner2").style.justifyContent = "center";
             document.getElementById("CardsInner2").style.alignItems = "center";
             document.getElementById("CardsInner2").innerHTML = "<p>No has creado ningún curso.</p>";
-        }
+        }        
+        this.setState({ 
+            DataProgresos: I.data,
+            DataCursosC: C.data
+        });
     }
     /*METODOS SIMPLES*/
     /*Este metodo muestra o no los cursos iniciados*/

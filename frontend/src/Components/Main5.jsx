@@ -2,8 +2,6 @@ import React from 'react';
 import '../Styles/Main5.css';
 import { withRouter, Link } from 'react-router-dom';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
-import { Clases } from '../Utiles/Mocks/Clases';
-import { User_clase } from '../Utiles/Mocks/User_clase';
 import axios from 'axios';
 let newDate;
 let bool = true, bool2 = true, SubirUsu = new Array(), i = 0;
@@ -51,7 +49,8 @@ class Main5 extends React.Component {
             document.getElementById("contidU2").innerHTML = "<p>No participas en ningúna clase.</p>"
             document.getElementById("contidU2").style.display = "flex";
             document.getElementById("contidU2").style.justifyContent = "center";
-        }
+        }        
+        document.getElementById("carga").style.display = "none";
     }
     /*METODOS SIMPLES*/
     /*Permite ocultar y/o mostrar las clases creadas*/
@@ -344,7 +343,7 @@ class Main5 extends React.Component {
     getClasesC = async () => {
         await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.setState({ DataClase: res.data });
+                this.state.DataClaseI= res.data;
                 this.filtrando();
             }).catch(err => {
                 console.error(err);
@@ -354,9 +353,7 @@ class Main5 extends React.Component {
     getClasesI = async () => {
         await axios.get(`http://localhost:3883/UsuCla/get-usario_claseJOINclases-todo/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.setState({
-                    DataClaseI: res.data
-                });
+                this.state.DataClaseI= res.data
                 this.filtrandoI();
             }).catch(err => {
                 console.error(err);
@@ -704,12 +701,13 @@ class Main5 extends React.Component {
             <>
                 {this.Modal1Return()}
                 {this.Modal2Return()}
-                {this.Modal3Return()}
+                {this.Modal3Return()}                
+                <div className="Cargando" id="carga"></div>
                 <div className="contM5">
                     <div className="buscadorClases">
                         <div className="filtroClasesSearch">
                             <div className="filtroClasesSearch2">
-                                <input type="text" id="filt" autoComplete="off" className="FiltrosC2 buscadorClases2" onChange={() => { this.filtrando(); this.filtrandoI() }} placeholder="buscar"></input>
+                                <input type="text" id="filt" autoComplete="off" className="FiltrosC2 buscadorClases2" onChange={async() => { this.filtrando(); this.filtrandoI() }} placeholder="buscar"></input>
                             </div>
                         </div>
                         <div className="BotonMore">
