@@ -55,12 +55,28 @@ class Main10 extends React.Component {
             return "colorDark";
         }
     }
-    /*Este metodo retorna el texto de las clases en recibidos*/
-    textRecibidos = (Notificacion) =>{
-        if(Notificacion.tipo_notificacion == 0){
+    /*Este metodo retorna el texto de las notificaciones en recibidos*/
+    textRecibidos = (Notificacion) => {
+        if (Notificacion.tipo_notificacion == 0) {
             return "El usuario " + Notificacion.usuario + " quiere unirse a tu clase " + Notificacion.titulo_clase;
-        }else{
+        } else {
             return "El usuario " + Notificacion.usuario + " te está invitando a unirse a su clase " + Notificacion.titulo_clase;
+        }
+    }
+    /*Este metodo retorna el texto de las notificaciones en enviados*/
+    textEnviados = (Notification) => {
+        if (Notification.tipo_notificacion == 0) {
+            return "Estas solicitando a unirte a la clase " + Notification.titulo_clase;
+        } else {
+            return "Estas invitando al usuario " + Notification.usuario + " a unirse a tu clase " + Notification.titulo_clase;
+        }
+    }
+    /*Este metodo retorna el texto de las notificaciones en rechazados*/
+    textRechazados = (Notification) => {
+        if (Notification.tipo_notificacion == 0) {
+            return "El creador de la clase " + Notification.titulo_clase + " rechazó tu petición para unirte."
+        } else {
+            return "El usuario " + Notification.usuario + " rechazó tu invitación para unirse a tu clase " + Notification.titulo_clase;
         }
     }
     render() {
@@ -84,12 +100,20 @@ class Main10 extends React.Component {
                                         </div>
                                     </>
                                 );
-                            }else{
-                                return(
+                            } else if (this.state.color == 2) {
+                                return (
                                     <>
-                                    <div>
-                                        <p>hola2</p>
-                                    </div>
+                                        <div>
+                                            <p>{this.textEnviados(Esito)}</p>
+                                        </div>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <>
+                                        <div>
+                                            <p>{this.textRechazados(Esito)}</p>
+                                        </div>
                                     </>
                                 );
                             }

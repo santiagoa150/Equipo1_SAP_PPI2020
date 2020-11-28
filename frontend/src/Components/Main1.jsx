@@ -19,7 +19,7 @@ class Main1 extends React.Component {
             UserB: false,
             UserB2: false,
             ConB2: false,
-            data: [],
+            data: []
         }
     }    
     componentDidMount(){
@@ -318,9 +318,19 @@ class Main1 extends React.Component {
                         </div>
                         <div id="GridCom2Div3_">
                             <p>Usuario</p>
-                            <input className="B4" id="IUCel" type="text" autoComplete="off" />
+                            <input className="B4" id="IUCel" type="text" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("IUCel");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
                             <p>Constraseña</p>
-                            <input className="B4" id="ICCel" type="password" autoComplete="off" />
+                            <input className="B4" id="ICCel" type="password" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("ICCel");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
                         </div>
                         <div className="GridCom2Div1_">
                             <button className="B4" onClick={this.IniciarSCel}>Aceptar</button>
@@ -338,12 +348,32 @@ class Main1 extends React.Component {
                             <h2 id="TitleReg">Registro</h2>
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="NRCe" type="text" placeholder="Nombre" autoComplete="off" />
-                            <input className="B1" id="ARCe" type="text" placeholder="Apellido" autoComplete="off" />
+                            <input className="B1" id="NRCe" type="text" placeholder="Nombre" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("NRCe");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
+                            <input className="B1" id="ARCe" type="text" placeholder="Apellido" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("ARCe");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="DRCe" type="text" onChange={this.UserName2} placeholder="Username" autoComplete="off" />
-                            <input className="B1" id="CRCe" type="email" placeholder="Correo" autoComplete="off" />
+                            <input className="B1" id="DRCe" type="text" onChange={this.UserName2} placeholder="Username" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("DRCe");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
+                            <input className="B1" id="CRCe" type="email" placeholder="Correo" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("IUCel");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
                         </div>
                         <div className="GridCom2Div1">
                             <select className="B2" id="SRCe">
@@ -356,8 +386,18 @@ class Main1 extends React.Component {
                             <input className="B3" id="ERCe" type="date" min={FechaMin} max={FechaH} placeholder="Edad" autoComplete="off" />
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="CoRCe" type="password" placeholder="Contraseña" autoComplete="of" />
-                            <input className="B1" id="Co2RCe" type="password" placeholder="Confirmar Contraseña" autoComplete="of" />
+                            <input className="B1" id="CoRCe" type="password" placeholder="Contraseña" autoComplete="of" onChange={()=>{
+                                let valor = document.getElementById("CoRCe");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
+                            <input className="B1" id="Co2RCe" type="password" placeholder="Confirmar Contraseña" autoComplete="of" onChange={()=>{
+                                let valor = document.getElementById("Co2RCe");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
                         </div>
                         <div className="GridCom2Div1_">
                             <button className="B4" onClick={this.RegistrarUsuCel}>Aceptar</button>
@@ -393,12 +433,32 @@ class Main1 extends React.Component {
                                 <p id="PAlert"></p>
                             </div>
                             <div className="GridCom2Div1">
-                                <input className="B1" id="NRC" type="text" placeholder="Nombre" autoComplete="off" />
-                                <input className="B1" id="ARC" type="text" placeholder="Apellido" autoComplete="off" />
+                                <input className="B1" id="NRC" type="text" placeholder="Nombre" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("NRC");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
+                                <input className="B1" id="ARC" type="text" placeholder="Apellido" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("ARC");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
                             </div>
                             <div className="GridCom2Div1">
-                                <input className="B1" id="DRC" type="text" onChange={this.UserName} placeholder="Username" autoComplete="off" />
-                                <input className="B1" id="CRC" placeholder="Correo" type="email" autoComplete="off" />
+                                <input className="B1" id="DRC" type="text" onChange={this.UserName} placeholder="Username" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("DRC");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
+                                <input className="B1" id="CRC" placeholder="Correo" type="email" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("CRC");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
                             </div>
                             <div className="GridCom2Div1">
                                 <select className="B2" id="SRC">
@@ -410,8 +470,18 @@ class Main1 extends React.Component {
                                 <input className="B3" id="ERC" type="date" min={FechaMin} max={FechaH} placeholder="Edad" autoComplete="off" />
                             </div>
                             <div className="GridCom2Div1">
-                                <input className="B1" id="CoRC" type="password" placeholder="Contraseña" autoComplete="off" />
-                                <input className="B1" id="Co2RC" type="password" placeholder="Confirmar Contraseña" autoComplete="off" />
+                                <input className="B1" id="CoRC" type="password" placeholder="Contraseña" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("CoRC");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
+                                <input className="B1" id="Co2RC" type="password" placeholder="Confirmar Contraseña" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("Co2RC");
+                                if(valor.value.length >= 100){
+                                    valor.value = valor.value.substring(0,99);
+                                }
+                            }}/>
                             </div>
                             <div className="GridCom2Div1_">
                                 <button className="B4" onClick={this.RegistrarUsuCom}>Aceptar</button>

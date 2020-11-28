@@ -1,6 +1,6 @@
 export const UsuarioI = [
  {
-        id_usuario: 2,
+        id_usuario: 1,
         nombre:'Santiago',
         apellido:'Álvarez',
         genero:'Masculino',
