@@ -23,6 +23,9 @@ class Header2 extends React.Component {
         document.getElementById("profile").style.backgroundImage = "url(" + avatar + ")";
         this.getNotificaciones();
     }
+    componentDidUpdate(){
+        this.getNotificaciones();
+    }
     /*METODOS QUE HACEN EL CORRECTO FUNCIONAMIENTO DEL MENÚ*/
     ureles = () => {
         x = this.props.location.pathname;
@@ -81,7 +84,6 @@ class Header2 extends React.Component {
     }
     /*FUNCIONAMIENTO DE LA CAMPANA*/
     retornoCampana = () => {
-        console.log(this.state.dataNotificaciones[0]);
         if (this.state.dataNotificaciones[0]?.conteo > 0) {
             return (
                 <div className="CositoCampana">
@@ -100,17 +102,11 @@ class Header2 extends React.Component {
         await axios.get(`http://localhost:3883/Not/get_notificaciones_count/Header2/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
             .then(res => {
                 this.setState({ dataNotificaciones: res.data })
-                setTimeout(function () {
-                    this.getNotificaciones2();
-                }, 300000);
             }).catch(err => {
                 if (err) {
                     console.error(err);
                 }
             })
-    }
-    getNotificaciones2 = () =>{
-        this.getNotificaciones();
     }
     render() {
         return (

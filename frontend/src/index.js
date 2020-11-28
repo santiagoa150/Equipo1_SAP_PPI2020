@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import Home from './Pages/Home';
 import Principal from './Pages/Principal';
 import Principal_ from './Pages/Principal_';
@@ -14,12 +13,12 @@ import Clase from './Pages/Clase';
 import CrearCursoTeorico from './Pages/CrearCursoTeorico';
 import CrearCurso from './Pages/CrearCurso';
 import Examen from './Pages/Examen';
+import Notificaciones from './Pages/Notificaciones';
 import {
     BrowserRouter as Router,
     Switch,
     Route
 } from "react-router-dom";
-
 ReactDOM.render(
     <React.StrictMode >
         <Router >
@@ -54,6 +53,7 @@ ReactDOM.render(
                 <Route path="/CrearCurso" component={CrearCurso}/>
                 <Route path="/CrearCursoTeorico" component={CrearCursoTeorico}/>
                 <Route path="/Clase" component={Clase}/>
+                <Route path="/Notificaciones" component={Notificaciones}/>
                 <Route path="/" >
                     <Home />
                 </Route>
