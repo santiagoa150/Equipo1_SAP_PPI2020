@@ -310,16 +310,15 @@ class Main5 extends React.Component {
         if (i.value != "") {
             let clase = await this.getClaseForId(i.value);
             let bool = false;
-            console.log(this.state.DataClaseI);
-            for (let i = 0; i < this.state.DataClaseI.length; i++) {
-                if (UsuarioI[0].id_usuario == this.state.DataClaseI[i].id_usuario) {
+            for (let x = 0; x < this.state.DataClaseI.length; x++) {
+                if (i.value == this.state.DataClaseI[x].id_clase) {
                     bool = true;
                 }
             }
             if (clase.data[0].id_creador != UsuarioI[0].id_usuario) {
                 if (clase.data[0].auto_u == 0) {
                     if (!bool) {
-                        this.postNotificaciones0(clase.data[0].id_creador, i.value);
+                        this.postNotificaciones0(clase.data[0].id_creador, i.value, clase.data[0].titulo);
                     }else{
                         this.Time(i, "text", "Ya participas ahí");
                     }
@@ -343,7 +342,7 @@ class Main5 extends React.Component {
     getClasesC = async () => {
         await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
             .then(res => {
-                this.state.DataClaseI= res.data;
+                this.state.DataClase= res.data;
                 this.filtrando();
             }).catch(err => {
                 console.error(err);
@@ -360,6 +359,20 @@ class Main5 extends React.Component {
             })
     }
     /*Este get trae u nusuari por su nickname para programar su notificación*/
+    getUsuarioNotifi = async (prop) => {
+        let variable = prop.value.toLowerCase();
+        await axios.get(`http://localhost:3883/Usu/get_clases_usuario-id/clases/${variable}`)
+            .then(res => {
+                this.setState({
+                    CrearClase: res.data
+                });
+            }).catch(err => {
+                if (err) {
+                    console.error(err);
+                }
+            })
+    }
+    /*Este get trae un 1 si ya tenemos alguna invitacion de la case 0 si no*/
     getUsuarioNotifi = async (prop) => {
         let variable = prop.value.toLowerCase();
         await axios.get(`http://localhost:3883/Usu/get_clases_usuario-id/clases/${variable}`)
@@ -474,12 +487,14 @@ class Main5 extends React.Component {
         this.getClasesC();
     }
     /*Este post sirve para crear las notificaciones de los usuarios que se quieran unir a una clase*/
-    postNotificaciones0 = async (id_creador, id_clase) => {
+    postNotificaciones0 = async (id_creador, id_clase,titulo_clase) => {
         let form = {
             id_clase: id_clase,
             id_creador_clase: id_creador,
             id_otro_usuario: UsuarioI[0].id_usuario,
-            tipo_notificacion: 0
+            tipo_notificacion: 0,
+            usuario:UsuarioI[0].usuario,
+            titulo_clase:titulo_clase
         }
         axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
             .then(res => {

@@ -17,6 +17,18 @@ router.get('/get_notificaciones_count/Header2/:id_creador_clase&:id_otro_usuario
         }
     });
 });
+/*Este get sirve para traer una notificacion en caso de tener ya la de un curso*/
+router.get('/get_notificaciones_uclase/clases/:id_clase&:id_otro_usuario', (req,res) =>{
+    const {id_creador_clase, id_otro_usuario} = req.params;
+    let queryGetNotificaciones = `SELECT COUNT(*) AS conteo FROM notificaciones WHERE id_clase=? AND id_otro_usuario=? `;
+    mySqlConnection.query(queryGetNotificaciones, [id_creador_clase, id_otro_usuario], (err,rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
 /*TODOS LOS POST*/
 /*Este post sirve para crear las notificaciones de un usuario al que se le invitó a una clase*/
 router.post('/post_notificaciones_info/Clases', (req,res) =>{
