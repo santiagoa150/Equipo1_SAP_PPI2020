@@ -70,4 +70,16 @@ router.put('/Put_Usuario-calificacion/Comunidad/:id_usuario&:id_curso', (req,res
         }
     });
 });
+/*Actualizar usuario-calificación// actualizar calificacion de un curso*/
+router.put('/Put_Usuario-calificacion_calificacion/Comunidad/:id_usuario&:id_curso&:calificacion', (req,res)=>{
+    const {id_usuario, id_curso,calificacion} = req.params;    
+    let queryPutValorCurso = 'UPDATE usuario_calificacion SET calificacion=? WHERE id_usuario=? AND id_curso=?';
+    mysqlConnection.query(queryPutValorCurso, [calificacion,id_usuario,id_curso], (err, results, fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
+        }
+    });
+});
 module.exports = router;
