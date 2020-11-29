@@ -251,7 +251,7 @@ class Main1 extends React.Component {
             Propi.style.color = "black";
             Propi.value = "";
             Propi.style.border = "1px solid black";
-        }, 1500)
+        }, 1500);
     }
     /*TODOS LOS AXIOS*/
     /*TODOS LOS GETS*/

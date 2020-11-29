@@ -32,6 +32,7 @@ class Main6 extends React.Component {
         let C = await this.getCursosC();
 
         /*Cursos Iniciados*/
+        /*
         if (I.data.length > 5) {
             document.getElementById("Main6I").style.overflowY = "scroll";
         }
@@ -41,7 +42,7 @@ class Main6 extends React.Component {
             document.getElementById("CardsInner").style.alignItems = "center";
             document.getElementById("CardsInner").innerHTML = "<p>No has iniciado ningún curso.</p>";
         }
-        /*Cursos Creados*/
+        /*Cursos Creados
         if (C.data.length >= 2) {
             document.getElementById("Main6C").style.overflowY = "scroll";
         }
@@ -50,7 +51,7 @@ class Main6 extends React.Component {
             document.getElementById("CardsInner2").style.justifyContent = "center";
             document.getElementById("CardsInner2").style.alignItems = "center";
             document.getElementById("CardsInner2").innerHTML = "<p>No has creado ningún curso.</p>";
-        }
+        }*/
         let filtrado = I.data.filter(filter => filter.calificacion == null)
         this.setState({
             DataProgresos: filtrado,
@@ -204,15 +205,15 @@ class Main6 extends React.Component {
     /*Este delete elimina un curso creado*/
     deleteCursoC = async (id) => {
         await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
-            .then(res => {
-                let x = this.getCursosC();
+            .then(async (res) => {
+                let x = await this.getCursosC();
                 this.setState({
                     Modal1: {
                         return: !this.state.Modal1.return,
                         title: "",
                         id: ""
                     },
-                    DataCursosC: x
+                    DataCursosC: x.data
                 })
             }).catch(err => {
                 if (err) {

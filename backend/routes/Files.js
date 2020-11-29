@@ -8,15 +8,23 @@ const fs = require('fs');
 /*Este get trae toda la información didactica de un curso*/
 router.get('/get-Examne-Contenido/Didactico/:id&:usuario', (req, res) => {
     const { id, usuario } = req.params;
-    let queryTraerContD = 'SELECT contenido_d_text,id_creador,id, d_permiso FROM cursos WHERE id=?';
-    mysqlconection.query(queryTraerContD, [id], (err, rows, fields) => {
+    let queryTraerContD = 'SELECT contenido_d_text,id_creador,id, d_permiso, d_propio FROM cursos WHERE id=?';
+    mysqlconection.query(queryTraerContD, [id],(err, rows, fields) => {
         if (err) {
             console.error(err);
         } else {
             if (rows[0].contenido_d_text != null || rows[0].contenido_d_text != "") {
-                Fs(rows, usuario);
+                let ruta = `./public/${usuario}.html`;
+                fs.writeFile(ruta, rows[0].contenido_d_text, (err) =>{
+                    if(err){
+                        console.error(err);
+                    }else{
+                       res.json(rows);
+                    }
+                });
+            }else{
+                res.json(rows);
             }
-            res.json(rows);
         }
     });
 });
@@ -38,20 +46,15 @@ router.get('/get-Examne-Contenido-delete/Didactico/:id&:usuario', (req, res) => 
 });
 
 /*Nos muestra el archivo del contenido didáctico*/
-router.use('/file-Didactico/:usuario&:id_creador&:id', (req, res) => {
-    const { usuario, id_creador, id } = req.params;
+router.use('/file-Didactico/:usuario', (req, res) => {
+    const { usuario} = req.params;
     var path = require('path');
-    res.sendFile(path.join(__dirname, `../public/${usuario}-${id_creador}-${id}.html`));
+    res.sendFile(path.join(__dirname, `../public/${usuario}.html`));
 });
 
-/*Este metodo crea el archivo que se va a mostrar en el contenido didáctico*/
-function Fs(rows, usuario) {
-    let ruta = `./public/${usuario}-${rows[0].id_creador}-${rows[0].id}.html`;
-    fs.writeFileSync(ruta, rows[0].contenido_d_text);
-}
 /*Este metodo elimina el archivo que se va a mostrar en el contenido didactico*/
 function deleteFs(rows, usuario, id) {
-    fs.unlink(`./public/${usuario}-${rows[0].id_creador}-${id}.html`, (err) => {
+    fs.unlink(`./public/${usuario}.html`, (err) => {
         if (err) {
             console.error(err);
         } else {

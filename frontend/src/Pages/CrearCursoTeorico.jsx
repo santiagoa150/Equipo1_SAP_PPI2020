@@ -350,13 +350,25 @@ class CrearCursoTeorico extends React.Component {
             );
         }
     }
+    /*Metodo para mostrar la imagen de aviso*/
+    ImagenAviso = () =>{
+        if(this.state.dataContenidoT[0]?.contenido_t == ""){
+            return(
+                <div className="Porciento100">
+                    <img className="Porciento100IMG" src="/Images/ContenidoT.png"></img>
+                </div>
+            );
+        }
+    }
     /*Metodo para cambiar a vista previa*/
     changeVistaPrevia = () => {
         this.setState({
             bool: true
         });
         document.getElementById("SubirBoton").disabled = true;
-        document.getElementById("tablero2").innerHTML = this.state.ConteCurso;
+        if(this.state.ConteCurso != ""){
+        document.getElementById("tablero2").innerHTML = this.state.ConteCurso;   
+    }
         document.getElementById("tablero2").style.display = "block";
         document.getElementById("tablero1").style.display = "none";
     }
@@ -388,6 +400,7 @@ class CrearCursoTeorico extends React.Component {
         let form = {
             contenido_t: this.state.ConteCurso
         }
+        console.log(form);
         axios.put(`http://localhost:3883/Cur/put_cursos_contenido-t/CrearCursoTeorico/${this.props.location.state.idCursoC}`, form)
             .then(res => {
 
@@ -425,7 +438,7 @@ class CrearCursoTeorico extends React.Component {
                             })}
                         </div>
                         <div className="MainTablero" id="tablero2">
-
+                            {this.ImagenAviso()}
                         </div>
                     </div>
                     <div className="InfoCrearC">

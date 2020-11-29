@@ -1,0 +1,68 @@
+.CentradoCrearCurso{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 100%;
+}
+.CentradoCrearCurso p{
+    width: 80%;
+    text-align: justify;
+}
+.Width100{
+    width: 80%;
+}
+.textArea{
+    box-sizing: border-box;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 0;
+}
+.textArea::-webkit-scrollbar{
+    cursor: pointer;
+    background-color:  #F6EBE9;
+    width: 15px;
+}
+.textArea::-webkit-scrollbar-thumb{
+ 
+    background-color: #444140;
+}
+.SubirContD{
+    display: flex;
+    width: 100;
+    justify-content: space-around;
+    align-items: center;
+}
+.SubirConteD{
+    background-image:url(/Images/Upload.png) ;
+    background-color: white;
+    width: 37px;
+    height: 37px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: all 1000ms;
+}
+.SubirConteD:hover{
+    background-color: #7c7c7c;
+    transition: all 1000ms;
+}
+.MarginTop{
+    margin-top: 30px;
+}
+.SubirConteD1{
+    width: calc(100% - 50px);
+    height: 35px;
+}   
+.textArea:focus{
+    outline: none;
+}
+.MainTablero2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6EBE9;
+    width: 95%;
+    height: 90%;
+}

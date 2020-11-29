@@ -14,7 +14,7 @@ import CrearCursoTeorico from './Pages/CrearCursoTeorico.jsx';
 import CrearCurso from './Pages/CrearCurso.jsx';
 import Examen from './Pages/Examen.jsx';
 import Notificaciones from './Pages/Notificaciones.jsx';
-import CrearContenidoDidactico from './Pages/CrearCursoDidacico.jsx';
+import CrearContenidoDidactico from './Pages/CrearCursoDidactico.jsx';
 import {
     BrowserRouter as Router,
     Switch,

@@ -18,7 +18,8 @@ class Main8 extends React.Component {
             boleanosRedirect2: {
                 bool1: false,
                 bool2: false,
-                bool3: false
+                bool3: false,
+                path: ""
             },
             repintar: false,
             Modal2: {
@@ -27,7 +28,7 @@ class Main8 extends React.Component {
             },
             Modal3: {
                 return: false
-            },boolFoto: false
+            }, boolFoto: false
         }
     }
     async componentDidMount() {
@@ -47,7 +48,7 @@ class Main8 extends React.Component {
             }
             return (
                 <>
-                    <button className="button buttonMisCursos elefantito" id="ATrasOfF" onClick={() => this.comprobacionCampos(variable, 1)}>Cancelar</button>
+                    <button className="button buttonMisCursos elefantito" id="ATrasOfF" onClick={() => this.comprobacionCampos(variable, 1, 0)}>Cancelar</button>
                 </>
             );
         } else {
@@ -93,26 +94,26 @@ class Main8 extends React.Component {
             }
             return (
                 <>
-                    <button className="button buttonMisCursos elefantito" id={prop2} onClick={() => this.comprobacionCampos(variable, 2)}>{prop}</button>
+                    <button className="button buttonMisCursos elefantito" id={prop2} onClick={() => this.comprobacionCampos(variable, 2, prop)}>Editar</button>
                 </>
             );
         } else {
             if (this.props.location.state.location == "/misCursos") {
                 return (
-                    <Link to={{ pathname: "/CrearCursoTeorico", state: { location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }}>
-                        <button className="EstiloButtonCrearCursoC" id={prop2}>{prop}</button>
+                    <Link to={{ pathname: prop, state: { location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }}>
+                        <button className="EstiloButtonCrearCursoC" id={prop2}>Editar</button>
                     </Link>
                 );
             } else if (this.props.location.state.location == "/Clase") {
                 return (
-                    <Link to={{ pathname: "/CrearCursoTeorico", state: { InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }}>
-                        <button className="EstiloButtonCrearCursoC" id={prop2}>{prop}</button>
+                    <Link to={{ pathname: prop, state: { InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }}>
+                        <button className="EstiloButtonCrearCursoC" id={prop2}>Editar</button>
                     </Link>
                 );
             } else {
                 return (
-                    <Link to={{ pathname: "/CrearCursoTeorico", state: { pagina: "Comunidad", idCursoC: this.state.DataInfoCurso[0].id } }}>
-                        <button className="EstiloButtonCrearCursoC" id={prop2}>{prop}</button>
+                    <Link to={{ pathname: prop, state: { pagina: "Comunidad", idCursoC: this.state.DataInfoCurso[0].id } }}>
+                        <button className="EstiloButtonCrearCursoC" id={prop2}>Editar</button>
                     </Link>
                 );
             }
@@ -151,16 +152,16 @@ class Main8 extends React.Component {
         }
     }
     /*Retorno de la clase del candado*/
-    claseImgCandado = (prop) =>{
-        if(prop == 0){
-            return("/Images/CandadoOpen.png");
-        }else{
-            return("/Images/CandadoClosed.png")
+    claseImgCandado = (prop) => {
+        if (prop == 0) {
+            return ("/Images/CandadoOpen.png");
+        } else {
+            return ("/Images/CandadoClosed.png")
         }
     }
     /*ACTUALIZACIÓN DE INFORMACIÓN DE UN CURSO*/
     /*Este metodo actualiza la información requerida de un curso*/
-    comprobacionCampos = async (numero, prop2) => {
+    comprobacionCampos = async (numero, prop2, path) => {
         let titulo = document.getElementById("Titulo");
         let tematica = document.getElementById("Tematica");
         let materia = document.getElementById("Materia");
@@ -181,7 +182,7 @@ class Main8 extends React.Component {
                 logo: this.state.DataInfoCurso[0].logo
             }
             await this.putInfoRequerida(form);
-            
+
             if (prop2 == 1) {
                 if (numero == 1) {
                     this.setState({
@@ -207,18 +208,21 @@ class Main8 extends React.Component {
                     this.setState({
                         boleanosRedirect2: {
                             bool1: true,
+                            path: path
                         }
                     });
                 } else if (numero == 2) {
                     this.setState({
                         boleanosRedirect2: {
                             bool2: true,
+                            path: path
                         }
                     });
                 } else {
                     this.setState({
                         boleanosRedirect2: {
                             bool3: true,
+                            path: path
                         }
                     });
                 }
@@ -239,7 +243,7 @@ class Main8 extends React.Component {
             } if (materia.value == "") {
                 this.Time(materia, "text", "Campo sin ingresar");
             }
-        } else if(titulo.value != this.state.DataInfoCurso[0].titulo || tematica.value != this.state.DataInfoCurso[0].tematica || materia.value != this.state.DataInfoCurso[0].materia || this.state.boolFoto){
+        } else if (titulo.value != this.state.DataInfoCurso[0].titulo || tematica.value != this.state.DataInfoCurso[0].tematica || materia.value != this.state.DataInfoCurso[0].materia || this.state.boolFoto) {
             let form = {
                 titulo: titulo.value,
                 tematica: tematica.value,
@@ -255,25 +259,29 @@ class Main8 extends React.Component {
             document.getElementById("AlertasCrearCurso").style.color = "#8ac926";
             document.getElementById("EditarButonOff").disabled = true;
             document.getElementById("ATrasOfF").disabled = true;
+            document.getElementById("EditarButonOff2").disabled = true;
             setTimeout(function () {
                 document.getElementById("AlertasCrearCurso").innerHTML = " ";
                 document.getElementById("AlertasCrearCursoDiv").style.display = "none";
-            document.getElementById("EditarButonOff").disabled = false;
-            document.getElementById("ATrasOfF").disabled = false;
+                document.getElementById("EditarButonOff").disabled = false;
+                document.getElementById("ATrasOfF").disabled = false;
+                document.getElementById("EditarButonOff2").disabled = false;
             }, 1500);
-        }else {
+        } else {
             document.getElementById("AlertasCrearCurso").innerHTML = "No hay nada para guardar.";
             document.getElementById("AlertasCrearCursoDiv").style.display = "flex";
             document.getElementById("AlertasCrearCurso").style.color = "#ff595e";
             document.getElementById("ATrasOfF").disabled = true;
             document.getElementById("EditarButonOff").disabled = true;
+            document.getElementById("EditarButonOff2").disabled = true;
             setTimeout(function () {
                 document.getElementById("AlertasCrearCurso").innerHTML = " ";
                 document.getElementById("AlertasCrearCursoDiv").style.display = "none";
-            document.getElementById("EditarButonOff").disabled = false;
-            document.getElementById("ATrasOfF").disabled = false;
+                document.getElementById("EditarButonOff").disabled = false;
+                document.getElementById("ATrasOfF").disabled = false;
+                document.getElementById("EditarButonOff2").disabled = false;
             }, 1500);
-        } 
+        }
     }
     /*TIMER*/
     Time = (Propi, Propi2, Propi3) => {
@@ -464,7 +472,7 @@ class Main8 extends React.Component {
     /*Traer la información del curso que se está creando o editando*/
     getInfoCursoCreados = async () => {
         console.log("AH BIEN");
-       axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.idCursoC}`)
+        axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.idCursoC}`)
             .then(res => {
                 console.log("AH BIEN 2");
                 this.setState({
@@ -500,8 +508,8 @@ class Main8 extends React.Component {
             privacidad = 0;
         }
         if (titulo.value != "" && tematica.value != "" && materia.value != "") {
-             axios.put(`http://localhost:3883/Cur/put_cursos_privacidad/CrearCurso/${this.state.DataInfoCurso[0].id}&${privacidad}`)
-             .catch(err => {
+            axios.put(`http://localhost:3883/Cur/put_cursos_privacidad/CrearCurso/${this.state.DataInfoCurso[0].id}&${privacidad}`)
+                .catch(err => {
                     if (err) {
                         console.error(err);
                     }
@@ -556,36 +564,36 @@ class Main8 extends React.Component {
                         <form className="FormCurso">
                             <div className="Cien">
                                 <p className="Group ">Título</p>
-                                <input type="text" className="Group ICCUrso" id="Titulo" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.titulo} onChange={()=>{
-                                let valor = document.getElementById("Titulo");
-                                if(valor.value.length >= 50){
-                                    valor.value = valor.value.substring(0,49);
-                                }
-                            }}/>
+                                <input type="text" className="Group ICCUrso" id="Titulo" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.titulo} onChange={() => {
+                                    let valor = document.getElementById("Titulo");
+                                    if (valor.value.length >= 50) {
+                                        valor.value = valor.value.substring(0, 49);
+                                    }
+                                }} />
                             </div>
                             <div className="Cien">
                                 <p className="Group">Tematica</p>
-                                <input type="text" className="Group ICCUrso" id="Tematica" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.tematica} onChange={()=>{
-                                let valor = document.getElementById("Tematica");
-                                if(valor.value.length >= 50){
-                                    valor.value = valor.value.substring(0,49);
-                                }
-                            }}/>
+                                <input type="text" className="Group ICCUrso" id="Tematica" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.tematica} onChange={() => {
+                                    let valor = document.getElementById("Tematica");
+                                    if (valor.value.length >= 50) {
+                                        valor.value = valor.value.substring(0, 49);
+                                    }
+                                }} />
                             </div>
                             <div className="Cien">
                                 <p className="Group">Materia</p>
-                                <input type="text" className="Group ICCUrso" id="Materia" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.materia} onChange={()=>{
-                                let valor = document.getElementById("Materia");
-                                if(valor.value.length >= 50){
-                                    valor.value = valor.value.substring(0,49);
-                                }
-                            }}/>
+                                <input type="text" className="Group ICCUrso" id="Materia" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.materia} onChange={() => {
+                                    let valor = document.getElementById("Materia");
+                                    if (valor.value.length >= 50) {
+                                        valor.value = valor.value.substring(0, 49);
+                                    }
+                                }} />
                             </div>
                         </form>
                         <div className="BotonesContaCrearC">
                             {this.DeleteButons()}
                             <img src="/Images/Save.png" onClick={() => this.guardarInfoCurso()} className="ButtonMetodosCrearC"></img>
-                            <img src={this.claseImgCandado(this.state.DataInfoCurso[0]?.privacidad)} className="ButtonMetodosCrearC" onClick={() => {this.putPrivacidad(); this.getInfoCursoCreados();}}></img>
+                            <img src={this.claseImgCandado(this.state.DataInfoCurso[0]?.privacidad)} className="ButtonMetodosCrearC" onClick={() => { this.putPrivacidad(); this.getInfoCursoCreados(); }}></img>
                         </div>
                         <div id="AlertasCrearCursoDiv">
                             <p id="AlertasCrearCurso"></p>
@@ -613,9 +621,9 @@ class Main8 extends React.Component {
                     </div>
 
                 </div>
-                {this.state.boleanosRedirect2.bool3 && <Redirect to={{ pathname: '/CrearCursoTeorico', state: { pagina: "Comunidad", idCursoC: this.state.DataInfoCurso[0].id } }} />}
-                {this.state.boleanosRedirect2.bool2 && <Redirect to={{ pathname: '/CrearCursoTeorico', state: { InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }} />}
-                {this.state.boleanosRedirect2.bool1 && <Redirect to={{ pathname: '/CrearCursoTeorico', state: { location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }} />}
+                {this.state.boleanosRedirect2.bool3 && <Redirect to={{ pathname: this.state.boleanosRedirect2.path, state: { pagina: "Comunidad", idCursoC: this.state.DataInfoCurso[0].id } }} />}
+                {this.state.boleanosRedirect2.bool2 && <Redirect to={{ pathname: this.state.boleanosRedirect2.path, state: { InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }} />}
+                {this.state.boleanosRedirect2.bool1 && <Redirect to={{ pathname: this.state.boleanosRedirect2.path, state: { location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }} />}
                 {this.state.boleanosRedirect.bool1 && <Redirect to={{ pathname: '/misCursos', state: { location: this.props.location.state.location } }} />}
                 {this.state.boleanosRedirect.bool2 && <Redirect to={{ pathname: '/clase', state: { InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location } }} />}
                 {this.state.boleanosRedirect.bool3 && <Redirect to={{

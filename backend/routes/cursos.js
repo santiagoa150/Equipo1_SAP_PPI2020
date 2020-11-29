@@ -121,6 +121,18 @@ router.get('/get_preguntas_informacion/ContenidoE/:id_curso', (req,res) =>{
         }
     });
 });
+/*Este get trae el contenido didactico de un curso para usarlo en la creación.*/
+router.get('/get_cursos_contenido-e/CrearContenidoE/:id', (req,res) =>{
+    const{id} = req.params;
+    let queryGetContenidoE = 'SELECT contenido_d_text FROM cursos WHERE id=? AND d_permiso=1';
+    mysqlconection.query(queryGetContenidoE, [id], (err,rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
 /*TODOS LOS POST*/
 /*Este post permite guardar un curso nuevo en la database*/
 router.post('/post_cursos_informacion/misCursos', (req, res) =>{
@@ -136,7 +148,7 @@ router.post('/post_cursos_informacion/misCursos', (req, res) =>{
             }
         })
     }else{
-        queryNewCurso = 'INSERT INTO cursos(id_creador,id_clase,fecha_c,logo, contenido_t) VALUES(?,?,?,?,"")';
+        queryNewCurso = 'INSERT INTO cursos(id_creador,id_clase,fecha_c,logo, contenido_t, contenido_e_text) VALUES(?,?,?,?,"","")';
         mysqlConnection.query(queryNewCurso, [id_creador, id_clase, fecha_c,logo], (err,results,fields) =>{
             if(err){
                 console.error(err);
@@ -207,7 +219,20 @@ router.put('/put_cursos_contenido-t_setNull/CrearCurso/:id', (req,res) =>{
         if(err){
             console.error(err);
         }else{
-            res.json("CORRECTO")
+            res.json({message: "CORRECTO"})
+        }
+    });
+});
+/*Este put actualiza el contenido didactico y sus derivados*/
+router.put('/put_cursos_contenido-d/CrearCursoD/:id', (req,res) =>{
+    const {id} = req.params;
+    const {contenido_d_text, d_permiso, d_propio} = req.body;
+    let queryPutContenidoD = 'UPDATE cursos SET contenido_d_text=?, d_permiso=?, d_propio=? WHERE id=?';
+    mysqlconection.query(queryPutContenidoD, [contenido_d_text, d_permiso, d_propio, id], (err,results,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message: "CORRECTO"});
         }
     });
 });

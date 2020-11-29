@@ -48,7 +48,9 @@ BODY::-webkit-scrollbar-thumb{
         width: 36.875vw;
     }
 }
-
+textarea{
+    resize: none;
+}
 /*BOTONES E INPUTS*/
 input[type=text],input[type=password], input[type=email],input[type=date]{    
     cursor: text !important;

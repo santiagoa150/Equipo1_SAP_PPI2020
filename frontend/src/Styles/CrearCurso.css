@@ -45,7 +45,16 @@
     flex-flow: column;
     align-items: center;
 }
-
+.Porciento100{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Porciento100IMG{
+    width: 50%;
+}
 .EstiloButtonCrearCursoC:hover {
     background-color: #444140;
     color: white;
