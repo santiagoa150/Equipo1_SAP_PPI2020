@@ -13,6 +13,7 @@ class Main4 extends React.Component {
                 modal1bool: false
             },
             boool: false,
+            boool2: false,
             modal2bool: false
 
         }
@@ -32,10 +33,10 @@ class Main4 extends React.Component {
                 <>
                     <div className="ModalFondo">
                         <div className="Modal1">
-                            <div className="ModalTitle">
+                            <div className="ModalTitle  title23">
                                 <h2>Empezar examen</h2>
                             </div>
-                            <p>
+                            <p className="texto234">
                                 Si inicia el examen debera acabarlo este tiene {this.state.cant_preguntas} preguntas, ¿Desea continuar?
                             </p>
                             <button className="button buttonModal1" onClick={() => {
@@ -59,27 +60,24 @@ class Main4 extends React.Component {
 
         }
     }
-
+    textomodal = () => {
+        if (this.state.CursoData[0].d_permiso == 1) {
+            return (
+                <><p className="texto234"> El codigo de incrustado de este juego es: {this.state.CursoData[0].id} </p></>);
+        } else {
+            return (<><p className="texto234"> El creador de este curso lo bloqueo para que no se pudiera usar su juego como incrustado </p></>);
+        }
+    }
     modal2Return = () => {
         if (this.state.modal2bool) {
             return (
                 <>
                     <div className="ModalFondo">
                         <div className="Modal1">
-                            <div className="ModalTitle">
+                            <div className="ModalTitle title23">
                                 <h2>Incrustado</h2>
                             </div>
-
-                            <p>
-                                {() => {
-                                    if (this.state.CursoData[0].d_permiso==1) {
-                                        return "El codigo de incrustado de este juego es: "+this.state.CursoData[0].id ;
-                                    }else{
-                                        return "El creador de este curso lo bloqueo para que no se pudiera usar su juego como incrustado";
-                                    }
-                                }}
-                            </p>
-
+                            {this.textomodal()}
                             <button className="button buttonModal1" onClick={() => {
                                 this.setState({
                                     modal2bool: !this.state.modal2bool
@@ -126,23 +124,18 @@ class Main4 extends React.Component {
                     </div>
                     <div id="DidaCurso">
                         <i></i>
-                        <Link className="LinkCursoMain4" to={{
-                            pathname: "/Didactico",
-                            state: {
-                                id: this.state.CursoData[0]?.id,
-                                CursoData: this.state.CursoData[0]?.id,
-                                pagina: this.props.location.state.pagina
-                            }
-                        }}>
-
-                            <button >Jugar</button>
-                        </Link>
-                        <img src="./images/InfoCurso.png" className="incrustado" onClick={() => {
+                            <button className="LinkCursoMain4" onClick={() => {
                                 this.setState({
-                                    modal2bool: !this.state.modal2bool
+                                    boool2: true
                                 })
                             }
-                            }/>
+                            }>Jugar</button>
+                        <img src="./images/InfoCurso.png" className="incrustado" onClick={() => {
+                            this.setState({
+                                modal2bool: !this.state.modal2bool
+                            })
+                        }
+                        } />
                     </div>
                     <div id="ExaCurso">
                         <button className="LinkCursoMain4" onClick={() => {
@@ -160,7 +153,14 @@ class Main4 extends React.Component {
                         id: this.state.CursoData[0]?.id,
                         cantidad: this.state.CursoData[0]?.cant_preguntas,
                         preguntas: this.state.preguntas,
-                        calificacion: this.state.CursoData[0]?.calificacion,
+                        pagina: this.props.location.state.pagina
+                    }
+                }} />}
+                {this.state.boool2 && <Redirect to={{
+                    pathname: "/Didactico",
+                    state: {
+                        id: this.state.CursoData[0]?.id,
+                        CursoData: this.state.CursoData[0]?.id,
                         pagina: this.props.location.state.pagina
                     }
                 }} />}
