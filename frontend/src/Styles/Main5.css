@@ -162,7 +162,7 @@
     display: grid;
     background-color: rgb(0, 0, 0, 0.8);
     grid-template-columns: 12.5% 35% 5% 35% 12.5%;
-    grid-template-rows: 7% 86% 7%;
+    grid-template-rows: 15% 70% 15%;
 }
 
 .PopUp2_ {

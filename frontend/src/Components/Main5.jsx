@@ -155,7 +155,12 @@ class Main5 extends React.Component {
                         <div id="PopUpPart1">
                             <div className="GroupC">
                                 <p className="Group">Nombre</p>
-                                <input type="text" id="NombreClase" className="Group inputCrearClase" autoComplete="off" />
+                                <input type="text" id="NombreClase" className="Group inputCrearClase" autoComplete="off" onChange={()=>{
+                                let valor = document.getElementById("NombreClase");
+                                if(valor.value.length >= 50){
+                                    valor.value = valor.value.substring(0,49);
+                                }
+                            }}/>
                             </div>
                             <div className="GroupC">
                                 <p className="Group">Usuario</p>

@@ -24,7 +24,7 @@ class CrearCursoTeorico extends React.Component {
     }
     async componentDidMount() {
         await this.getContenidoT();
-        if (this.state.dataContenidoT[0]?.contenido_t == null) {
+        if (this.state.dataContenidoT[0]?.contenido_t == "") {
             this.setState({ bool: false });
             document.getElementById("SubirBoton").disabled = false;
             document.getElementById("tablero2").style.display = "none";
@@ -40,7 +40,6 @@ class CrearCursoTeorico extends React.Component {
         if (this.state.dataContenidoT[0]?.contenido_t != "") {
             this.setState({ Bloques: this.state.dataContenidoT[0].contenido_t?.split("<!--->") });
         } 
-        
     }
     componentDidUpdate() {
         this.Pintarvistaprevia();
