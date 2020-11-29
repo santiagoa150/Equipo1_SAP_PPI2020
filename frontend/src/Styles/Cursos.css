@@ -8,7 +8,7 @@
 .formGames{
     margin: -2px !important;
     width: 100%;   
-    min-height: calc(100vh - 84px); 
+    height: calc(100vh - 84px); 
 }
 #Main4Container {
     grid-gap: 10px;

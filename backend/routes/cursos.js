@@ -60,6 +60,7 @@ router.get('/get_cursos-Comunidad_Integrado/Curso/:id', (req, res) => {
         }
     });
 });
+
 /*Este metodo trae todos los cursos creados*/
 router.get('/get_cursos_Mis_cursos/Creados/:id_creador', (req, res) =>{
     const {id_creador} = req.params;

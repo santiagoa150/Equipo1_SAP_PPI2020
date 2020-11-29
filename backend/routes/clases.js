@@ -31,7 +31,7 @@ router.get('/Get-Clases-id/clases/:fecha_c&:id_creador',(req,res) =>{
 /*Este get sirve para traer una clase por su id*/
 router.get('/Get-Clases-id_Min/clases/:id_clase', (req,res) =>{
     const {id_clase} =req.params;
-    let queryGetIdClase = 'SELECT clases.id_creador, clases.auto_u, clases.id_clase, clases.titulo, usuarios.usuario FROM clases JOIN usuarios ON clases.id_creador = usuario.id_usuario WHERE id_clase=?';
+    let queryGetIdClase = 'SELECT clases.id_creador, clases.auto_u, clases.id_clase, clases.titulo, usuarios.usuario FROM clases JOIN usuarios ON clases.id_creador = usuarios.id_usuario WHERE id_clase=?';
     mysqlconection.query(queryGetIdClase, [id_clase], (err,rows,fields) =>{
         if(err){
             console.error(err);

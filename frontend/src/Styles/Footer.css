@@ -8,3 +8,8 @@
     height: 15px;
     width: calc(100% - 10px);
 }
+@media(max-width: 350px){
+    #Footer{
+        height: 35px;
+    }
+}

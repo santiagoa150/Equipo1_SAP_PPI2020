@@ -2,8 +2,8 @@
     width: 100%;
     min-height: calc(100vh - 50px);
     display: grid;
-    grid-template-columns: 30% 70%;
-    grid-template-rows: 100%;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 100%
 }
 .Main10Switch{
     display: flex;
@@ -15,6 +15,10 @@
     background-color: #7c7c7c;
 }
 .Main10Contain{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
     grid-column: 2/3;
     grid-row: 1/2;
 }
@@ -34,7 +38,72 @@
     background-color: #FFA998 !important;
     color: black !important;
 }
+.CardRecibidos{
+    border-radius: 10px;
+    margin: 10px 0 0 0;
+    width: 80%;
+    display: flex;
+    background-color: #7c7c7c;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.PCard, .PCard3{
+    width: 70%;
+}
+.PCard2, .PCard4{
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.bCard{
+    width: 40%;
+    height: 35px;
+}
+.bCard2{
+    width: 60%;
+    height: 35px;
+}
+@media(max-width: 950px){
+    .PCard{
+        width: 50%;
+    }
+    .PCard2{
+        width: 45%;    
+    }
+    .bCard{
+        width: 48%;
+    }
+    .PCard3{
+        width: 60%;
+    }
+    .PCard4{
+        width: 40%;
+    }
+}
 @media(max-width:500px){
+    #RecibidosNoti{
+        background-size: 95%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/Images/Casa.png);
+    }
+    #EnviadosNoti{
+        background-size: 95%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/Images/CasaG.png);
+    }
+    .CardRecibidos{
+        width: 95%;
+        flex-wrap: wrap;
+    }
+    .PCard, .PCard3{
+        width: 100%;
+    }
+    .PCard2, .PCard4{
+        width: 100%;    
+    }
     .Main10Container{
         grid-template-columns: 15% 85%;
     }

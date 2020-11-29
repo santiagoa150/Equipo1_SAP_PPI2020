@@ -162,7 +162,7 @@
     display: grid;
     background-color: rgb(0, 0, 0, 0.8);
     grid-template-columns: 12.5% 35% 5% 35% 12.5%;
-    grid-template-rows: 15% 1fr 15%;
+    grid-template-rows: 7% 86% 7%;
 }
 
 .PopUp2_ {
@@ -303,6 +303,7 @@
     align-items: center;
     justify-content: space-around;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .PopUp1_ {
@@ -475,8 +476,8 @@
     }
     .BotonFlechita {
         border-radius: 10px;
-        width: 10vw;
-        height: 10vw;
+        width: 40px;
+        height: 40px;
     }
     .BotonFlechita:hover {
         background-color: #7c7c7c;
@@ -525,13 +526,13 @@
     .PopUp2_ {
         display: none;
         width: 90%;
-        height: 70%;
+        height: 80%;
     }
     .PopUp1_ {
         grid-template-columns: 100%;
         grid-template-rows: max-content 1fr max-content;
         width: 90%;
-        height: 70%;
+        height: 80%;
     }
     #XimageCrearClase {
         grid-row: 3/4;
