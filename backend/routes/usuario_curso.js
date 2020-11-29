@@ -32,11 +32,25 @@ router.put('/guardar_valoracion-Comunidad_Integrado/Curso/:id_curso', (req, res)
 /*Traer- Cursos iniciados(Miscursos)*/
 router.get('/traer-cursosIniciados/misCursos/:id_usuario', (req, res) => {
     const { id_usuario } = req.params;
-    let queryTraerCursosIniciados = `SELECT *
+    let queryTraerCursosIniciados = `SELECT calificacion
     FROM cursos
     JOIN usuario_calificacion
     ON cursos.id=usuario_calificacion.id_curso WHERE usuario_calificacion.id_usuario = ?`;
     mysqlconection.query(queryTraerCursosIniciados, [id_usuario], (err, rows, fields) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.json(rows);
+        }
+    });
+});
+/*Traer- Cursos iniciados(Miscursos)*/
+router.get('/traer-calificacion/Examen/:id_usuario&:id_curso', (req, res) => {
+    const { id_usuario, id_curso } = req.params;
+    let queryTraerCursosIniciados = `SELECT *
+    FROM  usuario_calificacion
+    WHERE id_usuario = ? AND id_curso=?`;
+    mysqlconection.query(queryTraerCursosIniciados, [id_usuario , id_curso], (err, rows, fields) => {
         if (err) {
             console.error(err);
         } else {

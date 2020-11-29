@@ -1,11 +1,12 @@
 .juegoF {
-    min-height: calc(100vh - 20px);
+    min-height: calc(100vh - 80px);
     width: 100%;
     display: flex;
     flex-flow: column;
     background-size: 100% auto;
     justify-content: space-around;
     text-align: center;
+    background-color: #f6EBE9;
     align-items: center;
     background-repeat: no-repeat;
     background-position-x: 0;
@@ -30,6 +31,7 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
+    border-radius: 10px;
     background-color: rgb(0, 0, 0, 0.5);
 }
 
@@ -39,76 +41,6 @@
     width: 69vw;
     color: honeydew;
 }
-
-.fimag {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background-color: rgb(256, 256, 256, 0.6);
-}
-.fondo0{
-    background-image: url("../images/fondo0.png");
-}
-.fondo1{
-    background-image: url("../images/fondo1.png");
-}
-.fondo2{
-    background-image: url("../images/fondo2.png");
-}
-.fondo3{
-    background-image: url("../images/fondo3.png");
-}
-.fondo4{
-    background-image: url("../images/fondo4.png");
-}
-.fondo5{
-    background-image: url("../images/fondo5.png");
-}
-.fondo6{
-    background-image: url("../images/fondo6.png");
-}
-.fondo7{
-    background-image: url("../images/fondo7.png");
-}
-.fondo8{
-    background-image: url("../images/fondo8.png");
-}
-.fondo9{
-    background-image: url("../images/fondo9.png");
-}
-.fondo10{
-    background-image: url("../images/fondo10.png");
-}
-.fondo11{
-    background-image: url("../images/fondo11.png");
-}
-.fondo12{
-    background-image: url("../images/fondo12.png");
-}
-.fondo13{
-    background-image: url("../images/fondo13.png");
-}
-.fondo14{
-    background-image: url("../images/fondo14.png");
-}
-.fondo15{
-    background-image: url("../images/fondo15.png");
-}
-.fondo16{
-    background-image: url("../images/fondo16.png");
-}
-.fondo17{
-    background-image: url("../images/fondo17.png");
-}
-.fondo18{
-    background-image: url("../images/fondo18.png");
-}
-.logo {
-    width: 13vw;
-    padding: 3vw;
-}
-
 .opcionesJ {
     display: flex;
     align-items: center;
@@ -116,7 +48,8 @@
     padding: 2vw;
     justify-content: space-around;
     width: 95%;
-    background-color: rgb(256, 256, 256, 0.6);
+    background-color: rgb(100, 100, 100, 0.4);
+    border-radius: 15px;
 }
 
 .botonJ {
@@ -139,7 +72,7 @@
 }
 .botonJ:hover{
     box-shadow: 4px 8px 20px black ;
-    background-color: rgb(196, 196, 250);
+    background-color: #7c7c7c;
 }
 .botonV{
     border: none;

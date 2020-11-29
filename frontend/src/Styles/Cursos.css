@@ -6,6 +6,25 @@
     background-color: #444140;
 }
 .formGames{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    border: 0;
+    width: 99%;   
+    min-height: calc(100vh - 70px);
+    height: max-content;
+}
+.texto234{
+    margin: 10px;
+}
+.title23{
+    width: calc(100% - 30px);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.formGamesalert{
     margin-left: 5px;
     margin-right: 5px;
     box-sizing: border-box;
