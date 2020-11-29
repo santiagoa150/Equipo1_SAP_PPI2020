@@ -47,7 +47,7 @@ class Main8 extends React.Component {
             }
             return (
                 <>
-                    <button className="button buttonMisCursos elefantito" onClick={() => this.comprobacionCampos(variable, 1)}>Cancelar</button>
+                    <button className="button buttonMisCursos elefantito" id="ATrasOfF" onClick={() => this.comprobacionCampos(variable, 1)}>Cancelar</button>
                 </>
             );
         } else {
@@ -55,7 +55,7 @@ class Main8 extends React.Component {
                 return (
                     <>
                         <Link className="buttonAlgo" to={{ pathname: '/misCursos', state: { location: this.props.location.state.location } }}>
-                            <button className="button buttonMisCursos">Cancelar</button>
+                            <button className="button buttonMisCursos" id="ATrasOfF">Cancelar</button>
                         </Link>
                     </>
                 );
@@ -63,7 +63,7 @@ class Main8 extends React.Component {
                 return (
                     <>
                         <Link className="buttonAlgo" to={{ pathname: '/clase', state: { InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location } }}>
-                            <button className="button buttonMisCursos">Cancelar</button>
+                            <button className="button buttonMisCursos" id="ATrasOfF">Cancelar</button>
                         </Link>
                     </>
                 );
@@ -73,7 +73,7 @@ class Main8 extends React.Component {
                         <Link className="buttonAlgo" to={{
                             pathname: '/Integrados', state: { pagina: "Comunidad" }
                         }}>
-                            <button className="button buttonMisCursos">Cancelar</button>
+                            <button className="button buttonMisCursos" id="ATrasOfF">Cancelar</button>
                         </Link>
                     </>
                 );
@@ -81,7 +81,7 @@ class Main8 extends React.Component {
         }
     }
     /*Retorno del botón editar en curso teorico*/
-    Botones2 = () => {
+    Botones2 = (prop, prop2) => {
         let variable = 0;
         if (this.state.DataInfoCurso2[0]?.titulo == null && this.state.DataInfoCurso2[0]?.tematica == null && this.state.DataInfoCurso2[0]?.materia == null) {
             if (this.props.location.state.location == "/misCursos") {
@@ -93,26 +93,26 @@ class Main8 extends React.Component {
             }
             return (
                 <>
-                    <button className="button buttonMisCursos elefantito" onClick={() => this.comprobacionCampos(variable, 2)}>Editar</button>
+                    <button className="button buttonMisCursos elefantito" id={prop2} onClick={() => this.comprobacionCampos(variable, 2)}>{prop}</button>
                 </>
             );
         } else {
             if (this.props.location.state.location == "/misCursos") {
                 return (
                     <Link to={{ pathname: "/CrearCursoTeorico", state: { location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }}>
-                        <button className="EstiloButtonCrearCursoC">Editar</button>
+                        <button className="EstiloButtonCrearCursoC" id={prop2}>{prop}</button>
                     </Link>
                 );
             } else if (this.props.location.state.location == "/Clase") {
                 return (
                     <Link to={{ pathname: "/CrearCursoTeorico", state: { InfoClass: this.props.location.state.InfoClass, location: this.props.location.state.location, idCursoC: this.state.DataInfoCurso[0].id } }}>
-                        <button className="EstiloButtonCrearCursoC">Editar</button>
+                        <button className="EstiloButtonCrearCursoC" id={prop2}>{prop}</button>
                     </Link>
                 );
             } else {
                 return (
                     <Link to={{ pathname: "/CrearCursoTeorico", state: { pagina: "Comunidad", idCursoC: this.state.DataInfoCurso[0].id } }}>
-                        <button className="EstiloButtonCrearCursoC">Editar</button>
+                        <button className="EstiloButtonCrearCursoC" id={prop2}>{prop}</button>
                     </Link>
                 );
             }
@@ -253,17 +253,25 @@ class Main8 extends React.Component {
             document.getElementById("AlertasCrearCurso").innerHTML = "Cambios guardados";
             document.getElementById("AlertasCrearCursoDiv").style.display = "flex";
             document.getElementById("AlertasCrearCurso").style.color = "#8ac926";
+            document.getElementById("EditarButonOff").disabled = true;
+            document.getElementById("ATrasOfF").disabled = true;
             setTimeout(function () {
                 document.getElementById("AlertasCrearCurso").innerHTML = " ";
                 document.getElementById("AlertasCrearCursoDiv").style.display = "none";
+            document.getElementById("EditarButonOff").disabled = false;
+            document.getElementById("ATrasOfF").disabled = false;
             }, 1500);
         }else {
             document.getElementById("AlertasCrearCurso").innerHTML = "No hay nada para guardar.";
             document.getElementById("AlertasCrearCursoDiv").style.display = "flex";
             document.getElementById("AlertasCrearCurso").style.color = "#ff595e";
+            document.getElementById("ATrasOfF").disabled = true;
+            document.getElementById("EditarButonOff").disabled = true;
             setTimeout(function () {
                 document.getElementById("AlertasCrearCurso").innerHTML = " ";
                 document.getElementById("AlertasCrearCursoDiv").style.display = "none";
+            document.getElementById("EditarButonOff").disabled = false;
+            document.getElementById("ATrasOfF").disabled = false;
             }, 1500);
         } 
     }
@@ -379,7 +387,7 @@ class Main8 extends React.Component {
                     <div id="PopUpPerfíl">
                         <div id="ContenedorPopUp2">
                             <div className="TitleModal1Perfíl3">
-                                <h2>¿Estas seguro de que quieres eliminar el curso {this.state.DataInfoCurso[0].titulo}?</h2>
+                                <h2>¿Estas seguro de que quieres eliminar este curso?</h2>
                             </div>
                             <div className="MainModal2Perfíl">
                                 <div className="BotonesCont">
@@ -548,15 +556,30 @@ class Main8 extends React.Component {
                         <form className="FormCurso">
                             <div className="Cien">
                                 <p className="Group ">Título</p>
-                                <input type="text" className="Group ICCUrso" id="Titulo" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.titulo} />
+                                <input type="text" className="Group ICCUrso" id="Titulo" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.titulo} onChange={()=>{
+                                let valor = document.getElementById("Titulo");
+                                if(valor.value.length >= 50){
+                                    valor.value = valor.value.substring(0,49);
+                                }
+                            }}/>
                             </div>
                             <div className="Cien">
                                 <p className="Group">Tematica</p>
-                                <input type="text" className="Group ICCUrso" id="Tematica" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.tematica} />
+                                <input type="text" className="Group ICCUrso" id="Tematica" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.tematica} onChange={()=>{
+                                let valor = document.getElementById("Tematica");
+                                if(valor.value.length >= 50){
+                                    valor.value = valor.value.substring(0,49);
+                                }
+                            }}/>
                             </div>
                             <div className="Cien">
                                 <p className="Group">Materia</p>
-                                <input type="text" className="Group ICCUrso" id="Materia" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.materia} />
+                                <input type="text" className="Group ICCUrso" id="Materia" autoComplete="off" defaultValue={this.state.DataInfoCurso[0]?.materia} onChange={()=>{
+                                let valor = document.getElementById("Materia");
+                                if(valor.value.length >= 50){
+                                    valor.value = valor.value.substring(0,49);
+                                }
+                            }}/>
                             </div>
                         </form>
                         <div className="BotonesContaCrearC">
@@ -572,14 +595,12 @@ class Main8 extends React.Component {
                     <div className="CardsCrearContenido">
                         <div className="CardCrearCursoContenido">
                             <h3>Teoría</h3>
-                            {this.Botones2()}
+                            {this.Botones2("/CrearCursoTeorico", "EditarButonOff")}
                             <button className="EstiloButtonCrearCursoC" onClick={() => { this.Modal3() }}>Borrar contenido</button>
                         </div>
                         <div className="CardCrearCursoContenido">
                             <h3>Minijuego</h3>
-
-                            <button className="EstiloButtonCrearCursoC">Editar</button>
-
+                            {this.Botones2("/CrearCursoDidactico", "EditarButonOff2")}
                             <button className="EstiloButtonCrearCursoC">Borrar contenido</button>
                         </div>
                         <div className="CardCrearCursoContenido">

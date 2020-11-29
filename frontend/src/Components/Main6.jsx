@@ -3,7 +3,6 @@ import '../Styles/Main6.css';
 import axios from 'axios';
 import { UsuarioI } from '../Utiles/Mocks/UsuarioI';
 import { Link, Redirect } from 'react-router-dom';
-
 let bool = true, bool2 = true;
 let newDate;
 class Main6 extends React.Component {
@@ -18,9 +17,10 @@ class Main6 extends React.Component {
                 return: false,
                 title: "",
                 id: 0
-            }
+            },
+            tipoCursosI: false
         }
-    }    
+    }
     componentWidUpdate() {
         document.getElementById("carga").style.display = "block";
     }
@@ -29,13 +29,13 @@ class Main6 extends React.Component {
     }
     async componentDidMount() {
         let I = await this.getCursosI();
-        let C = await this.getCursosC();        
-        
+        let C = await this.getCursosC();
+
         /*Cursos Iniciados*/
-        if ( I.data.length > 5) {
+        if (I.data.length > 5) {
             document.getElementById("Main6I").style.overflowY = "scroll";
         }
-        if ( I.data.length == 0) {
+        if (I.data.length == 0) {
             document.getElementById("CardsInner").style.display = "flex";
             document.getElementById("CardsInner").style.justifyContent = "center";
             document.getElementById("CardsInner").style.alignItems = "center";
@@ -50,9 +50,10 @@ class Main6 extends React.Component {
             document.getElementById("CardsInner2").style.justifyContent = "center";
             document.getElementById("CardsInner2").style.alignItems = "center";
             document.getElementById("CardsInner2").innerHTML = "<p>No has creado ningún curso.</p>";
-        }        
-        this.setState({ 
-            DataProgresos: I.data,
+        }
+        let filtrado = I.data.filter(filter => filter.calificacion == null)
+        this.setState({
+            DataProgresos: filtrado,
             DataCursosC: C.data
         });
     }
@@ -93,6 +94,24 @@ class Main6 extends React.Component {
             bool2 = false
         }
     }
+    /*Este metodo muestra o no los cursos terminado*/
+    Accion3 = () => {
+        if (!bool) {
+            document.getElementById("CardsInner").style.display = "block";
+            document.getElementById("CursosI2").innerHTML = "Cursos terminados ▼";
+            if (this.state.DataProgresos.length == 0) {
+                document.getElementById("CardsInner").style.display = "flex";
+                document.getElementById("CardsInner").style.justifyContent = "center";
+                document.getElementById("CardsInner").style.alignItems = "center";
+                document.getElementById("CardsInner").innerHTML = "<p>No has iniciado ningún curso.</p>";
+            }
+            bool = true
+        } else {
+            document.getElementById("CursosI2").innerHTML = "Cursos terminados ►"
+            document.getElementById("CardsInner").style.display = "none";
+            bool = false
+        }
+    }
     /*MODAL1*/
     /*Esta función activa o desactiva el modal1*/
     Modal1 = (prop, prop2) => {
@@ -117,7 +136,7 @@ class Main6 extends React.Component {
                             <div className="MainModal2Perfíl">
                                 <div className="BotonesCont">
                                     <button className="button SubImg2" onClick={() => { this.deleteCursoC(this.state.Modal1.id); }}>Si</button>
-                                    <button className="button SubImg2" onClick={() => this.Modal1("","")}>No</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal1("", "")}>No</button>
                                 </div>
                             </div>
                         </div>
@@ -185,8 +204,8 @@ class Main6 extends React.Component {
     /*Este delete elimina un curso creado*/
     deleteCursoC = async (id) => {
         await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
-            .then(res => {                                
-                let x= this.getCursosC();
+            .then(res => {
+                let x = this.getCursosC();
                 this.setState({
                     Modal1: {
                         return: !this.state.Modal1.return,
@@ -194,12 +213,48 @@ class Main6 extends React.Component {
                         id: ""
                     },
                     DataCursosC: x
-                })      
+                })
             }).catch(err => {
                 if (err) {
                     console.error(err);
                 }
-            });         
+            });
+    }
+    /*METODO PARA CAMBIAR EL FILTRADO DE LOS CURSOS I O CURSOS TERMINADOS*/
+    CambioFiltroI = async (prop) => {
+        if (this.state.tipoCursosI) {
+            if (bool) {
+                document.getElementById("CardsInner").style.display = "block";
+                document.getElementById("CursosI").innerHTML = "Cursos iniciados ▼";
+            } else {
+                document.getElementById("CursosI").innerHTML = "Cursos iniciados ►"
+                document.getElementById("CardsInner").style.display = "none";
+            }
+        } else {
+            if (bool) {
+                document.getElementById("CardsInner").style.display = "block";
+                document.getElementById("CursosI2").innerHTML = "Cursos terminados ▼";
+            } else {
+                document.getElementById("CursosI2").innerHTML = "Cursos terminados ►"
+                document.getElementById("CardsInner").style.display = "none";
+            }
+        }
+
+        let I = await this.getCursosI();
+        let filtrado;
+        if (!prop) {
+            filtrado = I.data.filter(filter => filter.calificacion == null);
+            document.getElementById("CursosI2").style.display = "none";
+            document.getElementById("CursosI").style.display = "block";
+        } else {
+            filtrado = I.data.filter(filter => filter.calificacion != null);
+            document.getElementById("CursosI").style.display = "none";
+            document.getElementById("CursosI2").style.display = "block";
+        }
+        this.setState({
+            DataProgresos: filtrado,
+            tipoCursosI: prop
+        });
     }
     render() {
         return (
@@ -208,8 +263,15 @@ class Main6 extends React.Component {
                 {this.Modal1Return()}
                 <div id="Main6Container">
                     <div id="Main6I">
-                        <div className="ButtonMisCursosC">
-                            <button className="button buttonMisCursos CIMB" id="CursosI" onClick={this.Accion1}>Cursos iniciado ▼</button>
+                        <div className="ButtonMisCursosC2">
+                            <div className="Flechita30" onClick={() => this.CambioFiltroI(!this.state.tipoCursosI)}>
+                                <p>◄</p>
+                            </div>
+                            <button className="button buttonMisCursos2 CIMB" id="CursosI" onClick={this.Accion1}>Cursos iniciado ▼</button>
+                            <button className="button buttonMisCursos2 CIMB" id="CursosI2" onClick={this.Accion3}>Cursos terminados ▼</button>
+                            <div className="Flechita30" onClick={() => this.CambioFiltroI(!this.state.tipoCursosI)}>
+                                <p>►</p>
+                            </div>
                         </div>
                         <div id="CardsInner">
                             {this.state.DataProgresos.map((Esito, index) => {
@@ -252,7 +314,7 @@ class Main6 extends React.Component {
                                         </div>
                                         <div className="CursoIC">
                                             <img className="ImgCI" src={Esito.logo} />
-                                            <div className="CursoIC2">
+                                            <div className="CursoIC2 CursoIC24">
                                                 <div className="InfoContMini">
                                                     <h5 className="TitlesI">Tematica: <br /> {Esito.tematica}</h5>
                                                     <h5 className="TitlesI">Materia: <br /> {Esito.materia}</h5>

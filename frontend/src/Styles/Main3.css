@@ -6,7 +6,7 @@
     justify-content: space-around;
 }
 .CursoIC2 {
-    width: 100%;
+    width: 80%;
     flex-wrap: wrap-reverse;
     display: flex;
     align-items: center;
@@ -66,7 +66,7 @@
     border: 1px solid #444140;
     box-shadow: 2px 2px 10px black;
     border-radius: 5px;
-    width: 25vh;
+    width: 22vh;
     min-width: 100px;
     max-width: 15vw;
 

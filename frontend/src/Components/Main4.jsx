@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import '../Styles/pantcarga.css';
 import { Link, withRouter } from 'react-router-dom';
+import {UsuarioI} from '../Utiles/Mocks/UsuarioI';
 class Main4 extends React.Component {
     constructor(props) {
         super(props);

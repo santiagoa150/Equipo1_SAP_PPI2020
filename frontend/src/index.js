@@ -14,6 +14,7 @@ import CrearCursoTeorico from './Pages/CrearCursoTeorico.jsx';
 import CrearCurso from './Pages/CrearCurso.jsx';
 import Examen from './Pages/Examen.jsx';
 import Notificaciones from './Pages/Notificaciones.jsx';
+import CrearContenidoDidactico from './Pages/CrearCursoDidacico.jsx';
 import {
     BrowserRouter as Router,
     Switch,
@@ -52,6 +53,7 @@ ReactDOM.render(
                 </Route>
                 <Route path="/CrearCurso" component={CrearCurso}/>
                 <Route path="/CrearCursoTeorico" component={CrearCursoTeorico}/>
+                <Route path="/CrearCursoDidactico" component={CrearContenidoDidactico}/>
                 <Route path="/Clase" component={Clase}/>
                 <Route path="/Notificaciones" component={Notificaciones}/>
                 <Route path="/" >
