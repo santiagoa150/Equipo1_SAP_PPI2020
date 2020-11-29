@@ -8,12 +8,14 @@ const fs = require('fs');
 /*Este get trae toda la información didactica de un curso*/
 router.get('/get-Examne-Contenido/Didactico/:id&:usuario', (req, res) => {
     const { id, usuario } = req.params;
-    let queryTraerContD = 'SELECT contenido_d_text,id_creador,id, contenido_d_bool, contenido_d_bool2 FROM cursos WHERE id=?';
+    let queryTraerContD = 'SELECT contenido_d_text,id_creador,id, d_permiso FROM cursos WHERE id=?';
     mysqlconection.query(queryTraerContD, [id], (err, rows, fields) => {
         if (err) {
             console.error(err);
         } else {
-            Fs(rows, usuario);
+            if (rows[0].contenido_d_text != null || rows[0].contenido_d_text != "") {
+                Fs(rows, usuario);
+            }
             res.json(rows);
         }
     });
@@ -22,13 +24,15 @@ router.get('/get-Examne-Contenido/Didactico/:id&:usuario', (req, res) => {
 /*Este get nos elimina el archivo creado al salir del componente*/
 router.get('/get-Examne-Contenido-delete/Didactico/:id&:usuario', (req, res) => {
     const { id, usuario } = req.params;
-    let queryTraerContD = 'SELECT id_creador FROM cursos WHERE id=?';
+    let queryTraerContD = 'SELECT id_creador, contenido_d_text FROM cursos WHERE id=?';
     mysqlconection.query(queryTraerContD, [id], (err, rows, fields) => {
         if (err) {
             console.error(err);
         } else {
-            deleteFs(rows, usuario, id);
-            res.json({message: "Correcto"});
+            if (rows[0].contenido_d_text != null || rows[0].contenido_d_text != "") {
+                deleteFs(rows, usuario, id);
+            }
+            res.json({ message: "Correcto" });
         }
     });
 });
@@ -46,11 +50,11 @@ function Fs(rows, usuario) {
     fs.writeFileSync(ruta, rows[0].contenido_d_text);
 }
 /*Este metodo elimina el archivo que se va a mostrar en el contenido didactico*/
-function deleteFs(rows, usuario, id){
-    fs.unlink(`./public/${usuario}-${rows[0].id_creador}-${id}.html`, (err)=>{
-        if(err){
+function deleteFs(rows, usuario, id) {
+    fs.unlink(`./public/${usuario}-${rows[0].id_creador}-${id}.html`, (err) => {
+        if (err) {
             console.error(err);
-        }else{
+        } else {
             console.log("Se borró el archivo");
         }
     })
