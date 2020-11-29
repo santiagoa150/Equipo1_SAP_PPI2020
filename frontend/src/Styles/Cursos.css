@@ -6,10 +6,15 @@
     background-color: #444140;
 }
 .formGames{
-    margin: -2px !important;
-    width: 100%;   
-    height: calc(100vh - 84px); 
+    margin-left: 5px;
+    margin-right: 5px;
+    box-sizing: border-box;
+    border: 0;
+    width: calc(100% - 10px);   
+    min-height: calc(100vh - 60px);
+    height: max-content;
 }
+
 #Main4Container {
     grid-gap: 10px;
     margin-top: 10px;
@@ -17,7 +22,7 @@
     width: 100%;
     justify-content: center;
     display: grid;
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 50px);
     grid-template-columns: 40% 40%;
     grid-template-rows: max-content max-content;
 }
@@ -35,17 +40,21 @@
     cursor: initial;
     text-decoration: none;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     grid-row: 2/3;
     grid-column: 1/2;
 }
-
+.incrustado{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
 #ExaCurso {
     cursor: initial;
     text-decoration: none;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     grid-row: 2/3;
     grid-column: 2/3;
