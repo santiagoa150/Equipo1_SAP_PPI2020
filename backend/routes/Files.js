@@ -37,9 +37,7 @@ router.get('/get-Examne-Contenido-delete/Didactico/:id&:usuario', (req, res) => 
         if (err) {
             console.error(err);
         } else {
-            if (rows[0].contenido_d_text != null || rows[0].contenido_d_text != "") {
-                deleteFs(rows, usuario, id);
-            }
+                deleteFs(usuario);
             res.json({ message: "Correcto" });
         }
     });
@@ -53,12 +51,11 @@ router.use('/file-Didactico/:usuario', (req, res) => {
 });
 
 /*Este metodo elimina el archivo que se va a mostrar en el contenido didactico*/
-function deleteFs(rows, usuario, id) {
+function deleteFs(usuario) {
     fs.unlink(`./public/${usuario}.html`, (err) => {
         if (err) {
             console.error(err);
         } else {
-            console.log("Se borró el archivo");
         }
     })
 }

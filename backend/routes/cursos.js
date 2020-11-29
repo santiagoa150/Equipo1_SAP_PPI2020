@@ -139,7 +139,7 @@ router.post('/post_cursos_informacion/misCursos', (req, res) =>{
     const {id_creador, id_clase, fecha_c, logo} = req.body;
     let queryNewCurso = "";
     if(id_clase == null){
-        queryNewCurso = 'INSERT INTO cursos(id_creador, fecha_c, logo, contenido_t) VALUES(?,?,?,"")';
+        queryNewCurso = 'INSERT INTO cursos(id_creador, fecha_c, logo, contenido_t, contenido_d_text) VALUES(?,?,?,"", "")';
         mysqlConnection.query(queryNewCurso, [id_creador, fecha_c,logo], (err, results, fields) =>{
             if(err){
                 console.error(err);
@@ -148,7 +148,7 @@ router.post('/post_cursos_informacion/misCursos', (req, res) =>{
             }
         })
     }else{
-        queryNewCurso = 'INSERT INTO cursos(id_creador,id_clase,fecha_c,logo, contenido_t, contenido_e_text) VALUES(?,?,?,?,"","")';
+        queryNewCurso = 'INSERT INTO cursos(id_creador,id_clase,fecha_c,logo, contenido_t, contenido_d_text) VALUES(?,?,?,?,"","")';
         mysqlConnection.query(queryNewCurso, [id_creador, id_clase, fecha_c,logo], (err,results,fields) =>{
             if(err){
                 console.error(err);

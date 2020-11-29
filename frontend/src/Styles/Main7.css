@@ -15,7 +15,7 @@
     grid-column: 2/3;
 }
 #UsersMain7::-webkit-scrollbar{
-    background-color:   wheat;
+    background-color:  #7c7c7c;
     width: 12px;
 }
 #UsersMain7::-webkit-scrollbar-thumb{
@@ -32,7 +32,7 @@
     align-items: center;
     overflow: hidden;
     overflow-y: scroll;
-    background-color: wheat;
+    background-color: #7c7c7c;
     grid-row: 1/2;
     grid-column: 1/2;
 }

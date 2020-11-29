@@ -34,6 +34,9 @@ class Main8 extends React.Component {
     async componentDidMount() {
         await this.getInfoCursoCreados();
     }
+    componentDidUpdate(){
+        document.getElementById("carga").style.display = "none";
+    }
     /*METODOS DE RETORNO DE BOTONES*/
     /*Retorno del boton cancelar*/
     Botones = () => {
@@ -498,6 +501,7 @@ class Main8 extends React.Component {
     }
     /*Este put actualiza la la privacidad de un curso*/
     putPrivacidad = () => {
+        document.getElementById("carga").style.display = "block";
         let titulo = document.getElementById("Titulo");
         let tematica = document.getElementById("Tematica");
         let materia = document.getElementById("Materia");
@@ -552,6 +556,7 @@ class Main8 extends React.Component {
                 {this.Modal1Return()}
                 {this.Modal2Return()}
                 {this.Modal3Return()}
+                <div className="Cargando" id="carga"></div>
                 <div className="PadreCursoCrear">
                     <div className="OpcionesCrearCurso editarInfo">
                         <div className="EncabezadoCrearC">

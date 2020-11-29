@@ -25,24 +25,24 @@ class CrearCursoTeorico extends React.Component {
     async componentDidMount() {
         await this.getContenidoT();
         if (this.state.dataContenidoT[0]?.contenido_t == "") {
-            this.setState({ bool: false });
             document.getElementById("SubirBoton").disabled = false;
             document.getElementById("tablero2").style.display = "none";
             document.getElementById("tablero1").style.display = "block";
+            this.setState({ bool: false });
         } else {
-            this.setState({ bool: true });
             document.getElementById("tablero2").innerHTML = this.state.dataContenidoT[0].contenido_t;
             document.getElementById("SubirBoton").disabled = true;
             document.getElementById("tablero2").style.display = "block";
             document.getElementById("tablero1").style.display = "none";
+            this.setState({ bool: true });
         }
-        console.log(this.state.dataContenidoT[0]?.contenido_t);
         if (this.state.dataContenidoT[0]?.contenido_t != "") {
             this.setState({ Bloques: this.state.dataContenidoT[0].contenido_t?.split("<!--->") });
-        } 
+        }
     }
     componentDidUpdate() {
         this.Pintarvistaprevia();
+        document.getElementById("carga").style.display = "none";
     }
     /* Deshabilitar imagen */
     Accion1 = () => {
@@ -174,10 +174,12 @@ class CrearCursoTeorico extends React.Component {
         if ((index + 1) < this.state.Bloques.length) {
             return (
                 <>
-                    <div className='elHueco' id={"elHueco" + (index + 1)}><p>Estás editando aquí.</p><img className="CancelarElHueco" src="/Images/Cancelar.png" onClick={()=> {this.setState({
-                        creando: true, anexando: false
-                    }); document.getElementById("elHueco" + (index + 1)).style.display="none";
-                    document.getElementById("rayita" + (index+1)).style.display ="block"; document.getElementById("mas" + (index+1)).style.display ="block";}}></img></div>
+                    <div className='elHueco' id={"elHueco" + (index + 1)}><p>Estás editando aquí.</p><img className="CancelarElHueco" src="/Images/Cancelar.png" onClick={() => {
+                        this.setState({
+                            creando: true, anexando: false
+                        }); document.getElementById("elHueco" + (index + 1)).style.display = "none";
+                        document.getElementById("rayita" + (index + 1)).style.display = "block"; document.getElementById("mas" + (index + 1)).style.display = "block";
+                    }}></img></div>
                     <div className="RayaCrearContenidoT" id={"rayita" + (index + 1)}></div>
                     <img className="MasCrearContenidoT" id={"mas" + (index + 1)} src="/Images/Mas2.png" onClick={() => { this.hueco(index + 1) }} />
                 </>
@@ -351,9 +353,9 @@ class CrearCursoTeorico extends React.Component {
         }
     }
     /*Metodo para mostrar la imagen de aviso*/
-    ImagenAviso = () =>{
-        if(this.state.dataContenidoT[0]?.contenido_t == ""){
-            return(
+    ImagenAviso = () => {
+        if (this.state.dataContenidoT[0]?.contenido_t == "") {
+            return (
                 <div className="Porciento100">
                     <img className="Porciento100IMG" src="/Images/ContenidoT.png"></img>
                 </div>
@@ -366,9 +368,9 @@ class CrearCursoTeorico extends React.Component {
             bool: true
         });
         document.getElementById("SubirBoton").disabled = true;
-        if(this.state.ConteCurso != ""){
-        document.getElementById("tablero2").innerHTML = this.state.ConteCurso;   
-    }
+        if (this.state.ConteCurso != "") {
+            document.getElementById("tablero2").innerHTML = this.state.ConteCurso;
+        }
         document.getElementById("tablero2").style.display = "block";
         document.getElementById("tablero1").style.display = "none";
     }
@@ -413,6 +415,7 @@ class CrearCursoTeorico extends React.Component {
     render() {
         return (
             <>
+                <div className="Cargando" id="carga"></div>
                 <div className="MainCrearCurso">
                     <div className="TableroCrearC">
                         <div className="EditorSelectCrearCT">
@@ -430,7 +433,7 @@ class CrearCursoTeorico extends React.Component {
                                                 <img src="./images/Basura.png" className="basuraCrearCT" onClick={() => { this.eliminarbloque(index) }} />
                                             </div>
                                         </div>
-                                        <div className="MasCrearContenidoT2" id={"hueco" + (index+1)}>
+                                        <div className="MasCrearContenidoT2" id={"hueco" + (index + 1)}>
                                             {this.renderContentMas(index)}
                                         </div>
                                     </>

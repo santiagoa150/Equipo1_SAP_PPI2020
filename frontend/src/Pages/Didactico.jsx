@@ -38,7 +38,7 @@ class Didactico extends React.Component {
     iframe = () =>{
         if(this.state.DataCurso[0]?.contenido_d_text != null){
             return(
-                <iframe className="formGames" src={`http://localhost:3883/Fil/file-Didactico/${UsuarioI[0].usuario}}/`}></iframe>
+                <iframe className="formGames" src={`http://localhost:3883/Fil/file-Didactico/${UsuarioI[0].usuario}/`}></iframe>
             );
         }else{
             return(

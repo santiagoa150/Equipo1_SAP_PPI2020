@@ -209,10 +209,9 @@ class Main10 extends React.Component {
                 id_otro_usuario: Notification.id_otro_usuario
             }
         }
-        await axios.get(`http://localhost:3883//get-notificaciones-length/clases/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
+        await axios.get(`http://localhost:3883/Not/get-notificaciones-length/clases/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
             .then(res => {
-                let data = res.data;
-                if (data[0].conteo == 1) {
+                if (res.data[0].conteo == 1) {
                     this.deleteNotificacion(form2);
                 } else {
                     this.Modal1(true, "El usuario que recibió la notificación ya la respondió.");

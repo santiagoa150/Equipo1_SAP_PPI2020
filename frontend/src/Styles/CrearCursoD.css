@@ -43,8 +43,20 @@
     background-repeat: no-repeat;
     background-position: center center;
     transition: all 1000ms;
+    cursor: pointer;
 }
-.SubirConteD:hover{
+.SubirConteD2{
+    background-image:url(/Images/Basura.png) ;
+    background-color: white;
+    width: 37px;
+    height: 37px;
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: all 1000ms;
+    cursor: pointer;
+}
+.SubirConteD:hover, .SubirConteD2:hover{
     background-color: #7c7c7c;
     transition: all 1000ms;
 }
@@ -52,7 +64,7 @@
     margin-top: 30px;
 }
 .SubirConteD1{
-    width: calc(100% - 50px);
+    width: calc(100% - 95px);
     height: 35px;
 }   
 .textArea:focus{
@@ -65,4 +77,25 @@
     background-color: #F6EBE9;
     width: 95%;
     height: 90%;
+}
+@media(max-width: 1150px){
+    .TextLow{
+        font-size: 14px;
+    }
+}@media(max-width: 870px){
+    .TextLow{
+        font-size: 12px;
+    }
+}@media(max-width: 600px){
+    .MainTablero2{
+        grid-column: 1/2;
+        grid-row: 2/3;
+        height: 100%;
+    }
+    .textArea{
+        height: 100%;
+    } 
+    .TextLow{
+        font-size: 1em;
+    }
 }
