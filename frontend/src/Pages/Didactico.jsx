@@ -7,15 +7,23 @@ import axios from 'axios';
 import {UsuarioI} from '../Utiles/Mocks/UsuarioI';
 const fs = require('fs');
 class Didactico extends React.Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            DataCurso: []
+        }
+    }
     async componentDidMount() {
-        if(this.props.location.state){
         await axios.get(`http://localhost:3883/Fil/get-Examne-Contenido/Didactico/${this.props.location.state.id}&${UsuarioI[0].usuario}`)
             .then(res => {
                 this.setState({ DataCurso: res.data });
             }).catch(err => {
                 console.error(err);
             })
-        }
+    }
+    componentDidUpdate =()=>{
+        document.getElementById("carga").style.display="none";
     }
     componentWillUnmount(){
         axios.get(`http://localhost:3883/Fil/get-Examne-Contenido-delete/Didactico/${this.props.location.state.id}&${UsuarioI[0].usuario}`)
@@ -30,28 +38,22 @@ class Didactico extends React.Component {
     iframe = () =>{
         if(this.state.DataCurso[0]?.contenido_d_text != null){
             return(
-                <iframe className="formGames" src={`http://localhost:3883/Fil/file-Didactico/${UsuarioI[0].usuario}&${this.state.DataCurso[0]?.id_creador}&${this.state.DataCurso[0]?.id}/`}></iframe>
+                <iframe className="formGames" src={`http://localhost:3883/Fil/file-Didactico/${UsuarioI[0].usuario}}/`}></iframe>
             );
         }else{
             return(
             <div className="formGames">
-                <p>Hola</p>
+                <h1>El curso no tiene ningun contenido Didactico</h1>
             </div>  
             );
-        }
-    }
-    constructor(props) {
-        super(props);
-        this.state = {
-            DataCurso: []
         }
     }
     render() {
         return (
             <>
-                <Header />
+                <Header />                
+                <div className="Cargando" id="carga"></div>
                 {this.iframe()}
-                <Footer />
             </>
         );
     }

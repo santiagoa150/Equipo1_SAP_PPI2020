@@ -1,0 +1,171 @@
+.juegoF {
+    min-height: calc(100vh - 20px);
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    background-size: 100% auto;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position-x: 0;
+    background-position-y: center;
+}
+
+@media ( max-aspect-ratio: 1120/649) {
+    .juegoF {
+        background-size: auto 100%;
+        justify-content: space-around;
+        text-align: center;
+        align-items: center;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-position-y: 0;
+    }
+}
+
+.cont_pregu {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: rgb(0, 0, 0, 0.5);
+}
+
+.pregunta {
+    margin: 0;
+    padding: 10px;
+    width: 69vw;
+    color: honeydew;
+}
+
+.fimag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgb(256, 256, 256, 0.6);
+}
+.fondo0{
+    background-image: url("../images/fondo0.png");
+}
+.fondo1{
+    background-image: url("../images/fondo1.png");
+}
+.fondo2{
+    background-image: url("../images/fondo2.png");
+}
+.fondo3{
+    background-image: url("../images/fondo3.png");
+}
+.fondo4{
+    background-image: url("../images/fondo4.png");
+}
+.fondo5{
+    background-image: url("../images/fondo5.png");
+}
+.fondo6{
+    background-image: url("../images/fondo6.png");
+}
+.fondo7{
+    background-image: url("../images/fondo7.png");
+}
+.fondo8{
+    background-image: url("../images/fondo8.png");
+}
+.fondo9{
+    background-image: url("../images/fondo9.png");
+}
+.fondo10{
+    background-image: url("../images/fondo10.png");
+}
+.fondo11{
+    background-image: url("../images/fondo11.png");
+}
+.fondo12{
+    background-image: url("../images/fondo12.png");
+}
+.fondo13{
+    background-image: url("../images/fondo13.png");
+}
+.fondo14{
+    background-image: url("../images/fondo14.png");
+}
+.fondo15{
+    background-image: url("../images/fondo15.png");
+}
+.fondo16{
+    background-image: url("../images/fondo16.png");
+}
+.fondo17{
+    background-image: url("../images/fondo17.png");
+}
+.fondo18{
+    background-image: url("../images/fondo18.png");
+}
+.logo {
+    width: 13vw;
+    padding: 3vw;
+}
+
+.opcionesJ {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2vw;
+    justify-content: space-around;
+    width: 95%;
+    background-color: rgb(256, 256, 256, 0.6);
+}
+
+.botonJ {
+    display: flex;
+    border: none;
+    box-shadow: 2px 4px 10px black ;
+    background-color: lavender;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    min-width: 250px;
+    margin: 1.8vw;
+    height: 60px;
+    width: 45%;
+    font-size: 1.4vw;
+    padding: 5px;
+    color:black;
+    cursor: pointer;
+    transition: all 1000ms;
+}
+.botonJ:hover{
+    box-shadow: 4px 8px 20px black ;
+    background-color: rgb(196, 196, 250);
+}
+.botonV{
+    border: none;
+    box-shadow: 2px 4px 10px black ;
+    border-radius: 10px;
+    padding: 1vw;
+    width: 10vw;
+    font-size: 25px;
+    color:black;
+    cursor: pointer;
+    transition: all 1000ms;
+}
+.botonV:hover{
+    box-shadow: 4px 8px 20px black ;
+    background-color: wheat;
+}
+.botonJ:focus , .botonV:focus{    
+    outline: none;
+}
+.Acabar{
+    padding: 15px;
+    background-color: rgb(256, 256,256,0.5);
+}
+@media(max-width:620px) {
+    .botonJ {
+        width: 90%;
+        font-size: 3vw;
+    }
+}
