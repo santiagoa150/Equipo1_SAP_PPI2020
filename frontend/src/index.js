@@ -15,7 +15,11 @@ import CrearCurso from './Pages/CrearCurso.jsx';
 import Examen from './Pages/Examen.jsx';
 import Notificaciones from './Pages/Notificaciones.jsx';
 import CrearContenidoDidactico from './Pages/CrearCursoDidactico.jsx';
+<<<<<<< HEAD
 import CalificacionesClaseCurso from './Pages/CalificacionesClaseCurso.jsx';
+=======
+import CrearExamen from './Pages/CrearCursoExamen.jsx';
+>>>>>>> 39843e43121cbdc4fb094971e09245e03bad37c7
 import {
     BrowserRouter as Router,
     Switch,
@@ -52,6 +56,9 @@ ReactDOM.render(
                 </Route>
                 <Route path="/Didactico">
                     <Didactico />
+                </Route>
+                <Route path="/CrearExamen">
+                    <CrearExamen />
                 </Route>
                 <Route path="/CrearCurso" component={CrearCurso}/>
                 <Route path="/CrearCursoTeorico" component={CrearCursoTeorico}/>

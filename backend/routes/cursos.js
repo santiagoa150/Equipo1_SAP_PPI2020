@@ -158,6 +158,18 @@ router.post('/post_cursos_informacion/misCursos', (req, res) =>{
         });
     }
 });
+
+router.post('/post_preguntas_curso/CrearExamen', (req, res) =>{
+    const {id_curso, pregunta, respuesta, opcion1, opcion2, opcion3} = req.body;
+    let queryNewCurso = "INSERT INTO cursos(id_curso, pregunta, respuesta, opcion1, opcion2, opcion3) VALUES(?,?,?,?,?,?)";
+    mysqlConnection.query(queryNewCurso, [id_curso, pregunta, respuesta, opcion1, opcion2, opcion3], (err, results, fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message: 'Curso registrado'});
+        }
+    });
+});
 /*TODOS LOS PUTS*/
 /*Actualizar curso// actualizar valoración curso*/
 router.put('/put_cursos_valoracion/comunidad/:id', (req, res) =>{
@@ -229,6 +241,18 @@ router.put('/put_cursos_contenido-d/CrearCursoD/:id', (req,res) =>{
     const {contenido_d_text, d_permiso, d_propio} = req.body;
     let queryPutContenidoD = 'UPDATE cursos SET contenido_d_text=?, d_permiso=?, d_propio=? WHERE id=?';
     mysqlconection.query(queryPutContenidoD, [contenido_d_text, d_permiso, d_propio, id], (err,results,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message: "CORRECTO"});
+        }
+    });
+});
+
+router.put('/put_cantidad_contenido-e/CrearExamen/:id&:cant_preguntas', (req,res) =>{
+    const {id, cant_peguntas} = req.params;
+    let queryPutContenidoD = 'UPDATE cursos SET cant_peguntas=? WHERE id=?';
+    mysqlconection.query(queryPutContenidoD, [cant_peguntas, id], (err,results,fields) =>{
         if(err){
             console.error(err);
         }else{
