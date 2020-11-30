@@ -95,7 +95,6 @@ router.put('/actualizacion-perfil/imagen/:id_usuario', (req, res) => {
 router.put('/put-usuarios-edad/:id_usuario', (req, res) =>{
     const {id_usuario} = req.params;
     const {edad} = req.body;
-    console.log(edad);
     let queryPutEdad = 'UPDATE usuarios SET edad=? WHERE id_usuario=?';
     mysqlconection.query(queryPutEdad, [edad,id_usuario],(err, results, fields) =>{
         if(err){
@@ -105,5 +104,16 @@ router.put('/put-usuarios-edad/:id_usuario', (req, res) =>{
         }
     });
 })
-
+/*ESTE DELETE BORRA UN USUARIO*/
+router.delete('/deleteUsuario/:id_usuario', (req, res) =>{
+    const {id_usuario} = req.params;
+    let querDELETEUSUARIO = 'DELETE FROM usuarios WHERE id_usuario=?';
+    mysqlconection.query(querDELETEUSUARIO, [id_usuario], (err, results, fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message: "CORRECTO"});
+        }
+    });
+});
 module.exports = router;

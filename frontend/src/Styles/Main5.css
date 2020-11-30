@@ -375,14 +375,23 @@
 #UsuariosIN {
     padding: 10px;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-flow: column;
     width: 90%;
     height: 80%;
     background-color: #f6ebe9;
     border-radius: 10px;
     border: 1px solid #444140;
+    overflow-y: scroll;
 }
-
+#UsuariosIN::-webkit-scrollbar{
+    background-color:  #f6ebe9;
+    width: 15px;
+}
+#UsuariosIN::-webkit-scrollbar-thumb{
+    background-color: #444140;
+    box-shadow: 2px 0 10px black;
+}
 .bmargintop {
     margin-top: 10px;
 }

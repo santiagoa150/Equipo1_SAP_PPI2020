@@ -5,6 +5,12 @@ const mysqlconection = mysql.createConnection({
     password: 'Uyy81rd0PqO5H2U5Jgv9',
     database: 'bd3wbemaaqtbjvrv8skh',
     multipleStatements: true
+   /*
+   host: 'localhost',
+   user: 'root',
+   password: '',
+   database: 'learn_with_us'
+   */
 });
 mysqlconection.connect((error) => {
     if (error) {

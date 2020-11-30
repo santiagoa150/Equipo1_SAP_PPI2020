@@ -133,6 +133,18 @@ router.get('/get_cursos_contenido-e/CrearContenidoE/:id', (req,res) =>{
         }
     });
 });
+/*Este get tra la cantidad de preguntas de un curso por su Id*/
+router.get('/get_cursos_cantidadPreguntas/CrearContenidoE/:id', (req, res) =>{
+    const {id} = req.params;
+    let query = 'SELECT cant_preguntas FROM cursos WHERE id=?';
+    mysqlconection.query(query, [id], (err,rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
 /*TODOS LOS POST*/
 /*Este post permite guardar un curso nuevo en la database*/
 router.post('/post_cursos_informacion/misCursos', (req, res) =>{
@@ -161,7 +173,7 @@ router.post('/post_cursos_informacion/misCursos', (req, res) =>{
 
 router.post('/post_preguntas_curso/CrearExamen', (req, res) =>{
     const {id_curso, pregunta, respuesta, opcion1, opcion2, opcion3} = req.body;
-    let queryNewCurso = "INSERT INTO cursos(id_curso, pregunta, respuesta, opcion1, opcion2, opcion3) VALUES(?,?,?,?,?,?)";
+    let queryNewCurso = "INSERT INTO preguntas(id_curso, pregunta, respuesta, opcion1, opcion2, opcion3) VALUES(?,?,?,?,?,?)";
     mysqlConnection.query(queryNewCurso, [id_curso, pregunta, respuesta, opcion1, opcion2, opcion3], (err, results, fields) =>{
         if(err){
             console.error(err);
@@ -235,6 +247,18 @@ router.put('/put_cursos_contenido-t_setNull/CrearCurso/:id', (req,res) =>{
         }
     });
 });
+/*Este put se utiliza en la creación de curso para colocar el contenido didactico como null*/
+router.put('/put_cursos_contenido-d-text_setNull/CrearCurso/:id', (req,res) =>{
+    const {id} = req.params;
+    let queryPutNullContenidoD = 'UPDATE cursos SET contenido_d_text = "" AND d_propio=0 AND d_permiso=0 WHERE id=?';
+    mysqlConnection.query(queryPutNullContenidoD, [id], (err,results,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message: "CORRECTO"})
+        }
+    });
+});
 /*Este put actualiza el contenido didactico y sus derivados*/
 router.put('/put_cursos_contenido-d/CrearCursoD/:id', (req,res) =>{
     const {id} = req.params;
@@ -248,11 +272,11 @@ router.put('/put_cursos_contenido-d/CrearCursoD/:id', (req,res) =>{
         }
     });
 });
-
+/*Este put sirve para actualizar la cantidad de preguntas de un curso*/
 router.put('/put_cantidad_contenido-e/CrearExamen/:id&:cant_preguntas', (req,res) =>{
-    const {id, cant_peguntas} = req.params;
-    let queryPutContenidoD = 'UPDATE cursos SET cant_peguntas=? WHERE id=?';
-    mysqlconection.query(queryPutContenidoD, [cant_peguntas, id], (err,results,fields) =>{
+    const {id, cant_preguntas} = req.params;
+    let queryPutContenidoD = 'UPDATE cursos SET cant_preguntas=? WHERE id=?';
+    mysqlconection.query(queryPutContenidoD, [cant_preguntas, id], (err,results,fields) =>{
         if(err){
             console.error(err);
         }else{
@@ -274,9 +298,10 @@ router.delete('/delete-curso-informacion/paginas/:id&:id_creador', (req,res) =>{
     });
 });
 /*Este delete sirve para eliminar las preguntas de un curso*/
-router.delete('/delete-preguntas-información/CrearCurso/:id_curso', (req,res) =>{
+router.delete('/delete-preguntas-informacion/CrearCurso/:id_curso', (req,res) =>{
+    console.log("HOLAA");
     const {id_curso} = req.params;
-    let queryDeletePreguntas = 'DELETE FROM cursos WHERE id_curso=?';
+    let queryDeletePreguntas = 'DELETE FROM preguntas WHERE id_curso=?';
     mysqlconection.query(queryDeletePreguntas, [id_curso], (err,rows,fields) =>{
         if(err){
             console.error(err);

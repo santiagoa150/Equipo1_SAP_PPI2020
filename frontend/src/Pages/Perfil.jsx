@@ -24,22 +24,24 @@ class Perfil extends React.Component {
             Bool: false,
             Fecha2: "",
             Modal1: false,
-            renderizar: false
+            Modal2: false,
+            renderizar: false,
+            boolUser: false
         }
     }
     componentDidMount() {
         let avatar = '';
-        if (UsuarioI[0].avatar == null) {
+        if (UsuarioI[0]?.avatar == null) {
             avatar = 'https://1.bp.blogspot.com/-p-TNqGEoS5w/X1PrFJ6rBYI/AAAAAAAAPQU/cgfqUztLg1YJL0zxyfRp8sEkhWGsymFUwCLcBGAsYHQ/s16000/Perf%25C3%25ADlLogo.png'
         } else {
-            avatar = UsuarioI[0].avatar;
+            avatar = UsuarioI[0]?.avatar;
         }
         document.getElementById("FotoPerfíl").style.backgroundImage = "url(" + avatar + ")";
     }
     componentWillMount() {
         Sesion = false;
         try {
-            let x = (UsuarioI[0].fecha_n).getFullYear();
+            let x = (UsuarioI[0]?.fecha_n).getFullYear();
         }
         catch (e) {
             Sesion = true;
@@ -48,7 +50,7 @@ class Perfil extends React.Component {
     }
     /*ESTA FUNCIOÓN SIRVE PARA CAMBIAR EL FORMATO DE LA FECHA Y PODER PINTARLA*/
     FechaFormat = () => {
-        this.setState({ Fecha2: (UsuarioI[0].fecha_n).getFullYear() + "-" + ((UsuarioI[0].fecha_n).getMonth() + 1) + "-" + (UsuarioI[0].fecha_n).getDate() });
+        this.setState({ Fecha2: (UsuarioI[0]?.fecha_n).getFullYear() + "-" + ((UsuarioI[0]?.fecha_n).getMonth() + 1) + "-" + (UsuarioI[0]?.fecha_n).getDate() });
     }
     /*EDICIÓN DE INFORMACIÓN*/
     /*Esta función habilita la posibilidad de editar información.*/
@@ -73,14 +75,14 @@ class Perfil extends React.Component {
     Edit2 = async () => {
         this.setState({ renderizar: false });
         let form = {
-            nombre: UsuarioI[0].nombre,
-            apellido: UsuarioI[0].apellido,
-            genero: UsuarioI[0].genero,
-            fecha_n: UsuarioI[0].fecha_n.getFullYear() + "-" + (UsuarioI[0].fecha_n.getMonth() + 1) + "-" + (UsuarioI[0].fecha_n.getDate() + 1),
-            edad: UsuarioI[0].edad,
-            usuario: UsuarioI[0].usuario,
-            contraseña: UsuarioI[0].contraseña,
-            correo: UsuarioI[0].correo
+            nombre: UsuarioI[0]?.nombre,
+            apellido: UsuarioI[0]?.apellido,
+            genero: UsuarioI[0]?.genero,
+            fecha_n: UsuarioI[0]?.fecha_n.getFullYear() + "-" + (UsuarioI[0]?.fecha_n.getMonth() + 1) + "-" + (UsuarioI[0]?.fecha_n.getDate() + 1),
+            edad: UsuarioI[0]?.edad,
+            usuario: UsuarioI[0]?.usuario,
+            contraseña: UsuarioI[0]?.contraseña,
+            correo: UsuarioI[0]?.correo
         }
         let Contraseña = document.getElementById("CP"), Contraseña2 = document.getElementById("CP2");
         let Nombre = document.getElementById("NP"), Apellido = document.getElementById("AP");
@@ -109,7 +111,7 @@ class Perfil extends React.Component {
         }
         this.setState({ UserB: false, UserB2: false });
         if (User.value != "") {
-            if (User.value.toLowerCase() != UsuarioI[0].usuario.toLowerCase()) {
+            if (User.value.toLowerCase() != UsuarioI[0]?.usuario.toLowerCase()) {
                 if (this.state.UserB == false) {
                     console.log("No debería 1")
                     await this.getUsuarioUserName(User);
@@ -123,7 +125,7 @@ class Perfil extends React.Component {
             })
         }
         if (correo.value != "") {
-            if (correo.value != UsuarioI[0].correo) {
+            if (correo.value != UsuarioI[0]?.correo) {
                 let regular = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                 if (regular.test(correo.value)) {
                     if (this.state.UserB2 == false) {
@@ -144,7 +146,7 @@ class Perfil extends React.Component {
         if (this.state.UserB && this.state.UserB2) {
             if (Contraseña.value != "" && Contraseña2.value != "") {
                 if (Contraseña.value == Contraseña2.value) {
-                    if (Contraseña.value != UsuarioI[0].contraseña) {
+                    if (Contraseña.value != UsuarioI[0]?.contraseña) {
                         UsuarioI[0].contraseña = Contraseña.value;
                         form.contraseña = Contraseña.value;
                     } else {
@@ -221,6 +223,40 @@ class Perfil extends React.Component {
     }
     /*MODAL1*/
     /*Esta función activa o desactiva el modal*/
+    Modal2 = () => {
+        this.setState({ Modal2: !this.state.Modal2 })
+    }
+    /*Esta función returna o no el Modal1*/
+    Modal2Return = () => {
+        if (this.state.Modal2) {
+            return (
+                <>
+                    <div id="PopUpPerfíl">
+                        <div className="Modal1">
+                            <div className="ModalTitle">
+                                <h2>¿Estas seguro de que quieres eliminar tu cuenta?</h2>
+                            </div>
+                            <button className="button SubImg2 BotonPerfil" onClick={() => { this.deleteUser() }}>Aceptar</button>
+                            <button className="button SubImg2 BotonPerfil" onClick={() => this.Modal2()}>Cancelar</button>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+    }
+    deleteUser = async () => {
+        axios.delete(`http://localhost:3883/Usu/deleteUsuario/${UsuarioI[0]?.id_usuario}`)
+            .then(res => {
+                UsuarioI.splice(0, 1);
+                this.setState({
+                    boolUser: true
+                })
+            }).catch(err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+    }
     Modal1 = () => {
         this.setState({ Modal1: !this.state.Modal1 })
     }
@@ -298,7 +334,7 @@ class Perfil extends React.Component {
         if (inpu.files && inpu.files[0]) {
             await this.putAvatar();
             UsuarioI[0].avatar = aja2;
-            document.getElementById("FotoPerfíl").style.backgroundImage = "url(" + UsuarioI[0].avatar + ")";
+            document.getElementById("FotoPerfíl").style.backgroundImage = "url(" + UsuarioI[0]?.avatar + ")";
         }
     }
     /*Funcion timer*/
@@ -354,7 +390,7 @@ class Perfil extends React.Component {
         let form = {
             avatar: aja2 + ""
         }
-        axios.put(`http://localhost:3883/Usu/actualizacion-perfil/imagen/${UsuarioI[0].id_usuario}`, form)
+        axios.put(`http://localhost:3883/Usu/actualizacion-perfil/imagen/${UsuarioI[0]?.id_usuario}`, form)
             .then(res => {
 
             }).catch(err => {
@@ -363,7 +399,7 @@ class Perfil extends React.Component {
     }
     /*Este put actualiza la información del usuario.*/
     putInformacion = async (form) => {
-        await axios.put(`http://localhost:3883/Usu/actualizacion-perfil/datos/${UsuarioI[0].id_usuario}`, form)
+        await axios.put(`http://localhost:3883/Usu/actualizacion-perfil/datos/${UsuarioI[0]?.id_usuario}`, form)
             .then(res => {
                 this.setState({ renderizar: true });
             }).catch(err => {
@@ -404,7 +440,9 @@ class Perfil extends React.Component {
     render() {
         return (
             <>
+                {this.state.boolUser && <Redirect to="/" />}
                 {this.Modal1Return()}
+                {this.Modal2Return()}
                 <Header />
                 <div className="centrar">
                     <div id="PerfilContainer">
@@ -418,32 +456,32 @@ class Perfil extends React.Component {
                         <div id="InfoPContainer">
                             <div className="GroupIP">
                                 <p className="PInfo">Nombre:</p>
-                                <input className="None Apar PInfo" id="NP" type="text" placeholder={UsuarioI[0].nombre} autoComplete="off" />
-                                <p className="PInfo PInfo2">{UsuarioI[0].nombre}</p>
+                                <input className="None Apar PInfo" id="NP" type="text" placeholder={UsuarioI[0]?.nombre} autoComplete="off" />
+                                <p className="PInfo PInfo2">{UsuarioI[0]?.nombre}</p>
                                 <div className="Edit" id="NPEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
                             <div className="GroupIP">
                                 <p className="PInfo">Apellido:</p>
-                                <input className="None Apar PInfo" id="AP" type="text" placeholder={UsuarioI[0].apellido} autoComplete="off" />
-                                <p className="PInfo PInfo2"> {UsuarioI[0].apellido}</p>
+                                <input className="None Apar PInfo" id="AP" type="text" placeholder={UsuarioI[0]?.apellido} autoComplete="off" />
+                                <p className="PInfo PInfo2"> {UsuarioI[0]?.apellido}</p>
                                 <div className="Edit" id="APEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
                             <div className="GroupIP">
                                 <p className="PInfo">Usuario:</p>
-                                <input className="None Apar PInfo" id="UP" type="text" placeholder={UsuarioI[0].usuario} autoComplete="off" />
-                                <p className="PInfo PInfo2">{UsuarioI[0].usuario}</p>
+                                <input className="None Apar PInfo" id="UP" type="text" placeholder={UsuarioI[0]?.usuario} autoComplete="off" />
+                                <p className="PInfo PInfo2">{UsuarioI[0]?.usuario}</p>
                                 <div className="Edit" id="UPEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
                             <div className="GroupIP">
                                 <p className="PInfo">Correo:</p>
-                                <input className="None Apar PInfo" id="EP" type="email" placeholder={UsuarioI[0].correo} autoComplete="off" />
-                                <p className="PInfo PInfo2">{UsuarioI[0].correo}</p>
+                                <input className="None Apar PInfo" id="EP" type="email" placeholder={UsuarioI[0]?.correo} autoComplete="off" />
+                                <p className="PInfo PInfo2">{UsuarioI[0]?.correo}</p>
                                 <div className="Edit" id="EPEDIT" onClick={this.Edit}>
 
                                 </div>
@@ -451,7 +489,7 @@ class Perfil extends React.Component {
                             <div className="GroupIP">
                                 <p className="PInfo">Contraseña:</p>
                                 <input className="None Apar PInfo" id="CP" type="password" autoComplete="off" />
-                                <input className="PInfo PInfo2 PINFOCONTRASEÑA" type="password" disabled value={UsuarioI[0].contraseña} />
+                                <input className="PInfo PInfo2 PINFOCONTRASEÑA" type="password" disabled value={UsuarioI[0]?.contraseña} />
                                 <div className="Edit" id="CPEDIT" onClick={this.Edit}>
 
                                 </div>
@@ -471,7 +509,7 @@ class Perfil extends React.Component {
                                     <option value="Femenino">Mujer</option>
                                     <option value="Otro">Otro</option>
                                 </select>
-                                <p className="PInfo PInfo2">{UsuarioI[0].genero}</p>
+                                <p className="PInfo PInfo2">{UsuarioI[0]?.genero}</p>
                                 <div className="Edit" id="SPEDIT" onClick={this.Edit}>
 
                                 </div>
@@ -486,20 +524,24 @@ class Perfil extends React.Component {
                             </div>
                             <div className="GroupIP" id="EdadDisPar">
                                 <p className="PInfo">Edad:</p>
-                                <p className="PInfo">{UsuarioI[0].edad}</p>
+                                <p className="PInfo">{UsuarioI[0]?.edad}</p>
                                 <div className="Edit2" id="EDEDIT" onClick={this.Edit}>
 
                                 </div>
                             </div>
                             <button id="classBotonConfirPerfil" className="button" onClick={this.Edit2}>Confirmar</button>
                             {this.state.Bool && <Redirect to={{ pathname: this.props.location.state.x, x: this.props.location.state.x }}></Redirect>}
+
                         </div>
                         <div id="ButtonPContainer">
                             {this.Accion1()}
 
                             <Link className="BP" to="/">
-                                <button className="BP" onClick={this.Borrartusdatos}>Cerrar sesión</button>
+                                <button className="BP" onClick={() => this.Borrartusdatos()}>Cerrar sesión</button>
                             </Link>
+                            <div className="BP">
+                                <button className="BP" onClick={() => this.Modal2()}>Eliminar cuenta</button>
+                            </div>
                         </div>
                     </div>
                 </div>

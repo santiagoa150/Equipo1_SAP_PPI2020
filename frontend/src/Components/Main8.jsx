@@ -28,7 +28,12 @@ class Main8 extends React.Component {
             },
             Modal3: {
                 return: false
-            }, boolFoto: false
+            }, boolFoto: false,
+            Modal4:{
+                return: false
+            },Modal5:{
+                return: false
+            }
         }
     }
     async componentDidMount() {
@@ -474,6 +479,64 @@ class Main8 extends React.Component {
             );
         }
     }
+    Modal4 = () => {
+        this.setState({
+            Modal4: {
+                return: !this.state.Modal4.return
+            }
+        })
+    }
+    /*Esta función returna o no el Modal3*/
+    Modal4Return = () => {
+        if (this.state.Modal4.return) {
+            return (
+                <>
+                    <div id="PopUpPerfíl">
+                        <div id="ContenedorPopUp2">
+                            <div className="TitleModal1Perfíl3">
+                                <h2>¿Estas seguro de que quieres borrar el contenido didactico de este curso?</h2>
+                            </div>
+                            <div className="MainModal2Perfíl">
+                                <div className="BotonesCont">
+                                    <button className="button SubImg2" onClick={() => { this.putSetNullContenidoD(); this.Modal4() }} >Si</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal4()}>No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+    }
+    Modal5 = () => {
+        this.setState({
+            Modal5: {
+                return: !this.state.Modal5.return
+            }
+        })
+    }
+    /*Esta función returna o no el Modal3*/
+    Modal5Return = () => {
+        if (this.state.Modal5.return) {
+            return (
+                <>
+                    <div id="PopUpPerfíl">
+                        <div id="ContenedorPopUp2">
+                            <div className="TitleModal1Perfíl3">
+                                <h2>¿Estas seguro de que quieres borrar el contenido didactico de este curso?</h2>
+                            </div>
+                            <div className="MainModal2Perfíl">
+                                <div className="BotonesCont">
+                                    <button className="button SubImg2" onClick={() => { this.deleteContenidoEvaluativo(); this.putCantidadPreguntas(); this.Modal5() }} >Si</button>
+                                    <button className="button SubImg2" onClick={() => this.Modal5()}>No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+    }
     /*AXIOS*/
     /*GETS*/
     /*Traer la información del curso que se está creando o editando*/
@@ -481,7 +544,6 @@ class Main8 extends React.Component {
         console.log("AH BIEN");
         axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.idCursoC}`)
             .then(res => {
-                console.log("AH BIEN 2");
                 this.setState({
                     DataInfoCurso: res.data,
                     DataInfoCurso2: res.data
@@ -503,7 +565,37 @@ class Main8 extends React.Component {
                 }
             });
     }
-    /*Este put actualiza la la privacidad de un curso*/
+    putSetNullContenidoD = () =>{
+        axios.put(`http://localhost:3883/Cur/put_cursos_contenido-d-text_setNull/CrearCurso/${this.state.DataInfoCurso[0].id}`)
+            .then(res =>{
+            }).catch(err =>{
+                if(err){
+                    console.error(err);
+                }
+            });
+    }
+    deleteContenidoEvaluativo = async () =>{
+        axios.delete(`http://localhost:3883/Cur/delete-preguntas-informacion/CrearCurso/${this.state.DataInfoCurso[0].id}`)
+            .then(res =>{
+
+            }).catch(err =>{
+                if(err){
+                    console.error(err);
+                }
+            })
+    }
+    putCantidadPreguntas = async () =>{
+        let cero = 0;
+
+        axios.put(`http://localhost:3883/Cur/put_cantidad_contenido-e/CrearExamen/${this.state.DataInfoCurso[0].id}&${cero}`)
+        .then(res =>{})
+        .catch(err =>{
+            if(err){
+                console.error(err);
+            }
+        })
+    }
+     /*Este put actualiza la la privacidad de un curso*/
     putPrivacidad = () => {
         document.getElementById("carga").style.display = "block";
         let titulo = document.getElementById("Titulo");
@@ -560,6 +652,8 @@ class Main8 extends React.Component {
                 {this.Modal1Return()}
                 {this.Modal2Return()}
                 {this.Modal3Return()}
+                {this.Modal4Return()}
+                {this.Modal5Return()}
                 <div className="Cargando" id="carga"></div>
                 <div className="PadreCursoCrear">
                     <div className="OpcionesCrearCurso editarInfo">
@@ -618,14 +712,14 @@ class Main8 extends React.Component {
                         <div className="CardCrearCursoContenido">
                             <h3>Minijuego</h3>
                             {this.Botones2("/CrearCursoDidactico", "EditarButonOff2")}
-                            <button className="EstiloButtonCrearCursoC">Borrar contenido</button>
+                            <button className="EstiloButtonCrearCursoC" onClick={() =>{this.Modal4()}}>Borrar contenido</button>
                         </div>
                         <div className="CardCrearCursoContenido">
                             <h3>Examen</h3>
 
                             {this.Botones2("/CrearExamen", "EditarButonOff3")}
 
-                            <button className="EstiloButtonCrearCursoC">Borrar contenido</button>
+                            <button className="EstiloButtonCrearCursoC" onClick={() => this.Modal5()}>Borrar contenido</button>
                         </div>
                     </div>
 

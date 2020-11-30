@@ -21,6 +21,11 @@ class CrearCursoTeorico extends React.Component {
     }
     async componentDidMount() {
         await this.getContenidoE();
+        let retorno = await this.cantidadPreguntas();
+        document.getElementById("cantidad").value = retorno.data[0].cant_preguntas;
+        this.setState({
+            cantp: retorno.data[0].cant_preguntas
+        })
     }
     componentDidUpdate() {
         document.getElementById("carga").style.display = "none";
@@ -39,7 +44,7 @@ class CrearCursoTeorico extends React.Component {
         }
         return (
             <>
-                <button className="button buttonMisCursos hoverCreadorT" onClick={() => { this.ActualizacionContenidoT(variable) }}>Guardar</button>
+                <button className="button buttonMisCursos hoverCreadorT" onClick={() => { this.putContenidoE(); }}>Guardar</button>
             </>
         );
     }
@@ -103,10 +108,10 @@ class CrearCursoTeorico extends React.Component {
         let opcion3 = document.getElementById("opcion3");
         let bool = true;
         let auxiliar = this.state.ExamenCurso;
-        if (pregunta.value == "" || document.getElementById("respuesta").value == "" || document.getElementById("opcion1").value == "" || document.getElementById("opcion2").value == "" || document.getElementById("opcion3").value == "") {
+        if (pregunta.value == "" || respuesta.value == "" || opcion1.value == "" || opcion2.value == "" || opcion3.value == "") {
             bool = false;
         }
-        if (bool[0] && bool[1] && bool[2] && bool[3] && bool[4]) {
+        if (bool) {
             if (this.state.creando) {
                 auxiliar.push({
                     pregunta: pregunta.value,
@@ -122,6 +127,11 @@ class CrearCursoTeorico extends React.Component {
                 auxiliar[this.state.index].opcion2 = opcion2.value;
                 auxiliar[this.state.index].opcion3 = opcion3.value;
             }
+            pregunta.value = "";
+            respuesta.value = "";
+            opcion1.value = "";
+            opcion2.value = "";
+            opcion3.value = "";
         } else {
             if (pregunta.value == "") {
                 this.timer(pregunta);
@@ -168,9 +178,6 @@ class CrearCursoTeorico extends React.Component {
             });
         }
     }
-    /*ESTOS METODOS SE UTILIZAN PARA MOSTRAR LA VISTA PREVIA O EL EDITOR DE TEXTO*/
-
-    /*Metodo para cambiar a vista previa*/
     /*AXIOS*/
     /*GETS*/
     /*Este metodo trae el contenido teoríco del curso que se está edianto*/
@@ -197,24 +204,33 @@ class CrearCursoTeorico extends React.Component {
             }, 1500);
         } else {
             document.getElementById("carga").style.display = "none";
-            for (let x = 0; this.state.ExamenCurso.length > x; x++) {
-                let form = await {
-                    id_curso: this.props.location.state.idCursoC,
-                    pregunta: this.state.ExamenCurso[x].pregunta,
-                    respuesta: this.state.ExamenCurso[x].respuesta,
-                    opcion1: this.state.ExamenCurso[x].opcion1,
-                    opcion2: this.state.ExamenCurso[x].opcion2,
-                    opcion3: this.state.ExamenCurso[x].opcion3
-                }
-                axios.post(`http://localhost:3883/Cur/post_preguntas_curso/CrearExamen`, form)
-                    .then(res => {
-                        console.log(res.data);
-                    }).catch(err => {
-                        if (err) {
-                            console.error(err);
+            await axios.delete(`http://localhost:3883/Cur/delete-preguntas-informacion/CrearCurso/${this.props.location.state.idCursoC}`)
+                .then(async (res) => {
+                    for (let x = 0; this.state.ExamenCurso.length > x; x++) {
+                        let form = await {
+                            id_curso: this.props.location.state.idCursoC,
+                            pregunta: this.state.ExamenCurso[x].pregunta,
+                            respuesta: this.state.ExamenCurso[x].respuesta,
+                            opcion1: this.state.ExamenCurso[x].opcion1,
+                            opcion2: this.state.ExamenCurso[x].opcion2,
+                            opcion3: this.state.ExamenCurso[x].opcion3
                         }
-                    })
-            }
+
+                        axios.post(`http://localhost:3883/Cur/post_preguntas_curso/CrearExamen`, form)
+                            .then(res => {
+                                console.log(res.data);
+                            }).catch(err => {
+                                if (err) {
+                                    console.error(err);
+                                }
+                            })
+                    }
+                }).catch(err => {
+                    if (err) {
+                        console.error(err);
+                    }
+                })
+
             axios.put(`http://localhost:3883/Cur/put_cantidad_contenido-e/CrearExamen/${this.props.location.state.idCursoC}&${document.getElementById("cantidad").value}`)
                 .then(res => {
                     console.log(res.data);
@@ -224,6 +240,14 @@ class CrearCursoTeorico extends React.Component {
                     }
                 })
         }
+    }
+    cantidadPreguntas = async () => {
+        return axios.get(`http://localhost:3883/Cur/get_cursos_cantidadPreguntas/CrearContenidoE/${this.props.location.state.idCursoC}`)
+            .catch(err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
     }
     min = () => {
         if (this.state.ExamenCurso.length == 0) {
@@ -235,8 +259,8 @@ class CrearCursoTeorico extends React.Component {
     valid = () => {
         if (document.getElementById("cantidad").value < this.min() - 1) {
             document.getElementById("cantidad").value = this.min();
-        } else if (document.getElementById("cantidad").value > this.state.cant) {
-            document.getElementById("cantidad").value = this.state.cant;
+        } else if (document.getElementById("cantidad").value > this.state.ExamenCurso.length) {
+            document.getElementById("cantidad").value = this.state.ExamenCurso.length;
         }
     }
     render() {
@@ -250,7 +274,17 @@ class CrearCursoTeorico extends React.Component {
                                 return (
                                     <>
                                         <div className="cardcontenidoTeorico" key={index}>
-                                            <p>Pregunta = {Esito.pregunta}<br /> Respuesta = {Esito.respuesta}<br /> opcion1= {Esito.opcion1}<br />{Esito.opcion2}<br />{Esito.opcion3}</p>
+                                            <div className="contenido">
+                                                <p>Pregunta: {Esito.pregunta}
+                                                    <br />Respuesta: {Esito.respuesta}
+                                                    <br />Opcion1: {Esito.opcion1}
+                                                    <br />Opcion2: {Esito.opcion2}
+                                                    <br />Opcion3: {Esito.opcion3}</p>
+                                            </div>
+                                            <div className="basuraCrearCTContainer">
+                                                <img src="./images/Lapiz.png" onClick={() => { this.editarBloque(index) }} className="basuraCrearCT" />
+                                                <img src="./images/Basura.png" className="basuraCrearCT" onClick={() => { this.eliminarbloque(index) }} />
+                                            </div>
                                         </div>
                                     </>
                                 );
@@ -258,11 +292,13 @@ class CrearCursoTeorico extends React.Component {
                         </div>
                     </div>
                     <div className="InfoCrearC">
-                        <img className="LogoCrearCurso" src="https://1.bp.blogspot.com/-4AYfdW1HnGQ/X02wnk_2J_I/AAAAAAAAPPk/znnHlLxw_bINf8jIvcaE3hxEruVJOjcawCLcBGAsYHQ/s16000/Logo.png" />
                         <div className="EditorCrearCurso">
                             <div className="Cien">
                                 <p className="Group">Pregunta:</p>
-                                <textarea id="pregunta" className="TextAreaCCurso Group"></textarea>
+                                <div className="ClassNameDivision">
+                                    <textarea id="pregunta" className="TextAreaCCurso2 Group"></textarea>
+                                    <button className="BotonSubirContenidoE" onClick={() => this.SubirContenido()}>Subir</button>
+                                </div>
                                 <p className="Group">Respuesta:</p>
                                 <textarea id="respuesta" className="TextAreaCCurso Group"></textarea>
                                 <p className="Group">Opcion1:</p>
@@ -273,18 +309,20 @@ class CrearCursoTeorico extends React.Component {
                                 <textarea id="opcion3" className="TextAreaCCurso Group"></textarea>
                             </div>
                         </div>
-                        <p className="Group">Opcion3:</p>
-                        <input type="number" placeholder="Escriba aqi" id="cantidad" min={this.min()} max={this.state.ExamenCurso.length} onInput={
-                            this.valid
-                        } onChange={
-                            () => {
-                                this.valid();
-                                this.setState({
-                                    cantp: document.getElementById("cantidad").value
-                                });
-                            }
-                        } />
-                        <button onClick={() => this.SubirContenido()}>Subir</button>
+                        <div className="DivCantidadPreguntas2">
+                            <p className="Group">Cantidad de preguntas: </p>
+                            <div className="DivCantidadPreguntas">
+                                <input type="number" className="CantPreguntasBoton" placeholder="Escriba aquí" id="cantidad" min={this.min()} max={this.state.ExamenCurso.length}
+                                    onChange={
+                                        () => {
+                                            this.valid();
+                                            this.setState({
+                                                cantp: document.getElementById("cantidad").value
+                                            });
+                                        }
+                                    } />
+                            </div>
+                        </div>
                         {this.Botones2()}
                         {this.Botones()}
                     </div>
