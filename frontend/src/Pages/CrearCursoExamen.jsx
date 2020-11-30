@@ -7,7 +7,7 @@ class CrearCursoTeorico extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cantp=0,
+            cantp: 0,
             ExamenCurso: [],
             bool: false,
             boleanosRedirect2: {
@@ -16,7 +16,7 @@ class CrearCursoTeorico extends React.Component {
                 bool3: false
             }, creando: true,
             index: 0,
-            booleanoalahpta:false
+            booleanoalahpta: false
         }
     }
     async componentDidMount() {
@@ -101,7 +101,7 @@ class CrearCursoTeorico extends React.Component {
         let opcion1 = document.getElementById("opcion1");
         let opcion2 = document.getElementById("opcion2");
         let opcion3 = document.getElementById("opcion3");
-        bool = true;
+        let bool = true;
         let auxiliar = this.state.ExamenCurso;
         if (pregunta.value == "" || document.getElementById("respuesta").value == "" || document.getElementById("opcion1").value == "" || document.getElementById("opcion2").value == "" || document.getElementById("opcion3").value == "") {
             bool = false;
@@ -195,10 +195,10 @@ class CrearCursoTeorico extends React.Component {
             setTimeout(() => {
                 document.getElementById("cantidad").style.border = "1px black solid";
             }, 1500);
-        } else {            
+        } else {
             document.getElementById("carga").style.display = "none";
             for (let x = 0; this.state.ExamenCurso.length > x; x++) {
-                form = await {
+                let form = await {
                     id_curso: this.props.location.state.idCursoC,
                     pregunta: this.state.ExamenCurso[x].pregunta,
                     respuesta: this.state.ExamenCurso[x].respuesta,
@@ -215,14 +215,14 @@ class CrearCursoTeorico extends React.Component {
                         }
                     })
             }
-            axios.put(`http://localhost:3883/Cur//put_cantidad_contenido-e/CrearExamen/${this.props.location.state.idCursoC}&${document.getElementById("cantidad").value}`)
-            .then(res => {
-                console.log(res.data);
-            }).catch(err => {
-                if (err) {
-                    console.error(err);
-                }
-            })
+            axios.put(`http://localhost:3883/Cur/put_cantidad_contenido-e/CrearExamen/${this.props.location.state.idCursoC}&${document.getElementById("cantidad").value}`)
+                .then(res => {
+                    console.log(res.data);
+                }).catch(err => {
+                    if (err) {
+                        console.error(err);
+                    }
+                })
         }
     }
     min = () => {
@@ -284,7 +284,7 @@ class CrearCursoTeorico extends React.Component {
                                 });
                             }
                         } />
-                        <button onClick={this.SubirContenido()}>Subir</button>
+                        <button onClick={() => this.SubirContenido()}>Subir</button>
                         {this.Botones2()}
                         {this.Botones()}
                     </div>

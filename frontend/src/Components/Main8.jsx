@@ -263,12 +263,14 @@ class Main8 extends React.Component {
             document.getElementById("EditarButonOff").disabled = true;
             document.getElementById("ATrasOfF").disabled = true;
             document.getElementById("EditarButonOff2").disabled = true;
+            document.getElementById("EditarButonOff3").disabled = true;
             setTimeout(function () {
                 document.getElementById("AlertasCrearCurso").innerHTML = " ";
                 document.getElementById("AlertasCrearCursoDiv").style.display = "none";
                 document.getElementById("EditarButonOff").disabled = false;
                 document.getElementById("ATrasOfF").disabled = false;
                 document.getElementById("EditarButonOff2").disabled = false;
+                document.getElementById("EditarButonOff3").disabled = false;
             }, 1500);
         } else {
             document.getElementById("AlertasCrearCurso").innerHTML = "No hay nada para guardar.";
@@ -277,12 +279,14 @@ class Main8 extends React.Component {
             document.getElementById("ATrasOfF").disabled = true;
             document.getElementById("EditarButonOff").disabled = true;
             document.getElementById("EditarButonOff2").disabled = true;
+            document.getElementById("EditarButonOff3").disabled = true;
             setTimeout(function () {
                 document.getElementById("AlertasCrearCurso").innerHTML = " ";
                 document.getElementById("AlertasCrearCursoDiv").style.display = "none";
                 document.getElementById("EditarButonOff").disabled = false;
                 document.getElementById("ATrasOfF").disabled = false;
                 document.getElementById("EditarButonOff2").disabled = false;
+                document.getElementById("EditarButonOff3").disabled = false;
             }, 1500);
         }
     }
@@ -619,7 +623,7 @@ class Main8 extends React.Component {
                         <div className="CardCrearCursoContenido">
                             <h3>Examen</h3>
 
-                            <button className="EstiloButtonCrearCursoC">Editar</button>
+                            {this.Botones2("/CrearExamen", "EditarButonOff3")}
 
                             <button className="EstiloButtonCrearCursoC">Borrar contenido</button>
                         </div>
