@@ -155,12 +155,12 @@ class Main5 extends React.Component {
                         <div id="PopUpPart1">
                             <div className="GroupC">
                                 <p className="Group">Nombre</p>
-                                <input type="text" id="NombreClase" className="Group inputCrearClase" autoComplete="off" onChange={()=>{
-                                let valor = document.getElementById("NombreClase");
-                                if(valor.value.length >= 50){
-                                    valor.value = valor.value.substring(0,49);
-                                }
-                            }}/>
+                                <input type="text" id="NombreClase" className="Group inputCrearClase" autoComplete="off" onChange={() => {
+                                    let valor = document.getElementById("NombreClase");
+                                    if (valor.value.length >= 50) {
+                                        valor.value = valor.value.substring(0, 49);
+                                    }
+                                }} />
                             </div>
                             <div className="GroupC">
                                 <p className="Group">Usuario</p>
@@ -320,32 +320,36 @@ class Main5 extends React.Component {
         if (i.value != "") {
             let clase = await this.getClaseForId(i.value);
             let bool = false;
-            if (clase.data[0].id_creador != UsuarioI[0].id_usuario) {
-                for (let x = 0; x < this.state.DataClaseI.length && !bool; x++) {
-                    if (i.value == this.state.DataClaseI[x].id_clase) {
-                        bool = true;
+            if (clase.data.length > 0) {
+                if (clase.data[0].id_creador != UsuarioI[0].id_usuario) {
+                    for (let x = 0; x < this.state.DataClaseI.length && !bool; x++) {
+                        if (i.value == this.state.DataClaseI[x].id_clase) {
+                            bool = true;
+                        }
                     }
-                }
-                let notifi = await this.getNotificurso(i.value);
-                if (notifi.data[0].conteo == 0) {
-                    if (clase.data[0].auto_u == 0) {
-                        if (!bool) {
-                            this.postNotificaciones0(clase.data[0].id_creador, i.value, clase.data[0].titulo, clase.data[0].usuario);
+                    let notifi = await this.getNotificurso(i.value);
+                    if (notifi.data[0].conteo == 0) {
+                        if (clase.data[0].auto_u == 0) {
+                            if (!bool) {
+                                this.postNotificaciones0(clase.data[0].id_creador, i.value, clase.data[0].titulo, clase.data[0].usuario);
+                            } else {
+                                this.Time(i, "text", "Ya participas ahí");
+                            }
                         } else {
-                            this.Time(i, "text", "Ya participas ahí");
+                            if (!bool) {
+                                this.postNewUsuarioClase(clase.data[0].id_clase);
+                            } else {
+                                this.Time(i, "text", "Ya participas ahí");
+                            }
                         }
                     } else {
-                        if (!bool) {
-                            this.postNewUsuarioClase(clase.data[0].id_clase);
-                        } else {
-                            this.Time(i, "text", "Ya participas ahí");
-                        }
+                        this.Time(i, "text", "Pendiente")
                     }
-                }else {
-                    this.Time(i, "text", "Pendiente")
+                } else {
+                    this.Time(i, "text", "Dato invalido")
                 }
             } else {
-                this.Time(i, "text", "Dato invalido")
+                this.Time(i, "text", "Dato invalido");
             }
         } else {
             this.Time(i, "text", "Dato sin ingresar");
@@ -597,7 +601,7 @@ class Main5 extends React.Component {
                 tamaño: tamaño,
                 array: arrays,
                 actual: [],
-                DataClase:prop,
+                DataClase: prop,
                 posicion: 0,
                 despaginar: 0
             });
@@ -773,7 +777,7 @@ class Main5 extends React.Component {
                                                     <h3 className="TitleCardClase">{Esito.titulo}</h3>
                                                     <div className="botoclassCreados">
                                                         <img className="botoneliminar" src="./images/Basura.png" onClick={() => this.Modal2(Esito.id_clase)} />
-                                                        <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                        <Link to={{ pathname: "/Clase", state: { InfoClass: Esito, return: "/Clases" } }}><input type="button" value="Ir" /></Link>
                                                     </div>
                                                 </div>
                                                 <div className="botoncard">
@@ -828,7 +832,7 @@ class Main5 extends React.Component {
                                                     <h3 className="TitleCardClase">{Esito.titulo}</h3>
                                                     <div className="botoclassCreados">
                                                         <img className="botoneliminar" src="./images/Salir.png" onClick={() => this.Modal3(Esito.id_clase, Esito.cont_usuarios)} />
-                                                        <Link to={{ pathname: "/Clase", state: { InfoClass: Esito } }}><input type="button" value="Ir" /></Link>
+                                                        <Link to={{ pathname: "/Clase", state: { InfoClass: Esito, return: "/Clases" } }}><input type="button" value="Ir" /></Link>
                                                     </div>
                                                 </div>
                                                 <div className="botoncard">

@@ -21,18 +21,18 @@ class Main1 extends React.Component {
             ConB2: false,
             data: []
         }
-    }    
-    componentDidMount(){
-        document.getElementById("carga").style.display="none";
-    }    
-    componentWillUpdate(){
-        document.getElementById("carga").style.display="block";
     }
-    componentDidUpdate(){
-        document.getElementById("carga").style.display="none";
+    componentDidMount() {
+        document.getElementById("carga").style.display = "none";
     }
-    componentWillUnmount(){
-        document.getElementById("carga").style.display="block";
+    componentWillUpdate() {
+        document.getElementById("carga").style.display = "block";
+    }
+    componentDidUpdate() {
+        document.getElementById("carga").style.display = "none";
+    }
+    componentWillUnmount() {
+        document.getElementById("carga").style.display = "block";
     }
     /*METODOS DE LOS MODALES EN COMPUTADOR Y TELÉFONO*/
     RegistrarCom = () => {
@@ -79,8 +79,8 @@ class Main1 extends React.Component {
         this.RegistroGlobal(Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, Cel);
     }
     /*Registro de usuario global*/
-    RegistroGlobal = async (Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, tipe) => {        
-        document.getElementById("carga").style.display="block";
+    RegistroGlobal = async (Nombre, Apellido, UserName, Correo, Sexo, Edad, Contraseña, Contraseña2, tipe) => {
+
         let edad = new Date(Edad.value);
         let tD = edad.getDate() + 1;
         let tM = edad.getMonth() + 1;
@@ -112,29 +112,35 @@ class Main1 extends React.Component {
             }
             if (Contraseña.value == Contraseña2.value) {
                 if (this.state.UserB && this.state.UserB2) {
-                    let form = {
-                        nombre: Nombre.value,
-                        apellido: Apellido.value,
-                        genero: Sexo.value,
-                        fecha_n: edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1),
-                        edad: años,
-                        usuario: UserName.value,
-                        contraseña: Contraseña.value,
-                        correo: Correo.value,
-                        registro_sistema: 1
-                    }
-                    await this.postUser(form);
-                    Nombre.value = "";
-                    Apellido.value = "";
-                    UserName.value = "";
-                    Correo.value = "";
-                    Edad.value = "";
-                    Contraseña.value = "";
-                    Contraseña2.value = "";
-                    if(tipe == "Comp"){
-                        this.IniciarCom();
+                    let regular = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+                    if (regular.test(Correo.value)) {
+                        document.getElementById("carga").style.display = "block";
+                        let form = {
+                            nombre: Nombre.value,
+                            apellido: Apellido.value,
+                            genero: Sexo.value,
+                            fecha_n: edad.getFullYear() + "-" + (edad.getMonth() + 1) + "-" + (edad.getDate() + 1),
+                            edad: años,
+                            usuario: UserName.value,
+                            contraseña: Contraseña.value,
+                            correo: Correo.value,
+                            registro_sistema: 1
+                        }
+                        await this.postUser(form);
+                        Nombre.value = "";
+                        Apellido.value = "";
+                        UserName.value = "";
+                        Correo.value = "";
+                        Edad.value = "";
+                        Contraseña.value = "";
+                        Contraseña2.value = "";
+                        if (tipe == "Comp") {
+                            this.IniciarCom();
+                        } else {
+                            this.IniciarCel();
+                        }
                     }else{
-                        this.IniciarCel();
+                        this.Time(Correo, "email", "Correo invalido");
                     }
                 }
             }
@@ -155,8 +161,8 @@ class Main1 extends React.Component {
             } if (Contraseña2.value == "") {
                 this.Time(Contraseña2, "password", "Dato no ingresado.");
             }
-        }             
-        document.getElementById("carga").style.display="none";
+        }
+        document.getElementById("carga").style.display = "none";
     }
     /*INICIO DE SESIÓN DE USUARIO*/
     /*Inicio de sesión en computador*/
@@ -186,13 +192,13 @@ class Main1 extends React.Component {
                 this.Time(Contraseña, "password", "Dato no ingresado.");
             }
         }
-    }    
+    }
     /*Inicio de sesión global*/
-    IniciarSGlobal = async (Usuario, Contraseña) => {        
-        document.getElementById("carga").style.display="block";
+    IniciarSGlobal = async (Usuario, Contraseña) => {
+        document.getElementById("carga").style.display = "block";
         if (this.state.data.length == 0) {
-            document.getElementById("carga").style.display="none";
-            this.Time(Usuario, "text", "El usuario no existe");     
+            document.getElementById("carga").style.display = "none";
+            this.Time(Usuario, "text", "El usuario no existe");
         } else {
             if (this.state.data[0].contraseña == Contraseña.value && this.state.data[0].registro_sistema == 1) {
                 let edad = new Date(this.state.data[0].fecha_n);
@@ -216,7 +222,7 @@ class Main1 extends React.Component {
                 else {
                     años = ttY - tY - 1;
                 }
-                if(this.state.data[0].edad != años){
+                if (this.state.data[0].edad != años) {
                     await this.putEdad(años);
                 }
                 UsuarioI.push({
@@ -235,7 +241,7 @@ class Main1 extends React.Component {
                 );
                 this.setState({ Bool: true });
             } else {
-                document.getElementById("carga").style.display="none";
+                document.getElementById("carga").style.display = "none";
                 this.Time(Contraseña, "password", "La contraseña no coincide.");
             }
         }
@@ -297,16 +303,16 @@ class Main1 extends React.Component {
     }
     /*TODOS LOS PUT*/
     /*Axio que actualiza la edad de un usuario al entrar al sistema*/
-    putEdad = (edad) =>{
-        let form={
-            edad:edad
+    putEdad = (edad) => {
+        let form = {
+            edad: edad
         }
         axios.put(`http://localhost:3883/Usu/put-usuarios-edad/${this.state.data[0].id_usuario}`, form);
     }
     render() {
         return (
             <>
-                {/*Inicio de sesión en celular*/}                
+                {/*Inicio de sesión en celular*/}
                 <div className="Cargando" id="carga"></div>
                 <div id="InicioCel">
                     <div id="InicioCel2">
@@ -318,23 +324,25 @@ class Main1 extends React.Component {
                         </div>
                         <div id="GridCom2Div3_">
                             <p>Usuario</p>
-                            <input className="B4" id="IUCel" type="text" autoComplete="off" onChange={()=>{
+                            <input className="B4" id="IUCel" type="text" autoComplete="off" onChange={() => {
                                 let valor = document.getElementById("IUCel");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
+                                if (valor.value.length >= 100) {
+                                    valor.value = valor.value.substring(0, 99);
                                 }
-                            }}/>
+                            }} />
                             <p>Constraseña</p>
-                            <input className="B4" id="ICCel" type="password" autoComplete="off" onChange={()=>{
+                            <input className="B4" id="ICCel" type="password" autoComplete="off" onChange={() => {
                                 let valor = document.getElementById("ICCel");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
+                                if (valor.value.length >= 100) {
+                                    valor.value = valor.value.substring(0, 99);
                                 }
-                            }}/>
+                            }} />
                         </div>
                         <div className="GridCom2Div1_">
                             <button className="B4" onClick={this.IniciarSCel}>Aceptar</button>
+                            {/*
                             <button className="B4">Iniciar sesión con Google</button>
+                            */}
                         </div>
                     </div>
                 </div>
@@ -348,32 +356,32 @@ class Main1 extends React.Component {
                             <h2 id="TitleReg">Registro</h2>
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="NRCe" type="text" placeholder="Nombre" autoComplete="off" onChange={()=>{
+                            <input className="B1" id="NRCe" type="text" placeholder="Nombre" autoComplete="off" onChange={() => {
                                 let valor = document.getElementById("NRCe");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
+                                if (valor.value.length >= 100) {
+                                    valor.value = valor.value.substring(0, 99);
                                 }
-                            }}/>
-                            <input className="B1" id="ARCe" type="text" placeholder="Apellido" autoComplete="off" onChange={()=>{
+                            }} />
+                            <input className="B1" id="ARCe" type="text" placeholder="Apellido" autoComplete="off" onChange={() => {
                                 let valor = document.getElementById("ARCe");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
+                                if (valor.value.length >= 100) {
+                                    valor.value = valor.value.substring(0, 99);
                                 }
-                            }}/>
+                            }} />
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="DRCe" type="text" onChange={this.UserName2} placeholder="Username" autoComplete="off" onChange={()=>{
+                            <input className="B1" id="DRCe" type="text" onChange={this.UserName2} placeholder="Username" autoComplete="off" onChange={() => {
                                 let valor = document.getElementById("DRCe");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
+                                if (valor.value.length >= 100) {
+                                    valor.value = valor.value.substring(0, 99);
                                 }
-                            }}/>
-                            <input className="B1" id="CRCe" type="email" placeholder="Correo" autoComplete="off" onChange={()=>{
+                            }} />
+                            <input className="B1" id="CRCe" type="email" placeholder="Correo" autoComplete="off" onChange={() => {
                                 let valor = document.getElementById("IUCel");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
+                                if (valor.value.length >= 100) {
+                                    valor.value = valor.value.substring(0, 99);
                                 }
-                            }}/>
+                            }} />
                         </div>
                         <div className="GridCom2Div1">
                             <select className="B2" id="SRCe">
@@ -386,22 +394,24 @@ class Main1 extends React.Component {
                             <input className="B3" id="ERCe" type="date" min={FechaMin} max={FechaH} placeholder="Edad" autoComplete="off" />
                         </div>
                         <div className="GridCom2Div1">
-                            <input className="B1" id="CoRCe" type="password" placeholder="Contraseña" autoComplete="of" onChange={()=>{
+                            <input className="B1" id="CoRCe" type="password" placeholder="Contraseña" autoComplete="of" onChange={() => {
                                 let valor = document.getElementById("CoRCe");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
+                                if (valor.value.length >= 100) {
+                                    valor.value = valor.value.substring(0, 99);
                                 }
-                            }}/>
-                            <input className="B1" id="Co2RCe" type="password" placeholder="Confirmar Contraseña" autoComplete="of" onChange={()=>{
+                            }} />
+                            <input className="B1" id="Co2RCe" type="password" placeholder="Confirmar Contraseña" autoComplete="of" onChange={() => {
                                 let valor = document.getElementById("Co2RCe");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
+                                if (valor.value.length >= 100) {
+                                    valor.value = valor.value.substring(0, 99);
                                 }
-                            }}/>
+                            }} />
                         </div>
                         <div className="GridCom2Div1_">
                             <button className="B4" onClick={this.RegistrarUsuCel}>Aceptar</button>
+                            {/*
                             <button className="B4">Registrarse con Google</button>
+                            */}
                         </div>
                     </div>
                 </div>
@@ -433,32 +443,32 @@ class Main1 extends React.Component {
                                 <p id="PAlert"></p>
                             </div>
                             <div className="GridCom2Div1">
-                                <input className="B1" id="NRC" type="text" placeholder="Nombre" autoComplete="off" onChange={()=>{
-                                let valor = document.getElementById("NRC");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
-                                }
-                            }}/>
-                                <input className="B1" id="ARC" type="text" placeholder="Apellido" autoComplete="off" onChange={()=>{
-                                let valor = document.getElementById("ARC");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
-                                }
-                            }}/>
+                                <input className="B1" id="NRC" type="text" placeholder="Nombre" autoComplete="off" onChange={() => {
+                                    let valor = document.getElementById("NRC");
+                                    if (valor.value.length >= 100) {
+                                        valor.value = valor.value.substring(0, 99);
+                                    }
+                                }} />
+                                <input className="B1" id="ARC" type="text" placeholder="Apellido" autoComplete="off" onChange={() => {
+                                    let valor = document.getElementById("ARC");
+                                    if (valor.value.length >= 100) {
+                                        valor.value = valor.value.substring(0, 99);
+                                    }
+                                }} />
                             </div>
                             <div className="GridCom2Div1">
-                                <input className="B1" id="DRC" type="text" onChange={this.UserName} placeholder="Username" autoComplete="off" onChange={()=>{
-                                let valor = document.getElementById("DRC");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
-                                }
-                            }}/>
-                                <input className="B1" id="CRC" placeholder="Correo" type="email" autoComplete="off" onChange={()=>{
-                                let valor = document.getElementById("CRC");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
-                                }
-                            }}/>
+                                <input className="B1" id="DRC" type="text" onChange={this.UserName} placeholder="Username" autoComplete="off" onChange={() => {
+                                    let valor = document.getElementById("DRC");
+                                    if (valor.value.length >= 100) {
+                                        valor.value = valor.value.substring(0, 99);
+                                    }
+                                }} />
+                                <input className="B1" id="CRC" placeholder="Correo" type="email" autoComplete="off" onChange={() => {
+                                    let valor = document.getElementById("CRC");
+                                    if (valor.value.length >= 100) {
+                                        valor.value = valor.value.substring(0, 99);
+                                    }
+                                }} />
                             </div>
                             <div className="GridCom2Div1">
                                 <select className="B2" id="SRC">
@@ -470,22 +480,24 @@ class Main1 extends React.Component {
                                 <input className="B3" id="ERC" type="date" min={FechaMin} max={FechaH} placeholder="Edad" autoComplete="off" />
                             </div>
                             <div className="GridCom2Div1">
-                                <input className="B1" id="CoRC" type="password" placeholder="Contraseña" autoComplete="off" onChange={()=>{
-                                let valor = document.getElementById("CoRC");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
-                                }
-                            }}/>
-                                <input className="B1" id="Co2RC" type="password" placeholder="Confirmar Contraseña" autoComplete="off" onChange={()=>{
-                                let valor = document.getElementById("Co2RC");
-                                if(valor.value.length >= 100){
-                                    valor.value = valor.value.substring(0,99);
-                                }
-                            }}/>
+                                <input className="B1" id="CoRC" type="password" placeholder="Contraseña" autoComplete="off" onChange={() => {
+                                    let valor = document.getElementById("CoRC");
+                                    if (valor.value.length >= 100) {
+                                        valor.value = valor.value.substring(0, 99);
+                                    }
+                                }} />
+                                <input className="B1" id="Co2RC" type="password" placeholder="Confirmar Contraseña" autoComplete="off" onChange={() => {
+                                    let valor = document.getElementById("Co2RC");
+                                    if (valor.value.length >= 100) {
+                                        valor.value = valor.value.substring(0, 99);
+                                    }
+                                }} />
                             </div>
                             <div className="GridCom2Div1_">
                                 <button className="B4" onClick={this.RegistrarUsuCom}>Aceptar</button>
+                                {/*
                                 <button className="B4">Registrarse con Google </button>
+                                */}
                             </div>
                         </div>
                         {/*Inicio de sesión Computador*/}
@@ -501,7 +513,9 @@ class Main1 extends React.Component {
                             </div>
                             <div className="GridCom2Div1_">
                                 <button className="B4" onClick={this.IniciarSCom}>Aceptar</button>
+                                {/*
                                 <button className="B4">Iniciar sesión con Google</button>
+                                */}
                             </div>
                         </div>
                     </div>

@@ -124,9 +124,14 @@ class Perfil extends React.Component {
         }
         if (correo.value != "") {
             if (correo.value != UsuarioI[0].correo) {
-                if (this.state.UserB2 == false) {
-                    console.log("No debería");
-                    await this.getUsuarioCorreo(correo);
+                let regular = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+                if (regular.test(correo.value)) {
+                    if (this.state.UserB2 == false) {
+                        console.log("No debería");
+                        await this.getUsuarioCorreo(correo);
+                    }
+                } else {
+                    this.Time(correo, "text", "Correo invalido")
                 }
             } else {
                 this.Time(correo, "text", "Este ya es tu correo");
@@ -139,8 +144,12 @@ class Perfil extends React.Component {
         if (this.state.UserB && this.state.UserB2) {
             if (Contraseña.value != "" && Contraseña2.value != "") {
                 if (Contraseña.value == Contraseña2.value) {
-                    UsuarioI[0].contraseña = Contraseña.value;
-                    form.contraseña = Contraseña.value;
+                    if (Contraseña.value != UsuarioI[0].contraseña) {
+                        UsuarioI[0].contraseña = Contraseña.value;
+                        form.contraseña = Contraseña.value;
+                    } else {
+                        this.Time(Contraseña2, "password", "Esta ya es tu contraseña.");
+                    }
                 }
             } else {
                 if (Contraseña.value != "" && Contraseña2.value == "") {
@@ -254,19 +263,19 @@ class Perfil extends React.Component {
             var reader = new FileReader();
             reader.onload = function (e) {
                 aja2 = e.target.result;
-                    document.getElementById("body").innerHTML = "<canvas id='tempCanvas' width='300' height='300' style='display:none'></canvas>";
-                    var canvas = document.getElementById("tempCanvas");
-                    var ctx = canvas.getContext("2d");
-                    var cw = canvas.width;
-                    var ch = canvas.height;
-                    var maxW = 300;
-                    var maxH = 300;
-                    var img = new Image;
-                    img.src = this.result;
-                    img.onload = function () {
-                        var iw = img.width;
-                        var ih = img.height;
-                        if (ih > 300 || iw > 300) {
+                document.getElementById("body").innerHTML = "<canvas id='tempCanvas' width='300' height='300' style='display:none'></canvas>";
+                var canvas = document.getElementById("tempCanvas");
+                var ctx = canvas.getContext("2d");
+                var cw = canvas.width;
+                var ch = canvas.height;
+                var maxW = 300;
+                var maxH = 300;
+                var img = new Image;
+                img.src = this.result;
+                img.onload = function () {
+                    var iw = img.width;
+                    var ih = img.height;
+                    if (ih > 300 || iw > 300) {
                         var scale = Math.min((maxW / iw), (maxH / ih));
                         var iwScaled = iw * scale;
                         var ihScaled = ih * scale;

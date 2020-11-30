@@ -32,7 +32,7 @@ router.put('/guardar_valoracion-Comunidad_Integrado/Curso/:id_curso', (req, res)
 /*Traer- Cursos iniciados(Miscursos)*/
 router.get('/traer-cursosIniciados/misCursos/:id_usuario', (req, res) => {
     const { id_usuario } = req.params;
-    let queryTraerCursosIniciados = `SELECT calificacion
+    let queryTraerCursosIniciados = `SELECT *
     FROM cursos
     JOIN usuario_calificacion
     ON cursos.id=usuario_calificacion.id_curso WHERE usuario_calificacion.id_usuario = ?`;

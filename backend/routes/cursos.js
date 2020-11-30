@@ -249,4 +249,16 @@ router.delete('/delete-curso-informacion/paginas/:id&:id_creador', (req,res) =>{
         }
     });
 });
+/*Este delete sirve para eliminar las preguntas de un curso*/
+router.delete('/delete-preguntas-información/CrearCurso/:id_curso', (req,res) =>{
+    const {id_curso} = req.params;
+    let queryDeletePreguntas = 'DELETE FROM cursos WHERE id_curso=?';
+    mysqlconection.query(queryDeletePreguntas, [id_curso], (err,rows,fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json({message:"CORRECTO"})
+        }
+    });
+});
 module.exports = router;

@@ -13,7 +13,7 @@ router.get('/get-Examne-Contenido/Didactico/:id&:usuario', (req, res) => {
         if (err) {
             console.error(err);
         } else {
-            if (rows[0].contenido_d_text != null || rows[0].contenido_d_text != "") {
+            if (rows[0].contenido_d_text != null && rows[0].contenido_d_text != "") {
                 let ruta = `./public/${usuario}.html`;
                 fs.writeFile(ruta, rows[0].contenido_d_text, (err) =>{
                     if(err){

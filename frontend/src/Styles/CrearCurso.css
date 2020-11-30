@@ -52,10 +52,16 @@
     justify-content: center;
     align-items: center;
 }
-.Porciento100IMG{
+.Porciento100IMG, .Porciento100IMG2{
     width: 50%;
 }
-
+.Porciento1002{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: calc(100vh - 206px);
+}
 .EstiloButtonCrearCursoC:hover {
     background-color: #444140;
     color: white;
@@ -446,6 +452,9 @@
     grid-row: 1/2;
 }
 @media(max-width: 600px) {
+    .Porciento100IMG2{
+        width: 90%;
+    }
     .centerImg{
         width: 90%;
     }

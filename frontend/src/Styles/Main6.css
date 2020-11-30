@@ -138,6 +138,12 @@
 .CIMB{
     margin-bottom: 10px;
 }
+@media(max-width: 880px){
+    #Main6Container{
+        
+    grid-template-columns: 49% 49%;
+    }
+}
 @media(min-width: 720px){
     #Main6Container{
         height: calc(90vh - 45px - 2vw);

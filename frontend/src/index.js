@@ -15,6 +15,7 @@ import CrearCurso from './Pages/CrearCurso.jsx';
 import Examen from './Pages/Examen.jsx';
 import Notificaciones from './Pages/Notificaciones.jsx';
 import CrearContenidoDidactico from './Pages/CrearCursoDidactico.jsx';
+import CalificacionesClaseCurso from './Pages/CalificacionesClaseCurso.jsx';
 import {
     BrowserRouter as Router,
     Switch,
@@ -42,6 +43,7 @@ ReactDOM.render(
                 <Route path="/misCursos">
                     <MisCursos />
                 </Route>
+                <Route  path="/CalificacionesClaseCurso" component={CalificacionesClaseCurso}/>
                 <Route path="/Clases" >
                     <Clases />
                 </Route>

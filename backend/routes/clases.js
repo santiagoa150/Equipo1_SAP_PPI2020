@@ -40,6 +40,18 @@ router.get('/Get-Clases-id_Min/clases/:id_clase', (req,res) =>{
         }
     })
 });
+/*Este get sirve para mostrar la calificación de cada usuario en una clase*/
+router.get('/GET-CLASES-CALIFICACIONCURSOS/:id_clase&:id', (req,res) =>{
+    const {id_clase, id} = req.params;
+    let queryCancer = `SELECT usuario_clase.id_clase, usuario_clase.id_usuario,primerJoin.* FROM usuario_clase LEFT JOIN (SELECT usuario_calificacion.*, CONCAT(usuarios.nombre, " ", usuarios.apellido) AS nombreCompleto FROM usuario_calificacion JOIN cursos JOIN usuarios ON usuario_calificacion.id_curso = cursos.id AND usuarios.id_usuario = usuario_calificacion.id_usuario WHERE cursos.id_clase=? AND cursos.id=?) AS primerJoin ON usuario_clase.id_usuario = primerJoin.id_usuario WHERE usuario_clase.id_clase = ?`;
+    mysqlconection.query(queryCancer, [id_clase, id, id_clase], (err, rows, fields) =>{
+        if(err){
+            console.error(err);
+        }else{
+            res.json(rows);
+        }
+    });
+});
 /*TODOS LOS POST*/
 /*Este post sirve para crear una clase nueva*/
 router.post('/Post-Clases-NuevaClase', (req,res) =>{

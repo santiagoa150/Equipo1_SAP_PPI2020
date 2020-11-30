@@ -15,7 +15,7 @@ class Juego extends React.Component {
             orden: [],
             cont: 0,
             pos: 0,
-            calificacion:0
+            calificacion: 0
         }
     }
     componentWillMount = () => {
@@ -27,10 +27,10 @@ class Juego extends React.Component {
     componentWillUpdate() {
         document.getElementById("carga").style.display = "block";
     }
-    componentWillReceiveProps() {        
+    componentWillReceiveProps() {
         document.getElementById("carga").style.display = "block";
     }
-    componentDidUpdate=()=>{        
+    componentDidUpdate = () => {
         document.getElementById("carga").style.display = "none";
     }
     componentWillUnmount = () => {
@@ -41,7 +41,7 @@ class Juego extends React.Component {
     getcalificacion = async () => {
         await axios.get(`http://localhost:3883/UsuCur/traer-calificacion/Examen/${UsuarioI[0].id_usuario}&${this.props.location.state.id}`)
             .then(res => {
-                this.setState({ calificacion:res.data[0].calificacion });
+                this.setState({ calificacion: res.data[0].calificacion });
             }).catch(err => {
                 console.error(err);
             })
@@ -93,16 +93,24 @@ class Juego extends React.Component {
         });
     }
     putEvaluacion = async (prop) => {
+        if(UsuarioI[0].id_usuario != this.props.location.state.id_creador){
         await axios.put(`http://localhost:3883/UsuCur/Put_Usuario-calificacion_calificacion/Comunidad/${UsuarioI[0].id_usuario}&${this.props.location.state.id}&${prop}`)
             .then(res => {
-
             }).catch(err => {
                 console.log(err);
             });
+            
+            
+        }
     }
     /*Metodo que define si se pinta una pregunta o si se pinta un renderizado*/
     finalizar = () => {
-        if (this.state.cont < this.state.cant) {
+        if (this.state.cant == 0) {
+            return (
+                <div className="Porciento1002">
+                    <img className="Porciento100IMG2" src="/Images/ContenidoECurso.png"></img>
+                </div>);
+        } else if (this.state.cont < this.state.cant) {
             return (
                 <>
                     <div className="cont_pregu">
@@ -136,22 +144,20 @@ class Juego extends React.Component {
                     </div>
                 </>
             );
-        } else if (this.props.location.state.preguntas.length == 0) {
-            return (
-            <div>
-                <p>
-                    Este curso no tiene un contenido evaluativo
-                </p>
-            </div>);
         }
-        else  {
+        else {
             return (
                 <>
-                    <h1 className="Acabar">Acabaste <br /> Acertaste {this.state.puntaje} preguntas</h1>
-                    <h1 className="Acabar">Tu calificacion es de: {(Math.round((this.state.puntaje / this.state.cant) * 50)) / 10}</h1>
-                    <Link to="/">
-                        <input type="button" value="Volver" className="botonV" />
-                    </Link>
+                    <div className="ModalJuego">
+                        <div className="ModalJuegoTitle">
+                            <h1 className="Acabar">Acabaste <br /> Acertaste {this.state.puntaje} preguntas</h1>
+                        </div>
+                        <h1 className="Acabar">Tu calificacion es de: {(Math.round((this.state.puntaje / this.state.cant) * 50)) / 10}</h1>
+                        <Link to="/misCursos">
+                            <input type="button" value="Volver" className="botonV" />
+                        </Link>
+                    </div>
+
                 </>
             );
         }

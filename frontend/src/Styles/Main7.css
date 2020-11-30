@@ -24,6 +24,15 @@
 .MaxContC{
     width: 80% !important;
 }
+.BOTTONCI{
+    flex-flow: column;
+}
+.ClaseEditar{
+    display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+    justify-content: space-around;
+}
 #UsersMain7{
     width: 100%;
     display: flex;

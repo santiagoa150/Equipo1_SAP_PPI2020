@@ -1,0 +1,17 @@
+.CardCalificacion{
+    width: 90%;
+    height: max-content;
+    background-color: #444140;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    margin-bottom: 10px;
+    color: white;
+}
+.Porciento70{
+    width: 95%;
+}
+.Porciento30{
+    width: 5%;
+}

@@ -276,6 +276,7 @@ class Main6 extends React.Component {
                         </div>
                         <div id="CardsInner">
                             {this.state.DataProgresos.map((Esito, index) => {
+                                console.log(Esito);
                                 return (
                                     <>
                                         <div key={index} className="CardCIMisC">
