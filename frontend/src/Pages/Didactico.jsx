@@ -15,7 +15,7 @@ class Didactico extends React.Component {
         }
     }
     async componentDidMount() {
-        await axios.get(`http://localhost:3883/Fil/get-Examne-Contenido/Didactico/${this.props.location.state.id}&${UsuarioI[0].usuario}`)
+        await axios.get(`https://learnwithus2020.herokuapp.com/Fil/get-Examne-Contenido/Didactico/${this.props.location.state.id}&${UsuarioI[0].usuario}`)
             .then(res => {
                 this.setState({ DataCurso: res.data });
             }).catch(err => {
@@ -26,7 +26,7 @@ class Didactico extends React.Component {
         document.getElementById("carga").style.display = "none";
     }
     componentWillUnmount() {
-        axios.get(`http://localhost:3883/Fil/get-Examne-Contenido-delete/Didactico/${this.props.location.state.id}&${UsuarioI[0].usuario}`)
+        axios.get(`https://learnwithus2020.herokuapp.com/Fil/get-Examne-Contenido-delete/Didactico/${this.props.location.state.id}&${UsuarioI[0].usuario}`)
             .then(res => {
 
             }).catch(err => {
@@ -38,7 +38,7 @@ class Didactico extends React.Component {
     iframe = () => {
         if (this.state.DataCurso[0]?.contenido_d_text != null && this.state.DataCurso[0]?.contenido_d_text != "") {
             return (
-                <iframe className="formGames" src={`http://localhost:3883/Fil/file-Didactico/${UsuarioI[0].usuario}/`}></iframe>
+                <iframe className="formGames" src={`https://learnwithus2020.herokuapp.com/Fil/file-Didactico/${UsuarioI[0].usuario}/`}></iframe>
             );
         } else {
             return (

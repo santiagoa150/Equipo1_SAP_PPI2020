@@ -150,21 +150,21 @@ class Main6 extends React.Component {
     /*GETS*/
     /*Este metodo trae todos los cursos iniciados*/
     getCursosI = async () => {
-        return axios.get(`http://localhost:3883/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
+        return axios.get(`https://learnwithus2020.herokuapp.com/UsuCur/traer-cursosIniciados/misCursos/${UsuarioI[0].id_usuario}`)
             .catch(err => {
                 console.error(err);
             })
     }
     /*Este metodo trae todos los cursos creados*/
     getCursosC = async () => {
-        return axios.get(`http://localhost:3883/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
+        return axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos_Mis_cursos/Creados/${UsuarioI[0].id_usuario}`)
             .catch(err => {
                 console.error(err);
             })
     }
     /*Este metodo trae el id de un curso a la hora de crearlo*/
     getCrearCurso = async () => {
-        await axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
+        await axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
             .then(res => {
                 this.setState({
                     idCursoCreado: res.data[0].id,
@@ -194,7 +194,7 @@ class Main6 extends React.Component {
             fecha_c: newDate,
             logo: "/Images/Cursos/Default.png"
         }
-        axios.post(`http://localhost:3883/Cur/post_cursos_informacion/misCursos/`, form)
+        axios.post(`https://learnwithus2020.herokuapp.com/Cur/post_cursos_informacion/misCursos/`, form)
             .catch(err => {
                 if (err) {
                     console.error(err);
@@ -204,7 +204,7 @@ class Main6 extends React.Component {
     /*DELETES*/
     /*Este delete elimina un curso creado*/
     deleteCursoC = async (id) => {
-        await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
+        await axios.delete(`https://learnwithus2020.herokuapp.com/Cur/delete-curso-informacion/paginas/${id}&${UsuarioI[0].id_usuario}`)
             .then(async (res) => {
                 let x = await this.getCursosC();
                 this.setState({

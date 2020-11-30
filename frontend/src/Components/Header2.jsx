@@ -99,7 +99,7 @@ class Header2 extends React.Component {
     /*GETS*/
     /*Este get sirve para traer todas las notificaciones de un usuario*/
     getNotificaciones = async () => {
-        await axios.get(`http://localhost:3883/Not/get_notificaciones_count/Header2/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
+        await axios.get(`https://learnwithus2020.herokuapp.com/Usu/Not/get_notificaciones_count/Header2/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
             .then(res => {
                 this.setState({ dataNotificaciones: res.data })
             }).catch(err => {

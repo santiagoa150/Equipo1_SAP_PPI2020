@@ -39,7 +39,7 @@ class Juego extends React.Component {
         }
     }
     getcalificacion = async () => {
-        await axios.get(`http://localhost:3883/UsuCur/traer-calificacion/Examen/${UsuarioI[0].id_usuario}&${this.props.location.state.id}`)
+        await axios.get(`https://learnwithus2020.herokuapp.com/UsuCur/traer-calificacion/Examen/${UsuarioI[0].id_usuario}&${this.props.location.state.id}`)
             .then(res => {
                 this.setState({ calificacion: res.data[0].calificacion });
             }).catch(err => {
@@ -94,7 +94,7 @@ class Juego extends React.Component {
     }
     putEvaluacion = async (prop) => {
         if(UsuarioI[0].id_usuario != this.props.location.state.id_creador){
-        await axios.put(`http://localhost:3883/UsuCur/Put_Usuario-calificacion_calificacion/Comunidad/${UsuarioI[0].id_usuario}&${this.props.location.state.id}&${prop}`)
+        await axios.put(`https://learnwithus2020.herokuapp.com/UsuCur/Put_Usuario-calificacion_calificacion/Comunidad/${UsuarioI[0].id_usuario}&${this.props.location.state.id}&${prop}`)
             .then(res => {
             }).catch(err => {
                 console.log(err);

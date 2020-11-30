@@ -263,7 +263,7 @@ class Main1 extends React.Component {
     /*TODOS LOS GETS*/
     /*Axio para traer un usuario por su UserName // Este se utiliza en el registro*/
     getUserNameRegistro = async (UserName) => {
-        const response = await axios.get(`http://localhost:3883/Usu/usuario-sesion/${UserName.value}`)
+        const response = await axios.get(`https://learnwithus2020.herokuapp.com/Usu/usuario-sesion/${UserName.value}`)
         if (response.length > 0) {
             this.Time(UserName, "text", "Usuario invalido");
         } else {
@@ -272,7 +272,7 @@ class Main1 extends React.Component {
     }
     /*Axio para traer un usuario por su Correo*/
     getCorreoRegistro = async (Correo) => {
-        const response = await axios.get(`http://localhost:3883/Usu/correo-sesion/${Correo.value}`)
+        const response = await axios.get(`https://learnwithus2020.herokuapp.com/Usu/correo-sesion/${Correo.value}`)
         if (response.length > 0) {
             this.Time(Correo, "text", "Usuario invalido");
         } else {
@@ -281,7 +281,7 @@ class Main1 extends React.Component {
     }
     /*Axio para traer un usuario por su UserName // Este se utiliza en el inicio de sesión*/
     getUserNameInicioSesion = async (Usuario, Contraseña) => {
-        await axios.get(`http://localhost:3883/Usu/usuario-sesion/${Usuario.value.toLowerCase()}`)
+        await axios.get(`https://backendlearn.vercel.app/Usu/usuario-sesion/${Usuario.value.toLowerCase()}`)
             .then(res => {
                 this.setState({ data: res.data });
                 this.IniciarSGlobal(Usuario, Contraseña);
@@ -292,7 +292,7 @@ class Main1 extends React.Component {
     /*TODOS LOS POST*/
     /*Axio que registra a un usuario en el sistema*/
     postUser = async (form) => {
-        await axios.post(`http://localhost:3883/Usu/registro-sesion`, form)
+        await axios.post(`https://learnwithus2020.herokuapp.com/Usu/registro-sesion`, form)
             .then(res => {
 
             }).catch(err => {
@@ -307,7 +307,7 @@ class Main1 extends React.Component {
         let form = {
             edad: edad
         }
-        axios.put(`http://localhost:3883/Usu/put-usuarios-edad/${this.state.data[0].id_usuario}`, form);
+        axios.put(`https://learnwithus2020.herokuapp.com/Usu/put-usuarios-edad/${this.state.data[0].id_usuario}`, form);
     }
     render() {
         return (

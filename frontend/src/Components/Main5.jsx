@@ -359,7 +359,7 @@ class Main5 extends React.Component {
     /*GETS*/
     /*Este get trae las clases creadas*/
     getClasesC = async () => {
-        await axios.get(`http://localhost:3883/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
+        await axios.get(`https://learnwithus2020.herokuapp.com/Cla/Get-Clases-Creadas/${UsuarioI[0].id_usuario}`)
             .then(res => {
                 this.filtrando(res.data);
             }).catch(err => {
@@ -368,7 +368,7 @@ class Main5 extends React.Component {
     }
     /*Este get trae las clases inscritas*/
     getClasesI = async () => {
-        await axios.get(`http://localhost:3883/UsuCla/get-usario_claseJOINclases-todo/${UsuarioI[0].id_usuario}`)
+        await axios.get(`https://learnwithus2020.herokuapp.com/UsuCla/get-usario_claseJOINclases-todo/${UsuarioI[0].id_usuario}`)
             .then(res => {
                 this.filtrandoI(res.data);
             }).catch(err => {
@@ -378,7 +378,7 @@ class Main5 extends React.Component {
     /*Este get trae u nusuari por su nickname para programar su notificación*/
     getUsuarioNotifi = async (prop) => {
         let variable = prop.value.toLowerCase();
-        await axios.get(`http://localhost:3883/Usu/get_clases_usuario-id/clases/${variable}`)
+        await axios.get(`https://learnwithus2020.herokuapp.com/Usu/get_clases_usuario-id/clases/${variable}`)
             .then(res => {
                 this.setState({
                     CrearClase: res.data
@@ -391,7 +391,7 @@ class Main5 extends React.Component {
     }
     /*Este get trae un 1 si ya tenemos alguna invitacion de la case 0 si no*/
     getNotificurso = (prop) => {
-        return axios.get(`http://localhost:3883/Not/get_notificaciones_uclase/clases/${prop}&${UsuarioI[0].id_usuario}`)
+        return axios.get(`https://learnwithus2020.herokuapp.com/Not/get_notificaciones_uclase/clases/${prop}&${UsuarioI[0].id_usuario}`)
             .catch(err => {
                 if (err) {
                     console.error(err);
@@ -400,7 +400,7 @@ class Main5 extends React.Component {
     }
     /*Este get trae una clase por ID*/
     getClaseForId = async (prop) => {
-        return axios.get(`http://localhost:3883/Cla/Get-Clases-id_Min/clases/${prop}`)
+        return axios.get(`https://learnwithus2020.herokuapp.com/Cla/Get-Clases-id_Min/clases/${prop}`)
             .catch(err => {
                 if (err) {
                     console.error(err);
@@ -409,7 +409,7 @@ class Main5 extends React.Component {
     }
     /*Este get trae la id de una clase a partir de su fecha*/
     getFechaClase = async (prop) => {
-        await axios.get(`http://localhost:3883/Cla/Get-Clases-id/clases/${newDate}&${UsuarioI[0].id_usuario}`)
+        await axios.get(`https://learnwithus2020.herokuapp.com/Cla/Get-Clases-id/clases/${newDate}&${UsuarioI[0].id_usuario}`)
             .then(res => {
                 let data = res.data;
                 this.postNotificaciones1(data[0].id_clase, prop);
@@ -422,7 +422,7 @@ class Main5 extends React.Component {
     /*PUTS*/
     /*Este put permite actualizar la cantidad de usaurios de una clase*/
     putUsariosClase = async () => {
-        axios.put(`http://localhost:3883/Cla/Put-Clases-cantidad_usuarios/Clases/${this.state.ModalClase}`)
+        axios.put(`https://learnwithus2020.herokuapp.com/Cla/Put-Clases-cantidad_usuarios/Clases/${this.state.ModalClase}`)
             .then(res => {
             }).catch(err => {
                 if (err) {
@@ -433,7 +433,7 @@ class Main5 extends React.Component {
     /*POST*/
     /*Este post sirve para crear una clase nueva*/
     postNewClase = async (form) => {
-        await axios.post(`http://localhost:3883/Cla/Post-Clases-NuevaClase`, form)
+        await axios.post(`https://learnwithus2020.herokuapp.com/Cla/Post-Clases-NuevaClase`, form)
             .then(res => {
                 if (this.state.UsuariosCrearClase.length > 0) {
                     this.getFechaClase(form.titulo);
@@ -464,7 +464,7 @@ class Main5 extends React.Component {
             id_clase: id_clase,
             fecha_u: FechaH
         }
-        axios.post(`http://localhost:3883/UsuCla/post-usuario_clase-Info/Clases`, form)
+        axios.post(`https://learnwithus2020.herokuapp.com/UsuCla/post-usuario_clase-Info/Clases`, form)
             .then(res => {
                 this.state.ModalClase = id_clase;
                 this.putUsariosClase();
@@ -493,7 +493,7 @@ class Main5 extends React.Component {
                 tipo_notificacion: 1,
                 usuario2: this.state.UsuariosCrearClase[i].usuario
             }
-            axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
+            axios.post(`https://learnwithus2020.herokuapp.com/Not/post_notificaciones_info/Clases`, form)
                 .then(res => {
 
                 }).catch(err => {
@@ -516,7 +516,7 @@ class Main5 extends React.Component {
             titulo_clase: titulo_clase,
             usuario2: usuario
         }
-        axios.post(`http://localhost:3883/Not/post_notificaciones_info/Clases`, form)
+        axios.post(`https://learnwithus2020.herokuapp.com/Not/post_notificaciones_info/Clases`, form)
             .then(res => {
                 this.Modal1();
             }).catch(err => {
@@ -528,7 +528,7 @@ class Main5 extends React.Component {
     /*DELETES*/
     /*Elimina clases creadas*/
     deleteClase = async () => {
-        await axios.delete(`http://localhost:3883/Cla/Delete-Clases-todo/Clases/${this.state.ModalClase}`)
+        await axios.delete(`https://learnwithus2020.herokuapp.com/Cla/Delete-Clases-todo/Clases/${this.state.ModalClase}`)
             .then(res => {
                 this.getClasesC();
                 this.setState({
@@ -544,7 +544,7 @@ class Main5 extends React.Component {
     /*Permite salirse de una clase en la que se participa*/
     Salirclase = async () => {
         document.getElementById("carga").style.display = "block";
-        await axios.delete(`http://localhost:3883/UsuCla/Delete-Clases-todo/Clases/${this.state.ModalClase}&${UsuarioI[0].id_usuario}`)
+        await axios.delete(`https://learnwithus2020.herokuapp.com/UsuCla/Delete-Clases-todo/Clases/${this.state.ModalClase}&${UsuarioI[0].id_usuario}`)
             .then(res => {
                 this.putUsariosClase();
                 this.getClasesI();

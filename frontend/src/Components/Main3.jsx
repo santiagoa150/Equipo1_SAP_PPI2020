@@ -300,14 +300,14 @@ class Main3 extends React.Component {
     /*GETS*/
     /*Este get trae todos los cursos dependiendo si la pagina es comunidad o integrado*/
     getCursos = async () => {
-        return axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/${this.props.location.state.pagina}`)
+        return axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos-Comunidad_Integrado/${this.props.location.state.pagina}`)
             .catch(err => {
                 console.error(err);
             });
     }
     /*Este get trae todos los cursos iniciados*/
     getCursoIniciado = async () => {
-        return axios.get(`http://localhost:3883/UsuCur/traer-UsuarioCalificacion/Integrado-Comunidad/${UsuarioI[0].id_usuario}`)
+        return axios.get(`https://learnwithus2020.herokuapp.com/UsuCur/traer-UsuarioCalificacion/Integrado-Comunidad/${UsuarioI[0].id_usuario}`)
             .catch(err => {
                 console.error(err);
             })
@@ -315,7 +315,7 @@ class Main3 extends React.Component {
     /*POST*/
     /*Este post inicia un curso actualizando la tabla Usuario-calificacion */
     postIniciarCurso = async (prop) => {
-        await axios.post(`http://localhost:3883/UsuCur/user-init-curso/${prop}`, this.state.form)
+        await axios.post(`https://learnwithus2020.herokuapp.com/UsuCur/user-init-curso/${prop}`, this.state.form)
             .then(response => {
                 console.log("Hola");
                 this.setState({
@@ -332,7 +332,7 @@ class Main3 extends React.Component {
     /*Este PUT actualiza usuario-calificación para no dejar calificar más un curso.*/
     putCalificacionCurso = async (prop) => {
         /*UsuarioCalificación*/
-        await axios.put(`http://localhost:3883/UsuCur/Put_Usuario-calificacion/Comunidad/${UsuarioI[0].id_usuario}&${prop}`)
+        await axios.put(`https://learnwithus2020.herokuapp.com/UsuCur/Put_Usuario-calificacion/Comunidad/${UsuarioI[0].id_usuario}&${prop}`)
             .then(res => {
                 console.log("SEHIZO EL PRIMER PUT");
             }).catch(err => {
@@ -353,7 +353,7 @@ class Main3 extends React.Component {
         }
         document.getElementById("carga").style.display = "block";
         /*Cursos*/
-        await axios.put(`http://localhost:3883/Cur/put_cursos_valoracion/comunidad/${prop}`, form2)
+        await axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cursos_valoracion/comunidad/${prop}`, form2)
             .then(async (res) => {
                 let C = await this.getCursos();
                 let Ci = await this.getCursoIniciado();
