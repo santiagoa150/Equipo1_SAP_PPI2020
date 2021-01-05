@@ -245,7 +245,7 @@ class Perfil extends React.Component {
         }
     }
     deleteUser = async () => {
-        axios.delete(`https://learnwithus2020.herokuapp.com/Usu/deleteUsuario/${UsuarioI[0]?.id_usuario}`)
+        axios.delete(`http://localhost:3883/Usu/deleteUsuario/${UsuarioI[0]?.id_usuario}`)
             .then(res => {
                 UsuarioI.splice(0, 1);
                 this.setState({
@@ -390,7 +390,7 @@ class Perfil extends React.Component {
         let form = {
             avatar: aja2 + ""
         }
-        axios.put(`https://learnwithus2020.herokuapp.com/Usu/actualizacion-perfil/imagen/${UsuarioI[0]?.id_usuario}`, form)
+        axios.put(`http://localhost:3883/Usu/actualizacion-perfil/imagen/${UsuarioI[0]?.id_usuario}`, form)
             .then(res => {
 
             }).catch(err => {
@@ -399,7 +399,7 @@ class Perfil extends React.Component {
     }
     /*Este put actualiza la información del usuario.*/
     putInformacion = async (form) => {
-        await axios.put(`https://learnwithus2020.herokuapp.com/Usu/actualizacion-perfil/datos/${UsuarioI[0]?.id_usuario}`, form)
+        await axios.put(`http://localhost:3883/Usu/actualizacion-perfil/datos/${UsuarioI[0]?.id_usuario}`, form)
             .then(res => {
                 this.setState({ renderizar: true });
             }).catch(err => {
@@ -411,7 +411,7 @@ class Perfil extends React.Component {
     /*GETS*/
     /*Este get nos trae la información de un usaurio dependiendo de su UserName*/
     getUsuarioUserName = async (User) => {
-        await axios.get(`https://learnwithus2020.herokuapp.com/Usu/usuario-sesion/${User.value}`)
+        await axios.get(`http://localhost:3883/Usu/usuario-sesion/${User.value}`)
             .then(res => {
                 if (res.data.length > 0) {
                     this.Time(User, "text", "Usuario invalido");
@@ -426,7 +426,7 @@ class Perfil extends React.Component {
     }
     /*Este get nos trae*/
     getUsuarioCorreo = async (correo) => {
-        await axios.get(`https://learnwithus2020.herokuapp.com/Usu/correo-sesion/${correo.value}`)
+        await axios.get(`http://localhost:3883/Usu/correo-sesion/${correo.value}`)
             .then(res => {
                 if (res.data.length > 0) {
                     this.Time(correo, "text", "Correo invalido");

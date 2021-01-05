@@ -37,7 +37,7 @@ class CrearCursoDidactico extends React.Component {
             bool: true
         });
         if (this.state.dataContenidoD[0]?.contenido_d_text != "") {
-            document.getElementById("tablero2").innerHTML = '<iframe class="formGames2" src="https://learnwithus2020.herokuapp.com/Fil/file-Didactico/' + UsuarioI[0].usuario + '"></iframe>';
+            document.getElementById("tablero2").innerHTML = '<iframe class="formGames2" src="http://localhost:3883/Fil/file-Didactico/' + UsuarioI[0].usuario + '"></iframe>';
         } else {
             document.getElementById("tablero2").innerHTML = '<div class="Porciento100"><img class="Porciento100IMG" src="/Images/ContenidoD.png"></img></div>';
         }
@@ -51,7 +51,7 @@ class CrearCursoDidactico extends React.Component {
         document.getElementById("tablero1").style.display = "block";
     }
     componentWillUnmount() {
-        axios.get(`https://learnwithus2020.herokuapp.com/Fil/get-Examne-Contenido-delete/Didactico/${this.props.location.state.idCursoC}&${UsuarioI[0].usuario}`)
+        axios.get(`http://localhost:3883/Fil/get-Examne-Contenido-delete/Didactico/${this.props.location.state.idCursoC}&${UsuarioI[0].usuario}`)
             .then(res => { })
             .catch(err => {
                 if (err) {
@@ -61,7 +61,7 @@ class CrearCursoDidactico extends React.Component {
     }
     componentDidUpdate() {
         if (this.state.dataContenidoD[0]?.contenido_d_text != "") {
-            document.getElementById("tablero2").innerHTML = '<iframe class="formGames2" src="https://learnwithus2020.herokuapp.com/Fil/file-Didactico/' + UsuarioI[0].usuario + '"></iframe>';
+            document.getElementById("tablero2").innerHTML = '<iframe class="formGames2" src="http://localhost:3883/Fil/file-Didactico/' + UsuarioI[0].usuario + '"></iframe>';
         } else {
             document.getElementById("tablero2").innerHTML = '<div class="Porciento100"><img class="Porciento100IMG" src="/Images/ContenidoD.png"></img></div>';
         }
@@ -236,7 +236,7 @@ class CrearCursoDidactico extends React.Component {
     /*Este get sirve para traer el contenido_d_text de un curso*/
     contenido_d_text = async (prop) => {
         console.log(prop);
-        return axios.get(`https://learnwithus2020.herokuapp.com/Fil/get-Examne-Contenido/Didactico/${prop}&${UsuarioI[0].usuario}`)
+        return axios.get(`http://localhost:3883/Fil/get-Examne-Contenido/Didactico/${prop}&${UsuarioI[0].usuario}`)
             .catch(err => {
                 if (err) {
                     console.error(err);
@@ -245,7 +245,7 @@ class CrearCursoDidactico extends React.Component {
     }
     /*Este get sirve para saber si un curso tiene habilitado el d_permiso y/o traer el contenido_e_text de ese curso*/
     contenido_d_text2 = async (prop) => {
-        return axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos_contenido-e/CrearContenidoE/${prop}`)
+        return axios.get(`http://localhost:3883/Cur/get_cursos_contenido-e/CrearContenidoE/${prop}`)
             .catch(err => {
                 if (err) {
                     console.error(err);
@@ -255,7 +255,7 @@ class CrearCursoDidactico extends React.Component {
     /*TODOS LOS PUT*/
     /*Guardar*/
     guardar = (form) => {
-        axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cursos_contenido-d/CrearCursoD/${this.props.location.state.idCursoC}`, form)
+        axios.put(`http://localhost:3883/Cur/put_cursos_contenido-d/CrearCursoD/${this.props.location.state.idCursoC}`, form)
             .then(res => {
             }).catch(err => {
                 if (err) {

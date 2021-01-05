@@ -18,7 +18,7 @@ class Header5 extends React.Component {
     }
     /*Metodo que trae la información del curso al que se entra.*/
     getCursoComunidad = async () => {
-        await axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
+        await axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
             .then(res => {
                 this.setState({ DataCurso: res.data });
             }).catch(err => {

@@ -27,7 +27,7 @@ class CalificacionesClaseCurso extends React.Component {
         document.getElementById("carga").style.display = "none";
     }
     getNotas = async () => {
-        return axios.get(`https://learnwithus2020.herokuapp.com/Cla/GET-CLASES-CALIFICACIONCURSOS/${this.props.location.state.InfoClass.id_clase}&${this.props.location.state.Curso.id}`)
+        return axios.get(`http://localhost:3883/Cla/GET-CLASES-CALIFICACIONCURSOS/${this.props.location.state.InfoClass.id_clase}&${this.props.location.state.Curso.id}`)
             .catch(err => {
                 if (err) {
                     console.error(err);

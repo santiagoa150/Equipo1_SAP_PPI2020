@@ -17,7 +17,7 @@ class Main2 extends React.Component {
                     <div className="conten">
                         <h2 className="tecto">Bienvenido</h2><br />
                         <p className="tecto">
-                            Bienvenidos al aplicativo Learn With Us, esta es la pantalla principal el menu par navegar lo puede encontrar en la parte de arriba a la izquierda, para entender el funcionamiento del sofware puede ver el video introductorio aca debajo.
+                            Bienvenidos al aplicativo Learn With Us, esta es la pantalla principal, el menu para navegar lo puede encontrar en la parte de arriba a la izquierda, para entender el funcionamiento del sofware puede ver el video introductorio que se encuentra debajo.
                         </p>
                     </div>
                     <div className="conten">

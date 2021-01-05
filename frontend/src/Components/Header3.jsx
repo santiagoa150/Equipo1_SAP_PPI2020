@@ -10,7 +10,7 @@ class Header3 extends React.Component {
         }
     }
      componentWillMount(){
-         axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
+         axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.id}`)
             .then(res => {
                 this.setState({data: res.data})
                 console.log();

@@ -182,7 +182,7 @@ class CrearCursoTeorico extends React.Component {
     /*GETS*/
     /*Este metodo trae el contenido teoríco del curso que se está edianto*/
     getContenidoE = async () => {
-        await axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_preguntas_informacion/ContenidoE/${this.props.location.state.idCursoC}`)
+        await axios.get(`http://localhost:3883/Cur/get_preguntas_informacion/ContenidoE/${this.props.location.state.idCursoC}`)
             .then(res => {
                 console.log(res.data);
                 this.setState({
@@ -204,7 +204,7 @@ class CrearCursoTeorico extends React.Component {
             }, 1500);
         } else {
             document.getElementById("carga").style.display = "none";
-            await axios.delete(`https://learnwithus2020.herokuapp.com/Cur/delete-preguntas-informacion/CrearCurso/${this.props.location.state.idCursoC}`)
+            await axios.delete(`http://localhost:3883/Cur/delete-preguntas-informacion/CrearCurso/${this.props.location.state.idCursoC}`)
                 .then(async (res) => {
                     for (let x = 0; this.state.ExamenCurso.length > x; x++) {
                         let form = await {
@@ -216,7 +216,7 @@ class CrearCursoTeorico extends React.Component {
                             opcion3: this.state.ExamenCurso[x].opcion3
                         }
 
-                        axios.post(`https://learnwithus2020.herokuapp.com/Cur/post_preguntas_curso/CrearExamen`, form)
+                        axios.post(`http://localhost:3883/Cur/post_preguntas_curso/CrearExamen`, form)
                             .then(res => {
                                 console.log(res.data);
                             }).catch(err => {
@@ -231,7 +231,7 @@ class CrearCursoTeorico extends React.Component {
                     }
                 })
 
-            axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cantidad_contenido-e/CrearExamen/${this.props.location.state.idCursoC}&${document.getElementById("cantidad").value}`)
+            axios.put(`http://localhost:3883/Cur/put_cantidad_contenido-e/CrearExamen/${this.props.location.state.idCursoC}&${document.getElementById("cantidad").value}`)
                 .then(res => {
                     console.log(res.data);
                 }).catch(err => {
@@ -242,7 +242,7 @@ class CrearCursoTeorico extends React.Component {
         }
     }
     cantidadPreguntas = async () => {
-        return axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos_cantidadPreguntas/CrearContenidoE/${this.props.location.state.idCursoC}`)
+        return axios.get(`http://localhost:3883/Cur/get_cursos_cantidadPreguntas/CrearContenidoE/${this.props.location.state.idCursoC}`)
             .catch(err => {
                 if (err) {
                     console.error(err);

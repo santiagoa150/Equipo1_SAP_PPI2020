@@ -68,7 +68,7 @@ class Main7 extends React.Component {
     /*GETS*/
     /*Este get trae todos los cursos que hacen parte */
     getCursosClase = async () => {
-        return axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos_informacion/Clase/${this.state.Clase.id_clase}`)
+        return axios.get(`http://localhost:3883/Cur/get_cursos_informacion/Clase/${this.state.Clase.id_clase}`)
             .catch(err => {
                 if (err) {
                     console.error(err);
@@ -77,7 +77,7 @@ class Main7 extends React.Component {
     }
     /*Este get trae todos los participantes de una clase*/
     getUsuariosClase = async () => {
-        return axios.get(`https://learnwithus2020.herokuapp.com/UsuCla/get-usuario_claseJOINclases-nombre_apellido/clase/${this.state.Clase.id_clase}`)
+        return axios.get(`http://localhost:3883/UsuCla/get-usuario_claseJOINclases-nombre_apellido/clase/${this.state.Clase.id_clase}`)
             .catch(err => {
                 if (err) {
                     console.error(err);
@@ -86,7 +86,7 @@ class Main7 extends React.Component {
     }
     /*Este get trae la id de un curso*/
     getCrearCurso = async () => {
-        await axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
+        await axios.get(`http://localhost:3883/Cur/get_cursos_id/misCursos_Clase_CreateCurso/${UsuarioI[0].id_usuario}&${newDate}`)
             .then(res => {
                 this.setState({
                     idCursoC: res.data[0].id,
@@ -100,7 +100,7 @@ class Main7 extends React.Component {
     }
     /*Este get trae los cursos iniciados*/
     getCursoIniciado = async () => {
-        return axios.get(`https://learnwithus2020.herokuapp.com/UsuCur/traer-UsuarioCalificacion/Integrado-Comunidad/${UsuarioI[0].id_usuario}`)
+        return axios.get(`http://localhost:3883/UsuCur/traer-UsuarioCalificacion/Integrado-Comunidad/${UsuarioI[0].id_usuario}`)
             .catch(err => {
                 console.error(err);
             })
@@ -123,7 +123,7 @@ class Main7 extends React.Component {
             fecha_c: newDate,
             logo: "/Images/Cursos/Default.png"
         }
-        axios.post(`https://learnwithus2020.herokuapp.com/Cur/post_cursos_informacion/misCursos`, form)
+        axios.post(`http://localhost:3883/Cur/post_cursos_informacion/misCursos`, form)
             .then(res => {
             }).catch(err => {
                 if (err) {
@@ -137,7 +137,7 @@ class Main7 extends React.Component {
             id_usuario: UsuarioI[0].id_usuario
         }
         console.log(form);
-        axios.post(`https://learnwithus2020.herokuapp.com/UsuCur/user-init-curso/${prop}`, form)
+        axios.post(`http://localhost:3883/UsuCur/user-init-curso/${prop}`, form)
             .then(res => {
                 this.setState({
                     IniciarCursoPost: {
@@ -150,7 +150,7 @@ class Main7 extends React.Component {
             })
     }
     EliminarCurso = async (Prop) => {
-        await axios.delete(`https://learnwithus2020.herokuapp.com/Cur/delete-curso-informacion/paginas/${Prop}&${UsuarioI[0].id_usuario}`)
+        await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${Prop}&${UsuarioI[0].id_usuario}`)
             .then(async (res) => {
                 let x = await this.getCursosClase();
                 this.setState({

@@ -23,6 +23,7 @@ class Juego extends React.Component {
     }
     componentDidMount = () => {
         document.getElementById("carga").style.display = "none";
+        this.getcalificacion();
     }
     componentWillUpdate() {
         document.getElementById("carga").style.display = "block";
@@ -35,12 +36,13 @@ class Juego extends React.Component {
     }
     componentWillUnmount = () => {
         if (this.state.calificacion == null) {
-            this.putEvaluacion((Math.round((this.state.puntaje / this.state.cant) * 50)) / 10)
+            this.putEvaluacion((Math.round((this.state.puntaje / this.state.cant) * 50)) / 10);
         }
     }
     getcalificacion = async () => {
-        await axios.get(`https://learnwithus2020.herokuapp.com/UsuCur/traer-calificacion/Examen/${UsuarioI[0].id_usuario}&${this.props.location.state.id}`)
+        await axios.get(`http://localhost:3883/UsuCur/traer-calificacion/Examen/${UsuarioI[0].id_usuario}&${this.props.location.state.id}`)
             .then(res => {
+                console.log(res.data[0]);
                 this.setState({ calificacion: res.data[0].calificacion });
             }).catch(err => {
                 console.error(err);
@@ -93,15 +95,11 @@ class Juego extends React.Component {
         });
     }
     putEvaluacion = async (prop) => {
-        if(UsuarioI[0].id_usuario != this.props.location.state.id_creador){
-        await axios.put(`https://learnwithus2020.herokuapp.com/UsuCur/Put_Usuario-calificacion_calificacion/Comunidad/${UsuarioI[0].id_usuario}&${this.props.location.state.id}&${prop}`)
+        await axios.put(`http://localhost:3883/UsuCur/Put_Usuario-calificacion_calificacion/Comunidad/${UsuarioI[0].id_usuario}&${this.props.location.state.id}&${prop}`)
             .then(res => {
             }).catch(err => {
                 console.log(err);
             });
-            
-            
-        }
     }
     /*Metodo que define si se pinta una pregunta o si se pinta un renderizado*/
     finalizar = () => {

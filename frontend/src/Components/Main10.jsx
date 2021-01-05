@@ -40,7 +40,7 @@ class Main10 extends React.Component {
     /*TODOS LOS GETS*/
     /*Este metodo sirve para traer todas las notificaciones de un usuario*/
     getNotificaciones = async () => {
-        await axios.get(`https://learnwithus2020.herokuapp.com/Not/get_notificaciones_info/Notificaciones/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
+        await axios.get(`http://localhost:3883/Not/get_notificaciones_info/Notificaciones/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
             .then(res => {
                 this.setState({ dataNotificaciones: res.data });
                 this.actualizacionEstado();
@@ -54,7 +54,7 @@ class Main10 extends React.Component {
     /*TODOS LOS POST*/
     /*Este metodo sirve para aceptar las solicitudes*/
     postAceptarSolicitud = async (form) => {
-        axios.post(`https://learnwithus2020.herokuapp.com/UsuCla/post-usuario_clase-Info/Clases`, form)
+        axios.post(`http://localhost:3883/UsuCla/post-usuario_clase-Info/Clases`, form)
             .then(res => {
             }).catch(err => {
                 if (err) {
@@ -64,7 +64,7 @@ class Main10 extends React.Component {
     }
     /*TODOS LOS DELETES*/
     deleteNotificacion = async (form2) => {
-        axios.delete(`https://learnwithus2020.herokuapp.com/Not/delete_notificaciones_info/Notificaciones/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
+        axios.delete(`http://localhost:3883/Not/delete_notificaciones_info/Notificaciones/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
             .then(res => {
                 this.getNotificaciones();
             }).catch(err => {
@@ -75,7 +75,7 @@ class Main10 extends React.Component {
     }
     /*TODOS LOS PUT*/
     actualizacionEstado = () => {
-        axios.put(`https://learnwithus2020.herokuapp.com/Not/put-notificaciones-estado/Notificaciones/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
+        axios.put(`http://localhost:3883/Not/put-notificaciones-estado/Notificaciones/${UsuarioI[0].id_usuario}&${UsuarioI[0].id_usuario}`)
             .then(res => { })
             .catch(err => {
                 if (err) {
@@ -84,7 +84,7 @@ class Main10 extends React.Component {
             })
     }
     putCantidadUsuarios = (id_clase) =>{
-        axios.put(`https://learnwithus2020.herokuapp.com/Cla/Put-Clases-cantidad_usuarios/Clases/${id_clase}`)
+        axios.put(`http://localhost:3883/Cla/Put-Clases-cantidad_usuarios/Clases/${id_clase}`)
         .then(res =>{})
         .catch(err =>{
             if(err){
@@ -147,7 +147,7 @@ class Main10 extends React.Component {
                 id_otro_usuario: UsuarioI[0].id_usuario
             }
         }
-        await axios.get(`https://learnwithus2020.herokuapp.com/Not/get-notificaciones-length/clases/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
+        await axios.get(`http://localhost:3883/Not/get-notificaciones-length/clases/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
             .then(res => {
                 let data = res.data;
                 if (data[0].conteo == 1) {
@@ -179,7 +179,7 @@ class Main10 extends React.Component {
                 id_otro_usuario: UsuarioI[0].id_usuario
             }
         }
-        await axios.get(`https://learnwithus2020.herokuapp.com//get-notificaciones-length/clases/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
+        await axios.get(`http://localhost:3883//get-notificaciones-length/clases/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
             .then(res => {
                 let data = res.data;
                 if (data[0].conteo == 1) {
@@ -209,7 +209,7 @@ class Main10 extends React.Component {
                 id_otro_usuario: Notification.id_otro_usuario
             }
         }
-        await axios.get(`https://learnwithus2020.herokuapp.com/Not/get-notificaciones-length/clases/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
+        await axios.get(`http://localhost:3883/Not/get-notificaciones-length/clases/${form2.id_clase}&${form2.id_creador_clase}&${form2.id_otro_usuario}`)
             .then(res => {
                 if (res.data[0].conteo == 1) {
                     this.deleteNotificacion(form2);

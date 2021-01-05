@@ -542,7 +542,7 @@ class Main8 extends React.Component {
     /*Traer la información del curso que se está creando o editando*/
     getInfoCursoCreados = async () => {
         console.log("AH BIEN");
-        axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.idCursoC}`)
+        axios.get(`http://localhost:3883/Cur/get_cursos-Comunidad_Integrado/Curso/${this.props.location.state.idCursoC}`)
             .then(res => {
                 this.setState({
                     DataInfoCurso: res.data,
@@ -557,7 +557,7 @@ class Main8 extends React.Component {
     /*PUTS*/
     /*Este put actualiza la información básica de un curso*/
     putInfoRequerida = (form) => {
-        axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cursos_infoBasica/CrearCurso/${this.state.DataInfoCurso[0].id}`, form)
+        axios.put(`http://localhost:3883/Cur/put_cursos_infoBasica/CrearCurso/${this.state.DataInfoCurso[0].id}`, form)
             .then(res => {
             }).catch(err => {
                 if (err) {
@@ -566,7 +566,7 @@ class Main8 extends React.Component {
             });
     }
     putSetNullContenidoD = () =>{
-        axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cursos_contenido-d-text_setNull/CrearCurso/${this.state.DataInfoCurso[0].id}`)
+        axios.put(`http://localhost:3883/Cur/put_cursos_contenido-d-text_setNull/CrearCurso/${this.state.DataInfoCurso[0].id}`)
             .then(res =>{
             }).catch(err =>{
                 if(err){
@@ -575,7 +575,7 @@ class Main8 extends React.Component {
             });
     }
     deleteContenidoEvaluativo = async () =>{
-        axios.delete(`https://learnwithus2020.herokuapp.com/Cur/delete-preguntas-informacion/CrearCurso/${this.state.DataInfoCurso[0].id}`)
+        axios.delete(`http://localhost:3883/Cur/delete-preguntas-informacion/CrearCurso/${this.state.DataInfoCurso[0].id}`)
             .then(res =>{
 
             }).catch(err =>{
@@ -587,7 +587,7 @@ class Main8 extends React.Component {
     putCantidadPreguntas = async () =>{
         let cero = 0;
 
-        axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cantidad_contenido-e/CrearExamen/${this.state.DataInfoCurso[0].id}&${cero}`)
+        axios.put(`http://localhost:3883/Cur/put_cantidad_contenido-e/CrearExamen/${this.state.DataInfoCurso[0].id}&${cero}`)
         .then(res =>{})
         .catch(err =>{
             if(err){
@@ -608,7 +608,7 @@ class Main8 extends React.Component {
             privacidad = 0;
         }
         if (titulo.value != "" && tematica.value != "" && materia.value != "") {
-            axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cursos_privacidad/CrearCurso/${this.state.DataInfoCurso[0].id}&${privacidad}`)
+            axios.put(`http://localhost:3883/Cur/put_cursos_privacidad/CrearCurso/${this.state.DataInfoCurso[0].id}&${privacidad}`)
                 .catch(err => {
                     if (err) {
                         console.error(err);
@@ -626,7 +626,7 @@ class Main8 extends React.Component {
     }
     /*Este put coloca como null el contenido teorico de el curso que se está editando*/
     putSetNullContenidoT = async () => {
-        await axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cursos_contenido-t_setNull/CrearCurso/${this.state.DataInfoCurso[0].id}`)
+        await axios.put(`http://localhost:3883/Cur/put_cursos_contenido-t_setNull/CrearCurso/${this.state.DataInfoCurso[0].id}`)
             .then(res => {
 
             }).catch(err => {
@@ -637,7 +637,7 @@ class Main8 extends React.Component {
     }
     /*DELETES*/
     deleteCurso = async (numero) => {
-        await axios.delete(`https://learnwithus2020.herokuapp.com/Cur/delete-curso-informacion/paginas/${this.state.DataInfoCurso[0].id}&${UsuarioI[0].id_usuario}`)
+        await axios.delete(`http://localhost:3883/Cur/delete-curso-informacion/paginas/${this.state.DataInfoCurso[0].id}&${UsuarioI[0].id_usuario}`)
             .then(res => {
             }).catch(err => {
                 if (err) {

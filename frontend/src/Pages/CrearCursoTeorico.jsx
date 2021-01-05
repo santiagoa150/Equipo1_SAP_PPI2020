@@ -385,7 +385,7 @@ class CrearCursoTeorico extends React.Component {
     /*GETS*/
     /*Este metodo trae el contenido teoríco del curso que se está edianto*/
     getContenidoT = async () => {
-        await axios.get(`https://learnwithus2020.herokuapp.com/Cur/get_cursos_id-ContenidoT/crearContenidoTeorico/${this.props.location.state.idCursoC}`)
+        await axios.get(`http://localhost:3883/Cur/get_cursos_id-ContenidoT/crearContenidoTeorico/${this.props.location.state.idCursoC}`)
             .then(res => {
                 this.setState({
                     dataContenidoT: res.data
@@ -403,7 +403,7 @@ class CrearCursoTeorico extends React.Component {
             contenido_t: this.state.ConteCurso
         }
         console.log(form);
-        axios.put(`https://learnwithus2020.herokuapp.com/Cur/put_cursos_contenido-t/CrearCursoTeorico/${this.props.location.state.idCursoC}`, form)
+        axios.put(`http://localhost:3883/Cur/put_cursos_contenido-t/CrearCursoTeorico/${this.props.location.state.idCursoC}`, form)
             .then(res => {
 
             }).catch(err => {
